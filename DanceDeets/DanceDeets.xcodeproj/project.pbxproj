@@ -1,0 +1,420 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */; };
+		1D8856BF19CDE510005FFDB2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BE19CDE510005FFDB2 /* ViewController.swift */; };
+		1D8856C219CDE510005FFDB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C019CDE510005FFDB2 /* Main.storyboard */; };
+		1D8856C419CDE510005FFDB2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C319CDE510005FFDB2 /* Images.xcassets */; };
+		1D8856C719CDE510005FFDB2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */; };
+		1D8856D319CDE511005FFDB2 /* DanceDeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1D8856CD19CDE510005FFDB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D8856AF19CDE510005FFDB2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D8856B619CDE510005FFDB2;
+			remoteInfo = DanceDeets;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1D8856B719CDE510005FFDB2 /* DanceDeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceDeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D8856BB19CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1D8856BE19CDE510005FFDB2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1D8856C119CDE510005FFDB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1D8856C319CDE510005FFDB2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1D8856C619CDE510005FFDB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		1D8856CC19CDE510005FFDB2 /* DanceDeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DanceDeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D8856D119CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanceDeetsTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D8856B419CDE510005FFDB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D8856C919CDE510005FFDB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1D8856AE19CDE510005FFDB2 = {
+			isa = PBXGroup;
+			children = (
+				1D8856B919CDE510005FFDB2 /* DanceDeets */,
+				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
+				1D8856B819CDE510005FFDB2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1D8856B819CDE510005FFDB2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D8856B719CDE510005FFDB2 /* DanceDeets.app */,
+				1D8856CC19CDE510005FFDB2 /* DanceDeetsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1D8856B919CDE510005FFDB2 /* DanceDeets */ = {
+			isa = PBXGroup;
+			children = (
+				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
+				1D8856BE19CDE510005FFDB2 /* ViewController.swift */,
+				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
+				1D8856C319CDE510005FFDB2 /* Images.xcassets */,
+				1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */,
+				1D8856BA19CDE510005FFDB2 /* Supporting Files */,
+			);
+			path = DanceDeets;
+			sourceTree = "<group>";
+		};
+		1D8856BA19CDE510005FFDB2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1D8856BB19CDE510005FFDB2 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */ = {
+			isa = PBXGroup;
+			children = (
+				1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */,
+				1D8856D019CDE510005FFDB2 /* Supporting Files */,
+			);
+			path = DanceDeetsTests;
+			sourceTree = "<group>";
+		};
+		1D8856D019CDE510005FFDB2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1D8856D119CDE510005FFDB2 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D8856B619CDE510005FFDB2 /* DanceDeets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D8856D619CDE511005FFDB2 /* Build configuration list for PBXNativeTarget "DanceDeets" */;
+			buildPhases = (
+				1D8856B319CDE510005FFDB2 /* Sources */,
+				1D8856B419CDE510005FFDB2 /* Frameworks */,
+				1D8856B519CDE510005FFDB2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DanceDeets;
+			productName = DanceDeets;
+			productReference = 1D8856B719CDE510005FFDB2 /* DanceDeets.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1D8856CB19CDE510005FFDB2 /* DanceDeetsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D8856D919CDE511005FFDB2 /* Build configuration list for PBXNativeTarget "DanceDeetsTests" */;
+			buildPhases = (
+				1D8856C819CDE510005FFDB2 /* Sources */,
+				1D8856C919CDE510005FFDB2 /* Frameworks */,
+				1D8856CA19CDE510005FFDB2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D8856CE19CDE510005FFDB2 /* PBXTargetDependency */,
+			);
+			name = DanceDeetsTests;
+			productName = DanceDeetsTests;
+			productReference = 1D8856CC19CDE510005FFDB2 /* DanceDeetsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1D8856AF19CDE510005FFDB2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = david.xiang;
+				TargetAttributes = {
+					1D8856B619CDE510005FFDB2 = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
+					1D8856CB19CDE510005FFDB2 = {
+						CreatedOnToolsVersion = 6.0.1;
+						TestTargetID = 1D8856B619CDE510005FFDB2;
+					};
+				};
+			};
+			buildConfigurationList = 1D8856B219CDE510005FFDB2 /* Build configuration list for PBXProject "DanceDeets" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1D8856AE19CDE510005FFDB2;
+			productRefGroup = 1D8856B819CDE510005FFDB2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D8856B619CDE510005FFDB2 /* DanceDeets */,
+				1D8856CB19CDE510005FFDB2 /* DanceDeetsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D8856B519CDE510005FFDB2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D8856C219CDE510005FFDB2 /* Main.storyboard in Resources */,
+				1D8856C719CDE510005FFDB2 /* LaunchScreen.xib in Resources */,
+				1D8856C419CDE510005FFDB2 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D8856CA19CDE510005FFDB2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D8856B319CDE510005FFDB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D8856BF19CDE510005FFDB2 /* ViewController.swift in Sources */,
+				1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D8856C819CDE510005FFDB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D8856D319CDE511005FFDB2 /* DanceDeetsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1D8856CE19CDE510005FFDB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D8856B619CDE510005FFDB2 /* DanceDeets */;
+			targetProxy = 1D8856CD19CDE510005FFDB2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1D8856C019CDE510005FFDB2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1D8856C119CDE510005FFDB2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1D8856C619CDE510005FFDB2 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1D8856D419CDE511005FFDB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1D8856D519CDE511005FFDB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1D8856D719CDE511005FFDB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = DanceDeets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1D8856D819CDE511005FFDB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = DanceDeets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1D8856DA19CDE511005FFDB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = DanceDeetsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DanceDeets.app/DanceDeets";
+			};
+			name = Debug;
+		};
+		1D8856DB19CDE511005FFDB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = DanceDeetsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DanceDeets.app/DanceDeets";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D8856B219CDE510005FFDB2 /* Build configuration list for PBXProject "DanceDeets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D8856D419CDE511005FFDB2 /* Debug */,
+				1D8856D519CDE511005FFDB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D8856D619CDE511005FFDB2 /* Build configuration list for PBXNativeTarget "DanceDeets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D8856D719CDE511005FFDB2 /* Debug */,
+				1D8856D819CDE511005FFDB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1D8856D919CDE511005FFDB2 /* Build configuration list for PBXNativeTarget "DanceDeetsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D8856DA19CDE511005FFDB2 /* Debug */,
+				1D8856DB19CDE511005FFDB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1D8856AF19CDE510005FFDB2 /* Project object */;
+}
