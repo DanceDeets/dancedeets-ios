@@ -23,7 +23,6 @@ public class Event: NSObject {
     
     
     init(dictionary:NSDictionary){
-        
         venue = dictionary["city"] as? String
         title = dictionary["title"] as? String
         identifier = dictionary["id"] as? String
