@@ -26,7 +26,7 @@ public class Event: NSObject {
         
     }
     
-    public class func loadEventsForCity(city:String, completion: (([Event]!, NSError!)->Void)?) -> Void
+    public class func loadEventsForCity(city:String, completion: (([Event]!, NSError!)->Void)) -> Void
     {
         var cityString:String? = city.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         var urlString = "http://www.dancedeets.com/events/feed?format=json&distance=10&min_attendees=0&distance_units=miles&location=" + cityString!
@@ -34,12 +34,28 @@ public class Event: NSObject {
         
         var session = NSURLSession.sharedSession()
         var task:NSURLSessionTask = session.dataTaskWithURL(url, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
-            
-            println("Got Data")
-            if(completion != nil){
-                completion!([], error)
+            if(error != nil){
+                completion([], error)
+          
+            }else{
+                var jsonError:NSError?
+                var json:NSArray = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as NSArray
+                if (jsonError != nil) {
+                    completion([], jsonError)
+                }
+                else {
+                    var eventList:[Event] = []
+                    for item in json{
+                        if let eventDictionary = item as? NSDictionary{
+                            let newEvent:Event? = Event(dictionary: eventDictionary)
+                            if newEvent != nil{
+                                eventList.append(newEvent!)
+                            }
+                        }
+                    }
+                    completion(eventList, nil)
+                }
             }
-            
         })
         task.resume()
     
