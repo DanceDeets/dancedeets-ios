@@ -28,7 +28,10 @@ public class Event: NSObject {
     
     public class func loadEventsForCity(city:String, completion: (([Event]!, NSError!)->Void)?) -> Void
     {
-        let url = NSURL(string:"http://97.88.225.91:5309/scheck")
+        var cityString:String? = city.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        var urlString = "http://www.dancedeets.com/events/feed?format=json&distance=10&min_attendees=0&distance_units=miles&location=" + cityString!
+        let url = NSURL(string:urlString)
+        
         var session = NSURLSession.sharedSession()
         var task:NSURLSessionTask = session.dataTaskWithURL(url, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
             
