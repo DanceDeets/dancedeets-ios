@@ -8,6 +8,7 @@
 
 import UIKit
 import XCTest
+import DanceDeets
 
 class DanceDeetsTests: XCTestCase {
     
@@ -21,16 +22,42 @@ class DanceDeetsTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+    func testEventRetrieval(){
+        
+        let expectation = expectationWithDescription("Event Retrieval Test")
+        Event.loadEventsForCity("New York City", completion: {(events, error) in
+            expectation.fulfill()
+            
+        })
+        
+        waitForExpectationsWithTimeout(10, handler:{ error in
+        })
+        
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-        }
+    func testSimpleAsync(){
+        let URL = "http://google.com.com/"
+        let expectation = expectationWithDescription("GET \(URL)")
+        
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithURL(NSURL(string: URL), completionHandler: {(data, response, error) in
+            expectation.fulfill()
+            
+            XCTAssertNotNil(data)
+            XCTAssertNil(error)
+            
+            if let HTTPResponse = response as NSHTTPURLResponse! {
+                XCTAssertEqual(HTTPResponse.statusCode, 200, "HTTP response status code should be 200")
+            } else {
+                XCTFail("Response was not NSHTTPURLResponse")
+            }
+        })
+        task.resume()
+        waitForExpectationsWithTimeout(task.originalRequest.timeoutInterval, handler:{ error in
+            task.cancel()
+        })
     }
+    
+
     
 }

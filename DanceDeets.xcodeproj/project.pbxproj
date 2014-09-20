@@ -13,6 +13,7 @@
 		1D8856C419CDE510005FFDB2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C319CDE510005FFDB2 /* Images.xcassets */; };
 		1D8856C719CDE510005FFDB2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */; };
 		1D8856D319CDE511005FFDB2 /* DanceDeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */; };
+		1D8A064019CDE605004607B6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A063F19CDE605004607B6 /* Event.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		1D8856CC19CDE510005FFDB2 /* DanceDeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DanceDeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856D119CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanceDeetsTests.swift; sourceTree = "<group>"; };
+		1D8A063F19CDE605004607B6 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,8 @@
 		1D8856B919CDE510005FFDB2 /* DanceDeets */ = {
 			isa = PBXGroup;
 			children = (
+				1D8A063E19CDE5D9004607B6 /* View Controllers */,
+				1D8A063D19CDE5D4004607B6 /* Models */,
 				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
 				1D8856BE19CDE510005FFDB2 /* ViewController.swift */,
 				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
@@ -110,6 +114,21 @@
 				1D8856D119CDE510005FFDB2 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1D8A063D19CDE5D4004607B6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1D8A063F19CDE605004607B6 /* Event.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		1D8A063E19CDE5D9004607B6 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D8856BF19CDE510005FFDB2 /* ViewController.swift in Sources */,
+				1D8A064019CDE605004607B6 /* Event.swift in Sources */,
 				1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,6 +425,7 @@
 				1D8856D819CDE511005FFDB2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1D8856D919CDE511005FFDB2 /* Build configuration list for PBXNativeTarget "DanceDeetsTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +434,7 @@
 				1D8856DB19CDE511005FFDB2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
