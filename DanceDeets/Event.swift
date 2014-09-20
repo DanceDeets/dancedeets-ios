@@ -14,7 +14,7 @@ public class Event: NSObject {
     let eventImage:UIImage?
     let venue:NSString?
     let shortDescription:NSString?
-    let starTime:NSDate?
+    let startTime:NSDate?
     let endTime:NSDate?
     let keywords:[String]?
     let title:NSString?
@@ -24,6 +24,27 @@ public class Event: NSObject {
     
     init(dictionary:NSDictionary){
         
+        venue = dictionary["city"] as? String
+        title = dictionary["title"] as? String
+        identifier = dictionary["id"] as? String
+        shortDescription = dictionary["description"] as? String
+        if let urlString = dictionary["image_url"] as? String{
+            eventImageUrl = NSURL(string: urlString)
+        }
+        
+        let dateFormatter:NSDateFormatter  = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+        if let startTimeString = dictionary["start_time"] as? String{
+            startTime = dateFormatter.dateFromString(startTimeString)
+        }
+        if let endTimeString = dictionary["end_time"] as? String{
+            endTime = dateFormatter.dateFromString(endTimeString)
+        }
+        location = dictionary["location"] as? String
+        
+        if let keywordString = dictionary["keywords"] as? String{
+            keywords = keywordString.componentsSeparatedByString(",")
+        }
     }
     
     public class func loadEventsForCity(city:String, completion: (([Event]!, NSError!)->Void)) -> Void

@@ -25,9 +25,9 @@ class DanceDeetsTests: XCTestCase {
     func testEventRetrieval(){
         
         let expectation = expectationWithDescription("Event Retrieval Test")
-        Event.loadEventsForCity("New York City", completion: {(events, error) in
+        Event.loadEventsForCity("New York City", completion: {(events:[Event]!, error) in
             expectation.fulfill()
-            
+            XCTAssert(events.count > 0)
         })
         
         waitForExpectationsWithTimeout(10, handler:{ error in
