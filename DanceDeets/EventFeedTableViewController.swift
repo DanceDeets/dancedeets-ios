@@ -18,10 +18,8 @@ class EventFeedTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tableView.backgroundView = UIImageView(image:UIImage(named:"background"))
-        self.tableView.estimatedRowHeight = estimatedEventRowHeight
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+
+        self.styleTableViewController()
         
         let currentCity = "New York City"
         Event.loadEventsForCity(currentCity, completion: {(events:[Event]!, error) in
@@ -54,9 +52,10 @@ class EventFeedTableViewController: UITableViewController {
         cell.updateForEvent(event)
         
         if event.identifier != nil && event.eventImageUrl != nil{
-            var image = imageCache[event.identifier!]
-            
-            if( image == nil ) {
+            if let image = imageCache[event.identifier!] {
+                cell.eventPhoto?.image = image
+            }else{
+        
                 cell.eventPhoto?.image = nil
                 // If the image does not exist, we need to download it
                 var imgUrl = event.eventImageUrl!
@@ -65,13 +64,13 @@ class EventFeedTableViewController: UITableViewController {
                 let request: NSURLRequest = NSURLRequest(URL: imgUrl)
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
                     if error == nil {
-                        image = UIImage(data: data)
+                        let newImage = UIImage(data: data)
                         
                         // Store the image in to our cache
-                        self.imageCache[event.identifier!] = image
+                        self.imageCache[event.identifier!] = newImage
                         dispatch_async(dispatch_get_main_queue(), {
                             if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
-                                cellToUpdate.eventPhoto?.image = image
+                                cellToUpdate.eventPhoto?.image = newImage
                             }
                         })
                     }
@@ -79,15 +78,6 @@ class EventFeedTableViewController: UITableViewController {
                         println("Error: \(error.localizedDescription)")
                     }
                 })
-                
-            }
-            else {
-                cell.eventPhoto?.image = image
-               // dispatch_async(dispatch_get_main_queue(), {
-              //      if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell {
-              //          cellToUpdate.eventPhoto?.image = image
-              //      }
-              //  })
             }
         }
         
@@ -96,6 +86,15 @@ class EventFeedTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat.min
+    }
+    
+    // MARK: - Private
+    func styleTableViewController(){
+        tableView.backgroundView = UIImageView(image:UIImage(named:"background"))
+        tableView.estimatedRowHeight = estimatedEventRowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
+        navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
 
 
