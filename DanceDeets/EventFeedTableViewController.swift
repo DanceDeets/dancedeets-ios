@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import CoreLocation
 
-class EventFeedTableViewController: UITableViewController {
+class EventFeedTableViewController: UITableViewController,CLLocationManagerDelegate {
     var events:[Event] = []
     var currentCity:String? = String()
     let estimatedEventRowHeight:CGFloat = 400
+    let locationManager:CLLocationManager  = CLLocationManager()
+    let geocoder:CLGeocoder = CLGeocoder()
     
     // event identifier -> image
     var imageCache = [String : UIImage]()
@@ -21,19 +24,50 @@ class EventFeedTableViewController: UITableViewController {
 
         self.styleTableViewController()
         
-        let currentCity = "New York City"
-        Event.loadEventsForCity(currentCity, completion: {(events:[Event]!, error) in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.events = events
-                self.tableView.reloadData()
-            })
-        })
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.darkGrayColor()
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "refreshEventsForCurrentLocation", forControlEvents: UIControlEvents.ValueChanged)
+        var backGroundViewZ = tableView.backgroundView?.layer.zPosition
+        self.refreshControl?.layer.zPosition = backGroundViewZ! + 1
+        
+        // location stuff
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self;
+        locationManager.startUpdatingLocation()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    func refreshEventsForCurrentLocation()
+    {
+        locationManager.startUpdatingLocation()
+    }
+    
+    // MARK: - CLLocationManagerDelegate
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
+        locationManager.stopUpdatingLocation()
+        
+        let locationObject:CLLocation = locations.first as CLLocation
+        geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
+            let placemark:CLPlacemark = placemarks.first as CLPlacemark
+            self.currentCity = placemark.locality
+            self.refreshEventsForCity()
+        })
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get your location at the moment. Try again in a moment.", delegate: nil, cancelButtonTitle: "OK")
+        locationFailure.show()
+    }
 
+    // MARK: - Action
+    @IBAction func refreshButtonTapped(sender: AnyObject) {
+        
+    }
     // MARK: - Table view data source
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -55,9 +89,7 @@ class EventFeedTableViewController: UITableViewController {
             if let image = imageCache[event.identifier!] {
                 cell.eventPhoto?.image = image
             }else{
-        
                 cell.eventPhoto?.image = nil
-                // If the image does not exist, we need to download it
                 var imgUrl = event.eventImageUrl!
                 
                 // Download an NSData representation of the image at the URL
@@ -89,6 +121,42 @@ class EventFeedTableViewController: UITableViewController {
     }
     
     // MARK: - Private
+    func refreshEventsForCity(){
+        
+        Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error) in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                // stop refresh control first
+                self.refreshControl?.endRefreshing()
+                
+                // check response
+                if(error != nil){
+                    let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
+                    errorAlert.show()
+                }else if(events.count == 0){
+                    let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in your area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
+                    noEventAlert.show()
+                }else{
+                    // success, update the refresh label
+                    var formatter = NSDateFormatter()
+                    formatter.dateFormat = "MMM d, h:mm a";
+                    let string = formatter.stringFromDate(NSDate())
+                    let title:String = self.currentCity! + " - Last update: " + string
+                    
+                    var attributedString:NSMutableAttributedString = NSMutableAttributedString(string: title)
+                    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range:NSMakeRange(0, countElements(title)))
+                    
+                    self.refreshControl?.attributedTitle = attributedString
+                    
+                    // re assing events and reload table
+                    self.events = events
+                    self.tableView.reloadData()
+                }
+                
+            })
+        })
+ 
+    }
+    
     func styleTableViewController(){
         tableView.backgroundView = UIImageView(image:UIImage(named:"background"))
         tableView.estimatedRowHeight = estimatedEventRowHeight

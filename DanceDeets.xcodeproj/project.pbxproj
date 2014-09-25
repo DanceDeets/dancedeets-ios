@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */; };
 		1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */; };
 		1D8856BF19CDE510005FFDB2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BE19CDE510005FFDB2 /* ViewController.swift */; };
 		1D8856C219CDE510005FFDB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C019CDE510005FFDB2 /* Main.storyboard */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1D8856B719CDE510005FFDB2 /* DanceDeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceDeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856BB19CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +68,7 @@
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
+				1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */,
 				1D8856B919CDE510005FFDB2 /* DanceDeets */,
 				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
 				1D8856B819CDE510005FFDB2 /* Products */,
