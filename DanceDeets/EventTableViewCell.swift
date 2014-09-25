@@ -14,7 +14,8 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var venueLabel: UILabel!
     @IBOutlet weak var mainView: UIView!
-    
+    @IBOutlet weak var eventTimeLabel: UILabel!
+    @IBOutlet weak var eventPhoto: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,6 +25,18 @@ class EventTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    // Update the cell based on the event
+    func updateForEvent(event:Event){
+        
+        mainView.layer.cornerRadius = 4;
+        mainView.layer.masksToBounds = true;
+        eventTitleLabel.text = event.venue
+        descriptionLabel.text = event.shortDescription
+        venueLabel.text = event.title
+        eventTimeLabel.text = event.displayTime
+        
     }
 
 }

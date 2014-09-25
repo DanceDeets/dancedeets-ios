@@ -20,6 +20,7 @@ public class Event: NSObject {
     let title:NSString?
     let location:NSString?
     let identifier:NSString?
+    let displayTime:NSString?
     
     
     init(dictionary:NSDictionary){
@@ -39,6 +40,24 @@ public class Event: NSObject {
         if let endTimeString = dictionary["end_time"] as? String{
             endTime = dateFormatter.dateFromString(endTimeString)
         }
+        
+        // Set up display time
+        var dateFormatterStart:NSDateFormatter  = NSDateFormatter()
+        var dateFormatterEnd:NSDateFormatter = NSDateFormatter()
+        var dateDisplayString:String  = String()
+        dateFormatterStart.dateFormat = "MMM dd 'at' h:mm a"
+        dateFormatterEnd.dateFormat = "h:mm a"
+        if (startTime != nil && endTime != nil){
+            dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
+            dateDisplayString += " till "
+            dateDisplayString += dateFormatterEnd.stringFromDate(endTime!)
+        } else if(startTime != nil){
+            dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
+        }else{
+            dateDisplayString = "Unknown Time"
+        }
+        displayTime = dateDisplayString 
+        
         location = dictionary["location"] as? String
         
         if let keywordString = dictionary["keywords"] as? String{
