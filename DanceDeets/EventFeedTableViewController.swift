@@ -63,11 +63,7 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get your location at the moment. Try again in a moment.", delegate: nil, cancelButtonTitle: "OK")
         locationFailure.show()
     }
-
-    // MARK: - Action
-    @IBAction func refreshButtonTapped(sender: AnyObject) {
-        
-    }
+    
     // MARK: - Table view data source
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1

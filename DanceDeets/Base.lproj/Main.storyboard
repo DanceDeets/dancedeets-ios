@@ -78,7 +78,8 @@
                                                             </constraints>
                                                         </view>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                                    <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                                                     <constraints>
                                                         <constraint firstItem="NSd-bg-iIx" firstAttribute="leading" secondItem="dC2-7d-bwJ" secondAttribute="leading" id="46I-68-PdY"/>
                                                         <constraint firstItem="9CM-zS-mvp" firstAttribute="leading" secondItem="dC2-7d-bwJ" secondAttribute="leading" constant="10" id="85K-5h-r51"/>
@@ -136,11 +137,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Dance Deets" id="dXt-Rj-F2R">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="refresh" id="9FR-RE-wde">
-                            <connections>
-                                <action selector="refreshButtonTapped:" destination="3nP-52-twq" id="ArC-bw-BDL"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="JW3-4w-9E6"/>
                     </navigationItem>
                 </tableViewController>
