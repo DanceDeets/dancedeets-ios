@@ -28,8 +28,14 @@ public class Event: NSObject {
         title = dictionary["title"] as? String
         identifier = dictionary["id"] as? String
         shortDescription = dictionary["description"] as? String
-        if let urlString = dictionary["image_url"] as? String{
-            eventImageUrl = NSURL(string: urlString)
+        
+        let coverUrlKey:NSString = "cover_url"
+        let coverDictionary = dictionary[coverUrlKey] as? NSDictionary
+        
+        if coverDictionary != nil{
+            if let coverImageUrl = coverDictionary!["source"] as? String {
+                eventImageUrl = NSURL(string: coverImageUrl)
+            }
         }
         
         let dateFormatter:NSDateFormatter  = NSDateFormatter()
