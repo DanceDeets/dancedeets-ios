@@ -23,6 +23,7 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         super.viewDidLoad()
 
         self.styleTableViewController()
+        self.tableView.delegate = self
         
         
         self.refreshControl = UIRefreshControl()
@@ -36,6 +37,13 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self;
         locationManager.startUpdatingLocation()
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showEventSegue"{
+            var destination:EventDetailTableViewController? = segue.destinationViewController as?EventDetailTableViewController
+            destination?.event = sender as Event?
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,6 +82,11 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     }
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedEvent:Event = events[indexPath.row]
+        performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
