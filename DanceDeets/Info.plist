@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>BebasNeueThin.otf</string>
+		<string>BebasNeueBold.otf</string>
+		<string>BebasNeueBook.otf</string>
+		<string>BebasNeueLight.otf</string>
+		<string>BebasNeueRegular.otf</string>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

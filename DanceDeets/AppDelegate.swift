@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBLoginView.self
         FBProfilePictureView.self
+        
         return true
     }
     

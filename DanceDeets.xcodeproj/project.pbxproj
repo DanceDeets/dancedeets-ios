@@ -11,6 +11,12 @@
 		1D0D92A319D52DE8003E7C14 /* EventDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0D92A219D52DE8003E7C14 /* EventDetailTableViewController.swift */; };
 		1D43346A19D738F0001A5381 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D43346919D738F0001A5381 /* FacebookSDK.framework */; };
 		1D43346B19D738F0001A5381 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D43346919D738F0001A5381 /* FacebookSDK.framework */; };
+		1D43347819D7552B001A5381 /* BebasNeueRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347319D7552B001A5381 /* BebasNeueRegular.otf */; };
+		1D43347919D7552B001A5381 /* BebasNeueLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347419D7552B001A5381 /* BebasNeueLight.otf */; };
+		1D43347A19D7552B001A5381 /* BebasNeueBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347519D7552B001A5381 /* BebasNeueBook.otf */; };
+		1D43347B19D7552B001A5381 /* BebasNeueBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347619D7552B001A5381 /* BebasNeueBold.otf */; };
+		1D43347C19D7552B001A5381 /* BebasNeueThin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347719D7552B001A5381 /* BebasNeueThin.otf */; };
+		1D43348119D75873001A5381 /* MainAppLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D43348019D75873001A5381 /* MainAppLabel.swift */; };
 		1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */; };
 		1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */; };
 		1D8856C219CDE510005FFDB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C019CDE510005FFDB2 /* Main.storyboard */; };
@@ -37,6 +43,12 @@
 		1D0D92A219D52DE8003E7C14 /* EventDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailTableViewController.swift; sourceTree = "<group>"; };
 		1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DanceDeets-Bridging-Header.h"; sourceTree = "<group>"; };
 		1D43346919D738F0001A5381 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK.framework; sourceTree = "<group>"; };
+		1D43347319D7552B001A5381 /* BebasNeueRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueRegular.otf; sourceTree = "<group>"; };
+		1D43347419D7552B001A5381 /* BebasNeueLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueLight.otf; sourceTree = "<group>"; };
+		1D43347519D7552B001A5381 /* BebasNeueBook.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueBook.otf; sourceTree = "<group>"; };
+		1D43347619D7552B001A5381 /* BebasNeueBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueBold.otf; sourceTree = "<group>"; };
+		1D43347719D7552B001A5381 /* BebasNeueThin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueThin.otf; sourceTree = "<group>"; };
+		1D43348019D75873001A5381 /* MainAppLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainAppLabel.swift; sourceTree = "<group>"; };
 		1D8856B719CDE510005FFDB2 /* DanceDeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceDeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856BB19CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +85,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D43347219D7551D001A5381 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1D43347319D7552B001A5381 /* BebasNeueRegular.otf */,
+				1D43347419D7552B001A5381 /* BebasNeueLight.otf */,
+				1D43347519D7552B001A5381 /* BebasNeueBook.otf */,
+				1D43347619D7552B001A5381 /* BebasNeueBold.otf */,
+				1D43347719D7552B001A5381 /* BebasNeueThin.otf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		1D43347F19D75861001A5381 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				1D43348019D75873001A5381 /* MainAppLabel.swift */,
+			);
+			name = "Custom Views";
+			sourceTree = "<group>";
+		};
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +128,8 @@
 		1D8856B919CDE510005FFDB2 /* DanceDeets */ = {
 			isa = PBXGroup;
 			children = (
+				1D43347F19D75861001A5381 /* Custom Views */,
+				1D43347219D7551D001A5381 /* Fonts */,
 				1D8A064119CE0CA6004607B6 /* Views */,
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,
 				1D8A063D19CDE5D4004607B6 /* Models */,
@@ -240,8 +274,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D43347A19D7552B001A5381 /* BebasNeueBook.otf in Resources */,
+				1D43347819D7552B001A5381 /* BebasNeueRegular.otf in Resources */,
+				1D43347919D7552B001A5381 /* BebasNeueLight.otf in Resources */,
 				1D8856C219CDE510005FFDB2 /* Main.storyboard in Resources */,
 				1D8856C719CDE510005FFDB2 /* LaunchScreen.xib in Resources */,
+				1D43347B19D7552B001A5381 /* BebasNeueBold.otf in Resources */,
+				1D43347C19D7552B001A5381 /* BebasNeueThin.otf in Resources */,
 				1D8856C419CDE510005FFDB2 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D8A064319CE0CB8004607B6 /* EventTableViewCell.swift in Sources */,
+				1D43348119D75873001A5381 /* MainAppLabel.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1D8A064019CDE605004607B6 /* Event.swift in Sources */,
 				1D0D92A319D52DE8003E7C14 /* EventDetailTableViewController.swift in Sources */,

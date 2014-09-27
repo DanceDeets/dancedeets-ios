@@ -11,17 +11,20 @@ import UIKit
 class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate {
 
     @IBOutlet weak var fbLoginView: FBLoginView!
+    @IBOutlet weak var mainLoginTitle: MainAppLabel!
+    @IBOutlet weak var subTitleLabel: UILabel!
+    
+    @IBOutlet weak var danceDeetsTitleView: MainAppLabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         self.fbLoginView.delegate = self
         self.fbLoginView.readPermissions =  ["public_profile", "email", "user_friends"]
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        view.backgroundColor = UIColor.blackColor()
+        let subtitleFont = UIFont(name:"BebasNeueRegular",size: 30)
+        self.subTitleLabel.font = subtitleFont
     }
 
     // MARK: FBLogingViewDelegate

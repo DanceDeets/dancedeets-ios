@@ -351,22 +351,57 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="se0-3f-EIf" customClass="FBLoginView">
-                                <rect key="frame" x="160" y="270" width="280" height="60"/>
+                                <rect key="frame" x="160" y="480" width="280" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="8zD-x1-Kyp"/>
                                     <constraint firstAttribute="width" constant="280" id="c2V-Gx-aBw"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance Deets" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MpM-g9-O1q" customClass="MainAppLabel" customModule="DanceDeets" customModuleProvider="target">
+                                <rect key="frame" x="228" y="80" width="144" height="30"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All the dopest dance events around you, right now." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPT-Vq-Y9N">
+                                <rect key="frame" x="40" y="140" width="520" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="260" id="RNI-8H-aKt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="RNI-8H-aKt"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="se0-3f-EIf" secondAttribute="centerY" id="IYR-ev-Hfl"/>
+                            <constraint firstItem="dPT-Vq-Y9N" firstAttribute="top" secondItem="MpM-g9-O1q" secondAttribute="bottom" constant="30" id="J4U-HV-ZTJ"/>
+                            <constraint firstAttribute="centerX" secondItem="dPT-Vq-Y9N" secondAttribute="centerX" id="P05-G2-zk1"/>
+                            <constraint firstItem="MpM-g9-O1q" firstAttribute="top" secondItem="4yA-So-u3K" secondAttribute="bottom" constant="60" id="Xjh-Ft-4Ob"/>
+                            <constraint firstAttribute="trailing" secondItem="dPT-Vq-Y9N" secondAttribute="trailing" constant="40" id="fA3-rj-SDs"/>
+                            <constraint firstAttribute="centerX" secondItem="MpM-g9-O1q" secondAttribute="centerX" id="gTh-ay-l4n"/>
                             <constraint firstAttribute="centerX" secondItem="se0-3f-EIf" secondAttribute="centerX" id="re2-WZ-pTy"/>
+                            <constraint firstItem="dPT-Vq-Y9N" firstAttribute="leading" secondItem="KvK-Th-Fj8" secondAttribute="leading" constant="40" id="tsJ-xI-g4q"/>
+                            <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="se0-3f-EIf" secondAttribute="bottom" constant="60" id="zcc-jM-MUS"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="P05-G2-zk1"/>
+                                <exclude reference="IYR-ev-Hfl"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="fbLoginView" destination="se0-3f-EIf" id="nQ7-D4-d5X"/>
+                        <outlet property="mainLoginTitle" destination="MpM-g9-O1q" id="UIn-KH-QMK"/>
+                        <outlet property="subTitleLabel" destination="dPT-Vq-Y9N" id="JCN-VY-rD8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bmy-Dl-kqu" userLabel="First Responder" sceneMemberID="firstResponder"/>
