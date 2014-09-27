@@ -137,7 +137,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Dance Deets" id="dXt-Rj-F2R">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="JW3-4w-9E6"/>
+                        <barButtonItem key="rightBarButtonItem" title="Filter" style="plain" id="JW3-4w-9E6"/>
                     </navigationItem>
                     <connections>
                         <segue destination="OvV-49-RBz" kind="show" identifier="showEventSegue" id="rt7-WN-LaH"/>
