@@ -14,6 +14,9 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.fbLoginView.delegate = self
+        self.fbLoginView.readPermissions =  ["public_profile", "email", "user_friends"]
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,6 +24,34 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    // MARK: FBLogingViewDelegate
+    
+    func loginViewShowingLoggedInUser(loginView : FBLoginView!) {
+       println("User Logged In")
+    }
+    
+    func loginViewFetchedUserInfo(loginView : FBLoginView!, user: FBGraphUser) {
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+         appDelegate.facebookGraphUser = user
+        
+        println("Facebook fetched Graph User Info")
+        println("User ID: \(user.objectID)")
+        println("User Name: \(user.name)")
+        var userEmail = user.objectForKey("email") as String
+        println("User Email: \(userEmail)")
+        
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func loginViewShowingLoggedOutUser(loginView : FBLoginView!) {
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        appDelegate.facebookGraphUser = nil
+    }
+    
+    func loginView(loginView : FBLoginView!, handleError:NSError) {
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        appDelegate.facebookGraphUser = nil
+    }
 
 }
 

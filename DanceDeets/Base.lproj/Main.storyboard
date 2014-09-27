@@ -137,6 +137,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Dance Deets" id="dXt-Rj-F2R">
+                        <barButtonItem key="leftBarButtonItem" title="Profile" id="WwV-Vg-JaI"/>
                         <barButtonItem key="rightBarButtonItem" title="Filter" style="plain" id="JW3-4w-9E6"/>
                     </navigationItem>
                     <connections>
@@ -340,7 +341,7 @@
         <!--Face Book Login View Controller-->
         <scene sceneID="w5m-Gb-xdx">
             <objects>
-                <viewController id="wgh-qC-ZRz" customClass="FaceBookLoginViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="faceBookLoginViewController" id="wgh-qC-ZRz" customClass="FaceBookLoginViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4yA-So-u3K"/>
                         <viewControllerLayoutGuide type="bottom" id="ftz-mG-Cbs"/>

@@ -22,8 +22,7 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.styleTableViewController()
-        self.tableView.delegate = self
+        styleTableViewController()
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.darkGrayColor()
@@ -37,6 +36,28 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         locationManager.delegate = self;
         locationManager.startUpdatingLocation()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        checkFaceBookToken()
+    }
+    
+    func checkFaceBookToken(){
+        let currentState:FBSessionState = FBSession.activeSession().state
+        
+        // don't do anything if session is open
+        if( currentState == FBSessionState.Open ||
+            currentState == FBSessionState.OpenTokenExtended){
+                return;
+        }else if( currentState == FBSessionState.CreatedTokenLoaded){
+            FBSession.openActiveSessionWithAllowLoginUI(false)
+        }else{
+            let fbLogin:FaceBookLoginViewController? = storyboard?.instantiateViewControllerWithIdentifier("faceBookLoginViewController") as? FaceBookLoginViewController
+            presentViewController(fbLogin!, animated: true, completion: nil)
+        }
+    }
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showEventSegue"{
             var destination:EventDetailTableViewController? = segue.destinationViewController as?EventDetailTableViewController

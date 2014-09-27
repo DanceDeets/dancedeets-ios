@@ -100,7 +100,6 @@
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,
 				1D8A063D19CDE5D4004607B6 /* Models */,
 				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
-				1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */,
 				1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */,
 				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
 				1D8856C319CDE510005FFDB2 /* Images.xcassets */,
@@ -148,6 +147,7 @@
 			children = (
 				1D8A064419CE0CCE004607B6 /* EventFeedTableViewController.swift */,
 				1D0D92A219D52DE8003E7C14 /* EventDetailTableViewController.swift */,
+				1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
