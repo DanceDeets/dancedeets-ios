@@ -337,5 +337,40 @@
             </objects>
             <point key="canvasLocation" x="223" y="231"/>
         </scene>
+        <!--Face Book Login View Controller-->
+        <scene sceneID="w5m-Gb-xdx">
+            <objects>
+                <viewController id="wgh-qC-ZRz" customClass="FaceBookLoginViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4yA-So-u3K"/>
+                        <viewControllerLayoutGuide type="bottom" id="ftz-mG-Cbs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KvK-Th-Fj8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="se0-3f-EIf" customClass="FBLoginView">
+                                <rect key="frame" x="160" y="270" width="280" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="8zD-x1-Kyp"/>
+                                    <constraint firstAttribute="width" constant="280" id="c2V-Gx-aBw"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="se0-3f-EIf" secondAttribute="centerY" id="IYR-ev-Hfl"/>
+                            <constraint firstAttribute="centerX" secondItem="se0-3f-EIf" secondAttribute="centerX" id="re2-WZ-pTy"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="fbLoginView" destination="se0-3f-EIf" id="nQ7-D4-d5X"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bmy-Dl-kqu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="263" y="1197"/>
+        </scene>
     </scenes>
 </document>

@@ -9,9 +9,10 @@
 /* Begin PBXBuildFile section */
 		1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */; };
 		1D0D92A319D52DE8003E7C14 /* EventDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0D92A219D52DE8003E7C14 /* EventDetailTableViewController.swift */; };
-		1D43346519D73515001A5381 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D43346419D73515001A5381 /* FacebookSDK.framework */; };
+		1D43346A19D738F0001A5381 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D43346919D738F0001A5381 /* FacebookSDK.framework */; };
+		1D43346B19D738F0001A5381 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D43346919D738F0001A5381 /* FacebookSDK.framework */; };
 		1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */; };
-		1D8856BF19CDE510005FFDB2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BE19CDE510005FFDB2 /* ViewController.swift */; };
+		1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */; };
 		1D8856C219CDE510005FFDB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C019CDE510005FFDB2 /* Main.storyboard */; };
 		1D8856C419CDE510005FFDB2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C319CDE510005FFDB2 /* Images.xcassets */; };
 		1D8856C719CDE510005FFDB2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */; };
@@ -34,11 +35,12 @@
 /* Begin PBXFileReference section */
 		1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1D0D92A219D52DE8003E7C14 /* EventDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailTableViewController.swift; sourceTree = "<group>"; };
-		1D43346419D73515001A5381 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK.framework; sourceTree = "<group>"; };
+		1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DanceDeets-Bridging-Header.h"; sourceTree = "<group>"; };
+		1D43346919D738F0001A5381 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK.framework; sourceTree = "<group>"; };
 		1D8856B719CDE510005FFDB2 /* DanceDeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceDeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856BB19CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1D8856BE19CDE510005FFDB2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceBookLoginViewController.swift; sourceTree = "<group>"; };
 		1D8856C119CDE510005FFDB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1D8856C319CDE510005FFDB2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D8856C619CDE510005FFDB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -56,7 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */,
-				1D43346519D73515001A5381 /* FacebookSDK.framework in Frameworks */,
+				1D43346A19D738F0001A5381 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D43346B19D738F0001A5381 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,7 +76,7 @@
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
-				1D43346419D73515001A5381 /* FacebookSDK.framework */,
+				1D43346919D738F0001A5381 /* FacebookSDK.framework */,
 				1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */,
 				1D8856B919CDE510005FFDB2 /* DanceDeets */,
 				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
@@ -97,7 +100,8 @@
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,
 				1D8A063D19CDE5D4004607B6 /* Models */,
 				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
-				1D8856BE19CDE510005FFDB2 /* ViewController.swift */,
+				1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */,
+				1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */,
 				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
 				1D8856C319CDE510005FFDB2 /* Images.xcassets */,
 				1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */,
@@ -257,7 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D8A064319CE0CB8004607B6 /* EventTableViewCell.swift in Sources */,
-				1D8856BF19CDE510005FFDB2 /* ViewController.swift in Sources */,
+				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1D8A064019CDE605004607B6 /* Event.swift in Sources */,
 				1D0D92A319D52DE8003E7C14 /* EventDetailTableViewController.swift in Sources */,
 				1D8A064519CE0CCE004607B6 /* EventFeedTableViewController.swift in Sources */,
@@ -388,10 +392,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					/Users/dxiang,
+					/Users/dxiang/Documents,
 				);
 				INFOPLIST_FILE = DanceDeets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "DanceDeets/DanceDeets-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -403,10 +410,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					/Users/dxiang,
+					/Users/dxiang/Documents,
 				);
 				INFOPLIST_FILE = DanceDeets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "DanceDeets/DanceDeets-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -417,6 +427,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					/Users/dxiang/Documents,
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -436,6 +447,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					/Users/dxiang/Documents,
 				);
 				INFOPLIST_FILE = DanceDeetsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
