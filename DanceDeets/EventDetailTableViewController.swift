@@ -20,6 +20,7 @@ class EventDetailTableViewController: UITableViewController {
     @IBOutlet weak var eventEndTimeLabel: UILabel!
     @IBOutlet weak var eventVenueLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var eventTagsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,7 @@ class EventDetailTableViewController: UITableViewController {
         self.eventTitleLabel.text = event?.title
         self.eventVenueLabel.text = event?.venue
         self.descriptionLabel.text = event?.shortDescription
+        self.eventTagsLabel.text = event?.tagString
         
         var formatter = NSDateFormatter()
         formatter.dateFormat = "MMM dd 'at' h:mm a"
@@ -37,12 +39,12 @@ class EventDetailTableViewController: UITableViewController {
         if let startTime = event?.startTime{
             eventStartTimeLabel.text = formatter.stringFromDate(startTime)
         }else{
-            eventStartTimeLabel.text = "Unknown"
+            eventStartTimeLabel.text = ""
         }
         if let endTime = event?.endTime{
             eventEndTimeLabel.text = formatter.stringFromDate(endTime)
         }else{
-            eventEndTimeLabel.text = "Unknown"
+            eventEndTimeLabel.text = ""
         }
         
         /*

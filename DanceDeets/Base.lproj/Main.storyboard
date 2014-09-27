@@ -62,7 +62,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSd-bg-iIx">
                                                             <rect key="frame" x="0.0" y="239" width="576" height="131"/>
                                                             <subviews>
-                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Event Descripti" lineBreakMode="tailTruncation" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDR-9z-dbd" userLabel="descriptionLabel">
+                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Event Descripti" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDR-9z-dbd" userLabel="descriptionLabel">
                                                                     <rect key="frame" x="10" y="5" width="556" height="121"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -275,6 +275,31 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="TAGS" id="2qz-gz-DdS">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="aN8-Ki-TgU">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aN8-Ki-TgU" id="V2a-u2-iNt">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHr-cB-HNJ">
+                                                    <rect key="frame" x="15" y="13" width="567" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="CHr-cB-HNJ" firstAttribute="leading" secondItem="V2a-u2-iNt" secondAttribute="leading" constant="15" id="DTH-1l-yH0"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="CHr-cB-HNJ" secondAttribute="trailing" constant="10" id="F6a-qr-jq9"/>
+                                                <constraint firstItem="CHr-cB-HNJ" firstAttribute="top" secondItem="V2a-u2-iNt" secondAttribute="topMargin" constant="5" id="FRZ-G2-8HW"/>
+                                                <constraint firstAttribute="centerY" secondItem="CHr-cB-HNJ" secondAttribute="centerY" id="O5w-kC-a82"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="CHr-cB-HNJ" secondAttribute="bottom" constant="5" id="VcD-hV-O6W"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="OvV-49-RBz" id="M7R-qm-uvv"/>
@@ -285,6 +310,7 @@
                         <outlet property="descriptionLabel" destination="dVe-DV-WnW" id="0f4-os-JiW"/>
                         <outlet property="eventEndTimeLabel" destination="SfA-RZ-D4G" id="A3X-LK-ZEP"/>
                         <outlet property="eventStartTimeLabel" destination="S3q-tB-ULo" id="LV7-eu-P32"/>
+                        <outlet property="eventTagsLabel" destination="CHr-cB-HNJ" id="XgN-eo-6BY"/>
                         <outlet property="eventTitleLabel" destination="x4X-oG-9jA" id="tFe-rv-Zem"/>
                         <outlet property="eventVenueLabel" destination="pBY-xW-JbT" id="mGa-l0-Iff"/>
                     </connections>

@@ -17,6 +17,7 @@ public class Event: NSObject {
     let startTime:NSDate?
     let endTime:NSDate?
     let keywords:[String]?
+    let tagString:NSString?
     let title:NSString?
     let location:NSString?
     let identifier:NSString?
@@ -67,6 +68,7 @@ public class Event: NSObject {
         location = dictionary["location"] as? String
         
         if let keywordString = dictionary["keywords"] as? String{
+            tagString = keywordString
             keywords = keywordString.componentsSeparatedByString(",")
         }
     }
