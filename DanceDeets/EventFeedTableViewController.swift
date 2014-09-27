@@ -25,7 +25,6 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         self.styleTableViewController()
         self.tableView.delegate = self
         
-        
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.darkGrayColor()
         self.refreshControl?.tintColor = UIColor.whiteColor()
@@ -132,8 +131,10 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     // MARK: - Private
     func refreshEventsForCity(){
         
+        self.title = "Loading..."
         Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.title = self.currentCity
                 // stop refresh control first
                 self.refreshControl?.endRefreshing()
                 
