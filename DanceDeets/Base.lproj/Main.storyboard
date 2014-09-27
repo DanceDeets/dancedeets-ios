@@ -5,7 +5,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Event Feed Table View Controller-->
+        <!--Dance Deets-->
         <scene sceneID="wgo-hS-LZ7">
             <objects>
                 <tableViewController id="3nP-52-twq" customClass="EventFeedTableViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
@@ -136,7 +136,7 @@
                             <outlet property="delegate" destination="3nP-52-twq" id="eaX-k9-jo9"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="dXt-Rj-F2R">
+                    <navigationItem key="navigationItem" title="Dance Deets" id="dXt-Rj-F2R">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="JW3-4w-9E6"/>
                     </navigationItem>
                     <connections>

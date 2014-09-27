@@ -60,14 +60,19 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         
         let locationObject:CLLocation = locations.first as CLLocation
         geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
-            let placemark:CLPlacemark = placemarks.first as CLPlacemark
-            self.currentCity = placemark.locality
-            self.refreshEventsForCity()
+            if(placemarks.count > 0){
+                let placemark:CLPlacemark = placemarks.first as CLPlacemark
+                self.currentCity = placemark.locality
+                self.refreshEventsForCity()
+            }else{
+                let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get your location. Please try again in a moment.", delegate: nil, cancelButtonTitle: "OK")
+                locationFailure.show()
+            }
         })
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get your location at the moment. Try again in a moment.", delegate: nil, cancelButtonTitle: "OK")
+        let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get your location. Please try again in a moment.", delegate: nil, cancelButtonTitle: "OK")
         locationFailure.show()
     }
     

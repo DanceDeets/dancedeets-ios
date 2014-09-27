@@ -45,6 +45,7 @@ class EventDetailTableViewController: UITableViewController {
             eventEndTimeLabel.text = "Unknown"
         }
         
+        /*
         // try to detect an address in the description
         var dataError:NSError?
         let addressDetector:NSDataDetector? = NSDataDetector(types: NSTextCheckingType.Address.toRaw(), error: &dataError)
@@ -63,10 +64,22 @@ class EventDetailTableViewController: UITableViewController {
             })
         }
         
-        if streetAddress != nil{
+        if streetAddress != nil && event?.location != nil{
             println(streetAddress)
+            let locationString:String? = event?.location
+            var addressToGeoCode = streetAddress! + " " + locationString!
+            geocoder.geocodeAddressString(addressToGeoCode, completionHandler: { (placemarks:[AnyObject]!, error: NSError!) -> Void in
+                
+                let placemark:CLPlacemark = placemarks.first as CLPlacemark
+                println(placemark.subThoroughfare)
+                println(placemark.name)
+                println(placemark.thoroughfare)
+                println(placemark.locality)
+                println(placemark.postalCode)
+            })
             
         }
+*/
 
     }
 
