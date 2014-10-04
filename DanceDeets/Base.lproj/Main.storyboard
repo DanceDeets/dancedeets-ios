@@ -45,7 +45,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UMq-Hm-8oQ">
-                                                            <rect key="frame" x="10" y="180" width="83" height="20"/>
+                                                            <rect key="frame" x="10" y="180" width="83" height="19.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
@@ -138,7 +138,12 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Dance Deets" id="dXt-Rj-F2R">
                         <barButtonItem key="leftBarButtonItem" title="Profile" id="WwV-Vg-JaI"/>
-                        <barButtonItem key="rightBarButtonItem" title="Filter" style="plain" id="JW3-4w-9E6"/>
+                        <barButtonItem key="rightBarButtonItem" image="settings-50" style="plain" id="JW3-4w-9E6">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="settingsTapped:" destination="3nP-52-twq" id="fca-ww-UtH"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="OvV-49-RBz" kind="show" identifier="showEventSegue" id="rt7-WN-LaH"/>
@@ -146,9 +151,58 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLX-XI-ZjE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1011" y="236"/>
+            <point key="canvasLocation" x="984" y="236"/>
         </scene>
-        <!--Event Detail Table View Controller-->
+        <!--Settings23-->
+        <scene sceneID="Fy3-mO-n3C">
+            <objects>
+                <tableViewController id="SiB-h9-pTV" customClass="SettingsTableViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="E46-eV-2qg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="locationToggleCell" id="f4C-UR-Q03">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f4C-UR-Q03" id="wUD-IJ-ywe">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use My Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNP-0s-Pjq">
+                                            <rect key="frame" x="15" y="11" width="129.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XmR-6o-Y9i">
+                                            <rect key="frame" x="536" y="6" width="51" height="31"/>
+                                        </switch>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="MNP-0s-Pjq" secondAttribute="centerY" id="902-mA-h62"/>
+                                        <constraint firstItem="MNP-0s-Pjq" firstAttribute="leading" secondItem="wUD-IJ-ywe" secondAttribute="leading" constant="15" id="QL3-Yy-BuV"/>
+                                        <constraint firstAttribute="centerY" secondItem="XmR-6o-Y9i" secondAttribute="centerY" id="aMf-3G-3rb"/>
+                                        <constraint firstAttribute="trailing" secondItem="XmR-6o-Y9i" secondAttribute="trailing" constant="15" id="ucA-jT-HvA"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="SiB-h9-pTV" id="SAD-5F-wFc"/>
+                            <outlet property="delegate" destination="SiB-h9-pTV" id="Mhh-KK-qTO"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Settings23" prompt="Test" id="gI3-Xu-L5U">
+                        <barButtonItem key="backBarButtonItem" title="Test" id="8o2-tg-23p"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iJD-uf-RDg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2512" y="-518"/>
+        </scene>
+        <!--Event-->
         <scene sceneID="0Eg-yT-69O">
             <objects>
                 <tableViewController id="OvV-49-RBz" customClass="EventDetailTableViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
@@ -165,7 +219,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x4X-oG-9jA">
-                                                    <rect key="frame" x="15" y="13" width="567" height="18"/>
+                                                    <rect key="frame" x="15" y="13" width="567" height="17.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -190,7 +244,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBY-xW-JbT">
-                                                    <rect key="frame" x="15" y="13" width="567" height="18"/>
+                                                    <rect key="frame" x="15" y="13" width="567" height="17.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -259,7 +313,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVe-DV-WnW">
-                                                    <rect key="frame" x="15" y="13" width="567" height="18"/>
+                                                    <rect key="frame" x="15" y="13" width="567" height="17.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -307,6 +361,7 @@
                             <outlet property="delegate" destination="OvV-49-RBz" id="Q9g-uh-GsZ"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Event" id="csR-IG-W3R"/>
                     <connections>
                         <outlet property="descriptionLabel" destination="dVe-DV-WnW" id="0f4-os-JiW"/>
                         <outlet property="eventEndTimeLabel" destination="SfA-RZ-D4G" id="A3X-LK-ZEP"/>
@@ -318,7 +373,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XBj-RO-jI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1700" y="236"/>
+            <point key="canvasLocation" x="1925" y="236"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="U7N-cY-zkj">
@@ -359,13 +414,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance Deets" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MpM-g9-O1q" customClass="MainAppLabel" customModule="DanceDeets" customModuleProvider="target">
-                                <rect key="frame" x="228" y="80" width="144" height="30"/>
+                                <rect key="frame" x="228" y="80" width="144" height="29.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All the dopest dance events around you, right now." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPT-Vq-Y9N">
-                                <rect key="frame" x="40" y="140" width="520" height="21"/>
+                                <rect key="frame" x="40" y="139.5" width="520" height="20.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="260" id="RNI-8H-aKt"/>
                                 </constraints>
@@ -409,4 +464,7 @@
             <point key="canvasLocation" x="263" y="1197"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="settings-50" width="25" height="25"/>
+    </resources>
 </document>

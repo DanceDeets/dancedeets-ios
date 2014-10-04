@@ -21,6 +21,11 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("backButtonTapped"))
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName:UIFont(name:"BebasNeueBold",size: 24)]
 
         styleTableViewController()
         
@@ -152,6 +157,12 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat.min
+    }
+    
+    
+    // MARK: - Action
+    @IBAction func settingsTapped(sender: AnyObject) {
+        self.performSegueWithIdentifier("showSettingsSegue", sender: sender)
     }
     
     // MARK: - Private

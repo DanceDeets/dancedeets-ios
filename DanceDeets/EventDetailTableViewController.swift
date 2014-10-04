@@ -22,8 +22,17 @@ class EventDetailTableViewController: UITableViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var eventTagsLabel: UILabel!
     
+    func backButtonTapped(){
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
+     
+
+        
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         

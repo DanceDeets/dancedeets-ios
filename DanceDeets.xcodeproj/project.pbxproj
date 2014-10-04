@@ -26,6 +26,7 @@
 		1D8A064019CDE605004607B6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A063F19CDE605004607B6 /* Event.swift */; };
 		1D8A064319CE0CB8004607B6 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */; };
 		1D8A064519CE0CCE004607B6 /* EventFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A064419CE0CCE004607B6 /* EventFeedTableViewController.swift */; };
+		1DB901C519E0856E0018B434 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		1D8A063F19CDE605004607B6 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		1D8A064419CE0CCE004607B6 /* EventFeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFeedTableViewController.swift; sourceTree = "<group>"; };
+		1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 				1D8A064419CE0CCE004607B6 /* EventFeedTableViewController.swift */,
 				1D0D92A219D52DE8003E7C14 /* EventDetailTableViewController.swift */,
 				1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */,
+				1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				TargetAttributes = {
 					1D8856B619CDE510005FFDB2 = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = NQ8GZFQ3RP;
 					};
 					1D8856CB19CDE510005FFDB2 = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -303,6 +307,7 @@
 				1D43348119D75873001A5381 /* MainAppLabel.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1D8A064019CDE605004607B6 /* Event.swift in Sources */,
+				1DB901C519E0856E0018B434 /* SettingsTableViewController.swift in Sources */,
 				1D0D92A319D52DE8003E7C14 /* EventDetailTableViewController.swift in Sources */,
 				1D8A064519CE0CCE004607B6 /* EventFeedTableViewController.swift in Sources */,
 				1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */,
@@ -428,6 +433,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -437,6 +444,7 @@
 				INFOPLIST_FILE = DanceDeets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "DanceDeets/DanceDeets-Bridging-Header.h";
 			};
@@ -446,6 +454,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -455,6 +465,7 @@
 				INFOPLIST_FILE = DanceDeets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "DanceDeets/DanceDeets-Bridging-Header.h";
 			};
