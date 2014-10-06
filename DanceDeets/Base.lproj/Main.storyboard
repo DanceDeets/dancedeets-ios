@@ -137,7 +137,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Dance Deets" id="dXt-Rj-F2R">
-                        <barButtonItem key="leftBarButtonItem" title="Profile" id="WwV-Vg-JaI"/>
                         <barButtonItem key="rightBarButtonItem" image="settings-50" style="plain" id="JW3-4w-9E6">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -147,13 +146,14 @@
                     </navigationItem>
                     <connections>
                         <segue destination="OvV-49-RBz" kind="show" identifier="showEventSegue" id="rt7-WN-LaH"/>
+                        <segue destination="SiB-h9-pTV" kind="show" identifier="showSettingsSegue" id="I18-oB-Y5z"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLX-XI-ZjE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="984" y="236"/>
         </scene>
-        <!--Settings23-->
+        <!--Settings-->
         <scene sceneID="Fy3-mO-n3C">
             <objects>
                 <tableViewController id="SiB-h9-pTV" customClass="SettingsTableViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
@@ -162,20 +162,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="locationToggleCell" id="f4C-UR-Q03">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="basicSwitchTableCell" rowHeight="50" id="f4C-UR-Q03" customClass="BasicSwitchTableCell" customModule="DanceDeets" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f4C-UR-Q03" id="wUD-IJ-ywe">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use My Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNP-0s-Pjq">
-                                            <rect key="frame" x="15" y="11" width="129.5" height="20.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNP-0s-Pjq">
+                                            <rect key="frame" x="15" y="14" width="79" height="20.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="Ti5-rS-yRn"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Ti5-rS-yRn"/>
+                                                </mask>
+                                            </variation>
                                         </label>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XmR-6o-Y9i">
-                                            <rect key="frame" x="536" y="6" width="51" height="31"/>
+                                            <rect key="frame" x="536" y="9" width="51" height="31"/>
+                                            <connections>
+                                                <action selector="locationToggleChanged:" destination="f4C-UR-Q03" eventType="valueChanged" id="6RR-9A-QjI"/>
+                                            </connections>
                                         </switch>
                                     </subviews>
                                     <constraints>
@@ -185,6 +196,32 @@
                                         <constraint firstAttribute="trailing" secondItem="XmR-6o-Y9i" secondAttribute="trailing" constant="15" id="ucA-jT-HvA"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="locationToggle" destination="XmR-6o-Y9i" id="uM5-qn-5PK"/>
+                                    <outlet property="titleLabel" destination="MNP-0s-Pjq" id="FpZ-oz-Cwo"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="customCityCell" id="ZIU-xm-jDD" customClass="CustomCityTableViewCell" customModule="DanceDeets" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZIU-xm-jDD" id="OC0-Ui-Bv4">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Your City" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nKG-1k-3h2">
+                                            <rect key="frame" x="15" y="11.5" width="570" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="nKG-1k-3h2" firstAttribute="leading" secondItem="OC0-Ui-Bv4" secondAttribute="leading" constant="15" id="DcY-Rt-elj"/>
+                                        <constraint firstAttribute="trailing" secondItem="nKG-1k-3h2" secondAttribute="trailing" constant="15" id="UwL-DI-4cv"/>
+                                        <constraint firstAttribute="centerY" secondItem="nKG-1k-3h2" secondAttribute="centerY" id="t00-XV-Tsb"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="inputTextField" destination="nKG-1k-3h2" id="fIs-Pg-jEc"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -194,13 +231,11 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Settings23" prompt="Test" id="gI3-Xu-L5U">
-                        <barButtonItem key="backBarButtonItem" title="Test" id="8o2-tg-23p"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Settings" id="gI3-Xu-L5U"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iJD-uf-RDg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2512" y="-518"/>
+            <point key="canvasLocation" x="1925" y="-512"/>
         </scene>
         <!--Event-->
         <scene sceneID="0Eg-yT-69O">

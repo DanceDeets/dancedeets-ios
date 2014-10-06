@@ -22,13 +22,14 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("backButtonTapped"))
-        
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName:UIFont(name:"BebasNeueBold",size: 24)]
+        // Navigation
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"Back", style: UIBarButtonItemStyle.Plain, target: nil, action:nil)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName:FontFactory.navigationTitleFont()]
 
+        // Style table view
         styleTableViewController()
         
+        // Refresh control
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.darkGrayColor()
         self.refreshControl?.tintColor = UIColor.whiteColor()

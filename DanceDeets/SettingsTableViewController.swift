@@ -8,24 +8,32 @@
 
 import UIKit
 
-class SettingsTableViewController: UITableViewController {
+class SettingsTableViewController: UITableViewController, UITextFieldDelegate, BasicSwitchTableCellDelegate {
+    
+    var showingCustomCityRow:Bool = false
+    var locationToggleCell:BasicSwitchTableCell?
+    var customCityCell:CustomCityTableViewCell?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-
-    // MARK: - Table view data source
+    // MARK: - UITableViewDataSource / UITableViewDelegate
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if(section == 0){
+            if(showingCustomCityRow){
+                return 2
+            }else{
+                return 1
+            }
+        }else{
+            return 0
+        }
     }
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
@@ -33,19 +41,48 @@ class SettingsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if (section == 0){
-            return "LOCATION"
+            return "SEARCH OPTIONS"
         }else{
             return ""
         }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UITableViewCell = UITableViewCell()
-        if(indexPath.row == 0){
-            cell = tableView.dequeueReusableCellWithIdentifier("locationToggleCell", forIndexPath: indexPath) as UITableViewCell
+        var cell:UITableViewCell? = UITableViewCell()
+        if(indexPath.section == 0){
+            if(indexPath.row == 0){
+                locationToggleCell = tableView.dequeueReusableCellWithIdentifier("basicSwitchTableCell", forIndexPath: indexPath) as? BasicSwitchTableCell
+                locationToggleCell?.delegate = self
+                locationToggleCell?.titleLabel.text = "Use My Location"
+                cell = locationToggleCell
+            }else if(indexPath.row == 1){
+                customCityCell = tableView.dequeueReusableCellWithIdentifier("customCityCell", forIndexPath:indexPath) as? CustomCityTableViewCell
+                customCityCell?.inputTextField.delegate = self
+                cell = customCityCell
+            }
         }
-        return cell
+        return cell!
+    }
+    
+    func switchToggled(sender: UISwitch!) {
+        if(sender.on){
+            showingCustomCityRow = false
+            let newIndexPath = NSIndexPath(forRow: 1, inSection: 0)
+            tableView.deleteRowsAtIndexPaths([newIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            locationToggleCell?.titleLabel.textColor = UIColor.blackColor()
+        }else{
+            showingCustomCityRow = true
+            let newIndexPath = NSIndexPath(forRow: 1, inSection: 0)
+            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            locationToggleCell?.titleLabel.textColor = UIColor.grayColor()
+            customCityCell?.inputTextField.becomeFirstResponder()
+        }
     }
   
+    // MARK: UITextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 
 }

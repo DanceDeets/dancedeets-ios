@@ -27,6 +27,9 @@
 		1D8A064319CE0CB8004607B6 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */; };
 		1D8A064519CE0CCE004607B6 /* EventFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A064419CE0CCE004607B6 /* EventFeedTableViewController.swift */; };
 		1DB901C519E0856E0018B434 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */; };
+		1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C719E0999E0018B434 /* FontFactory.swift */; };
+		1DB901CA19E09C5B0018B434 /* BasicSwitchToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */; };
+		1DB901CC19E1B3580018B434 /* CustomCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +67,9 @@
 		1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		1D8A064419CE0CCE004607B6 /* EventFeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFeedTableViewController.swift; sourceTree = "<group>"; };
 		1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		1DB901C719E0999E0018B434 /* FontFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontFactory.swift; sourceTree = "<group>"; };
+		1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSwitchToggleCell.swift; sourceTree = "<group>"; };
+		1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCityTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,9 +136,10 @@
 		1D8856B919CDE510005FFDB2 /* DanceDeets */ = {
 			isa = PBXGroup;
 			children = (
+				1DB901C619E099810018B434 /* Utilities */,
 				1D43347F19D75861001A5381 /* Custom Views */,
 				1D43347219D7551D001A5381 /* Fonts */,
-				1D8A064119CE0CA6004607B6 /* Views */,
+				1D8A064119CE0CA6004607B6 /* Table View Cells */,
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,
 				1D8A063D19CDE5D4004607B6 /* Models */,
 				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
@@ -189,12 +196,22 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		1D8A064119CE0CA6004607B6 /* Views */ = {
+		1D8A064119CE0CA6004607B6 /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
 				1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */,
+				1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */,
+				1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */,
 			);
-			name = Views;
+			name = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		1DB901C619E099810018B434 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				1DB901C719E0999E0018B434 /* FontFactory.swift */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,12 +320,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DB901CA19E09C5B0018B434 /* BasicSwitchToggleCell.swift in Sources */,
 				1D8A064319CE0CB8004607B6 /* EventTableViewCell.swift in Sources */,
 				1D43348119D75873001A5381 /* MainAppLabel.swift in Sources */,
+				1DB901CC19E1B3580018B434 /* CustomCityTableViewCell.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1D8A064019CDE605004607B6 /* Event.swift in Sources */,
 				1DB901C519E0856E0018B434 /* SettingsTableViewController.swift in Sources */,
 				1D0D92A319D52DE8003E7C14 /* EventDetailTableViewController.swift in Sources */,
+				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,
 				1D8A064519CE0CCE004607B6 /* EventFeedTableViewController.swift in Sources */,
 				1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */,
 			);
