@@ -10,26 +10,32 @@ import UIKit
 import CoreLocation
 
 class EventFeedTableViewController: UITableViewController,CLLocationManagerDelegate {
+    
+    enum EventFeedSearchMode{
+        case CurrentLocation
+        case CustomCity
+    }
+    
     var events:[Event] = []
     var currentCity:String? = String()
     let estimatedEventRowHeight:CGFloat = 400
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
-    
-    // event identifier -> image
     var imageCache = [String : UIImage]()
 
+    
+    // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Navigation
+        // navigation styling
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"Back", style: UIBarButtonItemStyle.Plain, target: nil, action:nil)
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName:FontFactory.navigationTitleFont()]
 
-        // Style table view
+        // table view styling
         styleTableViewController()
         
-        // Refresh control
+        // refresh control
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.darkGrayColor()
         self.refreshControl?.tintColor = UIColor.whiteColor()
@@ -43,26 +49,17 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         locationManager.startUpdatingLocation()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // always go back to top when view re-appears
+        self.tableView.setContentOffset(CGPointMake(0, 0), animated: false)
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         checkFaceBookToken()
     }
-    
-    func checkFaceBookToken(){
-        let currentState:FBSessionState = FBSession.activeSession().state
-        
-        // don't do anything if session is open
-        if( currentState == FBSessionState.Open ||
-            currentState == FBSessionState.OpenTokenExtended){
-                return;
-        }else if( currentState == FBSessionState.CreatedTokenLoaded){
-            FBSession.openActiveSessionWithAllowLoginUI(false)
-        }else{
-            let fbLogin:FaceBookLoginViewController? = storyboard?.instantiateViewControllerWithIdentifier("faceBookLoginViewController") as? FaceBookLoginViewController
-            presentViewController(fbLogin!, animated: true, completion: nil)
-        }
-    }
-    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showEventSegue"{
@@ -74,11 +71,6 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    func refreshEventsForCurrentLocation()
-    {
-        locationManager.startUpdatingLocation()
     }
     
     // MARK: - CLLocationManagerDelegate
@@ -167,6 +159,27 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     }
     
     // MARK: - Private
+    func refreshEventsForCurrentLocation()
+    {
+        locationManager.startUpdatingLocation()
+    }
+    
+    func checkFaceBookToken(){
+        let currentState:FBSessionState = FBSession.activeSession().state
+        
+        // don't do anything if session is open
+        if( currentState == FBSessionState.Open ||
+            currentState == FBSessionState.OpenTokenExtended){
+                return;
+        }else if( currentState == FBSessionState.CreatedTokenLoaded){
+            FBSession.openActiveSessionWithAllowLoginUI(false)
+        }else{
+            let fbLogin:FaceBookLoginViewController? = storyboard?.instantiateViewControllerWithIdentifier("faceBookLoginViewController") as? FaceBookLoginViewController
+            presentViewController(fbLogin!, animated: true, completion: nil)
+        }
+    }
+    
+    
     func refreshEventsForCity(){
         
         self.title = "Loading..."
@@ -211,6 +224,7 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         tableView.rowHeight = UITableViewAutomaticDimension
         navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        tableView.tableHeaderView = UIView(frame:CGRectMake(0, 0, self.tableView.frame.size.width, CGFloat.min))
     }
 
 

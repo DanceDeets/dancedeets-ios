@@ -74,7 +74,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
             showingCustomCityRow = true
             let newIndexPath = NSIndexPath(forRow: 1, inSection: 0)
             tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-            locationToggleCell?.titleLabel.textColor = UIColor.grayColor()
+            locationToggleCell?.titleLabel.textColor = UIColor.lightGrayColor()
             customCityCell?.inputTextField.becomeFirstResponder()
         }
     }

@@ -20,6 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBLoginView.self
         FBProfilePictureView.self
         
+        // check search mode setting from user defaults
+        let search:Bool = NSUserDefaults.standardUserDefaults().boolForKey("searchMode")
+      //  NSUserDefaults.standardUserDefaults().setObject(myValue, forKey:"searchMode")
+        println(search)
+        
         return true
     }
     

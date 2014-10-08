@@ -137,11 +137,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Dance Deets" id="dXt-Rj-F2R">
-                        <barButtonItem key="rightBarButtonItem" image="settings-50" style="plain" id="JW3-4w-9E6">
+                        <barButtonItem key="leftBarButtonItem" image="settings-50" style="plain" id="JW3-4w-9E6">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="settingsTapped:" destination="3nP-52-twq" id="fca-ww-UtH"/>
                             </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="search-50" id="KN1-ux-3px">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -151,7 +154,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLX-XI-ZjE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="984" y="236"/>
+            <point key="canvasLocation" x="1070" y="231"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Fy3-mO-n3C">
@@ -415,7 +418,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kaq-F5-sLw" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tNB-wr-A0z">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="tNB-wr-A0z">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -500,6 +503,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="search-50" width="25" height="25"/>
         <image name="settings-50" width="25" height="25"/>
     </resources>
 </document>
