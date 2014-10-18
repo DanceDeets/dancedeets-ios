@@ -16,27 +16,23 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var eventTimeLabel: UILabel!
     @IBOutlet weak var eventPhoto: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        mainView.layer.cornerRadius = 4;
+        mainView.layer.masksToBounds = true
+        venueLabel.font = UIFont(name:"BebasNeueBold",size: 22)
+        eventTitleLabel.font = UIFont(name: "Montserrat-Bold", size: 14)
+        descriptionLabel.font = UIFont(name: "Montserrat-Regular", size: 12)
+        eventTimeLabel.font = UIFont(name:"Montserrat-Bold", size:14)
     }
     
-    // Update the cell based on the event
+    // Style the cell based on the event
     func updateForEvent(event:Event){
-        
-        mainView.layer.cornerRadius = 4;
-        mainView.layer.masksToBounds = true;
         eventTitleLabel.text = event.venue
         descriptionLabel.text = event.shortDescription
         venueLabel.text = event.title
         eventTimeLabel.text = event.displayTime
-        
     }
 
 }

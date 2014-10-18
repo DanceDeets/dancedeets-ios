@@ -39,6 +39,8 @@
 	<string>Let Dance Deets find events near you</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Montserrat-Bold.ttf</string>
+		<string>Montserrat-Regular.ttf</string>
 		<string>BebasNeueThin.otf</string>
 		<string>BebasNeueBold.otf</string>
 		<string>BebasNeueBook.otf</string>

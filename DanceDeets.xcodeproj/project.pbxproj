@@ -26,6 +26,8 @@
 		1D8A064019CDE605004607B6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A063F19CDE605004607B6 /* Event.swift */; };
 		1D8A064319CE0CB8004607B6 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */; };
 		1D8A064519CE0CCE004607B6 /* EventFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A064419CE0CCE004607B6 /* EventFeedTableViewController.swift */; };
+		1DA51AE119F2F01300079DF1 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DA51AE019F2F01300079DF1 /* Montserrat-Regular.ttf */; };
+		1DA51AE319F2F3DF00079DF1 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DA51AE219F2F3DF00079DF1 /* Montserrat-Bold.ttf */; };
 		1DB901C519E0856E0018B434 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */; };
 		1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C719E0999E0018B434 /* FontFactory.swift */; };
 		1DB901CA19E09C5B0018B434 /* BasicSwitchToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */; };
@@ -66,6 +68,8 @@
 		1D8A063F19CDE605004607B6 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		1D8A064419CE0CCE004607B6 /* EventFeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFeedTableViewController.swift; sourceTree = "<group>"; };
+		1DA51AE019F2F01300079DF1 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		1DA51AE219F2F3DF00079DF1 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		1DB901C719E0999E0018B434 /* FontFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontFactory.swift; sourceTree = "<group>"; };
 		1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSwitchToggleCell.swift; sourceTree = "<group>"; };
@@ -96,6 +100,8 @@
 		1D43347219D7551D001A5381 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				1DA51AE219F2F3DF00079DF1 /* Montserrat-Bold.ttf */,
+				1DA51AE019F2F01300079DF1 /* Montserrat-Regular.ttf */,
 				1D43347319D7552B001A5381 /* BebasNeueRegular.otf */,
 				1D43347419D7552B001A5381 /* BebasNeueLight.otf */,
 				1D43347519D7552B001A5381 /* BebasNeueBook.otf */,
@@ -295,6 +301,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DA51AE319F2F3DF00079DF1 /* Montserrat-Bold.ttf in Resources */,
+				1DA51AE119F2F01300079DF1 /* Montserrat-Regular.ttf in Resources */,
 				1D43347A19D7552B001A5381 /* BebasNeueBook.otf in Resources */,
 				1D43347819D7552B001A5381 /* BebasNeueRegular.otf in Resources */,
 				1D43347919D7552B001A5381 /* BebasNeueLight.otf in Resources */,
