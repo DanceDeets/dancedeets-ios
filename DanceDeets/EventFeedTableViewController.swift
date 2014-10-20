@@ -9,12 +9,12 @@
 import UIKit
 import CoreLocation
 
+enum EventFeedSearchMode{
+    case CurrentLocation
+    case CustomCity
+}
+
 class EventFeedTableViewController: UITableViewController,CLLocationManagerDelegate {
-    
-    enum EventFeedSearchMode{
-        case CurrentLocation
-        case CustomCity
-    }
     
     var events:[Event] = []
     var currentCity:String? = String()
@@ -22,8 +22,8 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
     var imageCache = [String : UIImage]()
+    var searchMode:EventFeedSearchMode = EventFeedSearchMode.CurrentLocation  
 
-    
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()

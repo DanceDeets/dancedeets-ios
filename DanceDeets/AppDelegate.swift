@@ -13,6 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var facebookGraphUser:FBGraphUser?
+    
+    func eventFeedTableViewController()->EventFeedTableViewController?
+    {
+        let rootVC:UINavigationController? =  window?.rootViewController as? UINavigationController
+        return rootVC?.topViewController as? EventFeedTableViewController
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -20,10 +26,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBLoginView.self
         FBProfilePictureView.self
         
-        // check search mode setting from user defaults
-        let search:Bool = NSUserDefaults.standardUserDefaults().boolForKey("searchMode")
-      //  NSUserDefaults.standardUserDefaults().setObject(myValue, forKey:"searchMode")
-        println(search)
+        var eventFeedVC:EventFeedTableViewController? = eventFeedTableViewController()
+        
+        // if customCity is set in user defaults, user set a default city to search for events
+        let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
+        if(search != nil){
+            println("Custom search city is set as: " + search!)
+            eventFeedVC?.searchMode = EventFeedSearchMode.CustomCity
+            eventFeedVC?.currentCity = search
+        }else{
+            println("Custom search city not set, using location manager")
+            eventFeedVC?.searchMode = EventFeedSearchMode.CurrentLocation
+            eventFeedVC?.currentCity = ""
+        }
         
         return true
     }

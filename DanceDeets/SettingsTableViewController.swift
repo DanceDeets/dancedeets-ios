@@ -31,7 +31,8 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
             }else{
                 return 1
             }
-        }else{
+        }
+        else{
             return 0
         }
     }
@@ -81,8 +82,32 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
   
     // MARK: UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let eventTableVC:EventFeedTableViewController? = appDelegate.eventFeedTableViewController()
+        if(countElements(textField.text) == 0){
+            locationToggleCell?.locationToggle.setOn(true, animated: true)
+            let newIndexPath = NSIndexPath(forRow: 1, inSection: 0)
+            showingCustomCityRow = false
+            tableView.deleteRowsAtIndexPaths([newIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            locationToggleCell?.titleLabel.textColor = UIColor.blackColor()
+            
+            // if customCity is set in user defaults, user set a default city to search for events
+            NSUserDefaults.standardUserDefaults().setNilValueForKey("customCity")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            eventTableVC?.searchMode =  EventFeedSearchMode.CurrentLocation
+        }else{
+            let customCity:String = textField.text
+            
+            NSUserDefaults.standardUserDefaults().setValue(customCity, forKey: "customCity")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            eventTableVC?.searchMode =  EventFeedSearchMode.CustomCity
+            eventTableVC?.currentCity = customCity
+        }
+        
         textField.resignFirstResponder()
         return true
     }
+    
+    
 
 }

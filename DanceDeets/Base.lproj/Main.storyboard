@@ -165,39 +165,38 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="basicSwitchTableCell" rowHeight="50" id="f4C-UR-Q03" customClass="BasicSwitchTableCell" customModule="DanceDeets" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="basicSwitchTableCell" id="f4C-UR-Q03" customClass="BasicSwitchTableCell" customModule="DanceDeets" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f4C-UR-Q03" id="wUD-IJ-ywe">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNP-0s-Pjq">
-                                            <rect key="frame" x="15" y="14" width="79" height="20.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="Ti5-rS-yRn"/>
-                                            </constraints>
+                                            <rect key="frame" x="15" y="11.5" width="79" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="Ti5-rS-yRn"/>
-                                                </mask>
-                                            </variation>
                                         </label>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XmR-6o-Y9i">
-                                            <rect key="frame" x="536" y="9" width="51" height="31"/>
+                                            <rect key="frame" x="536" y="6.5" width="51" height="31"/>
                                             <connections>
                                                 <action selector="locationToggleChanged:" destination="f4C-UR-Q03" eventType="valueChanged" id="6RR-9A-QjI"/>
                                             </connections>
                                         </switch>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="centerY" secondItem="MNP-0s-Pjq" secondAttribute="centerY" id="902-mA-h62"/>
                                         <constraint firstItem="MNP-0s-Pjq" firstAttribute="leading" secondItem="wUD-IJ-ywe" secondAttribute="leading" constant="15" id="QL3-Yy-BuV"/>
                                         <constraint firstAttribute="centerY" secondItem="XmR-6o-Y9i" secondAttribute="centerY" id="aMf-3G-3rb"/>
+                                        <constraint firstAttribute="centerY" secondItem="MNP-0s-Pjq" secondAttribute="centerY" id="f9n-Vb-Zf2"/>
                                         <constraint firstAttribute="trailing" secondItem="XmR-6o-Y9i" secondAttribute="trailing" constant="15" id="ucA-jT-HvA"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="MNP-0s-Pjq" secondAttribute="bottom" constant="3.5" id="wxg-Q3-Wr6"/>
+                                        <constraint firstItem="MNP-0s-Pjq" firstAttribute="top" secondItem="wUD-IJ-ywe" secondAttribute="topMargin" constant="3.5" id="y4x-eL-2Cf"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="f9n-Vb-Zf2"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="locationToggle" destination="XmR-6o-Y9i" id="uM5-qn-5PK"/>
@@ -213,14 +212,21 @@
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Your City" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nKG-1k-3h2">
                                             <rect key="frame" x="15" y="11.5" width="570" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                                         </textField>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="nKG-1k-3h2" firstAttribute="leading" secondItem="OC0-Ui-Bv4" secondAttribute="leading" constant="15" id="DcY-Rt-elj"/>
+                                        <constraint firstItem="nKG-1k-3h2" firstAttribute="top" secondItem="OC0-Ui-Bv4" secondAttribute="topMargin" constant="3.5" id="Q6J-aC-3wD"/>
                                         <constraint firstAttribute="trailing" secondItem="nKG-1k-3h2" secondAttribute="trailing" constant="15" id="UwL-DI-4cv"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="nKG-1k-3h2" secondAttribute="bottom" constant="3" id="mpL-1k-7sT"/>
                                         <constraint firstAttribute="centerY" secondItem="nKG-1k-3h2" secondAttribute="centerY" id="t00-XV-Tsb"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="t00-XV-Tsb"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="inputTextField" destination="nKG-1k-3h2" id="fIs-Pg-jEc"/>

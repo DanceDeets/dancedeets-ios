@@ -27,13 +27,14 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate {
         self.subTitleLabel.font = subtitleFont
     }
 
-    // MARK: FBLogingViewDelegate
+    // MARK: FBLoginViewDelegate
     
     func loginViewShowingLoggedInUser(loginView : FBLoginView!) {
        println("User Logged In")
     }
     
     func loginViewFetchedUserInfo(loginView : FBLoginView!, user: FBGraphUser) {
+        println("Fethced facebook user info")
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
          appDelegate.facebookGraphUser = user
         
