@@ -13,10 +13,37 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
     var showingCustomCityRow:Bool = false
     var locationToggleCell:BasicSwitchTableCell?
     var customCityCell:CustomCityTableViewCell?
+    var searchMode:EventFeedSearchMode?
+    var appDelegate:AppDelegate?
+    
+    var toggleIndexPath:NSIndexPath{
+        return NSIndexPath(forRow: 0, inSection: 0)
+    }
+    var customCityIndexPath:NSIndexPath{
+        return NSIndexPath(forRow: 1, inSection: 0)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        
+        let eventFeedTVC = appDelegate?.eventFeedTableViewController();
+        searchMode = eventFeedTVC!.searchMode
+        if(searchMode == EventFeedSearchMode.CurrentLocation){
+            showingCustomCityRow = false
+        }else{
+            showingCustomCityRow = true
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     // MARK: - UITableViewDataSource / UITableViewDelegate
@@ -55,10 +82,24 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
                 locationToggleCell = tableView.dequeueReusableCellWithIdentifier("basicSwitchTableCell", forIndexPath: indexPath) as? BasicSwitchTableCell
                 locationToggleCell?.delegate = self
                 locationToggleCell?.titleLabel.text = "Use My Location"
+                
+                if(!showingCustomCityRow){
+                    locationToggleCell?.titleLabel.textColor = UIColor.blackColor()
+                    locationToggleCell?.locationToggle.setOn(true, animated: true)
+                }else{
+                    locationToggleCell?.titleLabel.textColor = UIColor.lightGrayColor()
+                    locationToggleCell?.locationToggle.setOn(false, animated: true)
+                }
+                
                 cell = locationToggleCell
             }else if(indexPath.row == 1){
                 customCityCell = tableView.dequeueReusableCellWithIdentifier("customCityCell", forIndexPath:indexPath) as? CustomCityTableViewCell
                 customCityCell?.inputTextField.delegate = self
+                
+                let customCityString:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
+                
+                customCityCell?.inputTextField.text = customCityString
+                
                 cell = customCityCell
             }
         }
@@ -66,48 +107,54 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
     }
     
     func switchToggled(sender: UISwitch!) {
+        let eventTableVC:EventFeedTableViewController? = appDelegate?.eventFeedTableViewController()
         if(sender.on){
+            // Toggled to use current location
             showingCustomCityRow = false
-            let newIndexPath = NSIndexPath(forRow: 1, inSection: 0)
-            tableView.deleteRowsAtIndexPaths([newIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-            locationToggleCell?.titleLabel.textColor = UIColor.blackColor()
+            tableView.beginUpdates()
+            tableView.reloadRowsAtIndexPaths([toggleIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+            tableView.deleteRowsAtIndexPaths([customCityIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+            tableView.endUpdates()
+            
+            NSUserDefaults.standardUserDefaults().setValue("", forKey: "customCity")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            eventTableVC?.searchMode =  EventFeedSearchMode.CurrentLocation
         }else{
+            // Toggled to use custom city location
             showingCustomCityRow = true
-            let newIndexPath = NSIndexPath(forRow: 1, inSection: 0)
-            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-            locationToggleCell?.titleLabel.textColor = UIColor.lightGrayColor()
+            tableView.beginUpdates()
+            tableView.reloadRowsAtIndexPaths([toggleIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+            tableView.insertRowsAtIndexPaths([customCityIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+            tableView.endUpdates()
             customCityCell?.inputTextField.becomeFirstResponder()
         }
     }
   
     // MARK: UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let eventTableVC:EventFeedTableViewController? = appDelegate.eventFeedTableViewController()
         if(countElements(textField.text) == 0){
+            // Closed keyboard with empty text field, assume using current location
             locationToggleCell?.locationToggle.setOn(true, animated: true)
-            let newIndexPath = NSIndexPath(forRow: 1, inSection: 0)
-            showingCustomCityRow = false
-            tableView.deleteRowsAtIndexPaths([newIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-            locationToggleCell?.titleLabel.textColor = UIColor.blackColor()
-            
-            // if customCity is set in user defaults, user set a default city to search for events
-            NSUserDefaults.standardUserDefaults().setNilValueForKey("customCity")
-            NSUserDefaults.standardUserDefaults().synchronize()
-            eventTableVC?.searchMode =  EventFeedSearchMode.CurrentLocation
+            switchToggled(locationToggleCell?.locationToggle)
         }else{
+            // Closed keyboard with some city
             let customCity:String = textField.text
             
+            // Sync
             NSUserDefaults.standardUserDefaults().setValue(customCity, forKey: "customCity")
             NSUserDefaults.standardUserDefaults().synchronize()
-            eventTableVC?.searchMode =  EventFeedSearchMode.CustomCity
-            eventTableVC?.currentCity = customCity
+            
+            // Confirm
+            let title = "Searching around " + customCity + " now!"
+            let confirmAlert:UIAlertView = UIAlertView(title:title, message: nil, delegate: nil, cancelButtonTitle: "OK")
+            confirmAlert.show()
         }
-        
         textField.resignFirstResponder()
         return true
     }
-    
     
 
 }

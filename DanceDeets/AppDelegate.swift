@@ -17,7 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func eventFeedTableViewController()->EventFeedTableViewController?
     {
         let rootVC:UINavigationController? =  window?.rootViewController as? UINavigationController
-        return rootVC?.topViewController as? EventFeedTableViewController
+        if(rootVC?.viewControllers.count > 0){
+            return rootVC?.viewControllers[0] as? EventFeedTableViewController
+        }else{
+            return nil
+        }
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -30,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // if customCity is set in user defaults, user set a default city to search for events
         let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
-        if(search != nil){
+        if(search != nil && countElements(search!) > 0){
             println("Custom search city is set as: " + search!)
             eventFeedVC?.searchMode = EventFeedSearchMode.CustomCity
             eventFeedVC?.currentCity = search
