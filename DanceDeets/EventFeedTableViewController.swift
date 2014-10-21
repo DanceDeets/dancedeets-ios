@@ -39,21 +39,36 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.darkGrayColor()
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "refreshEventsForCurrentLocation", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl?.addTarget(self, action: "refreshControlHandler", forControlEvents: UIControlEvents.ValueChanged)
         var backGroundViewZ = tableView.backgroundView?.layer.zPosition
         self.refreshControl?.layer.zPosition = backGroundViewZ! + 1
         
         // location stuff
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self;
-        locationManager.startUpdatingLocation()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        println("EventFeedTableViewController -> viewWillAppear")
+        
         // always go back to top when view re-appears
         self.tableView.setContentOffset(CGPointMake(0, 0), animated: false)
+        
+        // if customCity is set in user defaults, user set a default city to search for events
+        let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
+        if(search != nil && countElements(search!) > 0){
+            println("Custom search city is set as: " + search!)
+            searchMode = EventFeedSearchMode.CustomCity
+            currentCity = search
+            refreshEventsForCurrentCity()
+        }else{
+            println("Custom search city not set, using location manager")
+            searchMode = EventFeedSearchMode.CurrentLocation
+            currentCity = ""
+            locationManager.startUpdatingLocation()
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -66,7 +81,6 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
             var destination:EventDetailTableViewController? = segue.destinationViewController as?EventDetailTableViewController
             destination?.event = sender as Event?
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,16 +96,16 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
             if(placemarks.count > 0){
                 let placemark:CLPlacemark = placemarks.first as CLPlacemark
                 self.currentCity = placemark.locality
-                self.refreshEventsForCity()
+                self.refreshEventsForCurrentCity()
             }else{
-                let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get your location. Please try again in a moment.", delegate: nil, cancelButtonTitle: "OK")
+                let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
                 locationFailure.show()
             }
         })
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get your location. Please try again in a moment.", delegate: nil, cancelButtonTitle: "OK")
+        let locationFailure:UIAlertView = UIAlertView(title: "Sorry! Couldn't get your location", message: "Set your city in the settings for now", delegate: nil, cancelButtonTitle: "OK")
         locationFailure.show()
     }
     
@@ -163,9 +177,13 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     }
     
     // MARK: - Private
-    func refreshEventsForCurrentLocation()
+    func refreshControlHandler()
     {
-        locationManager.startUpdatingLocation()
+        if(searchMode == EventFeedSearchMode.CurrentLocation ){
+            locationManager.startUpdatingLocation()
+        }else{
+            refreshEventsForCurrentCity()
+        }
     }
     
     func checkFaceBookToken(){
@@ -183,9 +201,9 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         }
     }
     
-    
-    func refreshEventsForCity(){
+    func refreshEventsForCurrentCity(){
         
+        println("Refreshing events for: " + currentCity!)
         self.title = "Loading..."
         Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
