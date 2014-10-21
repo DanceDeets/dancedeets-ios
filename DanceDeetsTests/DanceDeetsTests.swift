@@ -40,7 +40,7 @@ class DanceDeetsTests: XCTestCase {
         let expectation = expectationWithDescription("GET \(URL)")
         
         let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithURL(NSURL(string: URL), completionHandler: {(data, response, error) in
+        let task = session.dataTaskWithURL(NSURL(string: URL)!, completionHandler: {(data, response, error) in
             expectation.fulfill()
             
             XCTAssertNotNil(data)

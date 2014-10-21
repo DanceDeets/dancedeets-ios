@@ -12,7 +12,7 @@ class MainAppLabel: UILabel {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        let titleFont:UIFont = UIFont(name: "BebasNeueBold", size: 48)
+        let titleFont:UIFont = UIFont(name: "BebasNeueBold", size: 48)!
         self.font = titleFont
         self.textColor = UIColor.whiteColor()
     }

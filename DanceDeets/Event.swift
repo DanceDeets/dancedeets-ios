@@ -25,6 +25,7 @@ public class Event: NSObject {
     
     
     init(dictionary:NSDictionary){
+        super.init()
         venue = dictionary["city"] as? String
         title = dictionary["title"] as? String
         identifier = dictionary["id"] as? String
@@ -80,7 +81,7 @@ public class Event: NSObject {
         let url = NSURL(string:urlString)
         
         var session = NSURLSession.sharedSession()
-        var task:NSURLSessionTask = session.dataTaskWithURL(url, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
+        var task:NSURLSessionTask = session.dataTaskWithURL(url!, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
             if(error != nil){
                 completion([], error)
           
