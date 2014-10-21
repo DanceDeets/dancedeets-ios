@@ -237,7 +237,6 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
                 
             })
         })
- 
     }
     
     func styleTableViewController(){
@@ -246,8 +245,5 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         tableView.rowHeight = UITableViewAutomaticDimension
         navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        tableView.tableHeaderView = UIView(frame:CGRectMake(0, 0, self.tableView.frame.size.width, CGFloat.min))
     }
-
-
 }

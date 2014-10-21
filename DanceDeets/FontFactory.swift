@@ -12,6 +12,6 @@ import UIKit
 class FontFactory {
     
     class func navigationTitleFont()->UIFont{
-        return UIFont(name:"BebasNeueBold",size: 24)!
+        return UIFont(name:"BebasNeueBold",size: 26)!
     }
 }
