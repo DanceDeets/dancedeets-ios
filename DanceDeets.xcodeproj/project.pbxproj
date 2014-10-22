@@ -74,6 +74,7 @@
 		1DB901C719E0999E0018B434 /* FontFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontFactory.swift; sourceTree = "<group>"; };
 		1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSwitchToggleCell.swift; sourceTree = "<group>"; };
 		1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCityTableViewCell.swift; sourceTree = "<group>"; };
+		1DFB3B4519F76DBE00CF4A72 /* Testing.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Testing.playground; path = ../../Desktop/Testing.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +123,7 @@
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
+				1DFB3B4519F76DBE00CF4A72 /* Testing.playground */,
 				1D43346919D738F0001A5381 /* FacebookSDK.framework */,
 				1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */,
 				1D8856B919CDE510005FFDB2 /* DanceDeets */,

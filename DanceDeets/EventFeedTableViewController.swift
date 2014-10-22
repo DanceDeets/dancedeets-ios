@@ -14,9 +14,10 @@ enum EventFeedSearchMode{
     case CustomCity
 }
 
-class EventFeedTableViewController: UITableViewController,CLLocationManagerDelegate {
+class EventFeedTableViewController: UITableViewController,CLLocationManagerDelegate,UISearchBarDelegate,UISearchDisplayDelegate {
     
     var events:[Event] = []
+    var filteredEvents:[Event] = []
     var currentCity:String? = String()
     let estimatedEventRowHeight:CGFloat = 400
     let locationManager:CLLocationManager  = CLLocationManager()
@@ -24,6 +25,23 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     var imageCache = [String : UIImage]()
     var searchMode:EventFeedSearchMode = EventFeedSearchMode.CurrentLocation  
 
+    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
+        self.filterContentForSearchText(searchString)
+        return true
+    }
+    
+    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchScope searchOption: Int) -> Bool {
+        self.filterContentForSearchText(self.searchDisplayController!.searchBar.text)
+        return true
+    }
+    
+    func filterContentForSearchText(searchText: String) {
+        // Filter the array using the filter method
+        self.filteredEvents = self.events.filter({( event: Event) -> Bool in
+            return event.title?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
+        })
+    }
+    
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,25 +54,31 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         styleTableViewController()
         
         // refresh control
+        /*
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.darkGrayColor()
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: "refreshControlHandler", forControlEvents: UIControlEvents.ValueChanged)
         var backGroundViewZ = tableView.backgroundView?.layer.zPosition
         self.refreshControl?.layer.zPosition = backGroundViewZ! + 1
+*/
         
         // location stuff
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self;
+        
+       // self.tableView.tableHeaderView = self.searchDisplayController?.searchBar
+        self.searchDisplayController?.searchResultsTableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
+        println(self.searchDisplayController?.searchBar)
+        
+        //self.tableView.tableHeaderView = nil
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        checkFaceBookToken()
         println("EventFeedTableViewController -> viewWillAppear")
-        
-        // always go back to top when view re-appears
-        self.tableView.setContentOffset(CGPointMake(0, 0), animated: false)
         
         // if customCity is set in user defaults, user set a default city to search for events
         let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
@@ -73,7 +97,6 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        checkFaceBookToken()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -114,6 +137,7 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         return 1
     }
     
+    /*
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat.min
     }
@@ -121,9 +145,14 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat.min
     }
+*/
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
+        if tableView == self.searchDisplayController!.searchResultsTableView{
+            return self.filteredEvents.count
+        }else{
+            return events.count
+        }
     }
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
@@ -135,39 +164,46 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("eventTableViewCell", forIndexPath: indexPath) as EventTableViewCell
-        let event = events[indexPath.row]
-        cell.updateForEvent(event)
-        
-        if event.identifier != nil && event.eventImageUrl != nil{
-            if let image = imageCache[event.identifier!] {
-                cell.eventPhoto?.image = image
-            }else{
-                cell.eventPhoto?.image = nil
-                var imgUrl = event.eventImageUrl!
-                
-                // Download an NSData representation of the image at the URL
-                let request: NSURLRequest = NSURLRequest(URL: imgUrl)
-                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                    if error == nil {
-                        let newImage = UIImage(data: data)
-                        
-                        // Store the image in to our cache
-                        self.imageCache[event.identifier!] = newImage
-                        dispatch_async(dispatch_get_main_queue(), {
-                            if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
-                                cellToUpdate.eventPhoto?.image = newImage
-                            }
-                        })
-                    }
-                    else {
-                        println("Error: \(error.localizedDescription)")
-                    }
-                })
+        if(tableView == self.tableView){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventTableViewCell", forIndexPath: indexPath) as EventTableViewCell
+            let event = events[indexPath.row]
+            cell.updateForEvent(event)
+            
+            if event.identifier != nil && event.eventImageUrl != nil{
+                if let image = imageCache[event.identifier!] {
+                    cell.eventPhoto?.image = image
+                }else{
+                    cell.eventPhoto?.image = nil
+                    var imgUrl = event.eventImageUrl!
+                    
+                    // Download an NSData representation of the image at the URL
+                    let request: NSURLRequest = NSURLRequest(URL: imgUrl)
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                        if error == nil {
+                            let newImage = UIImage(data: data)
+                            
+                            // Store the image in to our cache
+                            self.imageCache[event.identifier!] = newImage
+                            dispatch_async(dispatch_get_main_queue(), {
+                                if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
+                                    cellToUpdate.eventPhoto?.image = newImage
+                                }
+                            })
+                        }
+                        else {
+                            println("Error: \(error.localizedDescription)")
+                        }
+                    })
+                }
             }
+            
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCellWithIdentifier("filteredEventCell", forIndexPath: indexPath) as UITableViewCell
+            let event:Event = self.filteredEvents[indexPath.row]
+            cell.textLabel.text = event.title
+            return cell
         }
-        
-        return cell
     }
     
     
@@ -223,7 +259,7 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
                     var formatter = NSDateFormatter()
                     formatter.dateFormat = "MMM d, h:mm a";
                     let string = formatter.stringFromDate(NSDate())
-                    let title:String = self.currentCity! + " - Last update: " + string
+                    let title:String = self.currentCity! + " - Last updated: " + string
                     
                     var attributedString:NSMutableAttributedString = NSMutableAttributedString(string: title)
                     attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range:NSMakeRange(0, countElements(title)))
@@ -243,7 +279,8 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         tableView.backgroundView = UIImageView(image:UIImage(named:"background"))
         tableView.estimatedRowHeight = estimatedEventRowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
+        navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        navigationController?.navigationBar.translucent = true
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
 }

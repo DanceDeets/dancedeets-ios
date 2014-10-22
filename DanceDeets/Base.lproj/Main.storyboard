@@ -9,10 +9,18 @@
         <scene sceneID="wgo-hS-LZ7">
             <objects>
                 <tableViewController id="3nP-52-twq" customClass="EventFeedTableViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="3j5-cO-a3v">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3j5-cO-a3v">
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" barStyle="black" placeholder="Search Dance Events" id="zlf-O0-waC">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="3nP-52-twq" id="60d-m0-Z7D"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="eventTableViewCell" rowHeight="400" id="tkj-FX-rbs" customClass="EventTableViewCell" customModule="DanceDeets" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -138,14 +146,14 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Dance Deets" id="dXt-Rj-F2R">
                         <barButtonItem key="leftBarButtonItem" image="settings-50" style="plain" id="JW3-4w-9E6">
-                            <inset key="imageInsets" minX="-4" minY="-4" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageInsets" minX="-4" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="settingsTapped:" destination="3nP-52-twq" id="fca-ww-UtH"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="search-50" id="KN1-ux-3px">
-                            <inset key="imageInsets" minX="0.0" minY="-4" maxX="4" maxY="0.0"/>
+                            <inset key="imageInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                     </navigationItem>
@@ -153,11 +161,21 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                     <connections>
+                        <outlet property="searchDisplayController" destination="5QW-tW-HyB" id="sm1-ct-SKf"/>
                         <segue destination="OvV-49-RBz" kind="show" identifier="showEventSegue" id="rt7-WN-LaH"/>
                         <segue destination="SiB-h9-pTV" kind="show" identifier="showSettingsSegue" id="I18-oB-Y5z"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLX-XI-ZjE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="5QW-tW-HyB">
+                    <connections>
+                        <outlet property="delegate" destination="3nP-52-twq" id="ZJN-tI-mjA"/>
+                        <outlet property="searchBar" destination="zlf-O0-waC" id="0DV-ya-fzR"/>
+                        <outlet property="searchContentsController" destination="3nP-52-twq" id="KqC-8G-Se1"/>
+                        <outlet property="searchResultsDataSource" destination="3nP-52-twq" id="pPA-nc-N1D"/>
+                        <outlet property="searchResultsDelegate" destination="3nP-52-twq" id="am3-qq-QtC"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1070" y="231"/>
         </scene>
