@@ -14,12 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var facebookGraphUser:FBGraphUser?
     
-    // Helper function gets the Event Feed Controller
-    func eventFeedTableViewController()->EventFeedTableViewController?
+    func mainFeedViewController()->MainFeedViewController?
     {
         let rootVC:UINavigationController? =  window?.rootViewController as? UINavigationController
         if(rootVC?.viewControllers.count > 0){
-            return rootVC?.viewControllers[0] as? EventFeedTableViewController
+            return rootVC?.viewControllers[0] as? MainFeedViewController
         }else{
             return nil
         }

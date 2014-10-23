@@ -1,21 +1,21 @@
 //
-//  EventFeedTableViewController.swift
+//  MainFeedViewController.swift
 //  DanceDeets
 //
-//  Created by David Xiang on 9/20/14.
+//  Created by David Xiang on 10/22/14.
 //  Copyright (c) 2014 david.xiang. All rights reserved.
 //
 
 import UIKit
 import CoreLocation
 
-enum EventFeedSearchMode{
+enum MainFeedSearchMode{
     case CurrentLocation
     case CustomCity
 }
 
-class EventFeedTableViewController: UITableViewController,CLLocationManagerDelegate,UISearchBarDelegate,UISearchDisplayDelegate {
-    
+class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearchBarDelegate,UISearchDisplayDelegate ,UITableViewDataSource, UITableViewDelegate {
+
     var events:[Event] = []
     var filteredEvents:[Event] = []
     var currentCity:String? = String()
@@ -23,8 +23,14 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
     var imageCache = [String : UIImage]()
-    var searchMode:EventFeedSearchMode = EventFeedSearchMode.CurrentLocation  
-
+    var searchMode:MainFeedSearchMode = MainFeedSearchMode.CurrentLocation
+    
+    // MARK: Outlets
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
+    
+    
+    // MARK: UISearchDisplayDelegate
     func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
         self.filterContentForSearchText(searchString)
         return true
@@ -41,38 +47,31 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
             return event.title?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
         })
     }
-    
+ 
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // navigation styling
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"Back", style: UIBarButtonItemStyle.Plain, target: nil, action:nil)
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName:FontFactory.navigationTitleFont()]
-
+        
         // table view styling
         styleTableViewController()
-        
-        // refresh control
-        /*
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl?.backgroundColor = UIColor.darkGrayColor()
-        self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "refreshControlHandler", forControlEvents: UIControlEvents.ValueChanged)
-        var backGroundViewZ = tableView.backgroundView?.layer.zPosition
-        self.refreshControl?.layer.zPosition = backGroundViewZ! + 1
-*/
         
         // location stuff
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self;
         
-       // self.tableView.tableHeaderView = self.searchDisplayController?.searchBar
-        self.searchDisplayController?.searchResultsTableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
-        println(self.searchDisplayController?.searchBar)
-        
-        //self.tableView.tableHeaderView = nil
+        loadSearchDisplayController()
+        setNeedsStatusBarAppearanceUpdate()
+
     }
+    
+     override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -84,15 +83,21 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
         if(search != nil && countElements(search!) > 0){
             println("Custom search city is set as: " + search!)
-            searchMode = EventFeedSearchMode.CustomCity
+            searchMode = MainFeedSearchMode.CustomCity
             currentCity = search
             refreshEventsForCurrentCity()
         }else{
             println("Custom search city not set, using location manager")
-            searchMode = EventFeedSearchMode.CurrentLocation
+            searchMode = MainFeedSearchMode.CurrentLocation
             currentCity = ""
             locationManager.startUpdatingLocation()
         }
+    }
+    
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -104,10 +109,6 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
             var destination:EventDetailTableViewController? = segue.destinationViewController as?EventDetailTableViewController
             destination?.event = sender as Event?
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     // MARK: - CLLocationManagerDelegate
@@ -127,43 +128,39 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         })
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        let locationFailure:UIAlertView = UIAlertView(title: "Sorry! Couldn't get your location", message: "Set your city in the settings for now", delegate: nil, cancelButtonTitle: "OK")
-        locationFailure.show()
-    }
     
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     /*
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.min
+    return CGFloat.min
     }
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat.min
+    return CGFloat.min
     }
-*/
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    */
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.searchDisplayController!.searchResultsTableView{
             return self.filteredEvents.count
         }else{
             return events.count
         }
     }
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedEvent:Event = events[indexPath.row]
         performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
     }
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    
+   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(tableView == self.tableView){
             let cell = tableView.dequeueReusableCellWithIdentifier("eventTableViewCell", forIndexPath: indexPath) as EventTableViewCell
             let event = events[indexPath.row]
@@ -206,22 +203,13 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         }
     }
     
-    
     // MARK: - Action
     @IBAction func settingsTapped(sender: AnyObject) {
         self.performSegueWithIdentifier("showSettingsSegue", sender: sender)
     }
     
-    // MARK: - Private
-    func refreshControlHandler()
-    {
-        if(searchMode == EventFeedSearchMode.CurrentLocation ){
-            locationManager.startUpdatingLocation()
-        }else{
-            refreshEventsForCurrentCity()
-        }
-    }
     
+    // MARK: Private
     func checkFaceBookToken(){
         let currentState:FBSessionState = FBSession.activeSession().state
         
@@ -245,7 +233,7 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.title = self.currentCity
                 // stop refresh control first
-                self.refreshControl?.endRefreshing()
+                //self.refreshControl?.endRefreshing()
                 
                 // check response
                 if(error != nil){
@@ -264,7 +252,7 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
                     var attributedString:NSMutableAttributedString = NSMutableAttributedString(string: title)
                     attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range:NSMakeRange(0, countElements(title)))
                     
-                    self.refreshControl?.attributedTitle = attributedString
+                    //self.refreshControl?.attributedTitle = attributedString
                     
                     // re assing events and reload table
                     self.events = events
@@ -283,4 +271,10 @@ class EventFeedTableViewController: UITableViewController,CLLocationManagerDeleg
         navigationController?.navigationBar.translucent = true
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
+
+    func loadSearchDisplayController()
+    {
+        self.searchDisplayController?.searchResultsTableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
+    }
+
 }

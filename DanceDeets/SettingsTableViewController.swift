@@ -13,7 +13,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
     var showingCustomCityRow:Bool = false
     var locationToggleCell:BasicSwitchTableCell?
     var customCityCell:CustomCityTableViewCell?
-    var searchMode:EventFeedSearchMode?
+    var searchMode:MainFeedSearchMode?
     var appDelegate:AppDelegate?
     
     var toggleIndexPath:NSIndexPath{
@@ -29,9 +29,9 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
         
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
-        let eventFeedTVC = appDelegate?.eventFeedTableViewController();
-        searchMode = eventFeedTVC!.searchMode
-        if(searchMode == EventFeedSearchMode.CurrentLocation){
+        let mainFeedVC = appDelegate?.mainFeedViewController();
+        searchMode = mainFeedVC!.searchMode
+        if(searchMode == MainFeedSearchMode.CurrentLocation){
             showingCustomCityRow = false
         }else{
             showingCustomCityRow = true
@@ -107,7 +107,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
     }
     
     func switchToggled(sender: UISwitch!) {
-        let eventTableVC:EventFeedTableViewController? = appDelegate?.eventFeedTableViewController()
+        let eventTableVC:MainFeedViewController? = appDelegate?.mainFeedViewController()
         if(sender.on){
             // Toggled to use current location
             showingCustomCityRow = false
@@ -118,7 +118,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
             
             NSUserDefaults.standardUserDefaults().setValue("", forKey: "customCity")
             NSUserDefaults.standardUserDefaults().synchronize()
-            eventTableVC?.searchMode =  EventFeedSearchMode.CurrentLocation
+            eventTableVC?.searchMode =  MainFeedSearchMode.CurrentLocation
         }else{
             // Toggled to use custom city location
             showingCustomCityRow = true
@@ -134,7 +134,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        let eventTableVC:EventFeedTableViewController? = appDelegate.eventFeedTableViewController()
+        let eventTableVC:MainFeedViewController? = appDelegate.mainFeedViewController()
         if(countElements(textField.text) == 0){
             // Closed keyboard with empty text field, assume using current location
             locationToggleCell?.locationToggle.setOn(true, animated: true)
