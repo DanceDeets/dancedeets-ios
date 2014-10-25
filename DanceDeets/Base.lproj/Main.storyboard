@@ -66,7 +66,7 @@
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="WkR-6o-kLS"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6z-JQ-nU5" userLabel="titleLabel">
+                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6z-JQ-nU5" userLabel="titleLabel">
                                                                     <rect key="frame" x="10" y="250" width="560" height="25"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="BHd-PY-hDm"/>
@@ -160,9 +160,9 @@
                                             <outlet property="descriptionLabel" destination="XgI-E8-16R" id="5MT-04-mAy"/>
                                             <outlet property="eventPhoto" destination="amt-tQ-amo" id="02H-Al-H0x"/>
                                             <outlet property="eventTimeLabel" destination="cek-8Y-vF7" id="AGk-WB-02P"/>
-                                            <outlet property="eventTitleLabel" destination="r6z-JQ-nU5" id="8Z3-ke-qY8"/>
                                             <outlet property="mainView" destination="EFd-8w-USt" id="6Gf-G8-rmt"/>
-                                            <outlet property="venueLabel" destination="iZr-6j-TzU" id="k2z-ZZ-jXQ"/>
+                                            <outlet property="titleLabel" destination="iZr-6j-TzU" id="7xW-Gp-qdJ"/>
+                                            <outlet property="venueLabel" destination="r6z-JQ-nU5" id="7cm-Jk-N8e"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

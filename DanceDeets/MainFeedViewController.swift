@@ -139,11 +139,11 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
      func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
     }
-    
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(tableView == self.tableView){
             let selectedEvent:Event = events[indexPath.row]
-            performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+          //  performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
         }else if(tableView == searchResultsTableView){
             let selectedEvent:Event = filteredEvents[indexPath.row]
             performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
