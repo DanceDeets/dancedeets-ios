@@ -20,10 +20,10 @@ class EventTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         mainView.layer.masksToBounds = false
-        mainView.layer.shadowRadius = 3
-        mainView.layer.shadowOffset = CGSize(width: 3.0, height: 5.0)
+        mainView.layer.shadowRadius = 4
+        mainView.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
         mainView.layer.shadowColor = UIColor.blackColor().CGColor
-        mainView.layer.shadowOpacity = 0.80
+        mainView.layer.shadowOpacity = 0.60
         
         titleLabel.font = UIFont(name:"BebasNeueBold",size: 26)
         venueLabel.font = UIFont(name: "BebasNeueBold", size: 22)
