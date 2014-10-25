@@ -19,11 +19,12 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     var events:[Event] = []
     var filteredEvents:[Event] = []
     var currentCity:String? = String()
-    let estimatedEventRowHeight:CGFloat = 400
+    let estimatedEventRowHeight:CGFloat = 600
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
     var imageCache = [String : UIImage]()
     var searchMode:MainFeedSearchMode = MainFeedSearchMode.CurrentLocation
+    var searchResultsTableView:UITableView?
     
     // MARK: Outlets
     @IBOutlet weak var searchBar: UISearchBar!
@@ -51,21 +52,15 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // navigation styling
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"Back", style: UIBarButtonItemStyle.Plain, target: nil, action:nil)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName:FontFactory.navigationTitleFont()]
         
-        // table view styling
-        styleTableViewController()
+        styleViewController()
+        loadSearchDisplayController()
         
         // location stuff
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self;
         
-        loadSearchDisplayController()
         setNeedsStatusBarAppearanceUpdate()
-
     }
     
      override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -77,7 +72,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
         super.viewWillAppear(animated)
         
         checkFaceBookToken()
-        println("EventFeedTableViewController -> viewWillAppear")
+        println("MainFeedViewController -> viewWillAppear")
         
         // if customCity is set in user defaults, user set a default city to search for events
         let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
@@ -129,20 +124,10 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     }
     
     
-    // MARK: - Table view data source
+    // MARK: UITableViewDataSource / UITableViewDelegate
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-    
-    /*
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return CGFloat.min
-    }
-    
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    return CGFloat.min
-    }
-    */
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.searchDisplayController!.searchResultsTableView{
@@ -156,8 +141,13 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedEvent:Event = events[indexPath.row]
-        performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+        if(tableView == self.tableView){
+            let selectedEvent:Event = events[indexPath.row]
+            performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+        }else if(tableView == searchResultsTableView){
+            let selectedEvent:Event = filteredEvents[indexPath.row]
+            performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+        }
     }
     
    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -208,6 +198,9 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
         self.performSegueWithIdentifier("showSettingsSegue", sender: sender)
     }
     
+    @IBAction func refreshTapped(sender: AnyObject) {
+        refreshEventsForCurrentCity()
+    }
     
     // MARK: Private
     func checkFaceBookToken(){
@@ -219,6 +212,10 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
                 return;
         }else if( currentState == FBSessionState.CreatedTokenLoaded){
             FBSession.openActiveSessionWithAllowLoginUI(false)
+            
+               let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+            println(appDelegate.facebookGraphUser?.objectID)
+            println(appDelegate.facebookGraphUser?.link)
         }else{
             let fbLogin:FaceBookLoginViewController? = storyboard?.instantiateViewControllerWithIdentifier("faceBookLoginViewController") as? FaceBookLoginViewController
             presentViewController(fbLogin!, animated: true, completion: nil)
@@ -232,8 +229,6 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
         Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.title = self.currentCity
-                // stop refresh control first
-                //self.refreshControl?.endRefreshing()
                 
                 // check response
                 if(error != nil){
@@ -252,8 +247,6 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
                     var attributedString:NSMutableAttributedString = NSMutableAttributedString(string: title)
                     attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range:NSMakeRange(0, countElements(title)))
                     
-                    //self.refreshControl?.attributedTitle = attributedString
-                    
                     // re assing events and reload table
                     self.events = events
                     self.tableView.reloadData()
@@ -263,8 +256,13 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
         })
     }
     
-    func styleTableViewController(){
-        tableView.backgroundView = UIImageView(image:UIImage(named:"background"))
+    func styleViewController()
+    {
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"Back", style: UIBarButtonItemStyle.Plain, target: nil, action:nil)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName:FontFactory.navigationTitleFont()]
+        
+        //tableView.backgroundView = UIImageView(image:UIImage(named:"background"))
+        tableView.backgroundColor = UIColor(red: 119.0/255.0, green: 120.0/255.0, blue: 124.0/255.0, alpha: 1)
         tableView.estimatedRowHeight = estimatedEventRowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         navigationController?.navigationBar.barStyle = UIBarStyle.Black
@@ -274,7 +272,9 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
 
     func loadSearchDisplayController()
     {
-        self.searchDisplayController?.searchResultsTableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
+        searchResultsTableView = self.searchDisplayController?.searchResultsTableView
+        searchResultsTableView?.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
+        searchResultsTableView?.dataSource = self;
+        searchResultsTableView?.delegate = self;
     }
-
 }
