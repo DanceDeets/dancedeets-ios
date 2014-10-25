@@ -255,7 +255,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     func refreshEventsForCurrentCity(){
         println("Refreshing events for: " + currentCity!)
         self.title = "Loading..."
-        Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error) in
+        Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error:NSError!) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.title = self.currentCity
                 
@@ -264,19 +264,9 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
                     let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
                     errorAlert.show()
                 }else if(events.count == 0){
-                    let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in your area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
+                    let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                     noEventAlert.show()
                 }else{
-                    // success, update the refresh label
-                    var formatter = NSDateFormatter()
-                    formatter.dateFormat = "MMM d, h:mm a";
-                    let string = formatter.stringFromDate(NSDate())
-                    let title:String = self.currentCity! + " - Last updated: " + string
-                    
-                    var attributedString:NSMutableAttributedString = NSMutableAttributedString(string: title)
-                    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range:NSMakeRange(0, countElements(title)))
-                    
-                    // re assing events and reload table
                     self.events = events
                     self.tableView.reloadData()
                 }

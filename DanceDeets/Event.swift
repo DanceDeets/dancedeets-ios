@@ -84,20 +84,21 @@ public class Event: NSObject {
         var task:NSURLSessionTask = session.dataTaskWithURL(url!, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
             if(error != nil){
                 completion([], error)
-          
             }else{
                 var jsonError:NSError?
-                var json:NSArray = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as NSArray
+                var json:NSArray? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSArray
                 if (jsonError != nil) {
-                    completion([], jsonError)
+                    completion([], nil)
                 }
                 else {
                     var eventList:[Event] = []
-                    for item in json{
-                        if let eventDictionary = item as? NSDictionary{
-                            let newEvent:Event? = Event(dictionary: eventDictionary)
-                            if newEvent != nil{
-                                eventList.append(newEvent!)
+                    if(json != nil && json?.count > 0){
+                        for item in json!{
+                            if let eventDictionary = item as? NSDictionary{
+                                let newEvent:Event? = Event(dictionary: eventDictionary)
+                                if newEvent != nil{
+                                    eventList.append(newEvent!)
+                                }
                             }
                         }
                     }

@@ -28,10 +28,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFd-8w-USt" userLabel="mainView">
-                                                    <rect key="frame" x="15" y="18" width="570" height="374"/>
+                                                    <rect key="frame" x="15" y="13" width="570" height="379"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xSC-nI-gkI" userLabel="cardbg">
-                                                            <rect key="frame" x="0.0" y="0.0" width="570" height="374"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="570" height="379"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="amt-tQ-amo" userLabel="photo">
                                                                     <rect key="frame" x="0.0" y="0.0" width="570" height="260"/>
@@ -39,7 +39,7 @@
                                                                         <constraint firstAttribute="height" constant="260" id="7yB-rG-oPA"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEO-Ev-S9q" userLabel="titleBackground">
+                                                                <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEO-Ev-S9q" userLabel="titleBackground">
                                                                     <rect key="frame" x="0.0" y="0.0" width="570" height="60"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
@@ -59,15 +59,15 @@
                                                                     <color key="textColor" red="0.23342568676080455" green="0.86782304924653575" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Plj-ZE-TUP" userLabel="titleBackground">
-                                                                    <rect key="frame" x="0.0" y="200" width="570" height="60"/>
+                                                                <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Plj-ZE-TUP" userLabel="titleBackground">
+                                                                    <rect key="frame" x="0.0" y="205" width="570" height="55"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="WkR-6o-kLS"/>
+                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="55" id="WkR-6o-kLS"/>
                                                                     </constraints>
                                                                 </view>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jdq-o7-EvD">
-                                                                    <rect key="frame" x="520" y="200" width="50" height="60"/>
+                                                                    <rect key="frame" x="520" y="205" width="50" height="55"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="KK7-Ms-Pab"/>
                                                                         <constraint firstAttribute="width" constant="50" id="nMo-VF-nN0"/>
@@ -88,7 +88,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6z-JQ-nU5" userLabel="titleLabel">
-                                                                    <rect key="frame" x="10" y="210" width="510" height="45"/>
+                                                                    <rect key="frame" x="10" y="215" width="510" height="40"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="BHd-PY-hDm"/>
                                                                     </constraints>
@@ -102,10 +102,10 @@
                                                                     </variation>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6de-08-dTY">
-                                                                    <rect key="frame" x="0.0" y="260" width="570" height="114"/>
+                                                                    <rect key="frame" x="0.0" y="260" width="570" height="119"/>
                                                                     <subviews>
                                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Event Descripti" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgI-E8-16R" userLabel="descriptionLabel">
-                                                                            <rect key="frame" x="10" y="5" width="550" height="99"/>
+                                                                            <rect key="frame" x="10" y="5" width="550" height="104"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -182,7 +182,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="EFd-8w-USt" secondAttribute="bottom" id="OhW-5X-jdo"/>
-                                                <constraint firstItem="EFd-8w-USt" firstAttribute="top" secondItem="mBd-0A-QV0" secondAttribute="topMargin" constant="10" id="g9k-IQ-P6n"/>
+                                                <constraint firstItem="EFd-8w-USt" firstAttribute="top" secondItem="mBd-0A-QV0" secondAttribute="topMargin" constant="5" id="g9k-IQ-P6n"/>
                                                 <constraint firstItem="EFd-8w-USt" firstAttribute="leading" secondItem="mBd-0A-QV0" secondAttribute="leading" constant="15" id="mFg-uL-tRw"/>
                                                 <constraint firstAttribute="trailing" secondItem="EFd-8w-USt" secondAttribute="trailing" constant="15" id="vdj-mR-FbJ"/>
                                             </constraints>

@@ -34,8 +34,8 @@ class EventTableViewCell: UITableViewCell {
         mainView.layer.shadowColor = UIColor.blackColor().CGColor
         mainView.layer.shadowOpacity = 0.60
         
-        titleLabel.font = UIFont(name:"BebasNeueBold",size: 26)
-        venueLabel.font = UIFont(name: "BebasNeueBold", size: 22)
+        titleLabel.font = UIFont(name:"BebasNeueBold",size: 24)
+        venueLabel.font = UIFont(name: "BebasNeueBold", size: 20)
         descriptionLabel.font = UIFont(name: "Montserrat-Regular", size: 13)
         eventTimeLabel.font = UIFont(name:"Montserrat-Bold", size:14)
     }
