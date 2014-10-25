@@ -19,11 +19,11 @@ class EventTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        mainView.layer.cornerRadius = 4;
+        mainView.layer.cornerRadius = 5;
         mainView.layer.masksToBounds = true
         venueLabel.font = UIFont(name:"BebasNeueBold",size: 26)
         eventTitleLabel.font = UIFont(name: "BebasNeueBold", size: 22)
-        descriptionLabel.font = UIFont(name: "Montserrat-Regular", size: 12)
+        descriptionLabel.font = UIFont(name: "Montserrat-Regular", size: 13)
         eventTimeLabel.font = UIFont(name:"Montserrat-Bold", size:14)
     }
     
