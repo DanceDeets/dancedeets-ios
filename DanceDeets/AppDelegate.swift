@@ -36,6 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var wasHandled:Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
         return wasHandled
     }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        
+        var urlWasHanded:Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication) { (call:FBAppCall!) -> Void in
+            println("facebook app call deep link handler")
+        }
+        return urlWasHanded
+    }
 
 
     func applicationWillResignActive(application: UIApplication) {

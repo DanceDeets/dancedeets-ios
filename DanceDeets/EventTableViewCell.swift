@@ -8,6 +8,11 @@
 
 import UIKit
 
+@objc protocol EventTableViewCellDelegate
+{
+    optional func facebookButtonTapped(sender:Event!) ->()
+}
+
 class EventTableViewCell: UITableViewCell {
 
     @IBOutlet weak var venueLabel: UILabel!
@@ -16,6 +21,10 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var eventTimeLabel: UILabel!
     @IBOutlet weak var eventPhoto: UIImageView!
+    
+    var currentEvent:Event?
+    
+    var delegate:EventTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,6 +46,10 @@ class EventTableViewCell: UITableViewCell {
         descriptionLabel.text = event.shortDescription
         titleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
+        currentEvent = event
     }
 
+    @IBAction func facebookButtonTapped(sender: AnyObject) {
+        delegate?.facebookButtonTapped?(currentEvent!)
+    }
 }

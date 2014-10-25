@@ -32,7 +32,6 @@
 		1DB901CA19E09C5B0018B434 /* BasicSwitchToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */; };
 		1DB901CC19E1B3580018B434 /* CustomCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */; };
 		1DFB3B4919F8B0C400CF4A72 /* MainFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */; };
-		1DFB3B4B19F8C91900CF4A72 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4A19F8C91900CF4A72 /* ProfileTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,7 +74,6 @@
 		1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSwitchToggleCell.swift; sourceTree = "<group>"; };
 		1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCityTableViewCell.swift; sourceTree = "<group>"; };
 		1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedViewController.swift; sourceTree = "<group>"; };
-		1DFB3B4A19F8C91900CF4A72 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,7 +208,6 @@
 				1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */,
 				1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */,
 				1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */,
-				1DFB3B4A19F8C91900CF4A72 /* ProfileTableViewCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -340,7 +337,6 @@
 				1DB901C519E0856E0018B434 /* SettingsTableViewController.swift in Sources */,
 				1DFB3B4919F8B0C400CF4A72 /* MainFeedViewController.swift in Sources */,
 				1D0D92A319D52DE8003E7C14 /* EventDetailTableViewController.swift in Sources */,
-				1DFB3B4B19F8C91900CF4A72 /* ProfileTableViewCell.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,
 				1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */,
 			);
