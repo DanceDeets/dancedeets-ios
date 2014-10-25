@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import MessageUI
 
 enum MainFeedSearchMode{
     case CurrentLocation
@@ -245,10 +246,6 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
                 return;
         }else if( currentState == FBSessionState.CreatedTokenLoaded){
             FBSession.openActiveSessionWithAllowLoginUI(false)
-            
-               let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-            println(appDelegate.facebookGraphUser?.objectID)
-            println(appDelegate.facebookGraphUser?.link)
         }else{
             let fbLogin:FaceBookLoginViewController? = storyboard?.instantiateViewControllerWithIdentifier("faceBookLoginViewController") as? FaceBookLoginViewController
             presentViewController(fbLogin!, animated: true, completion: nil)
@@ -256,7 +253,6 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     }
     
     func refreshEventsForCurrentCity(){
-        
         println("Refreshing events for: " + currentCity!)
         self.title = "Loading..."
         Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error) in
