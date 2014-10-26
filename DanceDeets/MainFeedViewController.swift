@@ -32,17 +32,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
-    // MARK: UISearchDisplayDelegate
-    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
-        self.filterContentForSearchText(searchString)
-        return true
-    }
-    
-    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchScope searchOption: Int) -> Bool {
-        self.filterContentForSearchText(self.searchDisplayController!.searchBar.text)
-        return true
-    }
-    
+    // MARK: UISearchResultsUpdating
     func filterContentForSearchText(searchText: String) {
         // Filter the array using the filter method
         self.filteredEvents = self.events.filter({( event: Event) -> Bool in
@@ -52,9 +42,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
-        println("update results")
         filterContentForSearchText(searchController.searchBar.text)
-        
         searchResultsTableView?.reloadData()
     }
  
@@ -63,46 +51,24 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
         super.viewDidLoad()
         
         styleViewController()
-    //    loadSearchDisplayController()
+        loadSearchController()
         
         // location stuff
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self;
         
         setNeedsStatusBarAppearanceUpdate()
-       // self.navigationController?.hidesBarsOnSwipe = true
-       // self.searchDisplayController
-        
-        var tbvc:UITableViewController = UITableViewController(style: UITableViewStyle.Plain)
-        searchResultsTableView = tbvc.tableView
-        tbvc.tableView.backgroundColor = UIColor.clearColor()
-        tbvc.tableView.delegate = self
-        tbvc.tableView.dataSource = self
-        
-        self.searchController = UISearchController(searchResultsController: tbvc)
-        self.searchController?.searchResultsUpdater = self
-        self.searchController?.searchBar.barStyle = UIBarStyle.Black
-        self.searchController?.searchBar.tintColor = UIColor.whiteColor()
-        self.searchController?.searchBar.placeholder = "Search Dance Events"
-        
-        self.searchController?.searchBar.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.searchController!.searchBar.frame.size.width, height: 44))
-        self.tableView.tableHeaderView = self.searchController?.searchBar
-        self.searchController?.hidesNavigationBarDuringPresentation = false
-        
-        tbvc.tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
-        
     }
     
      override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
     
-    
     override func viewWillAppear(animated: Bool) {
+        println("MainFeedViewController -> viewWillAppear")
         super.viewWillAppear(animated)
         
         checkFaceBookToken()
-        println("MainFeedViewController -> viewWillAppear")
         
         // if customCity is set in user defaults, user set a default city to search for events
         let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
@@ -310,6 +276,27 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
                 
             })
         })
+    }
+    
+    func loadSearchController()
+    {
+        var tbvc:UITableViewController = UITableViewController(style: UITableViewStyle.Plain)
+        searchResultsTableView = tbvc.tableView
+        tbvc.tableView.backgroundColor = UIColor.clearColor()
+        tbvc.tableView.delegate = self
+        tbvc.tableView.dataSource = self
+        
+        self.searchController = UISearchController(searchResultsController: tbvc)
+        self.searchController?.searchResultsUpdater = self
+        self.searchController?.searchBar.barStyle = UIBarStyle.Black
+        self.searchController?.searchBar.tintColor = UIColor.whiteColor()
+        self.searchController?.searchBar.placeholder = "Search Dance Events"
+        
+        self.searchController?.searchBar.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.searchController!.searchBar.frame.size.width, height: 44))
+        self.tableView.tableHeaderView = self.searchController?.searchBar
+        self.searchController?.hidesNavigationBarDuringPresentation = false
+        
+        tbvc.tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
     }
     
     func styleViewController()

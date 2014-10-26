@@ -30,18 +30,17 @@ class EventDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
-     
-        
+        /*
         if let imgUrl = event?.eventImageUrl{
             // Download an NSData representation of the image at the URL
             let request: NSURLRequest = NSURLRequest(URL: imgUrl)
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
                 if error == nil {
-                    let newImage = UIImage(data: data)
+                    let newImage:UIImage? = UIImage(data: data)
+                    let height = newImage!.size.height
                     self.coverImage = UIImageView(image: newImage)
                     self.coverImage?.contentMode = UIViewContentMode.ScaleAspectFill
-                    self.coverImage?.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 300)
+                    self.coverImage?.frame = CGRectMake(0, 0, self.tableView.frame.size.width, height)
                     
                     // Store the image in to our cache
                     dispatch_async(dispatch_get_main_queue(), {
@@ -53,8 +52,7 @@ class EventDetailTableViewController: UITableViewController {
                 }
             })
         }
-       
-        
+        */
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
