@@ -14,6 +14,7 @@ class EventDetailTableViewController: UITableViewController {
     
     var event:Event?
     let geocoder:CLGeocoder = CLGeocoder()
+    var coverImage:UIImageView?
 
     @IBOutlet weak var eventStartTimeLabel: UILabel!
     @IBOutlet weak var eventTitleLabel: UILabel!
@@ -31,7 +32,28 @@ class EventDetailTableViewController: UITableViewController {
         
         //self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
      
-
+        
+        if let imgUrl = event?.eventImageUrl{
+            // Download an NSData representation of the image at the URL
+            let request: NSURLRequest = NSURLRequest(URL: imgUrl)
+            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                if error == nil {
+                    let newImage = UIImage(data: data)
+                    self.coverImage = UIImageView(image: newImage)
+                    self.coverImage?.contentMode = UIViewContentMode.ScaleAspectFill
+                    self.coverImage?.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 300)
+                    
+                    // Store the image in to our cache
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.tableView.tableHeaderView = self.coverImage
+                    })
+                }
+                else {
+                    println("Error: \(error.localizedDescription)")
+                }
+            })
+        }
+       
         
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -55,43 +77,6 @@ class EventDetailTableViewController: UITableViewController {
         }else{
             eventEndTimeLabel.text = ""
         }
-        
-        /*
-        // try to detect an address in the description
-        var dataError:NSError?
-        let addressDetector:NSDataDetector? = NSDataDetector(types: NSTextCheckingType.Address.toRaw(), error: &dataError)
-        
-        
-        var streetAddress:String?
-        if let eventDescription = event?.shortDescription {
-            addressDetector?.enumerateMatchesInString(eventDescription, options: nil, range: NSMakeRange(0, eventDescription.length), usingBlock: { (result:NSTextCheckingResult!, flags:NSMatchingFlags, stop:UnsafeMutablePointer<ObjCBool>) -> Void in
-                println(result)
-                println(result.components)
-                
-                if let streetString: AnyObject = result.components?[NSTextCheckingStreetKey] {
-                    streetAddress = streetString as? String
-                    stop.memory = true
-                }
-            })
-        }
-        
-        if streetAddress != nil && event?.location != nil{
-            println(streetAddress)
-            let locationString:String? = event?.location
-            var addressToGeoCode = streetAddress! + " " + locationString!
-            geocoder.geocodeAddressString(addressToGeoCode, completionHandler: { (placemarks:[AnyObject]!, error: NSError!) -> Void in
-                
-                let placemark:CLPlacemark = placemarks.first as CLPlacemark
-                println(placemark.subThoroughfare)
-                println(placemark.name)
-                println(placemark.thoroughfare)
-                println(placemark.locality)
-                println(placemark.postalCode)
-            })
-            
-        }
-*/
-
     }
 
 }

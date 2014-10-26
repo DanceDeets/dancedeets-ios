@@ -203,26 +203,15 @@
                                     <outlet property="delegate" destination="org-Pd-NdN" id="7eY-Z0-4Hm"/>
                                 </connections>
                             </tableView>
-                            <searchBar contentMode="redraw" barStyle="black" placeholder="Search Dance Events" translatesAutoresizingMaskIntoConstraints="NO" id="s1O-pJ-qbr">
-                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="org-Pd-NdN" id="Inb-d8-hmz"/>
-                                </connections>
-                            </searchBar>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.2334256868" green="0.86782304919999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="4Wc-vY-N88" firstAttribute="leading" secondItem="kkO-El-hGg" secondAttribute="leading" id="DIN-pw-5yh"/>
-                            <constraint firstAttribute="width" secondItem="s1O-pJ-qbr" secondAttribute="width" id="NVO-Na-3Go"/>
                             <constraint firstItem="4Wc-vY-N88" firstAttribute="top" secondItem="0yL-Ho-dq6" secondAttribute="bottom" id="QYA-sl-XnX"/>
                             <constraint firstAttribute="trailing" secondItem="4Wc-vY-N88" secondAttribute="trailing" id="aHg-VK-bcg"/>
                             <constraint firstItem="4Wc-vY-N88" firstAttribute="bottom" secondItem="kkO-El-hGg" secondAttribute="bottomMargin" id="kEr-Kq-C2x"/>
-                            <constraint firstItem="s1O-pJ-qbr" firstAttribute="top" secondItem="0yL-Ho-dq6" secondAttribute="bottom" id="ldw-BI-SjX"/>
                             <constraint firstItem="4Wc-vY-N88" firstAttribute="top" secondItem="kkO-El-hGg" secondAttribute="topMargin" id="lgs-3Q-7lS"/>
                             <constraint firstItem="0Yd-Cr-n2g" firstAttribute="top" secondItem="4Wc-vY-N88" secondAttribute="bottom" id="pKj-fD-hje"/>
-                            <constraint firstAttribute="centerX" secondItem="s1O-pJ-qbr" secondAttribute="centerX" id="zZW-GY-RRk"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -275,7 +264,6 @@
                 <searchDisplayController id="hmY-SH-aig">
                     <connections>
                         <outlet property="delegate" destination="org-Pd-NdN" id="3EU-8x-wZS"/>
-                        <outlet property="searchBar" destination="s1O-pJ-qbr" id="VRK-bC-Pno"/>
                         <outlet property="searchContentsController" destination="org-Pd-NdN" id="j1U-cj-gbv"/>
                         <outlet property="searchResultsDataSource" destination="org-Pd-NdN" id="3JX-Xs-OLV"/>
                         <outlet property="searchResultsDelegate" destination="org-Pd-NdN" id="gaj-L3-7Z1"/>

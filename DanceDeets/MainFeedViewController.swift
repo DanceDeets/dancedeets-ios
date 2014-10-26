@@ -15,7 +15,7 @@ enum MainFeedSearchMode{
     case CustomCity
 }
 
-class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearchBarDelegate,UISearchDisplayDelegate ,UITableViewDataSource, UITableViewDelegate, EventTableViewCellDelegate {
+class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearchResultsUpdating, UISearchBarDelegate,UITableViewDataSource, UITableViewDelegate, EventTableViewCellDelegate {
 
     var events:[Event] = []
     var filteredEvents:[Event] = []
@@ -26,11 +26,11 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     var imageCache = [String : UIImage]()
     var searchMode:MainFeedSearchMode = MainFeedSearchMode.CurrentLocation
     var searchResultsTableView:UITableView?
+    var searchController:UISearchController?
     
     // MARK: Outlets
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    
     
     // MARK: UISearchDisplayDelegate
     func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
@@ -49,19 +49,48 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
             return event.title?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
         })
     }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController)
+    {
+        println("update results")
+        filterContentForSearchText(searchController.searchBar.text)
+        
+        searchResultsTableView?.reloadData()
+    }
  
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
         styleViewController()
-        loadSearchDisplayController()
+    //    loadSearchDisplayController()
         
         // location stuff
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self;
         
         setNeedsStatusBarAppearanceUpdate()
+       // self.navigationController?.hidesBarsOnSwipe = true
+       // self.searchDisplayController
+        
+        var tbvc:UITableViewController = UITableViewController(style: UITableViewStyle.Plain)
+        searchResultsTableView = tbvc.tableView
+        tbvc.tableView.backgroundColor = UIColor.clearColor()
+        tbvc.tableView.delegate = self
+        tbvc.tableView.dataSource = self
+        
+        self.searchController = UISearchController(searchResultsController: tbvc)
+        self.searchController?.searchResultsUpdater = self
+        self.searchController?.searchBar.barStyle = UIBarStyle.Black
+        self.searchController?.searchBar.tintColor = UIColor.whiteColor()
+        self.searchController?.searchBar.placeholder = "Search Dance Events"
+        
+        self.searchController?.searchBar.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.searchController!.searchBar.frame.size.width, height: 44))
+        self.tableView.tableHeaderView = self.searchController?.searchBar
+        self.searchController?.hidesNavigationBarDuringPresentation = false
+        
+        tbvc.tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
+        
     }
     
      override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -93,7 +122,6 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -131,7 +159,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == self.searchDisplayController!.searchResultsTableView{
+        if( tableView == searchResultsTableView){
             return self.filteredEvents.count
         }else{
             return events.count
@@ -139,6 +167,14 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     }
      func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if(tableView == searchResultsTableView){
+            return CGFloat.min
+        }else{
+            return CGFloat.min
+        }
     }
     
 
@@ -149,6 +185,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
             performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
         }else if(tableView == searchResultsTableView){
             let selectedEvent:Event = filteredEvents[indexPath.row]
+            self.searchController?.active = false
             performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
         }
     }
@@ -277,11 +314,13 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     
     func styleViewController()
     {
+        self.view.backgroundColor = UIColor(red: 119.0/255.0, green: 120.0/255.0, blue: 124.0/255.0, alpha: 1)
+        
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"Back", style: UIBarButtonItemStyle.Plain, target: nil, action:nil)
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName:FontFactory.navigationTitleFont()]
         
-        //tableView.backgroundView = UIImageView(image:UIImage(named:"background"))
-        tableView.backgroundColor = UIColor(red: 119.0/255.0, green: 120.0/255.0, blue: 124.0/255.0, alpha: 1)
+        tableView.backgroundView = UIView()
+        tableView.backgroundColor = UIColor.clearColor()
         tableView.estimatedRowHeight = estimatedEventRowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         navigationController?.navigationBar.barStyle = UIBarStyle.Black
