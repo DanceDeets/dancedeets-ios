@@ -22,6 +22,7 @@ public class Event: NSObject {
     let location:NSString?
     let identifier:NSString?
     let displayTime:NSString?
+    var facebookUrl:NSURL?
     
     
     init(dictionary:NSDictionary){
@@ -29,6 +30,11 @@ public class Event: NSObject {
         venue = dictionary["city"] as? String
         title = dictionary["title"] as? String
         identifier = dictionary["id"] as? String
+        
+        if identifier?.length > 0{
+            facebookUrl = NSURL(string: "http://www.facebook.com/"+identifier!)
+        }
+        
         shortDescription = dictionary["description"] as? String
         
         let coverUrlKey:NSString = "cover_url"

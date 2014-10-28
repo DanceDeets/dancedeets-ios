@@ -29,31 +29,7 @@ class EventDetailTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        /*
-        if let imgUrl = event?.eventImageUrl{
-            // Download an NSData representation of the image at the URL
-            let request: NSURLRequest = NSURLRequest(URL: imgUrl)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                if error == nil {
-                    let newImage:UIImage? = UIImage(data: data)
-                    let height = newImage!.size.height
-                    self.coverImage = UIImageView(image: newImage)
-                    self.coverImage?.contentMode = UIViewContentMode.ScaleAspectFill
-                    self.coverImage?.frame = CGRectMake(0, 0, self.tableView.frame.size.width, height)
-                    
-                    // Store the image in to our cache
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.tableView.tableHeaderView = self.coverImage
-                    })
-                }
-                else {
-                    println("Error: \(error.localizedDescription)")
-                }
-            })
-        }
-        */
-        
+
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
         self.title = event?.title

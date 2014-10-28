@@ -28,10 +28,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFd-8w-USt" userLabel="mainView">
-                                                    <rect key="frame" x="15" y="13" width="570" height="379"/>
+                                                    <rect key="frame" x="15" y="8" width="570" height="384"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xSC-nI-gkI" userLabel="cardbg">
-                                                            <rect key="frame" x="0.0" y="0.0" width="570" height="379"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="570" height="384"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="amt-tQ-amo" userLabel="photo">
                                                                     <rect key="frame" x="0.0" y="0.0" width="570" height="260"/>
@@ -102,10 +102,10 @@
                                                                     </variation>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6de-08-dTY">
-                                                                    <rect key="frame" x="0.0" y="260" width="570" height="119"/>
+                                                                    <rect key="frame" x="0.0" y="260" width="570" height="124"/>
                                                                     <subviews>
                                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Event Descripti" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgI-E8-16R" userLabel="descriptionLabel">
-                                                                            <rect key="frame" x="10" y="5" width="550" height="104"/>
+                                                                            <rect key="frame" x="10" y="5" width="550" height="109"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -182,7 +182,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="EFd-8w-USt" secondAttribute="bottom" id="OhW-5X-jdo"/>
-                                                <constraint firstItem="EFd-8w-USt" firstAttribute="top" secondItem="mBd-0A-QV0" secondAttribute="topMargin" constant="5" id="g9k-IQ-P6n"/>
+                                                <constraint firstItem="EFd-8w-USt" firstAttribute="top" secondItem="mBd-0A-QV0" secondAttribute="topMargin" id="g9k-IQ-P6n"/>
                                                 <constraint firstItem="EFd-8w-USt" firstAttribute="leading" secondItem="mBd-0A-QV0" secondAttribute="leading" constant="15" id="mFg-uL-tRw"/>
                                                 <constraint firstAttribute="trailing" secondItem="EFd-8w-USt" secondAttribute="trailing" constant="15" id="vdj-mR-FbJ"/>
                                             </constraints>
@@ -242,6 +242,7 @@
                         <outlet property="tableView" destination="4Wc-vY-N88" id="DET-Sb-fjC"/>
                         <segue destination="SiB-h9-pTV" kind="show" identifier="showSettingsSegue" id="f8c-bx-8iK"/>
                         <segue destination="OvV-49-RBz" kind="show" identifier="showEventSegue" id="alv-45-T3Q"/>
+                        <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="SbT-as-SGu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="84v-6L-ZDe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -368,6 +369,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iJD-uf-RDg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1993" y="-665"/>
+        </scene>
+        <!--Event Detail View Controller-->
+        <scene sceneID="lcM-bZ-PCu">
+            <objects>
+                <viewController id="2zh-F8-7u4" customClass="EventDetailViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0ZW-Sa-LXs"/>
+                        <viewControllerLayoutGuide type="bottom" id="Rdq-Mj-e56"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hfc-7c-85b">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="Adr-pS-5N9">
+                        <barButtonItem key="rightBarButtonItem" title="Item" systemItem="action" id="0RO-QW-f1k">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="shareButtonTapped:" destination="2zh-F8-7u4" id="KFn-3l-VCD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Tr-Mo-faF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1247" y="119"/>
         </scene>
         <!--Event-->
         <scene sceneID="0Eg-yT-69O">
@@ -540,7 +568,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XBj-RO-jI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1993" y="96"/>
+            <point key="canvasLocation" x="1993" y="93"/>
         </scene>
         <!--Face Book Login View Controller-->
         <scene sceneID="w5m-Gb-xdx">

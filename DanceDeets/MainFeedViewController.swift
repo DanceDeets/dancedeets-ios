@@ -97,7 +97,10 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showEventSegue"{
             var destination:EventDetailTableViewController? = segue.destinationViewController as?EventDetailTableViewController
-            destination?.event = sender as Event?
+            destination?.event = sender as? Event
+        }else if segue.identifier == "eventDetailSegue"{
+            var destination:EventDetailViewController? = segue.destinationViewController as? EventDetailViewController
+            destination?.event = sender as? Event
         }
     }
     
@@ -136,11 +139,11 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if(tableView == searchResultsTableView){
-            return CGFloat.min
-        }else{
-            return CGFloat.min
-        }
+        return CGFloat.min
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.min
     }
     
 
@@ -148,7 +151,8 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
         var cell:EventTableViewCell? = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell
         if(tableView == self.tableView){
             let selectedEvent:Event = events[indexPath.row]
-            performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+            //performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+            performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)
         }else if(tableView == searchResultsTableView){
             let selectedEvent:Event = filteredEvents[indexPath.row]
             self.searchController?.active = false
@@ -168,10 +172,10 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
                     cell.eventPhoto?.image = image
                 }else{
                     cell.eventPhoto?.image = nil
-                    var imgUrl = event.eventImageUrl!
                     
                     // Download an NSData representation of the image at the URL
-                    let request: NSURLRequest = NSURLRequest(URL: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: event.eventImageUrl!)
+                    
                     NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
                         if error == nil {
                             let newImage = UIImage(data: data)
@@ -282,18 +286,20 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     {
         var tbvc:UITableViewController = UITableViewController(style: UITableViewStyle.Plain)
         searchResultsTableView = tbvc.tableView
-        tbvc.tableView.backgroundColor = UIColor.clearColor()
+        searchResultsTableView?.backgroundColor = UIColor.clearColor()
         tbvc.tableView.delegate = self
         tbvc.tableView.dataSource = self
         
         self.searchController = UISearchController(searchResultsController: tbvc)
         self.searchController?.searchResultsUpdater = self
         self.searchController?.searchBar.barStyle = UIBarStyle.Black
+        self.searchController?.searchBar.searchBarStyle = UISearchBarStyle.Minimal
         self.searchController?.searchBar.tintColor = UIColor.whiteColor()
         self.searchController?.searchBar.placeholder = "Search Dance Events"
         
         self.searchController?.searchBar.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.searchController!.searchBar.frame.size.width, height: 44))
         self.tableView.tableHeaderView = self.searchController?.searchBar
+        self.searchController?.dimsBackgroundDuringPresentation = true
         self.searchController?.hidesNavigationBarDuringPresentation = false
         
         tbvc.tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
@@ -303,7 +309,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     {
         self.view.backgroundColor = UIColor(red: 119.0/255.0, green: 120.0/255.0, blue: 124.0/255.0, alpha: 1)
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"Back", style: UIBarButtonItemStyle.Plain, target: nil, action:nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style: UIBarButtonItemStyle.Plain, target: nil, action:nil)
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName:FontFactory.navigationTitleFont()]
         
         tableView.backgroundView = UIView()

@@ -33,6 +33,7 @@
 		1DB901CC19E1B3580018B434 /* CustomCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */; };
 		1DFB3B4919F8B0C400CF4A72 /* MainFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */; };
 		1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */; };
+		1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCityTableViewCell.swift; sourceTree = "<group>"; };
 		1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedViewController.swift; sourceTree = "<group>"; };
 		1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,9 +201,10 @@
 			isa = PBXGroup;
 			children = (
 				1D0D92A219D52DE8003E7C14 /* EventDetailTableViewController.swift */,
+				1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */,
 				1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */,
-				1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */,
 				1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */,
+				1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				1DB901CC19E1B3580018B434 /* CustomCityTableViewCell.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1D8A064019CDE605004607B6 /* Event.swift in Sources */,
+				1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */,
 				1DB901C519E0856E0018B434 /* SettingsTableViewController.swift in Sources */,
 				1DFB3B4919F8B0C400CF4A72 /* MainFeedViewController.swift in Sources */,
 				1D0D92A319D52DE8003E7C14 /* EventDetailTableViewController.swift in Sources */,
