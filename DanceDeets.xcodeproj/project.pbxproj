@@ -34,6 +34,8 @@
 		1DFB3B4919F8B0C400CF4A72 /* MainFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */; };
 		1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */; };
 		1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */; };
+		1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B5119FF575C00CF4A72 /* EventKit.framework */; };
+		1DFB3B5419FF575C00CF4A72 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedViewController.swift; sourceTree = "<group>"; };
 		1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
+		1DFB3B5119FF575C00CF4A72 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */,
+				1DFB3B5419FF575C00CF4A72 /* EventKitUI.framework in Frameworks */,
 				1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */,
 				1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */,
 				1D43346A19D738F0001A5381 /* FacebookSDK.framework in Frameworks */,
@@ -127,6 +133,8 @@
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
+				1DFB3B5119FF575C00CF4A72 /* EventKit.framework */,
+				1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */,
 				1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */,
 				1D43346919D738F0001A5381 /* FacebookSDK.framework */,
 				1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */,

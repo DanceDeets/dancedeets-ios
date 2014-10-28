@@ -22,8 +22,9 @@ public class Event: NSObject {
     let location:NSString?
     let identifier:NSString?
     let displayTime:NSString?
-    var facebookUrl:NSURL?
+    let facebookUrl:NSURL?
     
+    var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
     
     init(dictionary:NSDictionary){
         super.init()
