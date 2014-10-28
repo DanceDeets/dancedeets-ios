@@ -100,6 +100,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
             destination?.event = sender as? Event
         }else if segue.identifier == "eventDetailSegue"{
             var destination:EventDetailViewController? = segue.destinationViewController as? EventDetailViewController
+            let event = sender as? Event
             destination?.event = sender as? Event
         }
     }

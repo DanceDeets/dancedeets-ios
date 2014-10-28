@@ -381,9 +381,31 @@
                     <view key="view" contentMode="scaleToFill" id="hfc-7c-85b">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ljZ-CE-TPC">
+                                <rect key="frame" x="0.0" y="64" width="600" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="om4-AB-ive"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="ljZ-CE-TPC" secondAttribute="centerX" id="CCu-LT-Kld"/>
+                            <constraint firstItem="ljZ-CE-TPC" firstAttribute="top" secondItem="0ZW-Sa-LXs" secondAttribute="bottom" id="Q32-XQ-epf"/>
+                            <constraint firstItem="ljZ-CE-TPC" firstAttribute="width" secondItem="hfc-7c-85b" secondAttribute="width" id="hC0-Mb-R2n"/>
+                            <constraint firstItem="ljZ-CE-TPC" firstAttribute="top" secondItem="hfc-7c-85b" secondAttribute="topMargin" id="yzq-f4-agC"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="yzq-f4-agC"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
+                    <connections>
+                        <outlet property="coverImageView" destination="ljZ-CE-TPC" id="Z58-FX-tAl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Tr-Mo-faF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
