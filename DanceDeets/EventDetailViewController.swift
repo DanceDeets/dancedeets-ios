@@ -9,24 +9,21 @@
 import UIKit
 import EventKit
 
-class EventDetailViewController: UIViewController {
+class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate {
 
     var event:Event?
     @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak var eventTitleLabel: UILabel!
     
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // nav bar buttons
-        let image = UIImage(named: "calendar")
-        var calendarButton = UIBarButtonItem(image: image, style: UIBarButtonItemStyle.Plain, target: self, action: "calendarButtonTapped:")
-        
-        
-        var shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
-        
-        self.navigationItem.rightBarButtonItems = [shareButton, calendarButton]
-        
+        eventTitleLabel.text = event?.title
+        eventTitleLabel.font = UIFont(name:"BebasNeueBold",size: 34)
+ 
+        navigationController?.interactivePopGestureRecognizer.enabled = true
+        navigationController?.interactivePopGestureRecognizer.delegate = self
         
         // TODO Use cached image from previous controller
         let request: NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
@@ -42,12 +39,34 @@ class EventDetailViewController: UIViewController {
             }
         })
     }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
     // MARK: Action
+    @IBAction func backButtonTapped(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func mapButtonTapped(sender: AnyObject) {
+        println("mapped button tapped")
+    }
+    
     @IBAction func calendarButtonTapped(sender: AnyObject) {
         var store = EKEventStore()
         store.requestAccessToEntityType(EKEntityTypeEvent) { (granted:Bool, error:NSError!) -> Void in
