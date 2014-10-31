@@ -10,12 +10,12 @@ import UIKit
 import CoreLocation
 import Foundation
 
-class EventDetailTableViewController: UITableViewController {
+class EventDetailTableViewController: UITableViewController, UIGestureRecognizerDelegate {
     
     var event:Event?
     let geocoder:CLGeocoder = CLGeocoder()
-    var coverImage:UIImageView?
 
+    @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var eventStartTimeLabel: UILabel!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventEndTimeLabel: UILabel!
@@ -23,17 +23,51 @@ class EventDetailTableViewController: UITableViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var eventTagsLabel: UILabel!
     
-    func backButtonTapped(){
-        self.navigationController?.popViewControllerAnimated(true)
+ 
+    @IBAction func shareButtonTapped(sender: AnyObject) {
+        // Simple iOS action sheet
+        var sharingItems:[AnyObject] = []
+        
+        if let title = event?.title{
+            sharingItems.append("Check out this event: " + title)
+        }
+        
+        if let url = event?.facebookUrl{
+            sharingItems.append(url)
+        }
+        
+        let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
+        self.presentViewController(activityViewController, animated: true, completion: nil)
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+       // self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.hidesBarsOnSwipe = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+      //  self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.hidesBarsOnSwipe = false
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.backgroundView = UIView()
+        tableView.backgroundColor = UIColor.blackColor()
+        tableView.rowHeight = UITableViewAutomaticDimension
         
-        self.title = event?.title
-        self.eventTitleLabel.text = event?.title
+     //   self.title = event?.title
         self.eventVenueLabel.text = event?.venue
         self.descriptionLabel.text = event?.shortDescription
         self.eventTagsLabel.text = event?.tagString
@@ -51,6 +85,26 @@ class EventDetailTableViewController: UITableViewController {
         }else{
             eventEndTimeLabel.text = ""
         }
+        
+        eventTitleLabel.text = event?.title
+        eventTitleLabel.font = UIFont(name:"BebasNeueBold",size: 34)
+        
+        navigationController?.interactivePopGestureRecognizer.enabled = true
+        navigationController?.interactivePopGestureRecognizer.delegate = self
+        
+        // TODO Use cached image from previous controller
+        let request: NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+            if error == nil {
+                let newImage = UIImage(data: data)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.coverImageView.image = newImage
+                })
+            }
+            else {
+                println("Error: \(error.localizedDescription)")
+            }
+        })
     }
 
 }

@@ -152,8 +152,8 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
         var cell:EventTableViewCell? = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell
         if(tableView == self.tableView){
             let selectedEvent:Event = events[indexPath.row]
-            //performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
-            performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)
+            performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+           // performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)
         }else if(tableView == searchResultsTableView){
             let selectedEvent:Event = filteredEvents[indexPath.row]
             self.searchController?.active = false
