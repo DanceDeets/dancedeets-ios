@@ -103,6 +103,14 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
                 println("Error: \(error.localizedDescription)")
             }
         })
+   
+        // TODO dont need to do this every time
+        event?.getMoreDetails({ (error:NSError!) -> Void in
+            if(error != nil){
+                self.tableView.reloadData()
+            }
+        })
+        
     }
 
 }

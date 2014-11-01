@@ -23,7 +23,8 @@ public class Event: NSObject {
     let identifier:NSString?
     let displayTime:NSString?
     let facebookUrl:NSURL?
-    var placemark:CLPlacemark?
+    var displayAddress:NSString?
+    var geoloc:CLLocation?
     var admins:[EventAdmin]?
     
     var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
@@ -96,7 +97,7 @@ public class Event: NSObject {
             }else{
                 var jsonError:NSError?
                 var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
-                if (jsonError != nil && json != nil) {
+                if (jsonError == nil && json != nil) {
                     if let admins = json!["admins"] as? NSArray{
                         for admin in admins{
                             if let adminDict = admin as? NSDictionary{
@@ -109,7 +110,36 @@ public class Event: NSObject {
                             }
                         }
                     }
-                    println(json)
+                    
+                    if let venue:NSDictionary? = json!["venue"] as? NSDictionary{
+                        if let geocodeDict:NSDictionary? = venue!["geocode"] as? NSDictionary{
+                            let lat:CLLocationDegrees = geocodeDict!["latitude"] as CLLocationDegrees
+                            let long:CLLocationDegrees = geocodeDict!["longitude"] as CLLocationDegrees
+                            self.geoloc = CLLocation(latitude: lat, longitude: long)
+                        }
+                        
+                        if let address:NSDictionary? = venue!["address"] as? NSDictionary{
+                            var displayAddress = ""
+                            
+                            if let street:String? = address!["street"] as? String{
+                                displayAddress += street!
+                                displayAddress += ", "
+                            }
+                            if let city:String? = address!["city"] as? String{
+                                displayAddress += city!
+                                displayAddress += ", "
+                            }
+                            if let state:String? = address!["state"] as? String{
+                                displayAddress += state!
+                                displayAddress += ", "
+                            }
+                            if let zip:String? = address!["zip"] as? String{
+                                displayAddress += zip!
+                            }
+                            self.displayAddress = displayAddress
+                        }
+                    }
+                    
                     completion(nil)
                 }
                 else {
@@ -119,8 +149,6 @@ public class Event: NSObject {
         })
         task.resume()
     }
-    
-    
     
     public class func loadEventsForCity(city:String, completion: (([Event]!, NSError!)->Void)) -> Void
     {
