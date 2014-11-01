@@ -46,14 +46,13 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-       // self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.hidesBarsOnSwipe = true
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-      //  self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.hidesBarsOnSwipe = false
+        self.navigationController?.navigationBarHidden = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -67,7 +66,6 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
         tableView.backgroundColor = UIColor.blackColor()
         tableView.rowHeight = UITableViewAutomaticDimension
         
-     //   self.title = event?.title
         self.eventVenueLabel.text = event?.venue
         self.descriptionLabel.text = event?.shortDescription
         self.eventTagsLabel.text = event?.tagString

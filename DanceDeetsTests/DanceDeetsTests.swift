@@ -29,7 +29,24 @@ class DanceDeetsTests: XCTestCase {
             expectation.fulfill()
             XCTAssert(events.count > 0)
         })
-        
+        waitForExpectationsWithTimeout(10, handler:{ error in
+        })
+    }
+    
+    func testEventDetailRetrival(){
+        let expectation = expectationWithDescription("Event Detail Test")
+        Event.loadEventsForCity("New York City", completion: {(events:[Event]!, error) in
+            //expectation.fulfill()
+            XCTAssert(events.count > 0)
+            XCTAssert(error == nil)
+            
+            let firstEvent:Event? = events.first
+            firstEvent?.getMoreDetails({ (error:NSError!) -> Void in
+                XCTAssert(error == nil)
+                expectation.fulfill()
+            })
+            
+        })
         waitForExpectationsWithTimeout(10, handler:{ error in
         })
         

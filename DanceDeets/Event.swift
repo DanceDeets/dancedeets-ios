@@ -23,11 +23,14 @@ public class Event: NSObject {
     let identifier:NSString?
     let displayTime:NSString?
     let facebookUrl:NSURL?
+    var placemark:CLPlacemark?
+    var admins:[EventAdmin]?
     
     var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
     
     init(dictionary:NSDictionary){
         super.init()
+        admins = []
         venue = dictionary["city"] as? String
         title = dictionary["title"] as? String
         identifier = dictionary["id"] as? String
@@ -80,6 +83,44 @@ public class Event: NSObject {
             keywords = keywordString.componentsSeparatedByString(",")
         }
     }
+    
+    public func getMoreDetails(completion: ((NSError!)->Void)) -> Void
+    {
+        var urlString = "http://www.dancedeets.com/api/events/" + identifier!
+        let url = NSURL(string:urlString)
+        
+        var session = NSURLSession.sharedSession()
+        var task:NSURLSessionTask = session.dataTaskWithURL(url!, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
+            if(error != nil){
+                completion(error)
+            }else{
+                var jsonError:NSError?
+                var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
+                if (jsonError != nil && json != nil) {
+                    if let admins = json!["admins"] as? NSArray{
+                        for admin in admins{
+                            if let adminDict = admin as? NSDictionary{
+                                let name:String? = admin["name"] as? String
+                                let identifier:String? = admin["id"] as? String
+                                if name != nil && identifier != nil{
+                                    var newAdmin = EventAdmin(name:name!, identifier:identifier!)
+                                    self.admins?.append(newAdmin)
+                                }
+                            }
+                        }
+                    }
+                    println(json)
+                    completion(nil)
+                }
+                else {
+                    completion(jsonError)
+                }
+            }
+        })
+        task.resume()
+    }
+    
+    
     
     public class func loadEventsForCity(city:String, completion: (([Event]!, NSError!)->Void)) -> Void
     {
