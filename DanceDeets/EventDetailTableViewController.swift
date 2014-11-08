@@ -14,10 +14,8 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
     
     var event:Event?
 
-    @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var eventStartTimeLabel: UILabel!
     @IBOutlet weak var eventEndTimeLabel: UILabel!
-    @IBOutlet weak var eventVenueLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var eventTagsLabel: UILabel!
     
@@ -29,6 +27,7 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
         tableView.backgroundColor = UIColor.blackColor()
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        /*
         self.eventVenueLabel.text = event?.venue
         self.descriptionLabel.text = event?.shortDescription
         self.eventTagsLabel.text = event?.tagString
@@ -48,9 +47,11 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
         }
         
         eventVenueLabel.font = UIFont(name: "BebasNeueBold", size: 20)
+*/
         
         self.title = event?.title
         
+        /*
         // TODO Use cached image from previous controller
         let request: NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
@@ -64,6 +65,7 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
                 println("Error: \(error.localizedDescription)")
             }
         })
+*/
         
         // TODO dont need to do this every time
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -104,13 +106,17 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
     
     // MARK: UITableViewDataSource 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as EventDetailCoverCell
         
         return cell
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return 1
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
     }
     
     

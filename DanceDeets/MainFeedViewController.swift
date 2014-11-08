@@ -173,26 +173,16 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
                     cell.eventPhoto?.image = image
                 }else{
                     cell.eventPhoto?.image = nil
-                    
-                    var downloadTask:NSURLSessionDownloadTask =
-                    NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
-                        completionHandler: { (location:NSURL!, resp:NSURLResponse!, error:NSError!) -> Void in
-                            if(error == nil){
-                                if let data:NSData? = NSData(contentsOfURL: location){
-                                    if let newImage = UIImage(data:data!){
-                                        ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
-                                        
-                                        dispatch_async(dispatch_get_main_queue(), {
-                                            if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
-                                                cellToUpdate.eventPhoto?.image = newImage
-                                            }
-                                        })
-                                    }
+
+                    event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
+                        if(image != nil && error == nil){
+                            dispatch_async(dispatch_get_main_queue(), {
+                                if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
+                                    cellToUpdate.eventPhoto?.image = image
                                 }
-                            }
-                            
+                            })
+                        }
                     })
-                    downloadTask.resume()
                 }
             }
             

@@ -85,6 +85,26 @@ public class Event: NSObject {
         }
     }
     
+    public func downloadCoverImage(completion:((UIImage!,NSError!)->Void)) ->Void
+    {
+        let imageRequest:NSURLRequest = NSURLRequest(URL: eventImageUrl!)
+        var downloadTask:NSURLSessionDownloadTask =
+        NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
+            completionHandler: { (location:NSURL!, resp:NSURLResponse!, error:NSError!) -> Void in
+                if(error == nil){
+                    if let data:NSData? = NSData(contentsOfURL: location){
+                        if let newImage = UIImage(data:data!){
+                            ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
+                            completion(newImage,nil)
+                        }
+                    }
+                }else{
+                    completion(nil,error)
+                }
+        })
+        downloadTask.resume()
+    }
+    
     public func getMoreDetails(completion: ((NSError!)->Void)) -> Void
     {
         var urlString = "http://www.dancedeets.com/api/events/" + identifier!

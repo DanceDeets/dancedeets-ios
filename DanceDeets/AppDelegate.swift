@@ -13,6 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var fbGraphUserObjectId:String?
+    let urlCacheMemoryCapacityMB = 24
+    let urlCacheDiskCapacityMB = 128
     
     class func sharedInstance() -> AppDelegate
     {
@@ -32,6 +34,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         FBLoginView.self
         FBProfilePictureView.self
+        
+        // ios url cache defaults to 512KB/10MB. The cover photos can get pretty big so up the defaults
+        let sharedURLCache = NSURLCache(memoryCapacity: urlCacheMemoryCapacityMB*1024*1024,
+            diskCapacity: urlCacheDiskCapacityMB*1024*1024, diskPath: nil)
+        NSURLCache.setSharedURLCache(sharedURLCache)
+        
         return true
     }
     

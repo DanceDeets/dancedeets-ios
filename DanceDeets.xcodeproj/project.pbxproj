@@ -25,6 +25,7 @@
 		1D8856C719CDE510005FFDB2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */; };
 		1D8856D319CDE511005FFDB2 /* DanceDeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */; };
 		1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */; };
+		1D89F6AA1A0ECDC100D3E4BE /* EventDetailCoverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D89F6A91A0ECDC100D3E4BE /* EventDetailCoverCell.swift */; };
 		1D8A064019CDE605004607B6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A063F19CDE605004607B6 /* Event.swift */; };
 		1D8A064319CE0CB8004607B6 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */; };
 		1DA51AE119F2F01300079DF1 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DA51AE019F2F01300079DF1 /* Montserrat-Regular.ttf */; };
@@ -73,6 +74,7 @@
 		1D8856D119CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanceDeetsTests.swift; sourceTree = "<group>"; };
 		1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		1D89F6A91A0ECDC100D3E4BE /* EventDetailCoverCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailCoverCell.swift; sourceTree = "<group>"; };
 		1D8A063F19CDE605004607B6 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		1DA51AE019F2F01300079DF1 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */,
 				1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */,
 				1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */,
+				1D89F6A91A0ECDC100D3E4BE /* EventDetailCoverCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				1D8A064319CE0CB8004607B6 /* EventTableViewCell.swift in Sources */,
 				1D43348119D75873001A5381 /* MainAppLabel.swift in Sources */,
 				1DB901CC19E1B3580018B434 /* CustomCityTableViewCell.swift in Sources */,
+				1D89F6AA1A0ECDC100D3E4BE /* EventDetailCoverCell.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1D8A064019CDE605004607B6 /* Event.swift in Sources */,
 				1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */,

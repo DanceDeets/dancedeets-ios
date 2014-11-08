@@ -48,14 +48,14 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Venue Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZr-6j-TzU" userLabel="venueLabel">
-                                                                    <rect key="frame" x="10" y="10" width="550" height="26"/>
+                                                                    <rect key="frame" x="10" y="10" width="550" height="25.5"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cek-8Y-vF7">
-                                                                    <rect key="frame" x="10" y="36" width="83" height="20"/>
+                                                                    <rect key="frame" x="10" y="35.5" width="83" height="19.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <color key="textColor" red="0.23342568676080455" green="0.86782304924653575" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -469,7 +469,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventCoverCell" rowHeight="300" id="ebe-U0-Xh9">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventCoverCell" rowHeight="300" id="ebe-U0-Xh9" customClass="EventDetailCoverCell" customModule="DanceDeets" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ebe-U0-Xh9" id="Big-ZD-pSU">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -490,6 +490,7 @@
                                                 <constraint firstItem="AiP-DB-oC3" firstAttribute="top" secondItem="4h3-pq-gKY" secondAttribute="top" id="4Ga-rP-kfO"/>
                                                 <constraint firstItem="AiP-DB-oC3" firstAttribute="leading" secondItem="4h3-pq-gKY" secondAttribute="leading" id="4k9-ms-hdv"/>
                                                 <constraint firstItem="UFq-Hb-6xk" firstAttribute="height" secondItem="AiP-DB-oC3" secondAttribute="height" id="8GJ-al-fva"/>
+                                                <constraint firstAttribute="height" constant="300" id="Xwj-hL-qnh"/>
                                                 <constraint firstAttribute="trailing" secondItem="AiP-DB-oC3" secondAttribute="trailing" id="gJV-Oc-aWk"/>
                                                 <constraint firstAttribute="bottom" secondItem="AiP-DB-oC3" secondAttribute="bottom" id="gfo-Sm-IAp"/>
                                                 <constraint firstItem="UFq-Hb-6xk" firstAttribute="centerY" secondItem="AiP-DB-oC3" secondAttribute="centerY" id="jjv-ng-JPq"/>
@@ -516,6 +517,10 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="coverImageView" destination="AiP-DB-oC3" id="2BH-ts-yfL"/>
+                                    <outlet property="venueLabel" destination="m3A-Js-26j" id="ka5-A7-vvb"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -531,10 +536,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="coverImageView" destination="AiP-DB-oC3" id="mN6-T1-egL"/>
-                        <outlet property="eventVenueLabel" destination="m3A-Js-26j" id="w3D-Oj-aXa"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XBj-RO-jI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
