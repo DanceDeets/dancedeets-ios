@@ -35,6 +35,7 @@
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="amt-tQ-amo" userLabel="photo">
                                                                     <rect key="frame" x="0.0" y="0.0" width="570" height="260"/>
+                                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="260" id="7yB-rG-oPA"/>
                                                                     </constraints>
@@ -66,29 +67,8 @@
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="55" id="WkR-6o-kLS"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jdq-o7-EvD">
-                                                                    <rect key="frame" x="520" y="205" width="50" height="55"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="40" id="KK7-Ms-Pab"/>
-                                                                        <constraint firstAttribute="width" constant="50" id="nMo-VF-nN0"/>
-                                                                        <constraint firstAttribute="height" constant="40" id="w6K-sH-9ZA"/>
-                                                                    </constraints>
-                                                                    <color key="tintColor" red="0.2334256868" green="0.86782304919999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <state key="normal" image="facebook">
-                                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    </state>
-                                                                    <variation key="default">
-                                                                        <mask key="constraints">
-                                                                            <exclude reference="KK7-Ms-Pab"/>
-                                                                            <exclude reference="w6K-sH-9ZA"/>
-                                                                        </mask>
-                                                                    </variation>
-                                                                    <connections>
-                                                                        <action selector="facebookButtonTapped:" destination="vOO-zD-2Fu" eventType="touchUpInside" id="vrv-kZ-gzx"/>
-                                                                    </connections>
-                                                                </button>
                                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6z-JQ-nU5" userLabel="titleLabel">
-                                                                    <rect key="frame" x="10" y="215" width="510" height="40"/>
+                                                                    <rect key="frame" x="10" y="215" width="550" height="40"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="BHd-PY-hDm"/>
                                                                     </constraints>
@@ -124,14 +104,10 @@
                                                             <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                                                             <constraints>
                                                                 <constraint firstItem="hEO-Ev-S9q" firstAttribute="top" secondItem="xSC-nI-gkI" secondAttribute="top" id="8NU-Gw-0FE"/>
-                                                                <constraint firstItem="Jdq-o7-EvD" firstAttribute="top" secondItem="Plj-ZE-TUP" secondAttribute="top" constant="5" id="Aa1-XY-PdI"/>
                                                                 <constraint firstItem="6de-08-dTY" firstAttribute="top" secondItem="r6z-JQ-nU5" secondAttribute="bottom" id="BDC-Ug-MPn"/>
                                                                 <constraint firstItem="hEO-Ev-S9q" firstAttribute="top" secondItem="iZr-6j-TzU" secondAttribute="top" constant="-10" id="D31-ca-KUe"/>
-                                                                <constraint firstItem="Jdq-o7-EvD" firstAttribute="leading" secondItem="xSC-nI-gkI" secondAttribute="leading" constant="265" id="DYw-tw-hf7"/>
                                                                 <constraint firstItem="amt-tQ-amo" firstAttribute="top" secondItem="xSC-nI-gkI" secondAttribute="top" id="KOj-hu-h7e"/>
                                                                 <constraint firstItem="iZr-6j-TzU" firstAttribute="leading" secondItem="xSC-nI-gkI" secondAttribute="leading" constant="10" id="L3a-t4-FUa"/>
-                                                                <constraint firstItem="Jdq-o7-EvD" firstAttribute="height" secondItem="Plj-ZE-TUP" secondAttribute="height" id="Lkg-Cy-DLn"/>
-                                                                <constraint firstItem="Jdq-o7-EvD" firstAttribute="centerY" secondItem="Plj-ZE-TUP" secondAttribute="centerY" id="NZs-8K-2du"/>
                                                                 <constraint firstAttribute="centerX" secondItem="Plj-ZE-TUP" secondAttribute="centerX" id="URy-5B-n0l"/>
                                                                 <constraint firstAttribute="trailing" secondItem="iZr-6j-TzU" secondAttribute="trailing" constant="10" id="X4U-ry-NKt"/>
                                                                 <constraint firstItem="cek-8Y-vF7" firstAttribute="bottom" secondItem="hEO-Ev-S9q" secondAttribute="bottom" constant="-5" id="XbR-Rh-CWI"/>
@@ -139,7 +115,6 @@
                                                                 <constraint firstAttribute="trailing" secondItem="6de-08-dTY" secondAttribute="trailing" id="ehR-Mh-6TC"/>
                                                                 <constraint firstAttribute="bottom" secondItem="6de-08-dTY" secondAttribute="bottom" id="gLI-pa-PCR"/>
                                                                 <constraint firstAttribute="centerX" secondItem="amt-tQ-amo" secondAttribute="centerX" id="h4c-e5-1jz"/>
-                                                                <constraint firstItem="Plj-ZE-TUP" firstAttribute="top" secondItem="Jdq-o7-EvD" secondAttribute="bottom" constant="10" id="hUi-jJ-yIm"/>
                                                                 <constraint firstAttribute="bottom" secondItem="6de-08-dTY" secondAttribute="bottom" id="lCK-Nr-4c9"/>
                                                                 <constraint firstItem="Plj-ZE-TUP" firstAttribute="top" secondItem="r6z-JQ-nU5" secondAttribute="top" constant="10" id="m2b-jV-SfL"/>
                                                                 <constraint firstItem="Plj-ZE-TUP" firstAttribute="width" secondItem="xSC-nI-gkI" secondAttribute="width" id="mf2-Ld-3V1"/>
@@ -148,24 +123,20 @@
                                                                 <constraint firstItem="6de-08-dTY" firstAttribute="top" secondItem="Plj-ZE-TUP" secondAttribute="bottom" id="oeH-Pc-KqJ"/>
                                                                 <constraint firstItem="hEO-Ev-S9q" firstAttribute="width" secondItem="xSC-nI-gkI" secondAttribute="width" id="p4L-98-igU"/>
                                                                 <constraint firstItem="Plj-ZE-TUP" firstAttribute="bottom" secondItem="r6z-JQ-nU5" secondAttribute="bottom" constant="5" id="sM2-R4-SPb"/>
-                                                                <constraint firstAttribute="trailing" secondItem="r6z-JQ-nU5" secondAttribute="trailing" constant="50" id="tom-pj-D4W"/>
+                                                                <constraint firstAttribute="trailing" secondItem="r6z-JQ-nU5" secondAttribute="trailing" constant="10" id="tom-pj-D4W"/>
                                                                 <constraint firstItem="Plj-ZE-TUP" firstAttribute="top" secondItem="r6z-JQ-nU5" secondAttribute="top" constant="-10" id="ugQ-AU-xdn"/>
                                                                 <constraint firstItem="6de-08-dTY" firstAttribute="leading" secondItem="xSC-nI-gkI" secondAttribute="leading" id="ut6-cu-8w8"/>
                                                                 <constraint firstItem="cek-8Y-vF7" firstAttribute="top" secondItem="iZr-6j-TzU" secondAttribute="bottom" id="v60-Gv-7d0"/>
                                                                 <constraint firstAttribute="centerX" secondItem="hEO-Ev-S9q" secondAttribute="centerX" id="wJw-ls-R9d"/>
                                                                 <constraint firstItem="Plj-ZE-TUP" firstAttribute="bottom" secondItem="amt-tQ-amo" secondAttribute="bottom" id="xGh-HM-JS0"/>
                                                                 <constraint firstItem="r6z-JQ-nU5" firstAttribute="top" secondItem="amt-tQ-amo" secondAttribute="bottom" constant="10" id="yFN-M6-PF1"/>
-                                                                <constraint firstAttribute="trailing" secondItem="Jdq-o7-EvD" secondAttribute="trailing" id="yz6-m5-0Gq"/>
                                                             </constraints>
                                                             <variation key="default">
                                                                 <mask key="constraints">
-                                                                    <exclude reference="hUi-jJ-yIm"/>
                                                                     <exclude reference="m2b-jV-SfL"/>
                                                                     <exclude reference="yFN-M6-PF1"/>
                                                                     <exclude reference="BDC-Ug-MPn"/>
                                                                     <exclude reference="gLI-pa-PCR"/>
-                                                                    <exclude reference="Aa1-XY-PdI"/>
-                                                                    <exclude reference="DYw-tw-hf7"/>
                                                                 </mask>
                                                             </variation>
                                                         </view>
@@ -799,7 +770,6 @@
     <resources>
         <image name="back" width="25" height="25"/>
         <image name="calendar" width="25" height="25"/>
-        <image name="facebook" width="25" height="25"/>
         <image name="map_marker" width="25" height="25"/>
         <image name="settings-50" width="25" height="25"/>
         <image name="upload" width="25" height="25"/>

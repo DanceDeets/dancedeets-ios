@@ -24,6 +24,7 @@
 		1D8856C419CDE510005FFDB2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C319CDE510005FFDB2 /* Images.xcassets */; };
 		1D8856C719CDE510005FFDB2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */; };
 		1D8856D319CDE511005FFDB2 /* DanceDeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */; };
+		1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */; };
 		1D8A064019CDE605004607B6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A063F19CDE605004607B6 /* Event.swift */; };
 		1D8A064319CE0CB8004607B6 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */; };
 		1DA51AE119F2F01300079DF1 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DA51AE019F2F01300079DF1 /* Montserrat-Regular.ttf */; };
@@ -71,6 +72,7 @@
 		1D8856CC19CDE510005FFDB2 /* DanceDeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DanceDeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856D119CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanceDeetsTests.swift; sourceTree = "<group>"; };
+		1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		1D8A063F19CDE605004607B6 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		1DA51AE019F2F01300079DF1 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				1DB901C719E0999E0018B434 /* FontFactory.swift */,
+				1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
 				1D0D92A319D52DE8003E7C14 /* EventDetailTableViewController.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,
+				1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */,
 				1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

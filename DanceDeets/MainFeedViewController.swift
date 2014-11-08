@@ -23,7 +23,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     let estimatedEventRowHeight:CGFloat = 600
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
-    var imageCache = [String : UIImage]()
+    //var imageCache = [String : UIImage]()
     var searchMode:MainFeedSearchMode = MainFeedSearchMode.CurrentLocation
     var searchResultsTableView:UITableView?
     var searchController:UISearchController?
@@ -168,30 +168,31 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
             cell.updateForEvent(event)
             
             if event.identifier != nil && event.eventImageUrl != nil{
-                if let image = imageCache[event.identifier!] {
+                let imageRequest:NSURLRequest = NSURLRequest(URL: event.eventImageUrl!)
+                if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
                     cell.eventPhoto?.image = image
                 }else{
                     cell.eventPhoto?.image = nil
                     
-                    // Download an NSData representation of the image at the URL
-                    let request: NSURLRequest = NSURLRequest(URL: event.eventImageUrl!)
-                    
-                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                        if error == nil {
-                            let newImage = UIImage(data: data)
-                            
-                            // Store the image in to our cache
-                            self.imageCache[event.identifier!] = newImage
-                            dispatch_async(dispatch_get_main_queue(), {
-                                if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
-                                    cellToUpdate.eventPhoto?.image = newImage
+                    var downloadTask:NSURLSessionDownloadTask =
+                    NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
+                        completionHandler: { (location:NSURL!, resp:NSURLResponse!, error:NSError!) -> Void in
+                            if(error == nil){
+                                if let data:NSData? = NSData(contentsOfURL: location){
+                                    if let newImage = UIImage(data:data!){
+                                        ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
+                                        
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
+                                                cellToUpdate.eventPhoto?.image = newImage
+                                            }
+                                        })
+                                    }
                                 }
-                            })
-                        }
-                        else {
-                            println("Error: \(error.localizedDescription)")
-                        }
+                            }
+                            
                     })
+                    downloadTask.resume()
                 }
             }
             
