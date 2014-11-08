@@ -103,12 +103,16 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
                 println("Error: \(error.localizedDescription)")
             }
         })
-   
+        
         // TODO dont need to do this every time
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         event?.getMoreDetails({ (error:NSError!) -> Void in
-            if(error != nil){
-                self.tableView.reloadData()
-            }
+            dispatch_async(dispatch_get_main_queue(), {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                if(error != nil){
+                    self.tableView.reloadData()
+                }
+            })
         })
         
     }

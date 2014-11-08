@@ -139,7 +139,6 @@ public class Event: NSObject {
                             self.displayAddress = displayAddress
                         }
                     }
-                    
                     completion(nil)
                 }
                 else {

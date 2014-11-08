@@ -228,7 +228,7 @@
                                 <action selector="refreshTapped:" destination="org-Pd-NdN" id="qjc-cH-WvA"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="settings-50" style="plain" id="Xsu-aL-Q7H">
+                        <barButtonItem key="rightBarButtonItem" image="settings-50" id="Xsu-aL-Q7H">
                             <inset key="imageInsets" minX="-4" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -282,13 +282,6 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="wnk-2f-hIr">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wnk-2f-hIr" id="Y9Z-sA-Klz">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="basicSwitchTableCell" id="f4C-UR-Q03" customClass="BasicSwitchTableCell" customModule="DanceDeets" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -692,7 +685,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="csR-IG-W3R">
-                        <barButtonItem key="rightBarButtonItem" title="Item" systemItem="action" id="RvG-LV-ufT">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="RvG-LV-ufT">
                             <connections>
                                 <action selector="shareButtonTapped:" destination="OvV-49-RBz" id="V5z-vT-yIt"/>
                             </connections>
