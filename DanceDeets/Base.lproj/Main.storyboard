@@ -479,27 +479,33 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AiP-DB-oC3">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 </imageView>
-                                                <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFq-Hb-6xk">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="AiP-DB-oC3" firstAttribute="top" secondItem="4h3-pq-gKY" secondAttribute="top" id="4Ga-rP-kfO"/>
                                                 <constraint firstItem="AiP-DB-oC3" firstAttribute="leading" secondItem="4h3-pq-gKY" secondAttribute="leading" id="4k9-ms-hdv"/>
-                                                <constraint firstItem="UFq-Hb-6xk" firstAttribute="height" secondItem="AiP-DB-oC3" secondAttribute="height" id="8GJ-al-fva"/>
                                                 <constraint firstAttribute="height" constant="300" id="Xwj-hL-qnh"/>
                                                 <constraint firstAttribute="trailing" secondItem="AiP-DB-oC3" secondAttribute="trailing" id="gJV-Oc-aWk"/>
                                                 <constraint firstAttribute="bottom" secondItem="AiP-DB-oC3" secondAttribute="bottom" id="gfo-Sm-IAp"/>
-                                                <constraint firstItem="UFq-Hb-6xk" firstAttribute="centerY" secondItem="AiP-DB-oC3" secondAttribute="centerY" id="jjv-ng-JPq"/>
-                                                <constraint firstItem="UFq-Hb-6xk" firstAttribute="width" secondItem="AiP-DB-oC3" secondAttribute="width" id="mG9-gN-col"/>
-                                                <constraint firstItem="UFq-Hb-6xk" firstAttribute="centerX" secondItem="AiP-DB-oC3" secondAttribute="centerX" id="vF9-iY-xKo"/>
                                             </constraints>
                                         </view>
+                                        <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3hj-Yw-B8X">
+                                            <rect key="frame" x="0.0" y="235" width="600" height="65"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="65" id="CAy-zM-Lbd"/>
+                                                <constraint firstAttribute="height" constant="65" id="wiX-qI-VXY"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="CAy-zM-Lbd"/>
+                                                </mask>
+                                            </variation>
+                                        </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venue Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m3A-Js-26j">
-                                            <rect key="frame" x="15" y="269" width="570" height="21"/>
+                                            <rect key="frame" x="15" y="274.5" width="570" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="1" green="0.801963906" blue="0.52850779020000005" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -507,14 +513,25 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstItem="m3A-Js-26j" firstAttribute="bottom" secondItem="3hj-Yw-B8X" secondAttribute="bottom" constant="-5" id="CCG-v8-0Ch"/>
                                         <constraint firstAttribute="trailing" secondItem="m3A-Js-26j" secondAttribute="trailing" constant="15" id="Mn0-QW-ufW"/>
                                         <constraint firstAttribute="bottom" secondItem="4h3-pq-gKY" secondAttribute="bottom" id="Rbv-Iz-zG3"/>
                                         <constraint firstItem="4h3-pq-gKY" firstAttribute="leading" secondItem="Big-ZD-pSU" secondAttribute="leading" id="Udc-he-0AY"/>
-                                        <constraint firstAttribute="bottom" secondItem="m3A-Js-26j" secondAttribute="bottom" constant="10" id="VFX-Sp-0Eu"/>
                                         <constraint firstItem="m3A-Js-26j" firstAttribute="leading" secondItem="Big-ZD-pSU" secondAttribute="leading" constant="15" id="VoT-KM-Bmw"/>
                                         <constraint firstItem="4h3-pq-gKY" firstAttribute="top" secondItem="Big-ZD-pSU" secondAttribute="top" id="XXq-Wb-vpQ"/>
+                                        <constraint firstAttribute="bottom" secondItem="3hj-Yw-B8X" secondAttribute="bottom" id="Y8T-Np-bV2"/>
+                                        <constraint firstAttribute="bottom" secondItem="m3A-Js-26j" secondAttribute="bottom" constant="5" id="YtG-ez-XTt"/>
+                                        <constraint firstItem="m3A-Js-26j" firstAttribute="top" secondItem="3hj-Yw-B8X" secondAttribute="top" constant="10" id="av3-nD-jNP"/>
+                                        <constraint firstAttribute="trailing" secondItem="3hj-Yw-B8X" secondAttribute="trailing" id="hAg-Mf-qGs"/>
                                         <constraint firstAttribute="trailing" secondItem="4h3-pq-gKY" secondAttribute="trailing" id="kt7-dn-Qe1"/>
+                                        <constraint firstItem="3hj-Yw-B8X" firstAttribute="leading" secondItem="Big-ZD-pSU" secondAttribute="leading" id="rox-qY-LNX"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="CCG-v8-0Ch"/>
+                                            <exclude reference="av3-nD-jNP"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>

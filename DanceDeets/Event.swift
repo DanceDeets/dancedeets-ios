@@ -26,6 +26,7 @@ public class Event: NSObject {
     var displayAddress:NSString?
     var geoloc:CLLocation?
     var admins:[EventAdmin]?
+    var placemark:CLPlacemark?
     
     var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
     
@@ -85,6 +86,8 @@ public class Event: NSObject {
         }
     }
     
+    /* Attempts to download the cover image for this event, automatically callbacks
+    on the main thread */
     public func downloadCoverImage(completion:((UIImage!,NSError!)->Void)) ->Void
     {
         let imageRequest:NSURLRequest = NSURLRequest(URL: eventImageUrl!)
@@ -92,14 +95,22 @@ public class Event: NSObject {
         NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
             completionHandler: { (location:NSURL!, resp:NSURLResponse!, error:NSError!) -> Void in
                 if(error == nil){
-                    if let data:NSData? = NSData(contentsOfURL: location){
-                        if let newImage = UIImage(data:data!){
-                            ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
+                    let data:NSData? = NSData(contentsOfURL: location)
+                    if let newImage = UIImage(data:data!){
+                        ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
+                        dispatch_async(dispatch_get_main_queue(), {
                             completion(newImage,nil)
-                        }
+                        })
+                    }else{
+                        let error = NSError(domain: "Couldn't create image from data", code: 0, userInfo: nil)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            completion(nil, error)
+                        })
                     }
                 }else{
-                    completion(nil,error)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        completion(nil, error)
+                    })
                 }
         })
         downloadTask.resume()
@@ -117,7 +128,9 @@ public class Event: NSObject {
             }else{
                 var jsonError:NSError?
                 var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
-                if (jsonError == nil && json != nil) {
+                if (jsonError != nil){
+                    completion(jsonError)
+                }else{
                     if let admins = json!["admins"] as? NSArray{
                         for admin in admins{
                             if let adminDict = admin as? NSDictionary{
@@ -131,38 +144,28 @@ public class Event: NSObject {
                         }
                     }
                     
+                    // If venue exists, try to reverse geocode an address and callback when that's done
                     if let venue = json!["venue"] as? NSDictionary{
                         if let geocodeDict = venue["geocode"] as? NSDictionary{
                             let lat:CLLocationDegrees = geocodeDict["latitude"] as CLLocationDegrees
                             let long:CLLocationDegrees = geocodeDict["longitude"] as CLLocationDegrees
                             self.geoloc = CLLocation(latitude: lat, longitude: long)
-                        }
-                        
-                        if let address = venue["address"] as? NSDictionary{
-                            var displayAddress = ""
                             
-                            if let street:String? = address["street"] as? String{
-                                displayAddress += street!
-                                displayAddress += ", "
-                            }
-                            if let city:String? = address["city"] as? String{
-                                displayAddress += city!
-                                displayAddress += ", "
-                            }
-                            if let state:String? = address["state"] as? String{
-                                displayAddress += state!
-                                displayAddress += ", "
-                            }
-                            if let zip:String? = address["zip"] as? String{
-                                displayAddress += zip!
-                            }
-                            self.displayAddress = displayAddress
+                            // address info is in the response, but usually we get more details
+                            // by using Apples geocoder
+                            let geocoder:CLGeocoder = CLGeocoder()
+                            geocoder.reverseGeocodeLocation(self.geoloc, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
+                                if placemarks.count > 0{
+                                    self.placemark = placemarks.first as? CLPlacemark
+                                }
+                                completion(nil)
+                            })
+                        }else{
+                            completion(nil)
                         }
+                    }else{
+                        completion(nil)
                     }
-                    completion(nil)
-                }
-                else {
-                    completion(jsonError)
                 }
             }
         })

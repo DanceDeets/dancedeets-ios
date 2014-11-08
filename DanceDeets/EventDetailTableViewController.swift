@@ -27,45 +27,7 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
         tableView.backgroundColor = UIColor.blackColor()
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        /*
-        self.eventVenueLabel.text = event?.venue
-        self.descriptionLabel.text = event?.shortDescription
-        self.eventTagsLabel.text = event?.tagString
-        
-        var formatter = NSDateFormatter()
-        formatter.dateFormat = "MMM dd 'at' h:mm a"
-        
-        if let startTime = event?.startTime{
-            eventStartTimeLabel.text = formatter.stringFromDate(startTime)
-        }else{
-            eventStartTimeLabel.text = ""
-        }
-        if let endTime = event?.endTime{
-            eventEndTimeLabel.text = formatter.stringFromDate(endTime)
-        }else{
-            eventEndTimeLabel.text = ""
-        }
-        
-        eventVenueLabel.font = UIFont(name: "BebasNeueBold", size: 20)
-*/
-        
         self.title = event?.title
-        
-        /*
-        // TODO Use cached image from previous controller
-        let request: NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-            if error == nil {
-                let newImage = UIImage(data: data)
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.coverImageView.image = newImage
-                })
-            }
-            else {
-                println("Error: \(error.localizedDescription)")
-            }
-        })
-*/
         
         // TODO dont need to do this every time
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -106,9 +68,27 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
     
     // MARK: UITableViewDataSource 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as EventDetailCoverCell
-        
-        return cell
+        if(indexPath.row == 0){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as EventDetailCoverCell
+            let imageRequest = NSURLRequest(URL: event!.eventImageUrl!)
+            cell.venueLabel.text = event?.venue
+            cell.contentView.setNeedsLayout()
+            if let image:UIImage? = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
+                cell.coverImageView.image = image
+            }else{
+                event!.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
+                    if(image != nil && error == nil){
+                        if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
+                            cellToUpdate.eventPhoto?.image = image
+                        }
+                    }
+                })
+            }
+            return cell
+        }else{
+            let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "default")
+            return cell
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -119,9 +99,7 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
         return 1
     }
     
-    
     // MARK: UITableViewDelegate
-    
  
 
 }

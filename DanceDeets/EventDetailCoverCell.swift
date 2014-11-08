@@ -12,4 +12,12 @@ class EventDetailCoverCell: UITableViewCell {
 
     @IBOutlet weak var venueLabel: UILabel!
     @IBOutlet weak var coverImageView: UIImageView!
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+   
+        venueLabel.font = UIFont(name: "BebasNeueBold", size: 24)
+    }
+    
 }

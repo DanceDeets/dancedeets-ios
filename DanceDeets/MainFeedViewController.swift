@@ -176,11 +176,9 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
 
                     event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
                         if(image != nil && error == nil){
-                            dispatch_async(dispatch_get_main_queue(), {
-                                if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
-                                    cellToUpdate.eventPhoto?.image = image
-                                }
-                            })
+                            if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
+                                cellToUpdate.eventPhoto?.image = image
+                            }
                         }
                     })
                 }
