@@ -12,7 +12,12 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var facebookGraphUser:FBGraphUser?
+    var fbGraphUserObjectId:String?
+    
+    class func sharedInstance() -> AppDelegate
+    {
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
     
     func mainFeedViewController()->MainFeedViewController?
     {
@@ -25,10 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
         FBLoginView.self
         FBProfilePictureView.self
-        
         return true
     }
     

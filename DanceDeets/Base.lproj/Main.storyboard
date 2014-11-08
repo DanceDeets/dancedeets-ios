@@ -773,7 +773,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bmy-Dl-kqu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="263" y="1197"/>
+            <point key="canvasLocation" x="223" y="565"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nQ5-AB-Ps9">
@@ -788,6 +788,7 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="org-Pd-NdN" kind="relationship" relationship="rootViewController" id="nM6-53-koQ"/>
+                        <segue destination="wgh-qC-ZRz" kind="presentation" identifier="presentFacebookLogin" id="Psl-Y9-ULx"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lGb-DU-UDy" userLabel="First Responder" sceneMemberID="firstResponder"/>

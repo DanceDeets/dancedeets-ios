@@ -68,8 +68,6 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
         println("MainFeedViewController -> viewWillAppear")
         super.viewWillAppear(animated)
         
-        checkFaceBookToken()
-        
         // if customCity is set in user defaults, user set a default city to search for events
         let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
         if(search != nil && countElements(search!) > 0){
@@ -92,6 +90,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        checkFaceBookToken()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -254,9 +253,14 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
                 return;
         }else if( currentState == FBSessionState.CreatedTokenLoaded){
             FBSession.openActiveSessionWithAllowLoginUI(false)
+            
+            FBRequestConnection.startForMeWithCompletionHandler({ (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
+                if let resultDictionary:NSDictionary? = result as? NSDictionary{
+                    AppDelegate.sharedInstance().fbGraphUserObjectId = resultDictionary!["id"] as? String
+                }
+            })
         }else{
-            let fbLogin:FaceBookLoginViewController? = storyboard?.instantiateViewControllerWithIdentifier("faceBookLoginViewController") as? FaceBookLoginViewController
-            presentViewController(fbLogin!, animated: true, completion: nil)
+            navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
         }
     }
     
