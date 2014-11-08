@@ -111,29 +111,29 @@ public class Event: NSObject {
                         }
                     }
                     
-                    if let venue:NSDictionary? = json!["venue"] as? NSDictionary{
-                        if let geocodeDict:NSDictionary? = venue!["geocode"] as? NSDictionary{
-                            let lat:CLLocationDegrees = geocodeDict!["latitude"] as CLLocationDegrees
-                            let long:CLLocationDegrees = geocodeDict!["longitude"] as CLLocationDegrees
+                    if let venue = json!["venue"] as? NSDictionary{
+                        if let geocodeDict = venue["geocode"] as? NSDictionary{
+                            let lat:CLLocationDegrees = geocodeDict["latitude"] as CLLocationDegrees
+                            let long:CLLocationDegrees = geocodeDict["longitude"] as CLLocationDegrees
                             self.geoloc = CLLocation(latitude: lat, longitude: long)
                         }
                         
-                        if let address:NSDictionary? = venue!["address"] as? NSDictionary{
+                        if let address = venue["address"] as? NSDictionary{
                             var displayAddress = ""
                             
-                            if let street:String? = address!["street"] as? String{
+                            if let street:String? = address["street"] as? String{
                                 displayAddress += street!
                                 displayAddress += ", "
                             }
-                            if let city:String? = address!["city"] as? String{
+                            if let city:String? = address["city"] as? String{
                                 displayAddress += city!
                                 displayAddress += ", "
                             }
-                            if let state:String? = address!["state"] as? String{
+                            if let state:String? = address["state"] as? String{
                                 displayAddress += state!
                                 displayAddress += ", "
                             }
-                            if let zip:String? = address!["zip"] as? String{
+                            if let zip:String? = address["zip"] as? String{
                                 displayAddress += zip!
                             }
                             self.displayAddress = displayAddress

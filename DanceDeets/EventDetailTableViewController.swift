@@ -13,55 +13,18 @@ import Foundation
 class EventDetailTableViewController: UITableViewController, UIGestureRecognizerDelegate {
     
     var event:Event?
-    let geocoder:CLGeocoder = CLGeocoder()
 
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var eventStartTimeLabel: UILabel!
-    @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventEndTimeLabel: UILabel!
     @IBOutlet weak var eventVenueLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var eventTagsLabel: UILabel!
     
- 
-    @IBAction func shareButtonTapped(sender: AnyObject) {
-        // Simple iOS action sheet
-        var sharingItems:[AnyObject] = []
-        
-        if let title = event?.title{
-            sharingItems.append("Check out this event: " + title)
-        }
-        
-        if let url = event?.facebookUrl{
-            sharingItems.append(url)
-        }
-        
-        let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
-        self.presentViewController(activityViewController, animated: true, completion: nil)
-    }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.hidesBarsOnSwipe = true
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.hidesBarsOnSwipe = false
-        self.navigationController?.navigationBarHidden = false
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
+    // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.backgroundView = UIView()
         tableView.backgroundColor = UIColor.blackColor()
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -84,11 +47,9 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
             eventEndTimeLabel.text = ""
         }
         
-        eventTitleLabel.text = event?.title
-        eventTitleLabel.font = UIFont(name:"BebasNeueBold",size: 34)
+        eventVenueLabel.font = UIFont(name: "BebasNeueBold", size: 20)
         
-        navigationController?.interactivePopGestureRecognizer.enabled = true
-        navigationController?.interactivePopGestureRecognizer.delegate = self
+        self.title = event?.title
         
         // TODO Use cached image from previous controller
         let request: NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
@@ -116,5 +77,45 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
         })
         
     }
+    
+    // MARK: Action
+    @IBAction func shareButtonTapped(sender: AnyObject) {
+        var sharingItems:[AnyObject] = []
+        
+        if let title = event?.title{
+            sharingItems.append("Check out this event: " + title)
+        }
+        
+        if let url = event?.facebookUrl{
+            sharingItems.append(url)
+        }
+        
+        let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
+        self.presentViewController(activityViewController, animated: true, completion: nil)
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    // MARK: UITableViewDataSource 
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as UITableViewCell
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       return 1
+    }
+    
+    
+    // MARK: UITableViewDelegate
+    
+ 
 
 }
