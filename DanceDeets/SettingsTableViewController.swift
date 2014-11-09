@@ -23,18 +23,16 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
         return NSIndexPath(forRow: 1, inSection: 0)
     }
 
+    // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
-        
-        let mainFeedVC = appDelegate?.mainFeedViewController();
-        searchMode = mainFeedVC!.searchMode
-        if(searchMode == MainFeedSearchMode.CurrentLocation){
-            showingCustomCityRow = false
-        }else{
+        // TODO: need to get some design direction on how to search across cities
+        if (mainFeedViewController?.searchMode == MainFeedSearchMode.CustomCity){
             showingCustomCityRow = true
+        }else{
+            showingCustomCityRow = false
         }
     }
     
@@ -53,16 +51,17 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
+            var rowCount = 1
             if(showingCustomCityRow){
-                return 2
-            }else{
-                return 1
+                rowCount += 1
             }
+            return rowCount
         }
         else{
             return 0
         }
     }
+    
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
     }

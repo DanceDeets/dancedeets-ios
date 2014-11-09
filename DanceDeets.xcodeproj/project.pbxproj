@@ -32,12 +32,12 @@
 		1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C719E0999E0018B434 /* FontFactory.swift */; };
 		1DB901CA19E09C5B0018B434 /* BasicSwitchToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */; };
 		1DB901CC19E1B3580018B434 /* CustomCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */; };
+		1DE70DFA1A0FD55D0044C77C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DE70DF91A0FD55D0044C77C /* FacebookSDK.framework */; };
 		1DFB3B4919F8B0C400CF4A72 /* MainFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */; };
 		1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */; };
 		1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */; };
 		1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B5119FF575C00CF4A72 /* EventKit.framework */; };
 		1DFB3B5419FF575C00CF4A72 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */; };
-		1DFD3D9E1A0FD22E00B7D3A2 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD3D9D1A0FD22E00B7D3A2 /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,12 +81,12 @@
 		1DB901C719E0999E0018B434 /* FontFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontFactory.swift; sourceTree = "<group>"; };
 		1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSwitchToggleCell.swift; sourceTree = "<group>"; };
 		1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCityTableViewCell.swift; sourceTree = "<group>"; };
+		1DE70DF91A0FD55D0044C77C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedViewController.swift; sourceTree = "<group>"; };
 		1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		1DFB3B5119FF575C00CF4A72 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
-		1DFD3D9D1A0FD22E00B7D3A2 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +95,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */,
-				1DFD3D9E1A0FD22E00B7D3A2 /* FacebookSDK.framework in Frameworks */,
+				1DE70DFA1A0FD55D0044C77C /* FacebookSDK.framework in Frameworks */,
 				1DFB3B5419FF575C00CF4A72 /* EventKitUI.framework in Frameworks */,
 				1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */,
 				1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */,
@@ -137,14 +137,14 @@
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
+				1D8856B919CDE510005FFDB2 /* DanceDeets */,
+				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
+				1D8856B819CDE510005FFDB2 /* Products */,
+				1DE70DF91A0FD55D0044C77C /* FacebookSDK.framework */,
 				1DFB3B5119FF575C00CF4A72 /* EventKit.framework */,
 				1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */,
 				1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */,
 				1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */,
-				1DFD3D9D1A0FD22E00B7D3A2 /* FacebookSDK.framework */,
-				1D8856B919CDE510005FFDB2 /* DanceDeets */,
-				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
-				1D8856B819CDE510005FFDB2 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -426,6 +426,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Documents/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -440,6 +441,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(HOME)/Documents/**",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -469,6 +475,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Documents/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -476,6 +483,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(HOME)/Documents/**",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -486,44 +498,60 @@
 		1D8856D719CDE511005FFDB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					/Users/dxiang,
-					/Users/dxiang/Documents,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = DanceDeets/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOME)",
+					"$(HOME)/Documents",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "DanceDeets/DanceDeets-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
 		1D8856D819CDE511005FFDB2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					/Users/dxiang,
-					/Users/dxiang/Documents,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = DanceDeets/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOME)",
+					"$(HOME)/Documents",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "DanceDeets/DanceDeets-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

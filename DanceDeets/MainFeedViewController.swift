@@ -126,8 +126,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
             destination?.event = sender as? Event
         }else if segue.identifier == "showSettingsSegue"{
             var destination:SettingsTableViewController? = segue.destinationViewController as? SettingsTableViewController
-            destination.ma
-            
+            destination?.mainFeedViewController = self
         }
     }
     
