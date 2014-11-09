@@ -17,11 +17,10 @@ class BasicSwitchTableCell: UITableViewCell {
     
     var delegate:BasicSwitchTableCellDelegate?
     
-    @IBOutlet weak var locationToggle: UISwitch!
+    @IBOutlet weak var toggleSwitch: UISwitch!
     @IBOutlet weak var titleLabel: UILabel!
-    
-    @IBAction func locationToggleChanged(sender: AnyObject) {
-        delegate?.switchToggled?(locationToggle)
-    }
 
+    @IBAction func toggleSwitchChanged(sender: AnyObject) {
+        delegate?.switchToggled?(toggleSwitch)
+    }
 }

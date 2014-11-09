@@ -52,6 +52,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
             var rowCount = 1
+            
             if(showingCustomCityRow){
                 rowCount += 1
             }
@@ -84,59 +85,58 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
                 
                 if(!showingCustomCityRow){
                     locationToggleCell?.titleLabel.textColor = UIColor.blackColor()
-                    locationToggleCell?.locationToggle.setOn(true, animated: true)
+                    locationToggleCell?.toggleSwitch.setOn(true, animated: true)
                 }else{
                     locationToggleCell?.titleLabel.textColor = UIColor.lightGrayColor()
-                    locationToggleCell?.locationToggle.setOn(false, animated: true)
+                    locationToggleCell?.toggleSwitch.setOn(false, animated: true)
                 }
-                
                 cell = locationToggleCell
             }else if(indexPath.row == 1){
                 customCityCell = tableView.dequeueReusableCellWithIdentifier("customCityCell", forIndexPath:indexPath) as? CustomCityTableViewCell
                 customCityCell?.inputTextField.delegate = self
                 
                 let customCityString:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
-                
                 customCityCell?.inputTextField.text = customCityString
-                
                 cell = customCityCell
             }
         }
         return cell!
     }
     
+    // MARK: BasicSwitchTableCellDelegate
     func switchToggled(sender: UISwitch!) {
-        let eventTableVC:MainFeedViewController? = appDelegate?.mainFeedViewController()
-        if(sender.on){
-            // Toggled to use current location
-            showingCustomCityRow = false
-            tableView.beginUpdates()
-            tableView.reloadRowsAtIndexPaths([toggleIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-            tableView.deleteRowsAtIndexPaths([customCityIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-            tableView.endUpdates()
-            
-            NSUserDefaults.standardUserDefaults().setValue("", forKey: "customCity")
-            NSUserDefaults.standardUserDefaults().synchronize()
-            eventTableVC?.searchMode =  MainFeedSearchMode.CurrentLocation
-        }else{
-            // Toggled to use custom city location
-            showingCustomCityRow = true
-            tableView.beginUpdates()
-            tableView.reloadRowsAtIndexPaths([toggleIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-            tableView.insertRowsAtIndexPaths([customCityIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-            tableView.endUpdates()
-            customCityCell?.inputTextField.becomeFirstResponder()
+        if(sender == locationToggleCell?.toggleSwitch){
+            if(sender.on){
+                // Toggled to use current location
+                showingCustomCityRow = false
+                tableView.beginUpdates()
+                tableView.reloadRowsAtIndexPaths([toggleIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                tableView.deleteRowsAtIndexPaths([customCityIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                tableView.endUpdates()
+                
+                NSUserDefaults.standardUserDefaults().setValue("", forKey: "customCity")
+                NSUserDefaults.standardUserDefaults().synchronize()
+                mainFeedViewController?.searchMode = MainFeedSearchMode.CurrentLocation
+            }else{
+                // Toggled to use custom city location
+                showingCustomCityRow = true
+                tableView.beginUpdates()
+                tableView.reloadRowsAtIndexPaths([toggleIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                tableView.insertRowsAtIndexPaths([customCityIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                tableView.endUpdates()
+                customCityCell?.inputTextField.becomeFirstResponder()
+            }
+            mainFeedViewController?.requiresRefresh = true
         }
     }
   
     // MARK: UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
-        let eventTableVC:MainFeedViewController? = AppDelegate.sharedInstance().mainFeedViewController()
         if(countElements(textField.text) == 0){
             // Closed keyboard with empty text field, assume using current location
-            locationToggleCell?.locationToggle.setOn(true, animated: true)
-            switchToggled(locationToggleCell?.locationToggle)
+            locationToggleCell?.toggleSwitch.setOn(true, animated: true)
+            switchToggled(locationToggleCell?.toggleSwitch)
         }else{
             // Closed keyboard with some city
             let customCity:String = textField.text
@@ -151,6 +151,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
             confirmAlert.show()
         }
         textField.resignFirstResponder()
+        mainFeedViewController?.requiresRefresh = true
         return true
     }
     

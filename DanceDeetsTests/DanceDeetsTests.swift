@@ -35,7 +35,6 @@ class DanceDeetsTests: XCTestCase {
     func testEventDetailRetrival(){
         let expectation = expectationWithDescription("Event Detail Test")
         Event.loadEventsForCity("New York City", completion: {(events:[Event]!, error) in
-            //expectation.fulfill()
             XCTAssert(events.count > 0)
             XCTAssert(error == nil)
             
@@ -54,7 +53,6 @@ class DanceDeetsTests: XCTestCase {
     func testEventCoverImageDownload(){
         let expectation = expectationWithDescription("Event Detail Test")
         Event.loadEventsForCity("New York City", completion: {(events:[Event]!, error) in
-            //expectation.fulfill()
             XCTAssert(events.count > 0)
             XCTAssert(error == nil)
             

@@ -263,7 +263,7 @@
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XmR-6o-Y9i">
                                             <rect key="frame" x="536" y="7" width="51" height="31"/>
                                             <connections>
-                                                <action selector="locationToggleChanged:" destination="f4C-UR-Q03" eventType="valueChanged" id="6RR-9A-QjI"/>
+                                                <action selector="toggleSwitchChanged:" destination="f4C-UR-Q03" eventType="valueChanged" id="NhV-XS-e4B"/>
                                             </connections>
                                         </switch>
                                     </subviews>
@@ -282,8 +282,8 @@
                                     </variation>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="locationToggle" destination="XmR-6o-Y9i" id="uM5-qn-5PK"/>
                                     <outlet property="titleLabel" destination="MNP-0s-Pjq" id="FpZ-oz-Cwo"/>
+                                    <outlet property="toggleSwitch" destination="XmR-6o-Y9i" id="1Af-fC-pvJ"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="customCityCell" id="ZIU-xm-jDD" customClass="CustomCityTableViewCell" customModule="DanceDeets" customModuleProvider="target">
