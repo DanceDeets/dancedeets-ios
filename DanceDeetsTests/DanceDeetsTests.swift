@@ -23,7 +23,6 @@ class DanceDeetsTests: XCTestCase {
     }
     
     func testEventRetrieval(){
-        
         let expectation = expectationWithDescription("Event Retrieval Test")
         Event.loadEventsForCity("New York City", completion: {(events:[Event]!, error) in
             expectation.fulfill()
@@ -41,15 +40,33 @@ class DanceDeetsTests: XCTestCase {
             XCTAssert(error == nil)
             
             let firstEvent:Event? = events.first
+            XCTAssert(firstEvent?.detailsLoaded == false)
             firstEvent?.getMoreDetails({ (error:NSError!) -> Void in
                 XCTAssert(error == nil)
+                XCTAssert(firstEvent?.detailsLoaded == true)
                 expectation.fulfill()
             })
-            
         })
         waitForExpectationsWithTimeout(10, handler:{ error in
         })
-        
+    }
+    
+    func testEventCoverImageDownload(){
+        let expectation = expectationWithDescription("Event Detail Test")
+        Event.loadEventsForCity("New York City", completion: {(events:[Event]!, error) in
+            //expectation.fulfill()
+            XCTAssert(events.count > 0)
+            XCTAssert(error == nil)
+            
+            let firstEvent:Event? = events.first
+            firstEvent?.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
+                XCTAssert(error == nil)
+                XCTAssert(image != nil)
+                expectation.fulfill()
+            })
+        })
+        waitForExpectationsWithTimeout(10, handler:{ error in
+        })
     }
     
     func testSimpleAsync(){
