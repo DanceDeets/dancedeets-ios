@@ -18,6 +18,7 @@ class EventDetailCoverCell: UITableViewCell {
         super.awakeFromNib()
    
         venueLabel.font = UIFont(name: "BebasNeueBold", size: 24)
+        venueLabel.numberOfLines = 0
     }
     
 }

@@ -29,17 +29,6 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
         
         self.title = event?.title
         
-        // TODO dont need to do this every time
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        event?.getMoreDetails({ (error:NSError!) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                if(error != nil){
-                    self.tableView.reloadData()
-                }
-            })
-        })
-        
     }
     
     // MARK: Action
@@ -73,6 +62,7 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
             let imageRequest = NSURLRequest(URL: event!.eventImageUrl!)
             cell.venueLabel.text = event?.venue
             cell.contentView.setNeedsLayout()
+            cell.contentView.layoutIfNeeded()   
             if let image:UIImage? = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
                 cell.coverImageView.image = image
             }else{

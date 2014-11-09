@@ -11,7 +11,6 @@ import UIKit
 
 public class Event: NSObject {
     let eventImageUrl:NSURL?
-    let eventImage:UIImage?
     let venue:NSString?
     let shortDescription:NSString?
     let startTime:NSDate?
@@ -27,6 +26,7 @@ public class Event: NSObject {
     var geoloc:CLLocation?
     var admins:[EventAdmin]?
     var placemark:CLPlacemark?
+    var detailsLoaded:Bool = false
     
     var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
     
@@ -131,6 +131,9 @@ public class Event: NSObject {
                 if (jsonError != nil){
                     completion(jsonError)
                 }else{
+                    // got something, mark this event as loaded we so dont do it again
+                    self.detailsLoaded = true
+                    
                     if let admins = json!["admins"] as? NSArray{
                         for admin in admins{
                             if let adminDict = admin as? NSDictionary{

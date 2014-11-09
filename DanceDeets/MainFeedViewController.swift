@@ -23,7 +23,6 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     let estimatedEventRowHeight:CGFloat = 600
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
-    //var imageCache = [String : UIImage]()
     var searchMode:MainFeedSearchMode = MainFeedSearchMode.CurrentLocation
     var searchResultsTableView:UITableView?
     var searchController:UISearchController?
@@ -34,7 +33,6 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     
     // MARK: UISearchResultsUpdating
     func filterContentForSearchText(searchText: String) {
-        // Filter the array using the filter method
         self.filteredEvents = self.events.filter({( event: Event) -> Bool in
             return event.title?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
         })
@@ -82,7 +80,6 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
             locationManager.startUpdatingLocation()
         }
     }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -146,13 +143,27 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
         return CGFloat.min
     }
     
-
+    // MARK: UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var cell:EventTableViewCell? = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell
         if(tableView == self.tableView){
             let selectedEvent:Event = events[indexPath.row]
-            performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
-           // performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)
+            if selectedEvent.detailsLoaded{
+                performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+            }else{
+                cell?.spinner.startAnimating()
+                selectedEvent.getMoreDetails({ (error:NSError!) -> Void in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        cell?.spinner.stopAnimating()
+                        if(error == nil){
+                            self.performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+                        }else{
+                            let alert:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get the deets to that event right now", delegate: nil, cancelButtonTitle: "OK")
+                            alert.show()
+                        }
+                    })
+                })
+            }
         }else if(tableView == searchResultsTableView){
             let selectedEvent:Event = filteredEvents[indexPath.row]
             self.searchController?.active = false
@@ -166,6 +177,8 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
             let event = events[indexPath.row]
             cell.delegate = self
             cell.updateForEvent(event)
+            cell.contentView.setNeedsLayout()
+            cell.contentView.layoutIfNeeded()
             
             if event.identifier != nil && event.eventImageUrl != nil{
                 let imageRequest:NSURLRequest = NSURLRequest(URL: event.eventImageUrl!)
