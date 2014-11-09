@@ -28,7 +28,6 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
         tableView.rowHeight = UITableViewAutomaticDimension
         
         self.title = event?.title
-        
     }
     
     // MARK: Action

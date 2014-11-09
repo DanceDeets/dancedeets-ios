@@ -44,7 +44,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
         super.viewDidAppear(animated)
     }
 
-    // MARK: - UITableViewDataSource / UITableViewDelegate
+    // MARK: - UITableViewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

@@ -102,6 +102,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
                 println("Custom search city not set, using location manager")
                 searchMode = MainFeedSearchMode.CurrentLocation
                 currentCity = ""
+                self.title = "Updating Location..."
                 locationManager.startUpdatingLocation()
             }
         }
@@ -133,6 +134,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     // MARK: - CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         locationManager.stopUpdatingLocation()
+        self.title = ""
         
         let locationObject:CLLocation = locations.first as CLLocation
         geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
@@ -145,6 +147,14 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
                 locationFailure.show()
             }
         })
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        locationManager.stopUpdatingLocation()
+        self.title = ""
+        
+        let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble getting your location", delegate: nil, cancelButtonTitle: "OK")
+        locationFailure.show()
     }
     
     

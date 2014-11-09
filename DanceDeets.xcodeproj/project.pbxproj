@@ -225,10 +225,10 @@
 		1D8A064119CE0CA6004607B6 /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
-				1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */,
 				1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */,
 				1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */,
 				1D89F6A91A0ECDC100D3E4BE /* EventDetailCoverCell.swift */,
+				1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";

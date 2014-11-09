@@ -510,6 +510,13 @@
                                     <outlet property="venueLabel" destination="m3A-Js-26j" id="ka5-A7-vvb"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="GYt-9K-dbI">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GYt-9K-dbI" id="hN0-4i-WlD">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -527,7 +534,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XBj-RO-jI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1965" y="129"/>
+            <point key="canvasLocation" x="1943" y="119"/>
         </scene>
         <!--Face Book Login View Controller-->
         <scene sceneID="w5m-Gb-xdx">
