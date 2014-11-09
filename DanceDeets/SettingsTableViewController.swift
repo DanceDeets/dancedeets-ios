@@ -13,8 +13,8 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
     var showingCustomCityRow:Bool = false
     var locationToggleCell:BasicSwitchTableCell?
     var customCityCell:CustomCityTableViewCell?
-    var searchMode:MainFeedSearchMode?
     var appDelegate:AppDelegate?
+    var mainFeedViewController:MainFeedViewController?
     
     var toggleIndexPath:NSIndexPath{
         return NSIndexPath(forRow: 0, inSection: 0)
@@ -133,8 +133,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
     // MARK: UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        let eventTableVC:MainFeedViewController? = appDelegate.mainFeedViewController()
+        let eventTableVC:MainFeedViewController? = AppDelegate.sharedInstance().mainFeedViewController()
         if(countElements(textField.text) == 0){
             // Closed keyboard with empty text field, assume using current location
             locationToggleCell?.locationToggle.setOn(true, animated: true)

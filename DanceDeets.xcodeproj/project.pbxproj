@@ -10,8 +10,6 @@
 		1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */; };
 		1D0D92A319D52DE8003E7C14 /* EventDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0D92A219D52DE8003E7C14 /* EventDetailTableViewController.swift */; };
 		1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15802A1A05695400658A1D /* EventAdmin.swift */; };
-		1D43346A19D738F0001A5381 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D43346919D738F0001A5381 /* FacebookSDK.framework */; };
-		1D43346B19D738F0001A5381 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D43346919D738F0001A5381 /* FacebookSDK.framework */; };
 		1D43347819D7552B001A5381 /* BebasNeueRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347319D7552B001A5381 /* BebasNeueRegular.otf */; };
 		1D43347919D7552B001A5381 /* BebasNeueLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347419D7552B001A5381 /* BebasNeueLight.otf */; };
 		1D43347A19D7552B001A5381 /* BebasNeueBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347519D7552B001A5381 /* BebasNeueBook.otf */; };
@@ -39,6 +37,7 @@
 		1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */; };
 		1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B5119FF575C00CF4A72 /* EventKit.framework */; };
 		1DFB3B5419FF575C00CF4A72 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */; };
+		1DFD3D9E1A0FD22E00B7D3A2 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD3D9D1A0FD22E00B7D3A2 /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +55,6 @@
 		1D0D92A219D52DE8003E7C14 /* EventDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailTableViewController.swift; sourceTree = "<group>"; };
 		1D15802A1A05695400658A1D /* EventAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAdmin.swift; sourceTree = "<group>"; };
 		1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DanceDeets-Bridging-Header.h"; sourceTree = "<group>"; };
-		1D43346919D738F0001A5381 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK.framework; sourceTree = "<group>"; };
 		1D43347319D7552B001A5381 /* BebasNeueRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueRegular.otf; sourceTree = "<group>"; };
 		1D43347419D7552B001A5381 /* BebasNeueLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueLight.otf; sourceTree = "<group>"; };
 		1D43347519D7552B001A5381 /* BebasNeueBook.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueBook.otf; sourceTree = "<group>"; };
@@ -88,6 +86,7 @@
 		1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		1DFB3B5119FF575C00CF4A72 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		1DFD3D9D1A0FD22E00B7D3A2 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,10 +95,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */,
+				1DFD3D9E1A0FD22E00B7D3A2 /* FacebookSDK.framework in Frameworks */,
 				1DFB3B5419FF575C00CF4A72 /* EventKitUI.framework in Frameworks */,
 				1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */,
 				1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */,
-				1D43346A19D738F0001A5381 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,7 +106,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D43346B19D738F0001A5381 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,8 +140,8 @@
 				1DFB3B5119FF575C00CF4A72 /* EventKit.framework */,
 				1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */,
 				1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */,
-				1D43346919D738F0001A5381 /* FacebookSDK.framework */,
 				1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */,
+				1DFD3D9D1A0FD22E00B7D3A2 /* FacebookSDK.framework */,
 				1D8856B919CDE510005FFDB2 /* DanceDeets */,
 				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
 				1D8856B819CDE510005FFDB2 /* Products */,

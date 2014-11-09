@@ -15,7 +15,7 @@ enum MainFeedSearchMode{
     case CustomCity
 }
 
-class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearchResultsUpdating, UISearchBarDelegate,UITableViewDataSource, UITableViewDelegate, EventTableViewCellDelegate {
+class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearchResultsUpdating, UISearchBarDelegate,UITableViewDataSource, UITableViewDelegate, EventTableViewCellDelegate {
 
     var events:[Event] = []
     var filteredEvents:[Event] = []
@@ -26,8 +26,11 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     var searchMode:MainFeedSearchMode = MainFeedSearchMode.CurrentLocation
     var searchResultsTableView:UITableView?
     var searchController:UISearchController?
+    var currentlyRefreshing = false
+    var requiresRefresh = true
     
     // MARK: Outlets
+    @IBOutlet weak var refreshIndicator: UIActivityIndicatorView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
@@ -42,6 +45,26 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     {
         filterContentForSearchText(searchController.searchBar.text)
         searchResultsTableView?.reloadData()
+    }
+    
+    // MARK: UIScrollViewDelegate
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if(scrollView == tableView){
+            if (scrollView.contentOffset.y < -125 && !currentlyRefreshing){
+                refreshIndicator.startAnimating()
+            }else{
+                refreshIndicator.stopAnimating()
+            }
+        }
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if(scrollView == tableView){
+            if(refreshIndicator.isAnimating()){
+                refreshIndicator.stopAnimating()
+                refreshEventsForCurrentCity()
+            }
+        }
     }
  
     // MARK: UIViewController
@@ -66,18 +89,21 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
         println("MainFeedViewController -> viewWillAppear")
         super.viewWillAppear(animated)
         
-        // if customCity is set in user defaults, user set a default city to search for events
-        let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
-        if(search != nil && countElements(search!) > 0){
-            println("Custom search city is set as: " + search!)
-            searchMode = MainFeedSearchMode.CustomCity
-            currentCity = search
-            refreshEventsForCurrentCity()
-        }else{
-            println("Custom search city not set, using location manager")
-            searchMode = MainFeedSearchMode.CurrentLocation
-            currentCity = ""
-            locationManager.startUpdatingLocation()
+        if(requiresRefresh){
+            requiresRefresh = false
+            // if customCity is set in user defaults, user set a default city to search for events
+            let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
+            if(search != nil && countElements(search!) > 0){
+                println("Custom search city is set as: " + search!)
+                searchMode = MainFeedSearchMode.CustomCity
+                currentCity = search
+                refreshEventsForCurrentCity()
+            }else{
+                println("Custom search city not set, using location manager")
+                searchMode = MainFeedSearchMode.CurrentLocation
+                currentCity = ""
+                locationManager.startUpdatingLocation()
+            }
         }
     }
 
@@ -98,6 +124,10 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
             var destination:EventDetailViewController? = segue.destinationViewController as? EventDetailViewController
             let event = sender as? Event
             destination?.event = sender as? Event
+        }else if segue.identifier == "showSettingsSegue"{
+            var destination:SettingsTableViewController? = segue.destinationViewController as? SettingsTableViewController
+            destination.ma
+            
         }
     }
     
@@ -241,10 +271,6 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
         self.performSegueWithIdentifier("showSettingsSegue", sender: sender)
     }
     
-    @IBAction func refreshTapped(sender: AnyObject) {
-        refreshEventsForCurrentCity()
-    }
-    
     // MARK: Private
     func checkFaceBookToken(){
         let currentState:FBSessionState = FBSession.activeSession().state
@@ -267,6 +293,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
     }
     
     func refreshEventsForCurrentCity(){
+        currentlyRefreshing = true
         println("Refreshing events for: " + currentCity!)
         self.title = "Loading..."
         Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error:NSError!) in
@@ -285,6 +312,7 @@ class MainFeedViewController: UIViewController,CLLocationManagerDelegate,UISearc
                     self.tableView.reloadData()
                 }
                 
+                self.currentlyRefreshing = false
             })
         })
     }

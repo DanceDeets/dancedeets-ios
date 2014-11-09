@@ -185,6 +185,9 @@
                                     <outlet property="delegate" destination="org-Pd-NdN" id="7eY-Z0-4Hm"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="vV4-yE-7jZ">
+                                <rect key="frame" x="290" y="74" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.2334256868" green="0.86782304919999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -192,8 +195,10 @@
                             <constraint firstItem="4Wc-vY-N88" firstAttribute="top" secondItem="0yL-Ho-dq6" secondAttribute="bottom" id="QYA-sl-XnX"/>
                             <constraint firstAttribute="trailing" secondItem="4Wc-vY-N88" secondAttribute="trailing" id="aHg-VK-bcg"/>
                             <constraint firstItem="4Wc-vY-N88" firstAttribute="bottom" secondItem="kkO-El-hGg" secondAttribute="bottomMargin" id="kEr-Kq-C2x"/>
+                            <constraint firstItem="vV4-yE-7jZ" firstAttribute="top" secondItem="0yL-Ho-dq6" secondAttribute="bottom" constant="10" id="kys-vK-pDj"/>
                             <constraint firstItem="4Wc-vY-N88" firstAttribute="top" secondItem="kkO-El-hGg" secondAttribute="topMargin" id="lgs-3Q-7lS"/>
                             <constraint firstItem="0Yd-Cr-n2g" firstAttribute="top" secondItem="4Wc-vY-N88" secondAttribute="bottom" id="pKj-fD-hje"/>
+                            <constraint firstAttribute="centerX" secondItem="vV4-yE-7jZ" secondAttribute="centerX" id="zsJ-xT-PoX"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -204,12 +209,6 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="fIQ-Yd-zx9">
-                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="0gO-HN-YvL">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="refreshTapped:" destination="org-Pd-NdN" id="qjc-cH-WvA"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="settings-50" id="Xsu-aL-Q7H">
                             <inset key="imageInsets" minX="-4" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -220,6 +219,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="refreshIndicator" destination="vV4-yE-7jZ" id="HWt-Jx-ZTm"/>
                         <outlet property="searchDisplayController" destination="hmY-SH-aig" id="op0-ND-ZNr"/>
                         <outlet property="tableView" destination="4Wc-vY-N88" id="DET-Sb-fjC"/>
                         <segue destination="SiB-h9-pTV" kind="show" identifier="showSettingsSegue" id="f8c-bx-8iK"/>
@@ -228,22 +228,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="84v-6L-ZDe" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="eOc-sH-oIj">
-                    <connections>
-                        <outlet property="delegate" destination="org-Pd-NdN" id="IOD-A5-KYH"/>
-                        <outlet property="searchContentsController" destination="org-Pd-NdN" id="ThC-Db-sYa"/>
-                        <outlet property="searchResultsDataSource" destination="org-Pd-NdN" id="ufK-LP-e26"/>
-                        <outlet property="searchResultsDelegate" destination="org-Pd-NdN" id="UHX-Gp-pv4"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="Sna-a2-Hpn">
-                    <connections>
-                        <outlet property="delegate" destination="org-Pd-NdN" id="eoj-Ne-WJZ"/>
-                        <outlet property="searchContentsController" destination="org-Pd-NdN" id="ujf-df-kL7"/>
-                        <outlet property="searchResultsDataSource" destination="org-Pd-NdN" id="890-4P-HeA"/>
-                        <outlet property="searchResultsDelegate" destination="org-Pd-NdN" id="tKt-RN-JSh"/>
-                    </connections>
-                </searchDisplayController>
                 <searchDisplayController id="hmY-SH-aig">
                     <connections>
                         <outlet property="delegate" destination="org-Pd-NdN" id="3EU-8x-wZS"/>
