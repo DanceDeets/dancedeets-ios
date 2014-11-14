@@ -62,7 +62,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         if(scrollView == tableView){
             if(refreshIndicator.isAnimating()){
                 refreshIndicator.stopAnimating()
-                refreshEventsForCurrentCity()
+                refreshEvents()
             }
         }
     }
@@ -91,20 +91,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         
         if(requiresRefresh){
             requiresRefresh = false
-            // if customCity is set in user defaults, user set a default city to search for events
-            let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
-            if(search != nil && countElements(search!) > 0){
-                println("Custom search city is set as: " + search!)
-                searchMode = MainFeedSearchMode.CustomCity
-                currentCity = search
-                refreshEventsForCurrentCity()
-            }else{
-                println("Custom search city not set, using location manager")
-                searchMode = MainFeedSearchMode.CurrentLocation
-                currentCity = ""
-                self.title = "Updating Location..."
-                locationManager.startUpdatingLocation()
-            }
+            refreshEvents()
         }
     }
 
@@ -138,7 +125,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         
         let locationObject:CLLocation = locations.first as CLLocation
         geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
-            if(placemarks.count > 0){
+            if( placemarks != nil && placemarks.count > 0){
                 let placemark:CLPlacemark = placemarks.first as CLPlacemark
                 self.currentCity = placemark.locality
                 self.refreshEventsForCurrentCity()
@@ -281,6 +268,23 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     }
     
     // MARK: Private
+    func refreshEvents(){
+        // if customCity is set in user defaults, user set a default city to search for events
+        let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
+        if(search != nil && countElements(search!) > 0){
+            println("Custom search city is set as: " + search!)
+            searchMode = MainFeedSearchMode.CustomCity
+            currentCity = search
+            refreshEventsForCurrentCity()
+        }else{
+            println("Custom search city not set, using location manager")
+            searchMode = MainFeedSearchMode.CurrentLocation
+            currentCity = ""
+            self.title = "Updating Location..."
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
     func checkFaceBookToken(){
         let currentState:FBSessionState = FBSession.activeSession().state
         
@@ -292,8 +296,10 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
             FBSession.openActiveSessionWithAllowLoginUI(false)
             
             FBRequestConnection.startForMeWithCompletionHandler({ (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
-                if let resultDictionary:NSDictionary? = result as? NSDictionary{
-                    AppDelegate.sharedInstance().fbGraphUserObjectId = resultDictionary!["id"] as? String
+                if (error == nil){
+                    if let resultDictionary:NSDictionary? = result as? NSDictionary{
+                        AppDelegate.sharedInstance().fbGraphUserObjectId = resultDictionary!["id"] as? String
+                    }
                 }
             })
         }else{

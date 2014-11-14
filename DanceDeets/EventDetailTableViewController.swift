@@ -67,9 +67,7 @@ class EventDetailTableViewController: UITableViewController, UIGestureRecognizer
             }else{
                 event!.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
                     if(image != nil && error == nil){
-                        if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
-                            cellToUpdate.eventPhoto?.image = image
-                        }
+                        cell.coverImageView?.image = image
                     }
                 })
             }
