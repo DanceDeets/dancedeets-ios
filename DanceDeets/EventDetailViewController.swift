@@ -14,10 +14,15 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     let DETAILS_TABLE_VIEW_TOP_MARGIN:CGFloat = 70.0
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 20.0
     let DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING:CGFloat = 10.0
+    var BLUR_THRESHOLD_OFFSET:CGFloat = 0.0
+    let BLUR_MAX_ALPHA:CGFloat = 0.75
+    let PARALLAX_SCROLL_OFFSET:CGFloat = 80.0
     var event:Event?
+    var overlayView:UIVisualEffectView?
     
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var detailsTableView: UITableView!
+    @IBOutlet weak var backgroundViewTopConstraint: NSLayoutConstraint!
     
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -26,6 +31,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         detailsTableView.delegate = self
         detailsTableView.dataSource = self
         detailsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        BLUR_THRESHOLD_OFFSET = view.frame.size.height
         
         // to enable default pop gesture recognizer, it turns off by 
         // default when you hide the nav bar
@@ -49,11 +55,11 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         view.setNeedsLayout()
         view.layoutIfNeeded()
         
-     //   var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Light)) as UIVisualEffectView
         
-      //  visualEffectView.frame = coverImageView.bounds
-        
-        //coverImageView.addSubview(visualEffectView)
+        overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
+        coverImageView.addSubview(overlayView!)
+        overlayView?.constrainToSuperViewBounds()
+        overlayView?.alpha = 0
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -189,5 +195,28 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     }
     
     // MARK: UITableViewDelegate
+    
+    // MARK: UIScrollViewDelegate
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        //  println(scrollView.contentOffset.y)
+        // Update blur by scroll
+        let currentVertOffset = scrollView.contentOffset.y
+        var boundedOffset:CGFloat = currentVertOffset
+        
+        if(currentVertOffset < 0){
+            boundedOffset = 0
+        }else if(currentVertOffset > BLUR_THRESHOLD_OFFSET){
+            boundedOffset = BLUR_THRESHOLD_OFFSET
+        }
+        
+        backgroundViewTopConstraint.constant = -(boundedOffset/BLUR_THRESHOLD_OFFSET) * PARALLAX_SCROLL_OFFSET;
+        println(backgroundViewTopConstraint.constant)
+        view.layoutIfNeeded()
+        
+        println(backgroundViewTopConstraint.constant)
+        
+        overlayView?.alpha = min(BLUR_MAX_ALPHA,boundedOffset/BLUR_THRESHOLD_OFFSET)
+   
+    }
 
 }

@@ -465,6 +465,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="backgroundViewTopConstraint" destination="7Aj-wf-f4i" id="7oo-Zb-uDY"/>
                         <outlet property="coverImageView" destination="ljZ-CE-TPC" id="Z58-FX-tAl"/>
                         <outlet property="detailsTableView" destination="UUe-Hg-p93" id="y0W-ag-aY5"/>
                     </connections>
