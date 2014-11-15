@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource {
+class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate {
 
     let DETAILS_TABLE_VIEW_TOP_MARGIN:CGFloat = 70.0
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 20.0
@@ -19,6 +19,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     let PARALLAX_SCROLL_OFFSET:CGFloat = 80.0
     var event:Event?
     var overlayView:UIVisualEffectView?
+    var addCalendarAlert:UIAlertView?
     
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var detailsTableView: UITableView!
@@ -55,6 +56,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         view.setNeedsLayout()
         view.layoutIfNeeded()
         
+        addCalendarAlert = UIAlertView(title: "Want to add this event to your calendar?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
         
         overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
         coverImageView.addSubview(overlayView!)
@@ -90,40 +92,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     }
     
     @IBAction func calendarButtonTapped(sender: AnyObject) {
-        var store = EKEventStore()
-        store.requestAccessToEntityType(EKEntityTypeEvent) { (granted:Bool, error:NSError!) -> Void in
-            
-            if(!granted && error != nil){
-                return
-            }
-            
-            var newEvent:EKEvent = EKEvent(eventStore: store)
-            newEvent.title = self.event?.title
-            newEvent.startDate = self.event?.startTime
-            if let endTime = self.event?.endTime{
-                newEvent.endDate = endTime
-            }else{
-                // default 2 hours
-                newEvent.endDate = newEvent.startDate.dateByAddingTimeInterval(2*60*60)
-            }
-            newEvent.calendar = store.defaultCalendarForNewEvents
-            var saveError:NSError?
-            store.saveEvent(newEvent, span: EKSpanThisEvent, commit: true, error: &saveError)
-            self.event?.savedEventId = newEvent.eventIdentifier
-            
-            if(saveError == nil){
-                var message:String?
-                if let title = self.event?.title{
-                    message = "Added " + title + " to your calendar!"
-                }else{
-                    message = "Added to your calendar!"
-                }
-                dispatch_async(dispatch_get_main_queue(), {
-                    let successAlert:UIAlertView = UIAlertView(title: "Dope", message: message, delegate: nil, cancelButtonTitle: "OK")
-                    successAlert.show()
-                })
-            }
-        }
+        addCalendarAlert?.show()
     }
     
     @IBAction func shareButtonTapped(sender: AnyObject) {
@@ -140,6 +109,49 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         
         let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
         self.presentViewController(activityViewController, animated: true, completion: nil)
+    }
+    
+    // MARK: UIAlertViewDelegate
+    func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
+        if(alertView == addCalendarAlert)
+        {
+            if (buttonIndex == 1){
+                var store = EKEventStore()
+                store.requestAccessToEntityType(EKEntityTypeEvent) { (granted:Bool, error:NSError!) -> Void in
+                    
+                    if(!granted && error != nil){
+                        return
+                    }
+                    
+                    var newEvent:EKEvent = EKEvent(eventStore: store)
+                    newEvent.title = self.event?.title
+                    newEvent.startDate = self.event?.startTime
+                    if let endTime = self.event?.endTime{
+                        newEvent.endDate = endTime
+                    }else{
+                        // default 2 hours
+                        newEvent.endDate = newEvent.startDate.dateByAddingTimeInterval(2*60*60)
+                    }
+                    newEvent.calendar = store.defaultCalendarForNewEvents
+                    var saveError:NSError?
+                    store.saveEvent(newEvent, span: EKSpanThisEvent, commit: true, error: &saveError)
+                    self.event?.savedEventId = newEvent.eventIdentifier
+                    
+                    if(saveError == nil){
+                        var message:String?
+                        if let title = self.event?.title{
+                            message = "Added " + title + " to your calendar!"
+                        }else{
+                            message = "Added to your calendar!"
+                        }
+                        dispatch_async(dispatch_get_main_queue(), {
+                            let successAlert:UIAlertView = UIAlertView(title: "Dope", message: message, delegate: nil, cancelButtonTitle: "OK")
+                            successAlert.show()
+                        })
+                    }
+                }
+            }
+        }
     }
     
     
@@ -198,8 +210,8 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     // MARK: UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        //  println(scrollView.contentOffset.y)
-        // Update blur by scroll
+        
+        // blurs and slight parallax when scrolling down
         let currentVertOffset = scrollView.contentOffset.y
         var boundedOffset:CGFloat = currentVertOffset
         
@@ -213,10 +225,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         println(backgroundViewTopConstraint.constant)
         view.layoutIfNeeded()
         
-        println(backgroundViewTopConstraint.constant)
-        
         overlayView?.alpha = min(BLUR_MAX_ALPHA,boundedOffset/BLUR_THRESHOLD_OFFSET)
-   
     }
 
 }

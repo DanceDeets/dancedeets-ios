@@ -391,6 +391,19 @@
                                     <action selector="shareButtonTapped:" destination="2zh-F8-7u4" eventType="touchUpInside" id="kQb-xx-HDZ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xve-KZ-DBH">
+                                <rect key="frame" x="500" y="20" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="GVl-HJ-O3M"/>
+                                    <constraint firstAttribute="height" constant="50" id="eGh-Us-Y0e"/>
+                                </constraints>
+                                <state key="normal" image="calendar">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="calendarButtonTapped:" destination="2zh-F8-7u4" eventType="touchUpInside" id="T9q-zP-EsO"/>
+                                </connections>
+                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="UUe-Hg-p93">
                                 <rect key="frame" x="0.0" y="70" width="600" height="530"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -456,7 +469,9 @@
                             <constraint firstItem="UUe-Hg-p93" firstAttribute="width" secondItem="hfc-7c-85b" secondAttribute="width" id="Kua-M8-caQ"/>
                             <constraint firstItem="uQa-Gm-qaf" firstAttribute="top" secondItem="0ZW-Sa-LXs" secondAttribute="bottom" id="OGv-eK-HM0"/>
                             <constraint firstAttribute="centerX" secondItem="grq-gC-PMl" secondAttribute="centerX" id="Tc9-yI-4og"/>
+                            <constraint firstItem="xve-KZ-DBH" firstAttribute="top" secondItem="0ZW-Sa-LXs" secondAttribute="bottom" id="Ufi-jZ-2JY"/>
                             <constraint firstItem="oVr-YR-SkD" firstAttribute="leading" secondItem="hfc-7c-85b" secondAttribute="leading" id="X6z-vi-k9V"/>
+                            <constraint firstItem="uQa-Gm-qaf" firstAttribute="leading" secondItem="xve-KZ-DBH" secondAttribute="trailing" id="bZd-YC-Wbv"/>
                             <constraint firstAttribute="bottomMargin" secondItem="UUe-Hg-p93" secondAttribute="bottom" id="pPa-s0-bAi"/>
                             <constraint firstItem="UUe-Hg-p93" firstAttribute="top" secondItem="hfc-7c-85b" secondAttribute="topMargin" constant="70" id="zcO-Zc-Tzy"/>
                         </constraints>
@@ -567,6 +582,7 @@
     </scenes>
     <resources>
         <image name="back" width="25" height="25"/>
+        <image name="calendar" width="25" height="25"/>
         <image name="settings-50" width="25" height="25"/>
         <image name="upload" width="25" height="25"/>
     </resources>
