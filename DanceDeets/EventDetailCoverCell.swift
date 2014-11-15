@@ -10,15 +10,21 @@ import UIKit
 
 class EventDetailCoverCell: UITableViewCell {
 
-    @IBOutlet weak var venueLabel: UILabel!
-    @IBOutlet weak var coverImageView: UIImageView!
-    
+    @IBOutlet weak var titleLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        backgroundColor = UIColor.clearColor()
+        self.selectionStyle = UITableViewCellSelectionStyle.None
    
-        venueLabel.font = UIFont(name: "BebasNeueBold", size: 24)
-        venueLabel.numberOfLines = 0
+        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.font = UIFont(name: "BebasNeueBold", size: 50)
+    }
+    
+    func updateViewForEvent(event:Event){
+        titleLabel.text = event.title
+        contentView.setNeedsLayout()
+        contentView.layoutIfNeeded()
     }
     
 }

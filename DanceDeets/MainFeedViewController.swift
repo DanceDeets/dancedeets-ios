@@ -105,10 +105,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showEventSegue"{
-            var destination:EventDetailTableViewController? = segue.destinationViewController as?EventDetailTableViewController
-            destination?.event = sender as? Event
-        }else if segue.identifier == "eventDetailSegue"{
+        if segue.identifier == "eventDetailSegue"{
             var destination:EventDetailViewController? = segue.destinationViewController as? EventDetailViewController
             let event = sender as? Event
             destination?.event = sender as? Event
@@ -175,14 +172,15 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         if(tableView == self.tableView){
             let selectedEvent:Event = events[indexPath.row]
             if selectedEvent.detailsLoaded{
-                performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+                            //performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+                performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)
             }else{
                 cell?.spinner.startAnimating()
                 selectedEvent.getMoreDetails({ (error:NSError!) -> Void in
                     dispatch_async(dispatch_get_main_queue(), {
                         cell?.spinner.stopAnimating()
                         if(error == nil){
-                            self.performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+                            self.performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)
                         }else{
                             let alert:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get the deets to that event right now", delegate: nil, cancelButtonTitle: "OK")
                             alert.show()

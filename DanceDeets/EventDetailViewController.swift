@@ -9,19 +9,26 @@
 import UIKit
 import EventKit
 
-class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate {
+class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource {
 
+    let DETAILS_TABLE_VIEW_TOP_MARGIN:CGFloat = 70.0
+    let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 20.0
+    let DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING:CGFloat = 10.0
     var event:Event?
+    
     @IBOutlet weak var coverImageView: UIImageView!
-    @IBOutlet weak var eventTitleLabel: UILabel!
+    @IBOutlet weak var detailsTableView: UITableView!
     
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        eventTitleLabel.text = event?.title
-        eventTitleLabel.font = UIFont(name:"BebasNeueBold",size: 34)
- 
+        detailsTableView.delegate = self
+        detailsTableView.dataSource = self
+        detailsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        
+        // to enable default pop gesture recognizer, it turns off by 
+        // default when you hide the nav bar
         navigationController?.interactivePopGestureRecognizer.enabled = true
         navigationController?.interactivePopGestureRecognizer.delegate = self
         
@@ -38,6 +45,15 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate {
                 println("Error: \(error.localizedDescription)")
             }
         })
+        
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+        
+     //   var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Light)) as UIVisualEffectView
+        
+      //  visualEffectView.frame = coverImageView.bounds
+        
+        //coverImageView.addSubview(visualEffectView)
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -119,5 +135,59 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate {
         let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
         self.presentViewController(activityViewController, animated: true, completion: nil)
     }
+    
+    
+    // MARK: UITableViewDataSource
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if(indexPath.row == 0){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as EventDetailCoverCell
+            cell.updateViewForEvent(event!)
+            return cell
+        }else if(indexPath.row == 1){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as EventDetailDescriptionCell
+            cell.updateViewForEvent(event!)
+            return cell
+        }
+        else{
+            let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "default")
+            return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if(indexPath.row == 0){
+            return view.frame.size.height - DETAILS_TABLE_VIEW_TOP_MARGIN
+        }else if(indexPath.row == 1){
+            
+            let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
+            
+            let height = Utilities.heightRequiredForText(event!.shortDescription!,
+                lineHeight: EventDetailDescriptionCell.descriptionLineHeight(),
+                font: EventDetailDescriptionCell.descriptionFont(),
+                width:width)
+            return height + (2*DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING)
+        }
+        else{
+            return CGFloat.min
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.min
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.min
+    }
+    
+    // MARK: UITableViewDelegate
 
 }
