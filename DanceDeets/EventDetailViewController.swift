@@ -39,22 +39,18 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         navigationController?.interactivePopGestureRecognizer.enabled = true
         navigationController?.interactivePopGestureRecognizer.delegate = self
         
-        // TODO Use cached image from previous controller
-        let request: NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-            if error == nil {
-                let newImage = UIImage(data: data)
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.coverImageView.image = newImage
+        if (event!.eventImageUrl != nil){
+            let imageRequest:NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
+            if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
+                coverImageView.image = image
+            }else{
+                event?.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
+                    if(image != nil && error == nil){
+                        self.coverImageView.image = image
+                    }
                 })
             }
-            else {
-                println("Error: \(error.localizedDescription)")
-            }
-        })
-        
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
+        }
         
         addCalendarAlert = UIAlertView(title: "Want to add this event to your calendar?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
         
@@ -162,6 +158,15 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             cell.updateViewForEvent(event!)
             return cell
         }else if(indexPath.row == 1){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventTimeCell", forIndexPath: indexPath) as EventDetailTimeCell
+            cell.updateViewForEvent(event!)
+            return cell
+        }else if(indexPath.row == 2){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as EventDetailLocationCell
+            cell.updateViewForEvent(event!)
+            return cell
+        }
+        else if(indexPath.row == 3){
             let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as EventDetailDescriptionCell
             cell.updateViewForEvent(event!)
             return cell
@@ -173,7 +178,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 4
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -184,6 +189,22 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         if(indexPath.row == 0){
             return view.frame.size.height - DETAILS_TABLE_VIEW_TOP_MARGIN
         }else if(indexPath.row == 1){
+            return 40.0;
+        }else if(indexPath.row == 2){
+            let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
+            var height:CGFloat = 0.0
+            
+            height += 2 * DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING
+            
+            height += Utilities.heightRequiredForText(event!.venue!, lineHeight: EventDetailLocationCell.venueLineHeight(), font: EventDetailLocationCell.venueFont(), width: width)
+            
+            if(event?.placemark != nil){
+                // to fit the full adress + map if there is a placemark
+                height += 210
+            }
+            return height
+            
+        }else if(indexPath.row == 3){
             
             let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
             
@@ -222,7 +243,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         }
         
         backgroundViewTopConstraint.constant = -(boundedOffset/BLUR_THRESHOLD_OFFSET) * PARALLAX_SCROLL_OFFSET;
-        println(backgroundViewTopConstraint.constant)
         view.layoutIfNeeded()
         
         overlayView?.alpha = min(BLUR_MAX_ALPHA,boundedOffset/BLUR_THRESHOLD_OFFSET)

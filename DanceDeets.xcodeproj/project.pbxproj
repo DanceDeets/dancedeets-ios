@@ -30,6 +30,9 @@
 		1DAB49EE1A17E31E0002BBDD /* EventDetailDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49ED1A17E31E0002BBDD /* EventDetailDescriptionCell.swift */; };
 		1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49EF1A17E4D70002BBDD /* Utilities.swift */; };
 		1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F11A17F0310002BBDD /* Extensions.swift */; };
+		1DAB49F41A18020D0002BBDD /* EventDetailTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F31A18020D0002BBDD /* EventDetailTimeCell.swift */; };
+		1DAB49F61A1807F40002BBDD /* EventDetailLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F51A1807F40002BBDD /* EventDetailLocationCell.swift */; };
+		1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */; };
 		1DB901C519E0856E0018B434 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */; };
 		1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C719E0999E0018B434 /* FontFactory.swift */; };
 		1DB901CA19E09C5B0018B434 /* BasicSwitchToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */; };
@@ -81,6 +84,9 @@
 		1DAB49ED1A17E31E0002BBDD /* EventDetailDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailDescriptionCell.swift; sourceTree = "<group>"; };
 		1DAB49EF1A17E4D70002BBDD /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		1DAB49F11A17F0310002BBDD /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		1DAB49F31A18020D0002BBDD /* EventDetailTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailTimeCell.swift; sourceTree = "<group>"; };
+		1DAB49F51A1807F40002BBDD /* EventDetailLocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailLocationCell.swift; sourceTree = "<group>"; };
+		1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFactory.swift; sourceTree = "<group>"; };
 		1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		1DB901C719E0999E0018B434 /* FontFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontFactory.swift; sourceTree = "<group>"; };
 		1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSwitchToggleCell.swift; sourceTree = "<group>"; };
@@ -233,6 +239,8 @@
 				1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */,
 				1D89F6A91A0ECDC100D3E4BE /* EventDetailCoverCell.swift */,
 				1DAB49ED1A17E31E0002BBDD /* EventDetailDescriptionCell.swift */,
+				1DAB49F31A18020D0002BBDD /* EventDetailTimeCell.swift */,
+				1DAB49F51A1807F40002BBDD /* EventDetailLocationCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -244,6 +252,7 @@
 				1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */,
 				1DAB49EF1A17E4D70002BBDD /* Utilities.swift */,
 				1DAB49F11A17F0310002BBDD /* Extensions.swift */,
+				1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -356,6 +365,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */,
 				1DB901CA19E09C5B0018B434 /* BasicSwitchToggleCell.swift in Sources */,
 				1D8A064319CE0CB8004607B6 /* EventTableViewCell.swift in Sources */,
 				1D43348119D75873001A5381 /* MainAppLabel.swift in Sources */,
@@ -364,11 +374,13 @@
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */,
 				1D8A064019CDE605004607B6 /* Event.swift in Sources */,
+				1DAB49F41A18020D0002BBDD /* EventDetailTimeCell.swift in Sources */,
 				1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */,
 				1DAB49EE1A17E31E0002BBDD /* EventDetailDescriptionCell.swift in Sources */,
 				1DB901C519E0856E0018B434 /* SettingsTableViewController.swift in Sources */,
 				1DFB3B4919F8B0C400CF4A72 /* MainFeedViewController.swift in Sources */,
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
+				1DAB49F61A1807F40002BBDD /* EventDetailLocationCell.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,
 				1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */,
 				1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */,

@@ -348,7 +348,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </imageView>
-                                    <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qiR-Cb-uAz">
+                                    <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qiR-Cb-uAz">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
@@ -429,6 +429,94 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="titleLabel" destination="0nM-UR-teI" id="sop-fT-cvV"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventTimeCell" id="xbb-JG-a8Q" customClass="EventDetailTimeCell" customModule="DanceDeets" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xbb-JG-a8Q" id="pDg-yP-jhU">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKS-WK-qB4">
+                                                    <rect key="frame" x="20" y="12" width="560" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.2334256868" green="0.86782304919999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="SKS-WK-qB4" secondAttribute="centerY" id="JzE-Hb-6Sl"/>
+                                                <constraint firstItem="SKS-WK-qB4" firstAttribute="leading" secondItem="pDg-yP-jhU" secondAttribute="leading" constant="20" id="aa4-EU-6hn"/>
+                                                <constraint firstAttribute="trailing" secondItem="SKS-WK-qB4" secondAttribute="trailing" constant="20" id="ctF-So-CjW"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="timeLabel" destination="SKS-WK-qB4" id="4Ev-n7-I7V"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventLocationCell" rowHeight="300" id="y64-AI-xII" customClass="EventDetailLocationCell" customModule="DanceDeets" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y64-AI-xII" id="Ufs-3w-hY3">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iR9-dF-OU4">
+                                                    <rect key="frame" x="20" y="10" width="560" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="0.801963906" blue="0.52850779020000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mep-vl-Gsf">
+                                                    <rect key="frame" x="0.0" y="33" width="600" height="268"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address Line 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hh-rR-Dxg">
+                                                            <rect key="frame" x="20" y="0.0" width="115" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="1" green="0.801963906" blue="0.52850779020000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address Line 2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aLM-4Q-ME9">
+                                                            <rect key="frame" x="20" y="23" width="115" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="1" green="0.801963906" blue="0.52850779020000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DI5-PC-JTw">
+                                                            <rect key="frame" x="20" y="53" width="560" height="160"/>
+                                                            <gestureRecognizers/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="160" id="Bc1-eg-q9i"/>
+                                                            </constraints>
+                                                        </mapView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="aLM-4Q-ME9" firstAttribute="leading" secondItem="9hh-rR-Dxg" secondAttribute="leading" id="4Hh-0t-rS0"/>
+                                                        <constraint firstAttribute="trailing" secondItem="DI5-PC-JTw" secondAttribute="trailing" constant="20" id="Ex2-FQ-v9N"/>
+                                                        <constraint firstItem="aLM-4Q-ME9" firstAttribute="leading" secondItem="DI5-PC-JTw" secondAttribute="leading" id="LeX-TM-QzV"/>
+                                                        <constraint firstItem="DI5-PC-JTw" firstAttribute="top" secondItem="aLM-4Q-ME9" secondAttribute="bottom" constant="10" id="deV-QK-jEB"/>
+                                                        <constraint firstItem="aLM-4Q-ME9" firstAttribute="top" secondItem="9hh-rR-Dxg" secondAttribute="bottom" constant="2" id="lCL-G7-0ef"/>
+                                                        <constraint firstItem="9hh-rR-Dxg" firstAttribute="leading" secondItem="Mep-vl-Gsf" secondAttribute="leading" constant="20" id="mif-pQ-jE4"/>
+                                                        <constraint firstItem="9hh-rR-Dxg" firstAttribute="top" secondItem="Mep-vl-Gsf" secondAttribute="top" id="qyf-rl-fqR"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="iR9-dF-OU4" firstAttribute="top" secondItem="Ufs-3w-hY3" secondAttribute="top" constant="10" id="8wq-A8-44t"/>
+                                                <constraint firstAttribute="bottom" secondItem="Mep-vl-Gsf" secondAttribute="bottom" id="9rQ-ce-wKj"/>
+                                                <constraint firstAttribute="trailing" secondItem="iR9-dF-OU4" secondAttribute="trailing" constant="20" id="Ezu-NQ-xgC"/>
+                                                <constraint firstItem="Mep-vl-Gsf" firstAttribute="leading" secondItem="Ufs-3w-hY3" secondAttribute="leading" id="IYD-Bz-b9Q"/>
+                                                <constraint firstItem="Mep-vl-Gsf" firstAttribute="top" secondItem="iR9-dF-OU4" secondAttribute="bottom" constant="2" id="P7U-zO-iMm"/>
+                                                <constraint firstAttribute="trailing" secondItem="Mep-vl-Gsf" secondAttribute="trailing" id="Pvk-3i-nCY"/>
+                                                <constraint firstItem="iR9-dF-OU4" firstAttribute="leading" secondItem="Ufs-3w-hY3" secondAttribute="leading" constant="20" id="fAy-jR-wsK"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addressContainerView" destination="Mep-vl-Gsf" id="zGU-nW-CWe"/>
+                                            <outlet property="addressLine1" destination="9hh-rR-Dxg" id="UcO-Hh-aKb"/>
+                                            <outlet property="addressLine2" destination="aLM-4Q-ME9" id="o9D-A1-QEJ"/>
+                                            <outlet property="mapView" destination="DI5-PC-JTw" id="nwR-Ja-hJl"/>
+                                            <outlet property="venueLabel" destination="iR9-dF-OU4" id="ycw-tL-NYu"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventDescriptionCell" id="sje-AR-MsQ" customClass="EventDetailDescriptionCell" customModule="DanceDeets" customModuleProvider="target">
