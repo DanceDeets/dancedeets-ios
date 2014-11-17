@@ -12,22 +12,23 @@ import QuartzCore
 
 class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate {
 
-    let DETAILS_TABLE_VIEW_TOP_MARGIN:CGFloat = 70.0
+    let DETAILS_TABLE_VIEW_TOP_MARGIN:CGFloat = 64.0
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 20.0
     let DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING:CGFloat = 10.0
     var BLUR_THRESHOLD_OFFSET:CGFloat = 0.0
     let BLUR_MAX_ALPHA:CGFloat = 1.0
     let PARALLAX_SCROLL_OFFSET:CGFloat = 80.0
+    
     var event:Event?
     var overlayView:UIVisualEffectView?
     var addCalendarAlert:UIAlertView?
     var gradientLayer:CAGradientLayer?
     
+    @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var detailsTableView: UITableView!
     @IBOutlet weak var backgroundViewTopConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var backgroundView: UIView!
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,13 +36,14 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         detailsTableView.delegate = self
         detailsTableView.dataSource = self
         detailsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        BLUR_THRESHOLD_OFFSET = view.frame.size.height
+        BLUR_THRESHOLD_OFFSET = (view.frame.size.height * 4)/5
         
-        // to enable default pop gesture recognizer, it turns off by 
-        // default when you hide the nav bar
+        // to enable default pop gesture recognizer
+        // it seems to turns off when you hide the nav bar
         navigationController?.interactivePopGestureRecognizer.enabled = true
         navigationController?.interactivePopGestureRecognizer.delegate = self
         
+        // background image
         if (event!.eventImageUrl != nil){
             let imageRequest:NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
@@ -57,10 +59,22 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         
         addCalendarAlert = UIAlertView(title: "Want to add this event to your calendar?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
         
+        // the blur effect view over the entire cover image
         overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
         coverImageView.addSubview(overlayView!)
-        overlayView?.constrainToSuperViewBounds()
+        overlayView?.constrainToSuperViewEdges()
         overlayView?.alpha = 0
+        
+        // this sets up a gradient mask on the table view layer, which gives the fade out effect
+        // when you scroll 
+        gradientLayer = CAGradientLayer()
+        let outerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor
+        let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        gradientLayer?.colors = [outerColor,innerColor,innerColor]
+        gradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.1), NSNumber(float: 1.0)]
+        gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - DETAILS_TABLE_VIEW_TOP_MARGIN)
+        gradientLayer?.anchorPoint = CGPoint.zeroPoint
+        self.detailsTableView.layer.mask = gradientLayer
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -70,22 +84,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
-        if(gradientLayer == nil){
-            gradientLayer = CAGradientLayer()
-            let outerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor
-            let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-            
-            gradientLayer?.colors = [outerColor,innerColor,innerColor]
-            
-            gradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.1), NSNumber(float: 1.0)]
-            gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 70.0)
-            println(gradientLayer?.bounds)
-            gradientLayer?.anchorPoint = CGPoint.zeroPoint
-            
-            self.detailsTableView.layer.mask = gradientLayer
-            
-        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -107,19 +105,10 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     }
     
     @IBAction func shareButtonTapped(sender: AnyObject) {
-        // Simple iOS action sheet
-        var sharingItems:[AnyObject] = []
-        
-        if let title = event?.title{
-            sharingItems.append("Check out this event: " + title)
+        if (event != nil){
+            let activityViewController = UIActivityViewController(activityItems: event!.createSharingItems(), applicationActivities: nil)
+            self.presentViewController(activityViewController, animated: true, completion: nil)
         }
-        
-        if let url = event?.facebookUrl{
-            sharingItems.append(url)
-        }
-        
-        let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
-        self.presentViewController(activityViewController, animated: true, completion: nil)
     }
     
     // MARK: UIAlertViewDelegate
@@ -140,7 +129,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
                     if let endTime = self.event?.endTime{
                         newEvent.endDate = endTime
                     }else{
-                        // default 2 hours
+                        // no end time parsed out, default 2 hours
                         newEvent.endDate = newEvent.startDate.dateByAddingTimeInterval(2*60*60)
                     }
                     newEvent.calendar = store.defaultCalendarForNewEvents

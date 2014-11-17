@@ -36,7 +36,7 @@ extension NSMutableAttributedString{
 
 extension UIView{
     /* view must have been added to super view before calling this*/
-    func constrainToSuperViewBounds(){
+    func constrainToSuperViewEdges(){
         self.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.superview?.addConstraint(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 0.0))
         self.superview?.addConstraint(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: 0.0))

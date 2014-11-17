@@ -86,8 +86,22 @@ public class Event: NSObject {
         }
     }
     
-    /* Attempts to download the cover image for this event, automatically callbacks
-    on the main thread */
+    // Create sharing items for the activity sheet
+    public func createSharingItems()->[AnyObject]{
+        var sharingItems:[AnyObject] = []
+        
+        if(title != nil){
+            sharingItems.append("Check out this event: " + title!)
+        }
+        
+        if(facebookUrl != nil){
+            sharingItems.append(facebookUrl!)
+        }
+        return sharingItems
+    }
+    
+    // Attempts to download the cover image for this event
+    // Callback on mainthread
     public func downloadCoverImage(completion:((UIImage!,NSError!)->Void)) ->Void
     {
         let imageRequest:NSURLRequest = NSURLRequest(URL: eventImageUrl!)

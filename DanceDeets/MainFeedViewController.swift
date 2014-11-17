@@ -176,8 +176,10 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
                 performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)
             }else{
                 cell?.spinner.startAnimating()
+                self.tableView.userInteractionEnabled = false
                 selectedEvent.getMoreDetails({ (error:NSError!) -> Void in
                     dispatch_async(dispatch_get_main_queue(), {
+                        self.tableView.userInteractionEnabled = true
                         cell?.spinner.stopAnimating()
                         if(error == nil){
                             self.performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)

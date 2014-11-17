@@ -405,7 +405,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="UUe-Hg-p93">
-                                <rect key="frame" x="0.0" y="70" width="600" height="530"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventCoverCell" id="yXy-jw-wIF" customClass="EventDetailCoverCell" customModule="DanceDeets" customModuleProvider="target">
@@ -561,7 +561,7 @@
                             <constraint firstItem="oVr-YR-SkD" firstAttribute="leading" secondItem="hfc-7c-85b" secondAttribute="leading" id="X6z-vi-k9V"/>
                             <constraint firstItem="uQa-Gm-qaf" firstAttribute="leading" secondItem="xve-KZ-DBH" secondAttribute="trailing" id="bZd-YC-Wbv"/>
                             <constraint firstAttribute="bottomMargin" secondItem="UUe-Hg-p93" secondAttribute="bottom" id="pPa-s0-bAi"/>
-                            <constraint firstItem="UUe-Hg-p93" firstAttribute="top" secondItem="hfc-7c-85b" secondAttribute="topMargin" constant="70" id="zcO-Zc-Tzy"/>
+                            <constraint firstItem="UUe-Hg-p93" firstAttribute="top" secondItem="hfc-7c-85b" secondAttribute="topMargin" constant="64" id="zcO-Zc-Tzy"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
