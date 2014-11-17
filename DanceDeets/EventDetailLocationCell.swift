@@ -73,31 +73,41 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
                 addressContainerView.hidden = true
             }
             
-            var attributedDescription = NSMutableAttributedString(string: event.venue!)
-            attributedDescription.setLineHeight(EventDetailLocationCell.venueLineHeight())
-            attributedDescription.setFont(EventDetailLocationCell.venueFont())
-            attributedDescription.setColor(ColorFactory.darkYellow())
-            venueLabel.attributedText = attributedDescription
-            venueLabel.sizeToFit()
+            if(event.venue != nil){
+                var attributedDescription = NSMutableAttributedString(string: event.venue!)
+                attributedDescription.setLineHeight(EventDetailLocationCell.venueLineHeight())
+                attributedDescription.setFont(EventDetailLocationCell.venueFont())
+                attributedDescription.setColor(ColorFactory.darkYellow())
+                venueLabel.attributedText = attributedDescription
+                venueLabel.sizeToFit()
+            }
             
-            if(event.placemark != nil){
-                let line1String = event.placemark!.subThoroughfare + " " + event.placemark!.thoroughfare
-                var line1 = NSMutableAttributedString(string:line1String)
-                line1.setLineHeight(EventDetailLocationCell.venueLineHeight())
-                line1.setFont(EventDetailLocationCell.venueFont())
-                line1.setColor(ColorFactory.darkYellow())
-                addressLine1.attributedText = line1
-                addressLine1.sizeToFit()
+            if(event.placemark != nil && event.placemark?.addressDictionary != nil){
                 
-                let line2String = event.placemark!.locality + ", " +
-                    event.placemark!.administrativeArea + ", " +
-                    event.placemark!.postalCode
-                var line2 = NSMutableAttributedString(string:line2String)
-                line2.setLineHeight(EventDetailLocationCell.venueLineHeight())
-                line2.setFont(EventDetailLocationCell.venueFont())
-                line2.setColor(ColorFactory.darkYellow())
-                addressLine2.attributedText = line2
-                addressLine2.sizeToFit()
+                var line1:String?
+                if let lines = event.placemark?.addressDictionary["FormattedAddressLines"] as? [String]{
+                    if lines.count >= 2{
+                       // let line1String = event.placemark!.subThoroughfare + " " + event.placemark!.thoroughfare
+                        var line1 = NSMutableAttributedString(string:lines[0])
+                        line1.setLineHeight(EventDetailLocationCell.venueLineHeight())
+                        line1.setFont(EventDetailLocationCell.venueFont())
+                        line1.setColor(ColorFactory.darkYellow())
+                        addressLine1.attributedText = line1
+                        addressLine1.sizeToFit()
+                        
+                        //let line2String = event.placemark!.locality + ", " +
+                          //  event.placemark!.administrativeArea + ", " +
+                           // event.placemark!.postalCode
+                        var line2 = NSMutableAttributedString(string:lines[1])
+                        line2.setLineHeight(EventDetailLocationCell.venueLineHeight())
+                        line2.setFont(EventDetailLocationCell.venueFont())
+                        line2.setColor(ColorFactory.darkYellow())
+                        addressLine2.attributedText = line2
+                        addressLine2.sizeToFit()
+                    }
+                }
+                
+          
                 
                 if(event.geoloc != nil){
                     let annotation:MKPointAnnotation = MKPointAnnotation()
@@ -114,5 +124,5 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
             contentView.setNeedsLayout()
             contentView.layoutIfNeeded()
         }
-    }
+}
 }

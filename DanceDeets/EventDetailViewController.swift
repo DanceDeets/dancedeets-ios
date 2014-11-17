@@ -8,6 +8,7 @@
 
 import UIKit
 import EventKit
+import QuartzCore
 
 class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate {
 
@@ -15,16 +16,18 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 20.0
     let DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING:CGFloat = 10.0
     var BLUR_THRESHOLD_OFFSET:CGFloat = 0.0
-    let BLUR_MAX_ALPHA:CGFloat = 0.75
+    let BLUR_MAX_ALPHA:CGFloat = 1.0
     let PARALLAX_SCROLL_OFFSET:CGFloat = 80.0
     var event:Event?
     var overlayView:UIVisualEffectView?
     var addCalendarAlert:UIAlertView?
+    var gradientLayer:CAGradientLayer?
     
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var detailsTableView: UITableView!
     @IBOutlet weak var backgroundViewTopConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var backgroundView: UIView!
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +70,22 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        if(gradientLayer == nil){
+            gradientLayer = CAGradientLayer()
+            let outerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor
+            let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+            
+            gradientLayer?.colors = [outerColor,innerColor,innerColor]
+            
+            gradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.1), NSNumber(float: 1.0)]
+            gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 70.0)
+            println(gradientLayer?.bounds)
+            gradientLayer?.anchorPoint = CGPoint.zeroPoint
+            
+            self.detailsTableView.layer.mask = gradientLayer
+            
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -81,10 +100,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     // MARK: Action
     @IBAction func backButtonTapped(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    @IBAction func mapButtonTapped(sender: AnyObject) {
-        println("mapped button tapped")
     }
     
     @IBAction func calendarButtonTapped(sender: AnyObject) {
@@ -231,6 +246,11 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     // MARK: UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        gradientLayer?.position = CGPointMake(0, scrollView.contentOffset.y);
+        CATransaction.commit()
         
         // blurs and slight parallax when scrolling down
         let currentVertOffset = scrollView.contentOffset.y

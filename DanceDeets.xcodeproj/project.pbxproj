@@ -33,6 +33,7 @@
 		1DAB49F41A18020D0002BBDD /* EventDetailTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F31A18020D0002BBDD /* EventDetailTimeCell.swift */; };
 		1DAB49F61A1807F40002BBDD /* EventDetailLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F51A1807F40002BBDD /* EventDetailLocationCell.swift */; };
 		1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */; };
+		1DAB49FA1A182AC90002BBDD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DAB49F91A182AC90002BBDD /* QuartzCore.framework */; };
 		1DB901C519E0856E0018B434 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */; };
 		1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C719E0999E0018B434 /* FontFactory.swift */; };
 		1DB901CA19E09C5B0018B434 /* BasicSwitchToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */; };
@@ -87,6 +88,7 @@
 		1DAB49F31A18020D0002BBDD /* EventDetailTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailTimeCell.swift; sourceTree = "<group>"; };
 		1DAB49F51A1807F40002BBDD /* EventDetailLocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailLocationCell.swift; sourceTree = "<group>"; };
 		1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFactory.swift; sourceTree = "<group>"; };
+		1DAB49F91A182AC90002BBDD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		1DB901C719E0999E0018B434 /* FontFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontFactory.swift; sourceTree = "<group>"; };
 		1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSwitchToggleCell.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DAB49FA1A182AC90002BBDD /* QuartzCore.framework in Frameworks */,
 				1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */,
 				1DE70DFA1A0FD55D0044C77C /* FacebookSDK.framework in Frameworks */,
 				1DFB3B5419FF575C00CF4A72 /* EventKitUI.framework in Frameworks */,
@@ -147,6 +150,7 @@
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
+				1DAB49F91A182AC90002BBDD /* QuartzCore.framework */,
 				1D8856B919CDE510005FFDB2 /* DanceDeets */,
 				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
 				1D8856B819CDE510005FFDB2 /* Products */,
@@ -248,11 +252,11 @@
 		1DB901C619E099810018B434 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */,
+				1DAB49F11A17F0310002BBDD /* Extensions.swift */,
 				1DB901C719E0999E0018B434 /* FontFactory.swift */,
 				1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */,
 				1DAB49EF1A17E4D70002BBDD /* Utilities.swift */,
-				1DAB49F11A17F0310002BBDD /* Extensions.swift */,
-				1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";

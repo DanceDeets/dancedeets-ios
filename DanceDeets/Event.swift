@@ -208,7 +208,6 @@ public class Event: NSObject {
             }
         })
         task.resume()
-    
     }
     
 }
