@@ -206,7 +206,6 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
             cell.contentView.setNeedsLayout()
             cell.contentView.layoutIfNeeded()
             
-            println(event.eventImageUrl)
             if event.identifier != nil && event.eventImageUrl != nil{
                 let imageRequest:NSURLRequest = NSURLRequest(URL: event.eventImageUrl!)
                 if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){

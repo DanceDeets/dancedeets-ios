@@ -78,6 +78,8 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - DETAILS_TABLE_VIEW_TOP_MARGIN)
         gradientLayer?.anchorPoint = CGPoint.zeroPoint
         self.detailsTableView.layer.mask = gradientLayer
+        
+        self.view.layoutIfNeeded()
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
