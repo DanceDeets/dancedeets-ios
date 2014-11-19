@@ -22,6 +22,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     var event:Event?
     var overlayView:UIVisualEffectView?
     var addCalendarAlert:UIAlertView?
+    var facebookAlert:UIAlertView?
     var gradientLayer:CAGradientLayer?
     
     @IBOutlet weak var backgroundView: UIView!
@@ -58,6 +59,8 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         }
         
         addCalendarAlert = UIAlertView(title: "Want to add this event to your calendar?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
+        
+        facebookAlert = UIAlertView(title: "RSVP on Facebook?", message: "", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
         
         // the blur effect view over the entire cover image
         overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
@@ -102,6 +105,9 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     @IBAction func calendarButtonTapped(sender: AnyObject) {
         addCalendarAlert?.show()
+    }
+    @IBAction func facebookButtonTapped(sender: AnyObject) {
+        facebookAlert?.show()
     }
     
     @IBAction func shareButtonTapped(sender: AnyObject) {
@@ -150,6 +156,19 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
                         })
                     }
                 }
+            }
+        }else if(alertView == facebookAlert){
+            if(buttonIndex == 1){
+                let graphPath = "/" + event!.identifier! + "/attending"
+                FBRequestConnection.startWithGraphPath(graphPath, parameters: nil, HTTPMethod: "POST", completionHandler: { (conn:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
+                    if(error == nil){
+                        let successAlert = UIAlertView(title: "RSVP'd on Facebook!", message: "",delegate:nil, cancelButtonTitle: "OK")
+                        successAlert.show()
+                    }else{
+                        let errorAlert = UIAlertView(title: "Couldn't RSVP right now, try again later.", message: "",delegate:nil, cancelButtonTitle: "OK")
+                        errorAlert.show()
+                    }
+                })
             }
         }
     }
