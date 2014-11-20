@@ -16,7 +16,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 20.0
     let DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING:CGFloat = 10.0
     var BLUR_THRESHOLD_OFFSET:CGFloat = 0.0
-    let BLUR_MAX_ALPHA:CGFloat = 1.0
+    let BLUR_MAX_ALPHA:CGFloat = 0.65
     let PARALLAX_SCROLL_OFFSET:CGFloat = 80.0
     
     var event:Event?
@@ -89,6 +89,15 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+      //  let snap:UIView = coverImageView.snapshotViewAfterScreenUpdates(true)
+       // coverImageView.removeFromSuperview()
+       //
+     //   backgroundView.addSubview(snap)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -187,12 +196,12 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             cell.updateViewForEvent(event!)
             return cell
         }else if(indexPath.row == 2){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as EventDetailLocationCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as EventDetailDescriptionCell
             cell.updateViewForEvent(event!)
             return cell
         }
         else if(indexPath.row == 3){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as EventDetailDescriptionCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as EventDetailLocationCell
             cell.updateViewForEvent(event!)
             return cell
         }
@@ -217,6 +226,15 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             return 40.0;
         }else if(indexPath.row == 2){
             let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
+            
+            let height = Utilities.heightRequiredForText(event!.shortDescription!,
+                lineHeight: EventDetailDescriptionCell.descriptionLineHeight(),
+                font: EventDetailDescriptionCell.descriptionFont(),
+                width:width)
+            return height + (2*DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING)
+            
+        }else if(indexPath.row == 3){
+            let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
             var height:CGFloat = 0.0
             
             height += 2 * DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING
@@ -228,16 +246,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
                 height += 210
             }
             return height
-            
-        }else if(indexPath.row == 3){
-            
-            let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
-            
-            let height = Utilities.heightRequiredForText(event!.shortDescription!,
-                lineHeight: EventDetailDescriptionCell.descriptionLineHeight(),
-                font: EventDetailDescriptionCell.descriptionFont(),
-                width:width)
-            return height + (2*DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING)
         }
         else{
             return CGFloat.min
