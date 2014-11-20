@@ -225,9 +225,61 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
             
             return cell
         }else{
-            let cell = tableView.dequeueReusableCellWithIdentifier("filteredEventCell", forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("filteredEventCell", forIndexPath: indexPath) as SearchResultsTableCell
             let event:Event = self.filteredEvents[indexPath.row]
-            cell.textLabel.text = event.title
+            //cell.textLabel.text = event.title
+          //  cell.backgroundColor = UIColor.clearColor()
+           // cell.contentView
+            
+            // the blur effect view over the entire cover image
+           //let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
+         //   cell.contentView.addSubview(overlayView)
+          //  overlayView.constrainToSuperViewEdges()
+            
+            /*
+            let viewInducingVIbrancy = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark))
+            cell.contentView .addSubview(viewInducingVIbrancy)
+            viewInducingVIbrancy.constrainToSuperViewEdges()
+            
+            
+            
+            let vibrantLabel = UILabel(frame: CGRectMake(0,0,50,40))
+            vibrantLabel.text = "TESTSTSTS"
+            viewInducingVIbrancy.contentView.addSubview(vibrantLabel)
+*/
+            
+            /*
+            // 1
+            let blurEffect = UIBlurEffect(style: .Dark)
+            // 2
+            let blurView = UIVisualEffectView(effect: blurEffect)
+            // 3
+            blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
+            cell.contentView.addSubview(blurView)
+            blurView.constrainToSuperViewEdges()
+            
+            
+            
+            // 1
+            let vibrancyEffect = UIVibrancyEffect(forBlurEffect: blurEffect)
+            // 2
+            let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
+            vibrancyView.setTranslatesAutoresizingMaskIntoConstraints(false)
+            // 3
+            let label = UILabel(frame: CGRectMake(0,0,60,30))
+            label.text = "TESTSET"
+            vibrancyView.contentView.addSubview(label)
+            label.constrainToSuperViewEdges()
+            
+            // 4
+            blurView.contentView.addSubview(vibrancyView)
+            vibrancyView.constrainToSuperViewEdges()
+            cell.contentView.layoutIfNeeded()
+            
+            
+*/
+            
+            cell.updateForEvent(event)
             return cell
         }
     }
@@ -352,7 +404,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         self.searchController?.dimsBackgroundDuringPresentation = true
         self.searchController?.hidesNavigationBarDuringPresentation = false
         
-        tbvc.tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
+        tbvc.tableView.registerClass(SearchResultsTableCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
     }
     
     func styleViewController()
@@ -369,13 +421,5 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         navigationController?.navigationBar.barStyle = UIBarStyle.Black
         navigationController?.navigationBar.translucent = true
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-    }
-
-    func loadSearchDisplayController()
-    {
-        searchResultsTableView = self.searchDisplayController?.searchResultsTableView
-        searchResultsTableView?.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
-        searchResultsTableView?.dataSource = self;
-        searchResultsTableView?.delegate = self;
     }
 }

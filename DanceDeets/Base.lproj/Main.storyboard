@@ -192,20 +192,12 @@
                         <color key="backgroundColor" red="0.2334256868" green="0.86782304919999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="4Wc-vY-N88" firstAttribute="leading" secondItem="kkO-El-hGg" secondAttribute="leading" id="DIN-pw-5yh"/>
-                            <constraint firstItem="4Wc-vY-N88" firstAttribute="top" secondItem="0yL-Ho-dq6" secondAttribute="bottom" id="QYA-sl-XnX"/>
                             <constraint firstAttribute="trailing" secondItem="4Wc-vY-N88" secondAttribute="trailing" id="aHg-VK-bcg"/>
                             <constraint firstItem="4Wc-vY-N88" firstAttribute="bottom" secondItem="kkO-El-hGg" secondAttribute="bottomMargin" id="kEr-Kq-C2x"/>
                             <constraint firstItem="vV4-yE-7jZ" firstAttribute="top" secondItem="0yL-Ho-dq6" secondAttribute="bottom" constant="10" id="kys-vK-pDj"/>
                             <constraint firstItem="4Wc-vY-N88" firstAttribute="top" secondItem="kkO-El-hGg" secondAttribute="topMargin" id="lgs-3Q-7lS"/>
-                            <constraint firstItem="0Yd-Cr-n2g" firstAttribute="top" secondItem="4Wc-vY-N88" secondAttribute="bottom" id="pKj-fD-hje"/>
                             <constraint firstAttribute="centerX" secondItem="vV4-yE-7jZ" secondAttribute="centerX" id="zsJ-xT-PoX"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="QYA-sl-XnX"/>
-                                <exclude reference="pKj-fD-hje"/>
-                            </mask>
-                        </variation>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="fIQ-Yd-zx9">
