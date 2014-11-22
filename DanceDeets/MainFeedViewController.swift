@@ -79,6 +79,13 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         locationManager.delegate = self;
         
         setNeedsStatusBarAppearanceUpdate()
+        
+        // notification registration
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "handleKeyboardShown:",
+            name: UIKeyboardDidShowNotification,
+            object: nil)
     }
     
      override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -227,58 +234,6 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("filteredEventCell", forIndexPath: indexPath) as SearchResultsTableCell
             let event:Event = self.filteredEvents[indexPath.row]
-            //cell.textLabel.text = event.title
-          //  cell.backgroundColor = UIColor.clearColor()
-           // cell.contentView
-            
-            // the blur effect view over the entire cover image
-           //let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
-         //   cell.contentView.addSubview(overlayView)
-          //  overlayView.constrainToSuperViewEdges()
-            
-            /*
-            let viewInducingVIbrancy = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark))
-            cell.contentView .addSubview(viewInducingVIbrancy)
-            viewInducingVIbrancy.constrainToSuperViewEdges()
-            
-            
-            
-            let vibrantLabel = UILabel(frame: CGRectMake(0,0,50,40))
-            vibrantLabel.text = "TESTSTSTS"
-            viewInducingVIbrancy.contentView.addSubview(vibrantLabel)
-*/
-            
-            /*
-            // 1
-            let blurEffect = UIBlurEffect(style: .Dark)
-            // 2
-            let blurView = UIVisualEffectView(effect: blurEffect)
-            // 3
-            blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
-            cell.contentView.addSubview(blurView)
-            blurView.constrainToSuperViewEdges()
-            
-            
-            
-            // 1
-            let vibrancyEffect = UIVibrancyEffect(forBlurEffect: blurEffect)
-            // 2
-            let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
-            vibrancyView.setTranslatesAutoresizingMaskIntoConstraints(false)
-            // 3
-            let label = UILabel(frame: CGRectMake(0,0,60,30))
-            label.text = "TESTSET"
-            vibrancyView.contentView.addSubview(label)
-            label.constrainToSuperViewEdges()
-            
-            // 4
-            blurView.contentView.addSubview(vibrancyView)
-            vibrancyView.constrainToSuperViewEdges()
-            cell.contentView.layoutIfNeeded()
-            
-            
-*/
-            
             cell.updateForEvent(event)
             return cell
         }
@@ -386,13 +341,28 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     
     func loadSearchController()
     {
+        // setting up the view controller handling results from the search bar
+        
+        var searchVC:UIViewController = UIViewController()
+        let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
+        searchVC.view.addSubview(overlayView)
+        overlayView.constrainToSuperViewEdges()
+        
         var tbvc:UITableViewController = UITableViewController(style: UITableViewStyle.Plain)
-        searchResultsTableView = tbvc.tableView
-        searchResultsTableView?.backgroundColor = UIColor.clearColor()
         tbvc.tableView.delegate = self
         tbvc.tableView.dataSource = self
+        tbvc.tableView.backgroundColor = UIColor.clearColor()
+        tbvc.tableView.rowHeight = UITableViewAutomaticDimension
         
-        self.searchController = UISearchController(searchResultsController: tbvc)
+        searchVC.view.addSubview(tbvc.tableView)
+        tbvc.tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        searchVC.view.addConstraint(NSLayoutConstraint(item: tbvc.tableView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: searchVC.view, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 70.0))
+        searchVC.view.addConstraint(NSLayoutConstraint(item: tbvc.tableView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: searchVC.view, attribute: NSLayoutAttribute.Left, multiplier: 1.0, constant: 0))
+        searchVC.view.addConstraint(NSLayoutConstraint(item: tbvc.tableView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: searchVC.view, attribute: NSLayoutAttribute.Right, multiplier: 1.0, constant: 0))
+    
+        searchResultsTableView = tbvc.tableView
+        
+        self.searchController = UISearchController(searchResultsController: searchVC)
         self.searchController?.searchResultsUpdater = self
         self.searchController?.searchBar.barStyle = UIBarStyle.Black
         self.searchController?.searchBar.searchBarStyle = UISearchBarStyle.Minimal
@@ -402,7 +372,9 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         self.searchController?.searchBar.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.searchController!.searchBar.frame.size.width, height: 44))
         self.tableView.tableHeaderView = self.searchController?.searchBar
         self.searchController?.dimsBackgroundDuringPresentation = true
-        self.searchController?.hidesNavigationBarDuringPresentation = false
+        
+        tbvc.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+        tbvc.tableView.separatorColor = UIColor.whiteColor()
         
         tbvc.tableView.registerClass(SearchResultsTableCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
     }
@@ -421,5 +393,18 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         navigationController?.navigationBar.barStyle = UIBarStyle.Black
         navigationController?.navigationBar.translucent = true
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+    }
+    
+    func handleKeyboardShown(notification:NSNotification){
+        // when keyboard pops up we want to layout the search results table view to end right at the top of the keyboard
+        if let info = notification.userInfo as? Dictionary<String,NSValue> {
+            if let keyboardFrame:NSValue = info[UIKeyboardFrameEndUserInfoKey]{
+                let frame:CGRect = keyboardFrame.CGRectValue()
+                let keyboardHeight = frame.height
+                let searchResultsController = self.searchController?.searchResultsController
+                searchResultsTableView?.superview?.addConstraint(NSLayoutConstraint(item: searchResultsTableView!, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: searchResultsTableView?.superview, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: -keyboardHeight))
+                searchResultsTableView?.superview?.layoutIfNeeded()
+            }
+        }
     }
 }

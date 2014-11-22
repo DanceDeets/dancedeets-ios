@@ -16,41 +16,18 @@ class SearchResultsTableCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = UIColor.clearColor()
         
-        // 1
-        let blurEffect = UIBlurEffect(style: .Dark)
-        // 2
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        // 3
-        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        contentView.insertSubview(blurView,atIndex:0)
-        blurView.constrainToSuperViewEdges()
+        selectionStyle = UITableViewCellSelectionStyle.None
         
-        
-        // 1
-        let vibrancyEffect = UIVibrancyEffect(forBlurEffect: blurEffect)
-        // 2
-        let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
-        vibrancyView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        // 3
         titleLabel = UILabel(frame: CGRectZero)
-        
-        let innerContentView = UIView(frame: CGRectZero)
-        innerContentView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
-        // 4
-        //vibrancyView.constrainToSuperViewEdges()
-        
-        
-        vibrancyView.contentView.addSubview(titleLabel!)
+        titleLabel?.textColor = UIColor.whiteColor()
+        titleLabel?.font = UIFont(name: "BebasNeueBold", size: 26)
+        titleLabel?.numberOfLines = 0
         titleLabel?.setTranslatesAutoresizingMaskIntoConstraints(false)
-        vibrancyView.contentView.addConstraint(NSLayoutConstraint(item: titleLabel!, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: titleLabel!.superview, attribute: NSLayoutAttribute.CenterY, multiplier: 1.0, constant: 0))
-        vibrancyView.contentView.addConstraint(NSLayoutConstraint(item: titleLabel!, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: titleLabel!.superview, attribute: NSLayoutAttribute.Left, multiplier: 1.0, constant: 20.0))
-        
-        blurView.contentView.addSubview(vibrancyView)
-       // vibrancyView.frame = CGRectMake(0, 0, 60, 40)
-        vibrancyView.constrainToSuperViewEdges()
-        
-       
+        contentView.addSubview(titleLabel!)
+        contentView.addConstraint(NSLayoutConstraint(item: titleLabel!, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: NSLayoutAttribute.Left, multiplier: 1.0, constant: 15.0))
+        contentView.addConstraint(NSLayoutConstraint(item: titleLabel!, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: NSLayoutAttribute.Right, multiplier: 1.0, constant: -15.0))
+        contentView.addConstraint(NSLayoutConstraint(item: titleLabel!, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 20.0))
+        contentView.addConstraint(NSLayoutConstraint(item: titleLabel!, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: -20.0))
     }
     
     required init(coder : NSCoder) {
@@ -59,9 +36,10 @@ class SearchResultsTableCell: UITableViewCell {
     
     func updateForEvent(event:Event)
     {
-        //titleLabel?.textColor = UIColor.greenColor()
+        titleLabel?.textColor = UIColor.whiteColor()
         titleLabel?.text = event.title
         titleLabel?.sizeToFit()
+        contentView.layoutIfNeeded()
     }
     
 }
