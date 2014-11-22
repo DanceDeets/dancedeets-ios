@@ -37,7 +37,15 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     // MARK: UISearchResultsUpdating
     func filterContentForSearchText(searchText: String) {
         self.filteredEvents = self.events.filter({( event: Event) -> Bool in
-            return event.title?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
+            // simple filter, check is search text is in description, title, or tags
+            if (event.title?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil){
+                return true;
+            }
+            if(event.tagString?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil){
+                return true;
+            }
+            
+            return false;
         })
     }
     
@@ -176,15 +184,21 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     // MARK: UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var cell:EventTableViewCell? = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell
+        var selectedEvent:Event?
         if(tableView == self.tableView){
-            let selectedEvent:Event = events[indexPath.row]
-            if selectedEvent.detailsLoaded{
-                            //performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
+            selectedEvent = events[indexPath.row]
+        }else if(tableView == searchResultsTableView){
+            selectedEvent = filteredEvents[indexPath.row]
+            searchController?.active = false
+        }
+        
+        if(selectedEvent != nil){
+            if selectedEvent!.detailsLoaded{
                 performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)
             }else{
                 cell?.spinner.startAnimating()
                 self.tableView.userInteractionEnabled = false
-                selectedEvent.getMoreDetails({ (error:NSError!) -> Void in
+                selectedEvent!.getMoreDetails({ (error:NSError!) -> Void in
                     dispatch_async(dispatch_get_main_queue(), {
                         self.tableView.userInteractionEnabled = true
                         cell?.spinner.stopAnimating()
@@ -197,10 +211,6 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
                     })
                 })
             }
-        }else if(tableView == searchResultsTableView){
-            let selectedEvent:Event = filteredEvents[indexPath.row]
-            self.searchController?.active = false
-            performSegueWithIdentifier("showEventSegue", sender: selectedEvent)
         }
     }
     
@@ -367,7 +377,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         self.searchController?.searchBar.barStyle = UIBarStyle.Black
         self.searchController?.searchBar.searchBarStyle = UISearchBarStyle.Minimal
         self.searchController?.searchBar.tintColor = UIColor.whiteColor()
-        self.searchController?.searchBar.placeholder = "Search Dance Events"
+        self.searchController?.searchBar.placeholder = "Filter Dance Events"
         
         self.searchController?.searchBar.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.searchController!.searchBar.frame.size.width, height: 44))
         self.tableView.tableHeaderView = self.searchController?.searchBar
