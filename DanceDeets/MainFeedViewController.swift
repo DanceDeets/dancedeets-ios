@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import MessageUI
+import QuartzCore
 
 enum MainFeedSearchMode{
     case CurrentLocation
@@ -28,6 +29,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     var searchController:UISearchController?
     var currentlyRefreshing = false
     var requiresRefresh = true
+    var gradientLayer:CAGradientLayer?
     
     // MARK: Outlets
     @IBOutlet weak var refreshIndicator: UIActivityIndicatorView!
@@ -63,6 +65,13 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
             }else{
                 refreshIndicator.stopAnimating()
             }
+        }
+        
+        if(scrollView == searchResultsTableView){
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            gradientLayer?.position = CGPointMake(0, scrollView.contentOffset.y);
+            CATransaction.commit()
         }
     }
     
@@ -353,6 +362,17 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         tbvc.tableView.separatorColor = UIColor.whiteColor()
         
         tbvc.tableView.registerClass(SearchResultsTableCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
+        
+        // this sets up a gradient mask on the table view layer, which gives the fade out effect
+        // when you scroll
+        gradientLayer = CAGradientLayer()
+        let outerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor
+        let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        gradientLayer?.colors = [outerColor,innerColor,innerColor]
+        gradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.03), NSNumber(float: 1.0)]
+        gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-70)
+        gradientLayer?.anchorPoint = CGPoint.zeroPoint
+        searchResultsTableView!.layer.mask = gradientLayer
     }
     
     func styleViewController()
@@ -383,4 +403,5 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
             }
         }
     }
+
 }

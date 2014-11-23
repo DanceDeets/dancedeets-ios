@@ -668,7 +668,7 @@
         <image name="back" width="25" height="25"/>
         <image name="calendar" width="25" height="25"/>
         <image name="facebook" width="25" height="25"/>
-        <image name="logoBackground" width="400" height="281"/>
+        <image name="logoBackground" width="400" height="300"/>
         <image name="settings-50" width="25" height="25"/>
         <image name="upload" width="25" height="25"/>
     </resources>
