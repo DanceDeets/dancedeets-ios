@@ -222,14 +222,13 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
             cell.updateForEvent(event)
             cell.contentView.setNeedsLayout()
             cell.contentView.layoutIfNeeded()
+            cell.eventPhoto?.image = nil
             
             if event.identifier != nil && event.eventImageUrl != nil{
                 let imageRequest:NSURLRequest = NSURLRequest(URL: event.eventImageUrl!)
                 if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
                     cell.eventPhoto?.image = image
                 }else{
-                    cell.eventPhoto?.image = nil
-
                     event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
                         if(image != nil && error == nil){
                             if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell{
