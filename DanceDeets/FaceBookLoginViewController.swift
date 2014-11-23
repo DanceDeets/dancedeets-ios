@@ -14,7 +14,6 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate {
 
     @IBOutlet weak var fbLoginView: FBLoginView!
     @IBOutlet weak var mainLoginTitle: MainAppLabel!
-    @IBOutlet weak var subTitleLabel: UILabel!
     
     @IBOutlet weak var danceDeetsTitleView: MainAppLabel!
     
@@ -25,8 +24,6 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate {
         self.fbLoginView.readPermissions = facebookPermission
         
         view.backgroundColor = UIColor.blackColor()
-        let subtitleFont = UIFont(name:"BebasNeueRegular",size: 30)
-        self.subTitleLabel.font = subtitleFont
     }
 
     // MARK: FBLoginViewDelegate

@@ -597,6 +597,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoBackground" translatesAutoresizingMaskIntoConstraints="NO" id="omW-zL-uBD">
+                                <rect key="frame" x="100" y="20" width="400" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="UnY-hA-JGc"/>
+                                    <constraint firstAttribute="width" constant="400" id="UrC-aP-aFl"/>
+                                </constraints>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="se0-3f-EIf" customClass="FBLoginView">
                                 <rect key="frame" x="160" y="480" width="280" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -605,50 +612,31 @@
                                     <constraint firstAttribute="width" constant="280" id="c2V-Gx-aBw"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance Deets" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MpM-g9-O1q" customClass="MainAppLabel" customModule="DanceDeets" customModuleProvider="target">
-                                <rect key="frame" x="228" y="80" width="144" height="30"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All the dopest dance events around you, right now." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPT-Vq-Y9N">
-                                <rect key="frame" x="40" y="140" width="520" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="260" id="RNI-8H-aKt"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="RNI-8H-aKt"/>
-                                    </mask>
-                                </variation>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="omW-zL-uBD" secondAttribute="centerX" id="27f-vx-Scc"/>
+                            <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="omW-zL-uBD" secondAttribute="bottom" id="6j3-h4-cJK"/>
                             <constraint firstAttribute="centerY" secondItem="se0-3f-EIf" secondAttribute="centerY" id="IYR-ev-Hfl"/>
-                            <constraint firstItem="dPT-Vq-Y9N" firstAttribute="top" secondItem="MpM-g9-O1q" secondAttribute="bottom" constant="30" id="J4U-HV-ZTJ"/>
-                            <constraint firstAttribute="centerX" secondItem="dPT-Vq-Y9N" secondAttribute="centerX" id="P05-G2-zk1"/>
-                            <constraint firstItem="MpM-g9-O1q" firstAttribute="top" secondItem="4yA-So-u3K" secondAttribute="bottom" constant="60" id="Xjh-Ft-4Ob"/>
-                            <constraint firstAttribute="trailing" secondItem="dPT-Vq-Y9N" secondAttribute="trailing" constant="40" id="fA3-rj-SDs"/>
-                            <constraint firstAttribute="centerX" secondItem="MpM-g9-O1q" secondAttribute="centerX" id="gTh-ay-l4n"/>
+                            <constraint firstItem="omW-zL-uBD" firstAttribute="leading" secondItem="KvK-Th-Fj8" secondAttribute="leadingMargin" id="TiN-D2-iCp"/>
+                            <constraint firstItem="omW-zL-uBD" firstAttribute="top" secondItem="4yA-So-u3K" secondAttribute="bottom" id="dcN-UF-NIn"/>
                             <constraint firstAttribute="centerX" secondItem="se0-3f-EIf" secondAttribute="centerX" id="re2-WZ-pTy"/>
-                            <constraint firstItem="dPT-Vq-Y9N" firstAttribute="leading" secondItem="KvK-Th-Fj8" secondAttribute="leading" constant="40" id="tsJ-xI-g4q"/>
+                            <constraint firstItem="omW-zL-uBD" firstAttribute="top" secondItem="4yA-So-u3K" secondAttribute="bottom" id="ucb-K7-TJZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="omW-zL-uBD" secondAttribute="trailing" id="wdq-lu-gRQ"/>
                             <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="se0-3f-EIf" secondAttribute="bottom" constant="60" id="zcc-jM-MUS"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="P05-G2-zk1"/>
+                                <exclude reference="TiN-D2-iCp"/>
+                                <exclude reference="dcN-UF-NIn"/>
+                                <exclude reference="wdq-lu-gRQ"/>
                                 <exclude reference="IYR-ev-Hfl"/>
+                                <exclude reference="6j3-h4-cJK"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="fbLoginView" destination="se0-3f-EIf" id="nQ7-D4-d5X"/>
-                        <outlet property="mainLoginTitle" destination="MpM-g9-O1q" id="UIn-KH-QMK"/>
-                        <outlet property="subTitleLabel" destination="dPT-Vq-Y9N" id="JCN-VY-rD8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bmy-Dl-kqu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -680,6 +668,7 @@
         <image name="back" width="25" height="25"/>
         <image name="calendar" width="25" height="25"/>
         <image name="facebook" width="25" height="25"/>
+        <image name="logoBackground" width="400" height="281"/>
         <image name="settings-50" width="25" height="25"/>
         <image name="upload" width="25" height="25"/>
     </resources>
