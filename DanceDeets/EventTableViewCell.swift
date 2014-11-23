@@ -8,11 +8,6 @@
 
 import UIKit
 
-@objc protocol EventTableViewCellDelegate
-{
-    optional func facebookButtonTapped(sender:Event!) ->()
-}
-
 class EventTableViewCell: UITableViewCell {
 
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -24,8 +19,6 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var eventPhoto: UIImageView!
     
     var currentEvent:Event?
-    
-    var delegate:EventTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,16 +34,12 @@ class EventTableViewCell: UITableViewCell {
         eventTimeLabel.font = UIFont(name:"Montserrat-Bold", size:14)
     }
     
-    // Style the cell based on the event
     func updateForEvent(event:Event){
         venueLabel.text = event.venue
         descriptionLabel.text = event.shortDescription
         titleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
         currentEvent = event
-    }
-
-    @IBAction func facebookButtonTapped(sender: AnyObject) {
-        delegate?.facebookButtonTapped?(currentEvent!)
+        contentView.layoutIfNeeded()
     }
 }

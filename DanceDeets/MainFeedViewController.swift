@@ -15,7 +15,7 @@ enum MainFeedSearchMode{
     case CustomCity
 }
 
-class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearchResultsUpdating, UISearchBarDelegate,UITableViewDataSource, UITableViewDelegate, EventTableViewCellDelegate {
+class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearchResultsUpdating, UISearchBarDelegate,UITableViewDataSource, UITableViewDelegate{
 
     var events:[Event] = []
     var filteredEvents:[Event] = []
@@ -218,10 +218,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         if(tableView == self.tableView){
             let cell = tableView.dequeueReusableCellWithIdentifier("eventTableViewCell", forIndexPath: indexPath) as EventTableViewCell
             let event = events[indexPath.row]
-            cell.delegate = self
             cell.updateForEvent(event)
-            cell.contentView.setNeedsLayout()
-            cell.contentView.layoutIfNeeded()
             cell.eventPhoto?.image = nil
             
             if event.identifier != nil && event.eventImageUrl != nil{
@@ -245,36 +242,6 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
             let event:Event = self.filteredEvents[indexPath.row]
             cell.updateForEvent(event)
             return cell
-        }
-    }
-    
-    // MARK: - EventTableViewCellDelegate
-    func facebookButtonTapped(sender: Event!) {
-        var linkparams:FBLinkShareParams = FBLinkShareParams()
-        
-        if( FBDialogs.canPresentShareDialogWithParams(linkparams)){
-            FBDialogs.presentShareDialogWithLink(sender.eventImageUrl, name: sender.title, caption: "Check out this event I found on Dance Deets!", description: "", picture: nil, clientState: nil, handler: { (call:FBAppCall!, clientState:[NSObject : AnyObject]!, error:NSError!) -> Void in
-                if(error != nil){
-                    println("Error with share dialog")
-                }else{
-                    println("success")
-                }
-            })
-        }else{
-            // TODO test this when I have real links, with facebook uninstalled
-            var shareDictionary:NSMutableDictionary = NSMutableDictionary()
-            shareDictionary.setObject(sender.title!, forKey: "name")
-            shareDictionary.setObject(sender.eventImageUrl!.absoluteString!, forKey: "link")
-            let caption:NSString = "Check out this event I found on Dance Deets!"
-            shareDictionary.setObject(caption, forKey:"caption")
-            
-            FBWebDialogs.presentFeedDialogModallyWithSession(nil, parameters: shareDictionary, handler: { (fbresult:FBWebDialogResult, url:NSURL!, error:NSError!) -> Void in
-                if(error != nil){
-                    println("Error with feed dialog")
-                }else{
-                    println("Success with feed dialog")
-                }
-            })
         }
     }
     

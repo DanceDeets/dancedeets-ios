@@ -14,7 +14,6 @@
 		1D43347A19D7552B001A5381 /* BebasNeueBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347519D7552B001A5381 /* BebasNeueBook.otf */; };
 		1D43347B19D7552B001A5381 /* BebasNeueBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347619D7552B001A5381 /* BebasNeueBold.otf */; };
 		1D43347C19D7552B001A5381 /* BebasNeueThin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347719D7552B001A5381 /* BebasNeueThin.otf */; };
-		1D43348119D75873001A5381 /* MainAppLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D43348019D75873001A5381 /* MainAppLabel.swift */; };
 		1D4343471A1DB06D00E0B0A3 /* SearchResultsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */; };
 		1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */; };
 		1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */; };
@@ -66,7 +65,6 @@
 		1D43347519D7552B001A5381 /* BebasNeueBook.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueBook.otf; sourceTree = "<group>"; };
 		1D43347619D7552B001A5381 /* BebasNeueBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueBold.otf; sourceTree = "<group>"; };
 		1D43347719D7552B001A5381 /* BebasNeueThin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueThin.otf; sourceTree = "<group>"; };
-		1D43348019D75873001A5381 /* MainAppLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainAppLabel.swift; sourceTree = "<group>"; };
 		1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableCell.swift; sourceTree = "<group>"; };
 		1D8856B719CDE510005FFDB2 /* DanceDeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceDeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856BB19CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -144,7 +142,6 @@
 		1D43347F19D75861001A5381 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
-				1D43348019D75873001A5381 /* MainAppLabel.swift */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -375,7 +372,6 @@
 				1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */,
 				1DB901CA19E09C5B0018B434 /* BasicSwitchToggleCell.swift in Sources */,
 				1D8A064319CE0CB8004607B6 /* EventTableViewCell.swift in Sources */,
-				1D43348119D75873001A5381 /* MainAppLabel.swift in Sources */,
 				1DB901CC19E1B3580018B434 /* CustomCityTableViewCell.swift in Sources */,
 				1D89F6AA1A0ECDC100D3E4BE /* EventDetailCoverCell.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
