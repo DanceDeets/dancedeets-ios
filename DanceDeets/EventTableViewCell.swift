@@ -40,6 +40,7 @@ class EventTableViewCell: UITableViewCell {
         titleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
         currentEvent = event
+        contentView.setNeedsLayout()
         contentView.layoutIfNeeded()
     }
 }

@@ -18,10 +18,11 @@ enum MainFeedSearchMode{
 
 class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearchResultsUpdating, UISearchBarDelegate,UITableViewDataSource, UITableViewDelegate{
 
+    let PULL_TO_REFRESH_OFFSET:CGFloat = 125.0
+    let SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET:CGFloat = 70.0
     var events:[Event] = []
     var filteredEvents:[Event] = []
     var currentCity:String? = String()
-    let estimatedEventRowHeight:CGFloat = 600
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
     var searchMode:MainFeedSearchMode = MainFeedSearchMode.CurrentLocation
@@ -46,7 +47,6 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
             if(event.tagString?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil){
                 return true;
             }
-            
             return false;
         })
     }
@@ -60,14 +60,12 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     // MARK: UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if(scrollView == tableView){
-            if (scrollView.contentOffset.y < -125 && !currentlyRefreshing){
+            if (scrollView.contentOffset.y < -PULL_TO_REFRESH_OFFSET && !currentlyRefreshing){
                 refreshIndicator.startAnimating()
             }else{
                 refreshIndicator.stopAnimating()
             }
-        }
-        
-        if(scrollView == searchResultsTableView){
+        }else if(scrollView == searchResultsTableView){
             CATransaction.begin()
             CATransaction.setDisableActions(true)
             gradientLayer?.position = CGPointMake(0, scrollView.contentOffset.y);
@@ -88,7 +86,7 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        styleViewController()
+        loadViewController()
         loadSearchController()
         
         // location stuff
@@ -327,64 +325,64 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     func loadSearchController()
     {
         // setting up the view controller handling results from the search bar
-        
         var searchVC:UIViewController = UIViewController()
+        
+        // blurred background
         let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
         searchVC.view.addSubview(overlayView)
         overlayView.constrainToSuperViewEdges()
         
+        // table view controller listing filtered events
         var tbvc:UITableViewController = UITableViewController(style: UITableViewStyle.Plain)
         tbvc.tableView.delegate = self
         tbvc.tableView.dataSource = self
         tbvc.tableView.backgroundColor = UIColor.clearColor()
         tbvc.tableView.rowHeight = UITableViewAutomaticDimension
+        tbvc.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+        tbvc.tableView.separatorColor = UIColor.whiteColor()
+        tbvc.tableView.registerClass(SearchResultsTableCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
         
         searchVC.view.addSubview(tbvc.tableView)
         tbvc.tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        searchVC.view.addConstraint(NSLayoutConstraint(item: tbvc.tableView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: searchVC.view, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 70.0))
+        searchVC.view.addConstraint(NSLayoutConstraint(item: tbvc.tableView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: searchVC.view, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET))
         searchVC.view.addConstraint(NSLayoutConstraint(item: tbvc.tableView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: searchVC.view, attribute: NSLayoutAttribute.Left, multiplier: 1.0, constant: 0))
         searchVC.view.addConstraint(NSLayoutConstraint(item: tbvc.tableView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: searchVC.view, attribute: NSLayoutAttribute.Right, multiplier: 1.0, constant: 0))
     
         searchResultsTableView = tbvc.tableView
         
+        // search controller set upt
         self.searchController = UISearchController(searchResultsController: searchVC)
         self.searchController?.searchResultsUpdater = self
         self.searchController?.searchBar.barStyle = UIBarStyle.Black
         self.searchController?.searchBar.searchBarStyle = UISearchBarStyle.Minimal
         self.searchController?.searchBar.tintColor = UIColor.whiteColor()
         self.searchController?.searchBar.placeholder = "Filter Dance Events"
-        
+        // sets at the top of the main feed
         self.searchController?.searchBar.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.searchController!.searchBar.frame.size.width, height: 44))
-        self.tableView.tableHeaderView = self.searchController?.searchBar
         self.searchController?.dimsBackgroundDuringPresentation = true
+        self.tableView.tableHeaderView = self.searchController?.searchBar
         
-        tbvc.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-        tbvc.tableView.separatorColor = UIColor.whiteColor()
-        
-        tbvc.tableView.registerClass(SearchResultsTableCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
-        
-        // this sets up a gradient mask on the table view layer, which gives the fade out effect
-        // when you scroll
+        // gradient fade out at top
         gradientLayer = CAGradientLayer()
         let outerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor
         let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         gradientLayer?.colors = [outerColor,innerColor,innerColor]
         gradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.03), NSNumber(float: 1.0)]
-        gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-70)
+        gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET)
         gradientLayer?.anchorPoint = CGPoint.zeroPoint
         searchResultsTableView!.layer.mask = gradientLayer
     }
     
-    func styleViewController()
+    func loadViewController()
     {
-        self.view.backgroundColor = UIColor(red: 119.0/255.0, green: 120.0/255.0, blue: 124.0/255.0, alpha: 1)
+        view.backgroundColor = UIColor(red: 119.0/255.0, green: 120.0/255.0, blue: 124.0/255.0, alpha: 1)
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style: UIBarButtonItemStyle.Plain, target: nil, action:nil)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName:FontFactory.navigationTitleFont()]
+        navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style: UIBarButtonItemStyle.Plain, target: nil, action:nil)
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName:FontFactory.navigationTitleFont()]
         
         tableView.backgroundView = UIView()
         tableView.backgroundColor = UIColor.clearColor()
-        tableView.estimatedRowHeight = estimatedEventRowHeight
+        tableView.estimatedRowHeight = 600
         tableView.rowHeight = UITableViewAutomaticDimension
         navigationController?.navigationBar.barStyle = UIBarStyle.Black
         navigationController?.navigationBar.translucent = true
