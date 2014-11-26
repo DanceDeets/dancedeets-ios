@@ -20,11 +20,11 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
 
     let PULL_TO_REFRESH_OFFSET:CGFloat = 125.0
     let SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET:CGFloat = 70.0
+    let locationManager:CLLocationManager  = CLLocationManager()
+    let geocoder:CLGeocoder = CLGeocoder()
     var events:[Event] = []
     var filteredEvents:[Event] = []
     var currentCity:String? = String()
-    let locationManager:CLLocationManager  = CLLocationManager()
-    let geocoder:CLGeocoder = CLGeocoder()
     var searchMode:MainFeedSearchMode = MainFeedSearchMode.CurrentLocation
     var searchResultsTableView:UITableView?
     var searchController:UISearchController?
@@ -33,9 +33,11 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     var gradientLayer:CAGradientLayer?
     
     // MARK: Outlets
+    @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var refreshIndicator: UIActivityIndicatorView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var refreshLabel: UILabel!
     
     // MARK: UISearchResultsUpdating
     func filterContentForSearchText(searchText: String) {
@@ -51,6 +53,19 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         })
     }
     
+    func hideRefreshView(){
+        println("hdie")
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.refreshView.alpha = 0
+        })
+    }
+    func showRefreshView(){
+        println("show")
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.refreshView.alpha = 1
+        })
+    }
+    
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
         filterContentForSearchText(searchController.searchBar.text)
@@ -61,9 +76,11 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if(scrollView == tableView){
             if (scrollView.contentOffset.y < -PULL_TO_REFRESH_OFFSET && !currentlyRefreshing){
-                refreshIndicator.startAnimating()
+                //refreshIndicator.startAnimating()
+                showRefreshView()
             }else{
-                refreshIndicator.stopAnimating()
+                //refreshIndicator.stopAnimating()
+                hideRefreshView()
             }
         }else if(scrollView == searchResultsTableView){
             CATransaction.begin()
@@ -75,8 +92,10 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if(scrollView == tableView){
-            if(refreshIndicator.isAnimating()){
-                refreshIndicator.stopAnimating()
+ //.           if(refreshIndicator.isAnimating()){
+            if(refreshView.alpha == 1){
+                //               refreshIndicator.stopAnimating()
+                hideRefreshView()
                 refreshEvents()
             }
         }
@@ -204,8 +223,10 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
                 performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)
             }else{
                 cell?.spinner.startAnimating()
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
                 self.tableView.userInteractionEnabled = false
                 selectedEvent!.getMoreDetails({ (error:NSError!) -> Void in
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     dispatch_async(dispatch_get_main_queue(), {
                         self.tableView.userInteractionEnabled = true
                         cell?.spinner.stopAnimating()
@@ -371,6 +392,8 @@ class MainFeedViewController:UIViewController,CLLocationManagerDelegate,UISearch
         gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET)
         gradientLayer?.anchorPoint = CGPoint.zeroPoint
         searchResultsTableView!.layer.mask = gradientLayer
+        
+        hideRefreshView()
     }
     
     func loadViewController()

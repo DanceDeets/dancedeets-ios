@@ -59,7 +59,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         }
         
         addCalendarAlert = UIAlertView(title: "Want to add this event to your calendar?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
-        
         facebookAlert = UIAlertView(title: "RSVP on Facebook?", message: "", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
         
         // the blur effect view over the entire cover image

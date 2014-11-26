@@ -65,18 +65,18 @@ public class Event: NSObject {
         var dateFormatterStart:NSDateFormatter  = NSDateFormatter()
         var dateFormatterEnd:NSDateFormatter = NSDateFormatter()
         var dateDisplayString:String  = String()
-        dateFormatterStart.dateFormat = "MMM dd 'at' h:mm a"
-        dateFormatterEnd.dateFormat = "h:mm a"
+        dateFormatterStart.dateFormat = "MMM dd, yyyy  |  ha"
+        dateFormatterEnd.dateFormat = "ha"
         if (startTime != nil && endTime != nil){
             dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
-            dateDisplayString += " till "
+            dateDisplayString += " - "
             dateDisplayString += dateFormatterEnd.stringFromDate(endTime!)
         } else if(startTime != nil){
             dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
         }else{
             dateDisplayString = "Unknown Time"
         }
-        displayTime = dateDisplayString 
+        displayTime = dateDisplayString.uppercaseString
         
         location = dictionary["location"] as? String
         

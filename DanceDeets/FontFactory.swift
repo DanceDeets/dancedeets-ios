@@ -12,6 +12,16 @@ import UIKit
 class FontFactory {
     
     class func navigationTitleFont()->UIFont{
-        return UIFont(name:"BebasNeueBold",size: 26)!
+        return UIFont(name:"UniversLTStd-UltraCn",size: 22)!
     }
+    class func eventHeadlineFont()->UIFont{
+        return UIFont(name:"Interstate-ExtraLight",size:22)!
+    }
+    class func eventDateFont()->UIFont{
+        return UIFont(name:"Interstate-BoldCondensed",size:15)!
+    }
+    class func eventVenueFont()->UIFont{
+        return UIFont(name:"Interstate-Light",size:13)!
+    }
+    
 }

@@ -40,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             diskCapacity: urlCacheDiskCapacityMB*1024*1024, diskPath: nil)
         NSURLCache.setSharedURLCache(sharedURLCache)
         
+        Utilities.printFontFamilies()
+    
         return true
     }
     

@@ -1,27 +1,31 @@
 //
-//  EventTableViewCell.swift
+//  EventCollectionViewCell.swift
 //  DanceDeets
 //
-//  Created by David Xiang on 9/20/14.
+//  Created by David Xiang on 11/26/14.
 //  Copyright (c) 2014 david.xiang. All rights reserved.
 //
 
 import UIKit
 
-class EventTableViewCell: UITableViewCell {
+class EventCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
-    @IBOutlet weak var venueLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var eventVenueLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
-    @IBOutlet weak var eventPhoto: UIImageView!
-    
+    @IBOutlet weak var eventTitleLabel: UILabel!
+    @IBOutlet weak var eventCoverImage: UIImageView!
+    @IBOutlet weak var eventCoverImageActivityIndicator: UIActivityIndicatorView!
     var currentEvent:Event?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        eventTitleLabel.font = FontFactory.eventHeadlineFont()
+        eventTitleLabel.textColor = UIColor.whiteColor()
+        eventTimeLabel.font = FontFactory.eventDateFont()
+        eventTimeLabel.textColor =  ColorFactory.lightBlue()
+        eventVenueLabel.textColor = UIColor.whiteColor()
+        eventVenueLabel.font = FontFactory.eventVenueFont()
+        /*
         mainView.layer.masksToBounds = false
         mainView.layer.shadowRadius = 4
         mainView.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
@@ -33,14 +37,15 @@ class EventTableViewCell: UITableViewCell {
         descriptionLabel.font = UIFont(name: "Montserrat-Regular", size: 13)
         eventTimeLabel.font = UIFont(name:"Montserrat-Bold", size:14)
         eventTimeLabel.textColor = ColorFactory.lightBlue()
+        */
     }
     
+    
     func updateForEvent(event:Event){
-        venueLabel.text = event.venue
-        descriptionLabel.text = event.shortDescription
-        titleLabel.text = event.title
+        eventTitleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
-        currentEvent = event
+        eventVenueLabel.text = event.venue
+       
         contentView.setNeedsLayout()
         contentView.layoutIfNeeded()
     }

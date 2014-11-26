@@ -26,4 +26,15 @@ class Utilities{
         return bounds.size.height;
     }
     
+    class func printFontFamilies()
+    {
+        for name in UIFont.familyNames()
+        {
+            if let nameString = name as? String{
+                let names = UIFont.fontNamesForFamilyName(nameString)
+                println(nameString)
+                println(names)
+            }
+        }
+    }
 }

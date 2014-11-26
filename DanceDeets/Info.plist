@@ -39,6 +39,10 @@
 	<string>Let Dance Deets find events near you</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Interstate-BoldCondensed.ttf</string>
+		<string>Interstate-ExtraLight.ttf</string>
+		<string>Interstate-Light.ttf</string>
+		<string>UniversLTStd-UltraCn.otf</string>
 		<string>Montserrat-Bold.ttf</string>
 		<string>Montserrat-Regular.ttf</string>
 		<string>BebasNeueThin.otf</string>
@@ -55,6 +59,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
