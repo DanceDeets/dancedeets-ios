@@ -11,7 +11,7 @@ import CoreLocation
 import MessageUI
 import QuartzCore
 
-class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UISearchResultsUpdating,UISearchControllerDelegate, UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate {
     
     enum SearchMode{
         case CurrentLocation
@@ -19,25 +19,65 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     let COLLECTION_VIEW_TOP_MARGIN:CGFloat = 70.0
+    let SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET:CGFloat = 70.0
     var events:[Event] = []
+    var filteredEvents:[Event] = []
     var currentCity:String? = String()
     var searchMode:SearchMode = SearchMode.CurrentLocation
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
     var requiresRefresh = true
+    var gradientLayer:CAGradientLayer?
+    var searchResultsTableView:UITableView?
+    var searchController:UISearchController?
+    var blurOverlay:UIView?
     
     // MARK: Outlets
     @IBOutlet weak var navigationTitle: UILabel!
     @IBOutlet weak var eventCollectionView: UICollectionView!
+    
+    // MARK: Action
+    @IBAction func searchBarButtonTapped(sender: AnyObject) {
+        blurOverlay?.fadeIn(0.4)
+        searchController?.searchBar.hidden = false
+        self.searchController?.searchBar.becomeFirstResponder()
+    }
+    
+    // MARK: UISearchResultsUpdating
+    func updateSearchResultsForSearchController(searchController: UISearchController){
+        filterContentForSearchText(searchController.searchBar.text)
+        searchResultsTableView?.reloadData()
+    }
+    
+    // MARK: UISearchControllerDelegate
+    func willDismissSearchController(searchController: UISearchController) {
+        blurOverlay?.fadeOut(0.4)
+        searchController.searchBar.hidden = true
+    }
+    
+    // MARK: UIScrollViewDelegate
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if(scrollView == searchResultsTableView){
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            gradientLayer?.position = CGPointMake(0, scrollView.contentOffset.y);
+            CATransaction.commit()
+        }
+    }
     
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.loadViewController()
+        self.loadSearchController()
         
-        eventCollectionView.delegate = self
-        eventCollectionView.dataSource = self
+        // notification registration
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "handleKeyboardShown:",
+            name: UIKeyboardDidShowNotification,
+            object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -68,39 +108,16 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: UICollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
         var selectedEvent:Event = events[indexPath.row]
-        
-        if selectedEvent.detailsLoaded{
-            performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)
-        }else{
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            self.eventCollectionView.userInteractionEnabled = false
-            selectedEvent.getMoreDetails({ (error:NSError!) -> Void in
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.eventCollectionView.userInteractionEnabled = true
-                    if(error == nil){
-                        self.performSegueWithIdentifier("eventDetailSegue", sender: selectedEvent)
-                    }else{
-                        let alert:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get the deets to that event right now", delegate: nil, cancelButtonTitle: "OK")
-                        alert.show()
-                    }
-                })
-            })
-        }
+        segueIntoEventDetail(selectedEvent)
     }
     
-    
     // MARK: UICollectionViewDataSource
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
-    {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return events.count
     }
     
-    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
-    {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
         let cell:EventCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("eventCollectionViewCell", forIndexPath: indexPath) as? EventCollectionViewCell
         let event = events[indexPath.row] as Event
         cell?.updateForEvent(event)
@@ -118,18 +135,18 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 })
             }
         }
-        
         return cell!
     }
     
     // MARK: Private
-    func loadViewController()
-    {
+    func loadViewController(){
+        eventCollectionView.delegate = self
+        eventCollectionView.dataSource = self
+        
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         navigationTitle.textColor = UIColor.whiteColor()
         navigationTitle.font = FontFactory.navigationTitleFont()
-        navigationTitle.text = "NEW YORK"
         
         eventCollectionView.layoutIfNeeded()
         let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
@@ -137,6 +154,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         flowLayout?.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height - COLLECTION_VIEW_TOP_MARGIN)
         flowLayout?.minimumInteritemSpacing = 0.0
         
+        blurOverlay = UIView(frame: CGRectZero)
+        self.view.addSubview(blurOverlay!)
+        blurOverlay?.constrainToSuperViewEdges()
+        
+        let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
+        blurOverlay?.addSubview(overlayView)
+        overlayView.constrainToSuperViewEdges()
+        blurOverlay?.alpha = 0
     }
     
     // MARK: - CLLocationManagerDelegate
@@ -164,6 +189,29 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         locationFailure.show()
     }
     
+    // MARK: UITableViewDataSource / UITableViewDelegate
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.filteredEvents.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("filteredEventCell", forIndexPath: indexPath) as SearchResultsTableCell
+        let event:Event = self.filteredEvents[indexPath.row]
+        cell.updateForEvent(event)
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let event:Event = filteredEvents[indexPath.row]
+        self.searchController?.active = false
+        segueIntoEventDetail(event)
+   
+    }
     
     // MARK: Private
     func refreshEvents(){
@@ -187,11 +235,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func refreshEventsForCurrentCity(){
         println("Refreshing events for: " + currentCity!)
-        self.navigationTitle.text = "LOADING EVENTS"
+        self.navigationTitle.text = "LOADING EVENTS..."
         Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error:NSError!) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.navigationTitle.text = self.currentCity
-                
                 // check response
                 if(error != nil){
                     let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
@@ -204,6 +251,103 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     self.eventCollectionView.reloadData()
                 }
             })
+        })
+    }
+    
+    func loadSearchController()
+    {
+        // setting up the view controller handling results from the search bar
+        var searchVC:UIViewController = UIViewController()
+        searchVC.automaticallyAdjustsScrollViewInsets = false
+        
+        // table view controller listing filtered events
+        var tbvc:UITableViewController = UITableViewController(style: UITableViewStyle.Plain)
+        tbvc.tableView.delegate = self
+        tbvc.tableView.dataSource = self
+        tbvc.tableView.backgroundColor = UIColor.clearColor()
+        tbvc.tableView.rowHeight = UITableViewAutomaticDimension
+        tbvc.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+        tbvc.tableView.separatorColor = UIColor.whiteColor()
+        tbvc.tableView.registerClass(SearchResultsTableCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
+        
+        searchVC.view.addSubview(tbvc.tableView)
+        tbvc.tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        searchVC.view.addConstraint(NSLayoutConstraint(item: tbvc.tableView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: searchVC.view, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET))
+        searchVC.view.addConstraint(NSLayoutConstraint(item: tbvc.tableView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: searchVC.view, attribute: NSLayoutAttribute.Left, multiplier: 1.0, constant: 0))
+        searchVC.view.addConstraint(NSLayoutConstraint(item: tbvc.tableView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: searchVC.view, attribute: NSLayoutAttribute.Right, multiplier: 1.0, constant: 0))
+        
+        searchResultsTableView = tbvc.tableView
+        
+        // search controller set upt
+        self.searchController = UISearchController(searchResultsController: searchVC)
+        self.searchController?.delegate = self
+        self.searchController?.searchResultsUpdater = self
+        self.searchController?.searchBar.delegate = self
+        self.searchController?.searchBar.barStyle = UIBarStyle.Black
+        self.searchController?.searchBar.searchBarStyle = UISearchBarStyle.Minimal
+        self.searchController?.searchBar.tintColor = UIColor.whiteColor()
+        self.searchController?.searchBar.placeholder = "Filter Dance Events"
+        // sets at the top of the main feed
+        self.searchController?.searchBar.frame = CGRect(origin: CGPoint(x: 0, y: 10), size: CGSize(width: self.searchController!.searchBar.frame.size.width, height: 44))
+        self.searchController?.dimsBackgroundDuringPresentation = true
+        self.view.addSubview(self.searchController!.searchBar)
+        
+        // gradient fade out at top
+        gradientLayer = CAGradientLayer()
+        let outerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor
+        let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        gradientLayer?.colors = [outerColor,innerColor,innerColor]
+        gradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.03), NSNumber(float: 1.0)]
+        gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET)
+        gradientLayer?.anchorPoint = CGPoint.zeroPoint
+        searchResultsTableView!.layer.mask = gradientLayer
+    }
+    
+    
+    func handleKeyboardShown(notification:NSNotification){
+        // when keyboard pops up we want to layout the search results table view to end right at the top of the keyboard
+        if let info = notification.userInfo as? Dictionary<String,NSValue> {
+            if let keyboardFrame:NSValue = info[UIKeyboardFrameEndUserInfoKey]{
+                let frame:CGRect = keyboardFrame.CGRectValue()
+                let keyboardHeight = frame.height
+                let searchResultsController = self.searchController?.searchResultsController
+                searchResultsTableView?.superview?.addConstraint(NSLayoutConstraint(item: searchResultsTableView!, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: searchResultsTableView?.superview, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: -keyboardHeight))
+                searchResultsTableView?.superview?.layoutIfNeeded()
+            }
+        }
+    }
+    
+    func segueIntoEventDetail(event:Event){
+        if event.detailsLoaded{
+            performSegueWithIdentifier("eventDetailSegue", sender: event)
+        }else{
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            self.eventCollectionView.userInteractionEnabled = false
+            event.getMoreDetails({ (error:NSError!) -> Void in
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.eventCollectionView.userInteractionEnabled = true
+                    if(error == nil){
+                        self.performSegueWithIdentifier("eventDetailSegue", sender: event)
+                    }else{
+                        let alert:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get the deets to that event right now", delegate: nil, cancelButtonTitle: "OK")
+                        alert.show()
+                    }
+                })
+            })
+        }
+    }
+
+    func filterContentForSearchText(searchText: String) {
+        self.filteredEvents = self.events.filter({( event: Event) -> Bool in
+            // simple filter, check is search text is in description, title, or tags
+            if (event.title?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil){
+                return true;
+            }
+            if(event.tagString?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil){
+                return true;
+            }
+            return false;
         })
     }
     

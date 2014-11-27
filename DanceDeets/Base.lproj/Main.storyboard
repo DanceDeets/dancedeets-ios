@@ -57,6 +57,9 @@
                                 <state key="normal" image="searchIconThick">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="searchBarButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="4jR-vW-wuT"/>
+                                </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="IbI-W0-Nu5">
                                 <rect key="frame" x="0.0" y="70" width="600" height="486"/>
@@ -180,7 +183,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5E-47-ysN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2356" y="-1393"/>
+            <point key="canvasLocation" x="1960" y="-1961"/>
         </scene>
         <!--Main Feed View Controller-->
         <scene sceneID="hrs-bu-SBO">
@@ -869,7 +872,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dea-gI-tMM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="748" y="-1393"/>
+            <point key="canvasLocation" x="1240" y="-1961"/>
         </scene>
     </scenes>
     <resources>
