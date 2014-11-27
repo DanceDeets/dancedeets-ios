@@ -87,7 +87,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+      //  self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -101,7 +101,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+      //  self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     override func didReceiveMemoryWarning() {

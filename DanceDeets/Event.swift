@@ -11,6 +11,8 @@ import UIKit
 
 public class Event: NSObject {
     let eventImageUrl:NSURL?
+    let eventImageWidth:CGFloat?
+    let eventImageHeight:CGFloat?
     let venue:NSString?
     let shortDescription:NSString?
     let startTime:NSDate?
@@ -44,11 +46,16 @@ public class Event: NSObject {
         shortDescription = dictionary["description"] as? String
         
         let coverUrlKey:NSString = "cover_url"
-        let coverDictionary = dictionary[coverUrlKey] as? NSDictionary
         
-        if coverDictionary != nil{
-            if let coverImageUrl = coverDictionary!["source"] as? String {
+        if let coverDictionary = dictionary[coverUrlKey] as? NSDictionary{
+            if let coverImageUrl = coverDictionary["source"] as? String {
                 eventImageUrl = NSURL(string: coverImageUrl)
+            }
+            if let height = coverDictionary["height"] as? CGFloat{
+                eventImageHeight = height
+            }
+            if let width = coverDictionary["width"] as? CGFloat {
+                eventImageWidth = width
             }
         }
         
@@ -110,7 +117,7 @@ public class Event: NSObject {
             completionHandler: { (location:NSURL!, resp:NSURLResponse!, error:NSError!) -> Void in
                 if(error == nil){
                     let data:NSData? = NSData(contentsOfURL: location)
-                    if let newImage = UIImage(data:data!){
+                    if let newImage = UIImage(data: data!, scale: UIScreen.mainScreen().scale){
                         ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
                         dispatch_async(dispatch_get_main_queue(), {
                             completion(newImage,nil)
