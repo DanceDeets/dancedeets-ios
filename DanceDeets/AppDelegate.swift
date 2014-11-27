@@ -21,11 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UIApplication.sharedApplication().delegate as AppDelegate
     }
     
-    func mainFeedViewController()->MainFeedViewController?
+    func eventStreamViewController()->EventStreamViewController?
     {
         let rootVC:UINavigationController? =  window?.rootViewController as? UINavigationController
         if(rootVC?.viewControllers.count > 0){
-            return rootVC?.viewControllers[0] as? MainFeedViewController
+            return rootVC?.viewControllers[0] as? EventStreamViewController
         }else{
             return nil
         }

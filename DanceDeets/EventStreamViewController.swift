@@ -90,6 +90,11 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        checkFaceBookToken()
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "eventDetailSegue"{
             var destination:EventDetailViewController? = segue.destinationViewController as? EventDetailViewController
@@ -198,6 +203,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         return self.filteredEvents.count
     }
     
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.min
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.min
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("filteredEventCell", forIndexPath: indexPath) as SearchResultsTableCell
@@ -267,7 +280,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         tbvc.tableView.backgroundColor = UIColor.clearColor()
         tbvc.tableView.rowHeight = UITableViewAutomaticDimension
         tbvc.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-        tbvc.tableView.separatorColor = UIColor.whiteColor()
+        tbvc.tableView.separatorColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
         tbvc.tableView.registerClass(SearchResultsTableCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
         
         searchVC.view.addSubview(tbvc.tableView)
@@ -278,14 +291,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         searchResultsTableView = tbvc.tableView
         
-        // search controller set upt
+        // search controller set up
         self.searchController = UISearchController(searchResultsController: searchVC)
         self.searchController?.delegate = self
         self.searchController?.searchResultsUpdater = self
         self.searchController?.searchBar.delegate = self
         self.searchController?.searchBar.barStyle = UIBarStyle.Black
         self.searchController?.searchBar.searchBarStyle = UISearchBarStyle.Minimal
-        self.searchController?.searchBar.tintColor = UIColor.whiteColor()
+        self.searchController?.searchBar.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         self.searchController?.searchBar.placeholder = "Filter Dance Events"
         // sets at the top of the main feed
         self.searchController?.searchBar.frame = CGRect(origin: CGPoint(x: 0, y: 10), size: CGSize(width: self.searchController!.searchBar.frame.size.width, height: 44))
@@ -349,6 +362,28 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             }
             return false;
         })
+    }
+    
+    func checkFaceBookToken(){
+        let currentState:FBSessionState = FBSession.activeSession().state
+        
+        // don't do anything if session is open
+        if( currentState == FBSessionState.Open ||
+            currentState == FBSessionState.OpenTokenExtended){
+                return;
+        }else if( currentState == FBSessionState.CreatedTokenLoaded){
+            FBSession.openActiveSessionWithAllowLoginUI(false)
+            
+            FBRequestConnection.startForMeWithCompletionHandler({ (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
+                if (error == nil){
+                    if let resultDictionary:NSDictionary? = result as? NSDictionary{
+                        AppDelegate.sharedInstance().fbGraphUserObjectId = resultDictionary!["id"] as? String
+                    }
+                }
+            })
+        }else{
+            navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
+        }
     }
     
 }

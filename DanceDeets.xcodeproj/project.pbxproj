@@ -13,6 +13,7 @@
 		1D0892441A267EBF00A9EAC4 /* Interstate-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D0892411A267EBF00A9EAC4 /* Interstate-ExtraLight.ttf */; };
 		1D0892451A267EBF00A9EAC4 /* Interstate-BoldCondensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D0892421A267EBF00A9EAC4 /* Interstate-BoldCondensed.ttf */; };
 		1D0892471A267EE700A9EAC4 /* UniversLTStd-UltraCn.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D0892461A267EE700A9EAC4 /* UniversLTStd-UltraCn.otf */; };
+		1D0892491A278DCB00A9EAC4 /* GooglePlaceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0892481A278DCB00A9EAC4 /* GooglePlaceAPI.swift */; };
 		1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */; };
 		1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15802A1A05695400658A1D /* EventAdmin.swift */; };
 		1D43347819D7552B001A5381 /* BebasNeueRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347319D7552B001A5381 /* BebasNeueRegular.otf */; };
@@ -45,7 +46,6 @@
 		1DB901CA19E09C5B0018B434 /* BasicSwitchToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */; };
 		1DB901CC19E1B3580018B434 /* CustomCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */; };
 		1DE70DFA1A0FD55D0044C77C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DE70DF91A0FD55D0044C77C /* FacebookSDK.framework */; };
-		1DFB3B4919F8B0C400CF4A72 /* MainFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */; };
 		1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */; };
 		1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */; };
 		1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B5119FF575C00CF4A72 /* EventKit.framework */; };
@@ -69,6 +69,7 @@
 		1D0892411A267EBF00A9EAC4 /* Interstate-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Interstate-ExtraLight.ttf"; sourceTree = "<group>"; };
 		1D0892421A267EBF00A9EAC4 /* Interstate-BoldCondensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Interstate-BoldCondensed.ttf"; sourceTree = "<group>"; };
 		1D0892461A267EE700A9EAC4 /* UniversLTStd-UltraCn.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UniversLTStd-UltraCn.otf"; sourceTree = "<group>"; };
+		1D0892481A278DCB00A9EAC4 /* GooglePlaceAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlaceAPI.swift; sourceTree = "<group>"; };
 		1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1D15802A1A05695400658A1D /* EventAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAdmin.swift; sourceTree = "<group>"; };
 		1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DanceDeets-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -106,7 +107,6 @@
 		1DB901C919E09C5B0018B434 /* BasicSwitchToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSwitchToggleCell.swift; sourceTree = "<group>"; };
 		1DB901CB19E1B3580018B434 /* CustomCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCityTableViewCell.swift; sourceTree = "<group>"; };
 		1DE70DF91A0FD55D0044C77C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
-		1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedViewController.swift; sourceTree = "<group>"; };
 		1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		1DFB3B5119FF575C00CF4A72 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
@@ -253,7 +253,6 @@
 			children = (
 				1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */,
 				1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */,
-				1DFB3B4819F8B0C400CF4A72 /* MainFeedViewController.swift */,
 				1DB901C419E0856E0018B434 /* SettingsTableViewController.swift */,
 				1D08923B1A266D7A00A9EAC4 /* EventStreamViewController.swift */,
 			);
@@ -283,6 +282,7 @@
 				1DB901C719E0999E0018B434 /* FontFactory.swift */,
 				1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */,
 				1DAB49EF1A17E4D70002BBDD /* Utilities.swift */,
+				1D0892481A278DCB00A9EAC4 /* GooglePlaceAPI.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -408,13 +408,13 @@
 				1D89F6AA1A0ECDC100D3E4BE /* EventDetailCoverCell.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */,
+				1D0892491A278DCB00A9EAC4 /* GooglePlaceAPI.swift in Sources */,
 				1D4343471A1DB06D00E0B0A3 /* SearchResultsTableCell.swift in Sources */,
 				1D8A064019CDE605004607B6 /* Event.swift in Sources */,
 				1DAB49F41A18020D0002BBDD /* EventDetailTimeCell.swift in Sources */,
 				1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */,
 				1DAB49EE1A17E31E0002BBDD /* EventDetailDescriptionCell.swift in Sources */,
 				1DB901C519E0856E0018B434 /* SettingsTableViewController.swift in Sources */,
-				1DFB3B4919F8B0C400CF4A72 /* MainFeedViewController.swift in Sources */,
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
 				1DAB49F61A1807F40002BBDD /* EventDetailLocationCell.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,

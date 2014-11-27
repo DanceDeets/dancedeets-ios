@@ -10,6 +10,7 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController, UITextFieldDelegate, BasicSwitchTableCellDelegate {
     
+    /*
     var showingCustomCityRow:Bool = false
     var locationToggleCell:BasicSwitchTableCell?
     var customCityCell:CustomCityTableViewCell?
@@ -156,4 +157,5 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, B
     }
     
 
+*/
 }
