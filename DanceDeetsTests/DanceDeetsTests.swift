@@ -93,7 +93,6 @@ class DanceDeetsTests: XCTestCase {
 
     func testGooglePlaceAutoSuggest(){
         let expectation = expectationWithDescription("GOOGLE PLACE API GET")
-        
         GooglePlaceAPI.autoSuggestCity("N", { (autosuggests:[String]!, error:NSError!) -> Void in
             expectation.fulfill()
             XCTAssertNotNil(autosuggests)
@@ -102,7 +101,6 @@ class DanceDeetsTests: XCTestCase {
         })
         waitForExpectationsWithTimeout(10, handler:{ error in
         })
-  
     }
     
 }

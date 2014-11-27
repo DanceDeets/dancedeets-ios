@@ -43,6 +43,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         self.searchController?.searchBar.becomeFirstResponder()
     }
     
+    @IBAction func myCitiesButtonTapped(sender: AnyObject) {
+        performSegueWithIdentifier("myCitiesSegue", sender: sender)
+    }
+    
     // MARK: UISearchResultsUpdating
     func updateSearchResultsForSearchController(searchController: UISearchController){
         filterContentForSearchText(searchController.searchBar.text)
@@ -100,6 +104,18 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             var destination:EventDetailViewController? = segue.destinationViewController as? EventDetailViewController
             let event = sender as? Event
             destination?.event = sender as? Event
+        }else if segue.identifier == "myCitiesSegue"{
+            var destination:MyCitiesViewController? = segue.destinationViewController as? MyCitiesViewController
+            
+            let snapShot:UIView = self.view.snapshotViewAfterScreenUpdates(false)
+            
+            let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
+            snapShot.addSubview(overlayView)
+            overlayView.constrainToSuperViewEdges()
+            
+            destination?.view.insertSubview(snapShot, atIndex: 0)
+            snapShot.constrainToSuperViewEdges()
+            
         }
     }
     

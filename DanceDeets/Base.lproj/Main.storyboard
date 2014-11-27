@@ -61,6 +61,19 @@
                                     <action selector="searchBarButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="4jR-vW-wuT"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="985-JS-nOW">
+                                <rect key="frame" x="0.0" y="15" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="SDL-kz-8Vg"/>
+                                    <constraint firstAttribute="height" constant="50" id="zIh-R4-RcH"/>
+                                </constraints>
+                                <state key="normal" image="locationPin">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="myCitiesButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="4G7-go-iz8"/>
+                                </connections>
+                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="IbI-W0-Nu5">
                                 <rect key="frame" x="0.0" y="70" width="600" height="486"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -147,6 +160,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="985-JS-nOW" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" constant="15" id="2V8-XN-F6P"/>
                             <constraint firstItem="Snq-oY-pp0" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" constant="15" id="3EI-4F-BRj"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="top" id="3jb-Xt-E9m"/>
                             <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" constant="32" id="3uL-tq-Rhm"/>
@@ -154,18 +168,21 @@
                             <constraint firstItem="Su9-au-Hmc" firstAttribute="top" secondItem="IbI-W0-Nu5" secondAttribute="bottom" id="7SG-wg-xrd"/>
                             <constraint firstItem="IbI-W0-Nu5" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" constant="70" id="Cpo-hq-1PO"/>
                             <constraint firstAttribute="centerX" secondItem="dCA-Tc-CJh" secondAttribute="centerX" id="Dgb-xb-IhJ"/>
+                            <constraint firstItem="985-JS-nOW" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="ESp-ZN-ujB"/>
                             <constraint firstAttribute="centerX" secondItem="IbI-W0-Nu5" secondAttribute="centerX" id="F9r-Iq-1v6"/>
                             <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="CIT-1y-Jqu" secondAttribute="bottom" constant="-20" id="Jep-dV-Up0"/>
                             <constraint firstAttribute="trailing" secondItem="Snq-oY-pp0" secondAttribute="trailing" id="LE3-7J-IKr"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="bottom" secondItem="h61-S6-mbM" secondAttribute="bottom" id="Pi8-1U-Qdb"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="Wqz-Fa-g7r"/>
                             <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" id="Zdg-L6-KEx"/>
+                            <constraint firstItem="985-JS-nOW" firstAttribute="top" secondItem="CIT-1y-Jqu" secondAttribute="bottom" id="dAf-Ey-3gB"/>
                             <constraint firstAttribute="trailing" secondItem="6uV-7g-Wtg" secondAttribute="trailing" id="eoa-nY-2dI"/>
                             <constraint firstAttribute="width" secondItem="IbI-W0-Nu5" secondAttribute="width" id="nRy-Kc-KtG"/>
                             <constraint firstItem="dCA-Tc-CJh" firstAttribute="width" secondItem="h61-S6-mbM" secondAttribute="width" multiplier="0.6" id="oWQ-Kx-ymd"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="dAf-Ey-3gB"/>
                                 <exclude reference="Jep-dV-Up0"/>
                                 <exclude reference="Zdg-L6-KEx"/>
                                 <exclude reference="47d-u7-58g"/>
@@ -174,11 +191,13 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="abR-ru-BqT"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="eventCollectionView" destination="IbI-W0-Nu5" id="elA-1g-GUE"/>
                         <outlet property="navigationTitle" destination="dCA-Tc-CJh" id="Rh3-hf-Zjx"/>
                         <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="vjg-jf-Ol8"/>
+                        <segue destination="Gdp-6o-WzI" kind="presentation" identifier="myCitiesSegue" modalTransitionStyle="crossDissolve" id="jGw-rt-6UH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5E-47-ysN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -273,7 +292,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iJD-uf-RDg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136" y="-1195"/>
+            <point key="canvasLocation" x="-744" y="-363"/>
         </scene>
         <!--Event Detail View Controller-->
         <scene sceneID="lcM-bZ-PCu">
@@ -540,6 +559,90 @@
             </objects>
             <point key="canvasLocation" x="1011" y="-1953"/>
         </scene>
+        <!--My Cities View Controller-->
+        <scene sceneID="osf-pX-gan">
+            <objects>
+                <viewController id="Gdp-6o-WzI" customClass="MyCitiesViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5Vi-nh-fRU"/>
+                        <viewControllerLayoutGuide type="bottom" id="J94-CF-CIx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ntT-me-6lC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vF-By-ZAi">
+                                <rect key="frame" x="0.0" y="16" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="baS-12-Rvg"/>
+                                    <constraint firstAttribute="width" constant="50" id="jDq-Xz-LN6"/>
+                                </constraints>
+                                <state key="normal" image="plus-50">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addCityButtonTapped:" destination="Gdp-6o-WzI" eventType="touchUpInside" id="HSO-Hn-ubl"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY CITIES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfq-kp-eKO">
+                                <rect key="frame" x="120" y="32" width="360" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="z4g-OG-VAN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="z4g-OG-VAN"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5IE-B2-vbr">
+                                <rect key="frame" x="550" y="16" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="lrk-MP-5r5"/>
+                                    <constraint firstAttribute="width" constant="50" id="rbW-jA-GDh"/>
+                                </constraints>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneButtonTapped:" destination="Gdp-6o-WzI" eventType="touchUpInside" id="TrB-ME-tT7"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6vF-By-ZAi" firstAttribute="top" secondItem="5Vi-nh-fRU" secondAttribute="bottom" id="CIu-rH-HcN"/>
+                            <constraint firstItem="5IE-B2-vbr" firstAttribute="top" secondItem="ntT-me-6lC" secondAttribute="topMargin" constant="16" id="Gp2-nz-iNp"/>
+                            <constraint firstItem="6vF-By-ZAi" firstAttribute="top" secondItem="ntT-me-6lC" secondAttribute="topMargin" constant="16" id="Vpp-04-F6Y"/>
+                            <constraint firstAttribute="trailing" secondItem="5IE-B2-vbr" secondAttribute="trailing" id="fgO-PI-ahh"/>
+                            <constraint firstItem="6vF-By-ZAi" firstAttribute="leading" secondItem="ntT-me-6lC" secondAttribute="leading" id="q02-GI-zga"/>
+                            <constraint firstItem="Pfq-kp-eKO" firstAttribute="top" secondItem="ntT-me-6lC" secondAttribute="topMargin" constant="32" id="r9u-25-3oa"/>
+                            <constraint firstAttribute="centerX" secondItem="Pfq-kp-eKO" secondAttribute="centerX" id="sQe-vp-UPF"/>
+                            <constraint firstItem="Pfq-kp-eKO" firstAttribute="width" secondItem="ntT-me-6lC" secondAttribute="width" multiplier="0.6" id="tWX-v8-cly"/>
+                            <constraint firstItem="5IE-B2-vbr" firstAttribute="top" secondItem="5Vi-nh-fRU" secondAttribute="bottom" id="yQ9-S6-nja"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="CIu-rH-HcN"/>
+                                <exclude reference="yQ9-S6-nja"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="addCityButton" destination="6vF-By-ZAi" id="hPb-bF-jxx"/>
+                        <outlet property="doneButton" destination="5IE-B2-vbr" id="RKQ-zv-XsL"/>
+                        <outlet property="titleLabel" destination="Pfq-kp-eKO" id="4sg-R7-UXt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PZ6-Yr-WYy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136" y="-1220"/>
+        </scene>
         <!--Face Book Login View Controller-->
         <scene sceneID="w5m-Gb-xdx">
             <objects>
@@ -622,7 +725,9 @@
         <image name="back" width="25" height="25"/>
         <image name="calendar" width="25" height="25"/>
         <image name="facebook" width="25" height="25"/>
+        <image name="locationPin" width="16" height="24"/>
         <image name="logoBackground" width="400" height="300"/>
+        <image name="plus-50" width="16" height="16"/>
         <image name="searchIconThick" width="16" height="17"/>
         <image name="streamBackground" width="375" height="667"/>
         <image name="upload" width="25" height="25"/>

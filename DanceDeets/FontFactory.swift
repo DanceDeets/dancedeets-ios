@@ -23,5 +23,7 @@ class FontFactory {
     class func eventVenueFont()->UIFont{
         return UIFont(name:"Interstate-Light",size:13)!
     }
-    
+    class func barButtonFont()->UIFont{
+        return UIFont(name:"Interstate-Light",size:13)!
+    }
 }
