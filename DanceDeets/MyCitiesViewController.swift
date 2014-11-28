@@ -71,13 +71,11 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
         if(city == ""){
             indexPathToHighlight = NSIndexPath(forRow: 0, inSection: 0)
         }else{
-            var row = 0
-            for c in cities{
-                if(city == c){
-                    indexPathToHighlight = NSIndexPath(forRow: row+1, inSection: 0)
+            for(var i = 0;  i < cities.count; ++i){
+                if(cities[i] == city){
+                    indexPathToHighlight = NSIndexPath(forRow: i+1, inSection: 0)
                     break
                 }
-                row += 1
             }
         }
         if(indexPathToHighlight != nil){
@@ -154,18 +152,17 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
         cities = UserSettings.getUserCities()
         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
     }
-*/
+    */
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(mode == MyCitiesViewController.Mode.ViewMode){
-            var streamVC = AppDelegate.sharedInstance().eventStreamViewController()
             if(indexPath.row == 0){
                 UserSettings.setUserCitySearch("")
             }else{
                 let newCity = cities[indexPath.row - 1]
                 UserSettings.setUserCitySearch(newCity)
             }
-            streamVC?.requiresRefresh = true
+            AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
         }else if(mode == MyCitiesViewController.Mode.EntryMode){
             let newSearchCity = autosuggestedCities[indexPath.row]
             UserSettings.addUserCity(newSearchCity)
@@ -237,5 +234,4 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
         toggleMode(MyCitiesViewController.Mode.ViewMode)
         return true
     }
-   
 }

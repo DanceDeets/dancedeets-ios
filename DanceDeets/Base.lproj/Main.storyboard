@@ -602,7 +602,7 @@
                                                         <constraint firstAttribute="width" constant="60" id="puY-iq-P89"/>
                                                         <constraint firstAttribute="height" constant="44" id="uQV-hp-LQe"/>
                                                     </constraints>
-                                                    <state key="normal" image="deleteLogo">
+                                                    <state key="normal" image="deleteIcon">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -634,14 +634,26 @@
                                                     <rect key="frame" x="15" y="14" width="11" height="16"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autosuggested City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6Q-8i-Ulb">
-                                                    <rect key="frame" x="41" y="11" width="152" height="20.5"/>
+                                                    <rect key="frame" x="41" y="11" width="151.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="naB-Pa-gjs">
+                                                    <rect key="frame" x="525" y="0.0" width="60" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="JwF-O5-gu6"/>
+                                                        <constraint firstAttribute="width" constant="60" id="Vbz-Lp-qj4"/>
+                                                    </constraints>
+                                                    <state key="normal" image="addIcon">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="xpM-Po-zcY" firstAttribute="leading" secondItem="zju-MA-XFB" secondAttribute="leading" constant="15" id="MGd-Jm-f2C"/>
+                                                <constraint firstAttribute="trailing" secondItem="naB-Pa-gjs" secondAttribute="trailing" constant="15" id="NJZ-Jn-iLS"/>
+                                                <constraint firstAttribute="centerY" secondItem="naB-Pa-gjs" secondAttribute="centerY" id="aKe-uT-fdT"/>
                                                 <constraint firstItem="n6Q-8i-Ulb" firstAttribute="centerY" secondItem="xpM-Po-zcY" secondAttribute="centerY" id="ki7-IU-zd0"/>
                                                 <constraint firstAttribute="centerY" secondItem="xpM-Po-zcY" secondAttribute="centerY" id="owW-nf-nR2"/>
                                                 <constraint firstItem="n6Q-8i-Ulb" firstAttribute="leading" secondItem="xpM-Po-zcY" secondAttribute="trailing" constant="15" id="t3E-Rk-ABX"/>
@@ -779,9 +791,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="addIcon" width="17" height="17"/>
         <image name="back" width="25" height="25"/>
         <image name="calendar" width="25" height="25"/>
-        <image name="deleteLogo" width="15" height="15"/>
+        <image name="deleteIcon" width="15" height="15"/>
         <image name="facebook" width="25" height="25"/>
         <image name="locationPin" width="16" height="24"/>
         <image name="locationPinSmall" width="11" height="16"/>

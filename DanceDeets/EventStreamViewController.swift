@@ -290,6 +290,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 }else{
                     self.events = events
                     self.eventCollectionView.reloadData()
+                    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                    self.eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: true)
                 }
             })
         })
