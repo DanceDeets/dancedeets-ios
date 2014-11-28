@@ -111,30 +111,32 @@ public class Event: NSObject {
     // Callback on mainthread
     public func downloadCoverImage(completion:((UIImage!,NSError!)->Void)) ->Void
     {
-        let imageRequest:NSURLRequest = NSURLRequest(URL: eventImageUrl!)
-        var downloadTask:NSURLSessionDownloadTask =
-        NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
-            completionHandler: { (location:NSURL!, resp:NSURLResponse!, error:NSError!) -> Void in
-                if(error == nil){
-                    let data:NSData? = NSData(contentsOfURL: location)
-                    if let newImage = UIImage(data: data!, scale: UIScreen.mainScreen().scale){
-                        ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
-                        dispatch_async(dispatch_get_main_queue(), {
-                            completion(newImage,nil)
-                        })
+        if(eventImageUrl != nil){
+            let imageRequest:NSURLRequest = NSURLRequest(URL: eventImageUrl!)
+            var downloadTask:NSURLSessionDownloadTask =
+            NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
+                completionHandler: { (location:NSURL!, resp:NSURLResponse!, error:NSError!) -> Void in
+                    if(error == nil){
+                        let data:NSData? = NSData(contentsOfURL: location)
+                        if let newImage = UIImage(data: data!, scale: UIScreen.mainScreen().scale){
+                            ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                completion(newImage,nil)
+                            })
+                        }else{
+                            let error = NSError(domain: "Couldn't create image from data", code: 0, userInfo: nil)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                completion(nil, error)
+                            })
+                        }
                     }else{
-                        let error = NSError(domain: "Couldn't create image from data", code: 0, userInfo: nil)
                         dispatch_async(dispatch_get_main_queue(), {
                             completion(nil, error)
                         })
                     }
-                }else{
-                    dispatch_async(dispatch_get_main_queue(), {
-                        completion(nil, error)
-                    })
-                }
-        })
-        downloadTask.resume()
+            })
+            downloadTask.resume()
+        }
     }
     
     public func getMoreDetails(completion: ((NSError!)->Void)) -> Void

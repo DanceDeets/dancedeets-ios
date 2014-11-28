@@ -37,6 +37,9 @@ class EventCollectionViewCell: UICollectionViewCell {
         eventTimeLabel.text = event.displayTime
         eventVenueLabel.text = event.venue
         
+        eventCoverImageHeightConstraint.constant = eventCoverImage.frame.size.width
+        eventCoverImage.contentMode = UIViewContentMode.ScaleAspectFill
+        /*
         // if height and width are available, re calc the constraints to keep a nice aspect ratio
         if(event.eventImageHeight != nil && event.eventImageWidth != nil){
             let aspectRatio = event.eventImageWidth! / event.eventImageHeight!
@@ -58,5 +61,6 @@ class EventCollectionViewCell: UICollectionViewCell {
             eventCoverImageHeightConstraint.constant -= (maxYOffset - contentView.frame.size.height)
             contentView.layoutIfNeeded()
         }
+*/
     }
 }

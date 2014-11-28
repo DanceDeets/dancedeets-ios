@@ -163,7 +163,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             let prefetchEvent:Event = events[indexPath.row+1]
             prefetchEvent.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
             })
-            
         }
         
         return cell!
