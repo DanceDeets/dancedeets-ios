@@ -194,6 +194,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="backgroundImageView" destination="Pf1-0N-YSd" id="low-69-cUp"/>
                         <outlet property="eventCollectionView" destination="IbI-W0-Nu5" id="elA-1g-GUE"/>
                         <outlet property="navigationTitle" destination="dCA-Tc-CJh" id="Rh3-hf-Zjx"/>
                         <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="vjg-jf-Ol8"/>
@@ -241,34 +242,27 @@
                                     <constraint firstAttribute="centerY" secondItem="qiR-Cb-uAz" secondAttribute="centerY" id="ylp-I1-VVK"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oVr-YR-SkD">
-                                <rect key="frame" x="0.0" y="20" width="50" height="50"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Uu-Au-n76">
+                                <rect key="frame" x="-200" y="32" width="1000" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oVr-YR-SkD">
+                                <rect key="frame" x="15" y="14" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="PDq-oE-ZdZ"/>
                                     <constraint firstAttribute="width" constant="50" id="uRz-Mc-Sr4"/>
                                 </constraints>
-                                <state key="normal" image="back">
+                                <state key="normal" image="backIcon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="backButtonTapped:" destination="2zh-F8-7u4" eventType="touchUpInside" id="CJB-iV-znN"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIq-5w-ZSL">
-                                <rect key="frame" x="450" y="20" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="2QV-Oe-8VG"/>
-                                    <constraint firstAttribute="width" constant="50" id="siq-d8-mW0"/>
-                                </constraints>
-                                <state key="normal" image="facebook">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="facebookButtonTapped:" destination="2zh-F8-7u4" eventType="touchUpInside" id="gwx-A7-w2y"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQa-Gm-qaf">
-                                <rect key="frame" x="550" y="20" width="50" height="50"/>
+                                <rect key="frame" x="550" y="12" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="Deu-DB-ntO"/>
                                     <constraint firstAttribute="height" constant="50" id="jGH-jk-mer"/>
@@ -278,19 +272,6 @@
                                 </state>
                                 <connections>
                                     <action selector="shareButtonTapped:" destination="2zh-F8-7u4" eventType="touchUpInside" id="kQb-xx-HDZ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xve-KZ-DBH">
-                                <rect key="frame" x="500" y="20" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="GVl-HJ-O3M"/>
-                                    <constraint firstAttribute="height" constant="50" id="eGh-Us-Y0e"/>
-                                </constraints>
-                                <state key="normal" image="calendar">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="calendarButtonTapped:" destination="2zh-F8-7u4" eventType="touchUpInside" id="T9q-zP-EsO"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="UUe-Hg-p93">
@@ -440,20 +421,27 @@
                             <constraint firstAttribute="width" secondItem="grq-gC-PMl" secondAttribute="width" id="0J3-6W-S1v"/>
                             <constraint firstAttribute="bottom" secondItem="grq-gC-PMl" secondAttribute="bottom" id="62L-1R-j8O"/>
                             <constraint firstItem="grq-gC-PMl" firstAttribute="top" secondItem="hfc-7c-85b" secondAttribute="topMargin" id="7Aj-wf-f4i"/>
-                            <constraint firstItem="xve-KZ-DBH" firstAttribute="leading" secondItem="KIq-5w-ZSL" secondAttribute="trailing" id="GYx-M2-c4g"/>
                             <constraint firstAttribute="trailing" secondItem="uQa-Gm-qaf" secondAttribute="trailing" id="Ha8-Ld-17y"/>
                             <constraint firstItem="oVr-YR-SkD" firstAttribute="top" secondItem="0ZW-Sa-LXs" secondAttribute="bottom" id="Jdn-JE-v0R"/>
                             <constraint firstAttribute="centerX" secondItem="UUe-Hg-p93" secondAttribute="centerX" id="JsL-x3-L87"/>
                             <constraint firstItem="UUe-Hg-p93" firstAttribute="width" secondItem="hfc-7c-85b" secondAttribute="width" id="Kua-M8-caQ"/>
                             <constraint firstItem="uQa-Gm-qaf" firstAttribute="top" secondItem="0ZW-Sa-LXs" secondAttribute="bottom" id="OGv-eK-HM0"/>
                             <constraint firstAttribute="centerX" secondItem="grq-gC-PMl" secondAttribute="centerX" id="Tc9-yI-4og"/>
-                            <constraint firstItem="xve-KZ-DBH" firstAttribute="top" secondItem="0ZW-Sa-LXs" secondAttribute="bottom" id="Ufi-jZ-2JY"/>
-                            <constraint firstItem="oVr-YR-SkD" firstAttribute="leading" secondItem="hfc-7c-85b" secondAttribute="leading" id="X6z-vi-k9V"/>
-                            <constraint firstItem="uQa-Gm-qaf" firstAttribute="leading" secondItem="xve-KZ-DBH" secondAttribute="trailing" id="bZd-YC-Wbv"/>
-                            <constraint firstItem="KIq-5w-ZSL" firstAttribute="top" secondItem="0ZW-Sa-LXs" secondAttribute="bottom" id="o3b-DM-3Kk"/>
+                            <constraint firstAttribute="centerX" secondItem="2Uu-Au-n76" secondAttribute="centerX" id="V1a-PH-epV"/>
+                            <constraint firstItem="oVr-YR-SkD" firstAttribute="leading" secondItem="hfc-7c-85b" secondAttribute="leading" constant="15" id="X6z-vi-k9V"/>
+                            <constraint firstItem="oVr-YR-SkD" firstAttribute="top" secondItem="hfc-7c-85b" secondAttribute="topMargin" constant="14" id="XxP-cY-xQF"/>
+                            <constraint firstItem="2Uu-Au-n76" firstAttribute="top" secondItem="hfc-7c-85b" secondAttribute="topMargin" constant="32" id="aGZ-MX-KaV"/>
+                            <constraint firstAttribute="width" secondItem="2Uu-Au-n76" secondAttribute="width" multiplier="0.6" id="aNg-WS-AG9"/>
                             <constraint firstAttribute="bottomMargin" secondItem="UUe-Hg-p93" secondAttribute="bottom" id="pPa-s0-bAi"/>
+                            <constraint firstItem="uQa-Gm-qaf" firstAttribute="top" secondItem="hfc-7c-85b" secondAttribute="topMargin" constant="12" id="taJ-dJ-USY"/>
                             <constraint firstItem="UUe-Hg-p93" firstAttribute="top" secondItem="hfc-7c-85b" secondAttribute="topMargin" constant="64" id="zcO-Zc-Tzy"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Jdn-JE-v0R"/>
+                                <exclude reference="OGv-eK-HM0"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -463,6 +451,7 @@
                         <outlet property="backgroundViewTopConstraint" destination="7Aj-wf-f4i" id="7oo-Zb-uDY"/>
                         <outlet property="coverImageView" destination="ljZ-CE-TPC" id="Z58-FX-tAl"/>
                         <outlet property="detailsTableView" destination="UUe-Hg-p93" id="y0W-ag-aY5"/>
+                        <outlet property="eventTitleLabel" destination="2Uu-Au-n76" id="HjF-Lp-Nuq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Tr-Mo-faF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -792,10 +781,8 @@
     </scenes>
     <resources>
         <image name="addIcon" width="17" height="17"/>
-        <image name="back" width="25" height="25"/>
-        <image name="calendar" width="25" height="25"/>
+        <image name="backIcon" width="11" height="19"/>
         <image name="deleteIcon" width="15" height="15"/>
-        <image name="facebook" width="25" height="25"/>
         <image name="locationPin" width="16" height="24"/>
         <image name="locationPinSmall" width="11" height="16"/>
         <image name="logoBackground" width="400" height="300"/>
@@ -803,6 +790,6 @@
         <image name="plus-50" width="16" height="16"/>
         <image name="searchIconThick" width="16" height="17"/>
         <image name="streamBackground" width="375" height="667"/>
-        <image name="upload" width="25" height="25"/>
+        <image name="upload" width="18" height="25"/>
     </resources>
 </document>

@@ -28,7 +28,7 @@ public class Event: NSObject {
     var geoloc:CLLocation?
     var admins:[EventAdmin]?
     var placemark:CLPlacemark?
-    public var detailsLoaded:Bool = false
+    public var detailsLoaded:Bool = true
     
     var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
     

@@ -25,6 +25,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     var facebookAlert:UIAlertView?
     var gradientLayer:CAGradientLayer?
     
+    @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var detailsTableView: UITableView!
@@ -33,6 +34,10 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        eventTitleLabel.textColor = UIColor.whiteColor()
+        eventTitleLabel.font = FontFactory.navigationTitleFont()
+        eventTitleLabel.text = event!.title!.uppercaseString
         
         detailsTableView.delegate = self
         detailsTableView.dataSource = self

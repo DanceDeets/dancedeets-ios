@@ -31,8 +31,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var searchResultsTableView:UITableView?
     var searchController:UISearchController?
     var blurOverlay:UIView?
+    var backgroundBlurOverlay:UIView?
     
     // MARK: Outlets
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var navigationTitle: UILabel!
     @IBOutlet weak var eventCollectionView: UICollectionView!
     
@@ -103,6 +105,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "eventDetailSegue"{
+            
+            
             var destination:EventDetailViewController? = segue.destinationViewController as? EventDetailViewController
             let event = sender as? Event
             destination?.event = sender as? Event
@@ -117,7 +121,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             
             destination?.view.insertSubview(snapShot, atIndex: 0)
             snapShot.constrainToSuperViewEdges()
-            
         }
     }
     
@@ -190,14 +193,11 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         flowLayout?.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height - COLLECTION_VIEW_TOP_MARGIN)
         flowLayout?.minimumInteritemSpacing = 0.0
         
-        blurOverlay = UIView(frame: CGRectZero)
-        self.view.addSubview(blurOverlay!)
-        blurOverlay?.constrainToSuperViewEdges()
-        
-        let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
-        blurOverlay?.addSubview(overlayView)
-        overlayView.constrainToSuperViewEdges()
+        blurOverlay = view.addDarkBlurOverlay()
         blurOverlay?.alpha = 0
+        
+        backgroundBlurOverlay = self.backgroundImageView.addDarkBlurOverlay()
+        backgroundBlurOverlay?.alpha = 0
     }
     
     // MARK: - CLLocationManagerDelegate

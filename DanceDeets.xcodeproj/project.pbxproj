@@ -167,13 +167,6 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
-		1D43347F19D75861001A5381 /* Custom Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Custom Views";
-			sourceTree = "<group>";
-		};
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
@@ -201,14 +194,12 @@
 		1D8856B919CDE510005FFDB2 /* DanceDeets */ = {
 			isa = PBXGroup;
 			children = (
+				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
+				1D8A063D19CDE5D4004607B6 /* Models */,
 				1DB901C619E099810018B434 /* Utilities */,
-				1D43347F19D75861001A5381 /* Custom Views */,
-				1D43347219D7551D001A5381 /* Fonts */,
 				1D08923D1A26724400A9EAC4 /* Collection View Cells */,
 				1D8A064119CE0CA6004607B6 /* Table View Cells */,
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,
-				1D8A063D19CDE5D4004607B6 /* Models */,
-				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
 				1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */,
 				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
 				1D8856C319CDE510005FFDB2 /* Images.xcassets */,
@@ -221,6 +212,7 @@
 		1D8856BA19CDE510005FFDB2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1D43347219D7551D001A5381 /* Fonts */,
 				1D8856BB19CDE510005FFDB2 /* Info.plist */,
 			);
 			name = "Supporting Files";
