@@ -11,8 +11,6 @@ import Foundation
 public class GooglePlaceAPI{
     
     public class func apiKey() -> String{
-       // return "AIzaSyD8E6t-CTw6yTEynHcCqY6kzA0z2LdyEGU"
-       // return "AIzaSyBQN4RgOgFVnFidWJZgOJX4AOat9L3oIjw"
         return "AIzaSyCIaKGVhI2vD9rA7oGLltgHcUw7TuBPzBc"
     }
     
@@ -35,15 +33,19 @@ public class GooglePlaceAPI{
                         if let predictions = json!["predictions"] as? NSArray{
                             for prediction in predictions{
                                 if let predictionDict = prediction as? NSDictionary{
-                                    if let description = predictionDict["description"] as? String{
-                                        if (countElements(description) > 0){
-                                            autoSuggestions.append(description)
+                                    if let terms = predictionDict["terms"] as? NSArray{
+                                        if (terms.count > 0){
+                                            if let termDict = terms[0] as? NSDictionary{
+                                                if let value = termDict["value"] as? String{
+                                                    autoSuggestions.append(value)
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
-                            
                         }
+                        println(autoSuggestions)
                         completion(autosuggests: autoSuggestions, error: nil)
                     }
                 }

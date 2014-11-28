@@ -26,4 +26,10 @@ class FontFactory {
     class func barButtonFont()->UIFont{
         return UIFont(name:"Interstate-Light",size:13)!
     }
+    class func standardTableLabelFont()->UIFont{
+        return UIFont(name:"Interstate-Light",size:15)!
+    }
+    class func textFieldFont()->UIFont{
+        return UIFont(name:"Interstate-Light",size:18)!
+    }
 }

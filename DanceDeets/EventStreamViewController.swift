@@ -161,6 +161,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: Private
     func loadViewController(){
+        
+        locationManager.delegate = self
+        
         eventCollectionView.delegate = self
         eventCollectionView.dataSource = self
         
@@ -168,6 +171,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         navigationTitle.textColor = UIColor.whiteColor()
         navigationTitle.font = FontFactory.navigationTitleFont()
+        navigationTitle.text = ""
         
         eventCollectionView.layoutIfNeeded()
         let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
@@ -244,20 +248,18 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: Private
     func refreshEvents(){
-        // if customCity is set in user defaults, user set a default city to search for events
-        // TODO
-        //let search:String? = NSUserDefaults.standardUserDefaults().stringForKey("customCity")
-        let search:String? = "NEW YORK"
-        if(search != nil && countElements(search!) > 0){
-            println("Custom search city is set as: " + search!)
+        let searchCity = UserSettings.getUserCitySearch()
+        println(locationManager)
+        if(countElements(searchCity) > 0){
+            println("Custom search city is set as: " + searchCity)
             searchMode = SearchMode.CustomCity
-            currentCity = search
+            currentCity = searchCity
             refreshEventsForCurrentCity()
         }else{
             println("Custom search city not set, using location manager")
             searchMode = SearchMode.CurrentLocation
             currentCity = ""
-            self.title = "Updating Location..."
+            navigationTitle.text = "UPDATING LOCATION..."
             locationManager.startUpdatingLocation()
         }
     }
@@ -267,7 +269,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         self.navigationTitle.text = "LOADING EVENTS..."
         Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error:NSError!) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.navigationTitle.text = self.currentCity
+                self.navigationTitle.text = self.currentCity!.uppercaseString
                 // check response
                 if(error != nil){
                     let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
