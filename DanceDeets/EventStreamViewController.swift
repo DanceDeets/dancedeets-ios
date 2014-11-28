@@ -146,17 +146,19 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         cell?.updateForEvent(event)
         cell?.eventCoverImage?.image = nil
         
-        if event.identifier != nil && event.eventImageUrl != nil{
+        if event.eventImageUrl != nil{
             let imageRequest:NSURLRequest = NSURLRequest(URL: event.eventImageUrl!)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
                 cell?.eventCoverImage?.image = image
             }else{
                 event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
-                    if(image != nil && error == nil){
+                    if(image != nil){
                         cell?.eventCoverImage?.image = image
                     }
                 })
             }
+        }else{
+            cell?.eventCoverImage?.image = UIImage(named: "placeholderCover")
         }
         
         if(indexPath.row < events.count - 1){
