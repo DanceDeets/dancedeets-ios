@@ -33,6 +33,15 @@ class UserSettings
         }
     }
     
+    class func deleteUserCity(city:String){
+        var userCities = NSUserDefaults.standardUserDefaults().arrayForKey("userCities") as [String]
+        if let index = find(userCities,city){
+            userCities.removeAtIndex(index)
+            NSUserDefaults.standardUserDefaults().setObject(userCities, forKey: "userCities")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+    }
+    
     class func getUserCitySearch()->String{
         let city = NSUserDefaults.standardUserDefaults().stringForKey("searchCity")
         if(city == nil){
