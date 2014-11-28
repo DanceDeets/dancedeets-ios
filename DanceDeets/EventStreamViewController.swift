@@ -76,6 +76,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         self.loadViewController()
         self.loadSearchController()
         
+        locationManager.requestWhenInUseAuthorization()
+        
         // notification registration
         NSNotificationCenter.defaultCenter().addObserver(
             self,

@@ -210,7 +210,7 @@ public class Event: NSObject {
                 var jsonError:NSError?
                 var json:NSArray? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSArray
                 if (jsonError != nil) {
-                    completion([], nil)
+                    completion([], jsonError)
                 }
                 else {
                     var eventList:[Event] = []

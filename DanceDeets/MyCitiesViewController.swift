@@ -44,7 +44,7 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
         myCitiesTableView.delegate = self
         myCitiesTableView.dataSource = self
         myCitiesTableView.separatorColor = ColorFactory.tableSeparatorColor()
-        myCitiesTableView.allowsMultipleSelectionDuringEditing = false
+        myCitiesTableView.allowsSelectionDuringEditing = true
         myCitiesTableView.allowsMultipleSelection = false
         citySearchTextField.delegate = self
         citySearchTextField.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
