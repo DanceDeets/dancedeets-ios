@@ -158,6 +158,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 })
             }
         }
+        
+        if(indexPath.row < events.count - 1){
+            let prefetchEvent:Event = events[indexPath.row+1]
+            prefetchEvent.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
+            })
+            
+        }
+        
         return cell!
     }
     

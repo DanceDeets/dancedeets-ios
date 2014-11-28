@@ -23,4 +23,8 @@ class ColorFactory {
         return UIColor.whiteColor().colorWithAlphaComponent(0.3)
     }
     
+    class func white50()->UIColor{
+        return UIColor.whiteColor().colorWithAlphaComponent(0.5)
+    }
+    
 }

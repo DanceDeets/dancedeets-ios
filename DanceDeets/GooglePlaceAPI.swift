@@ -45,7 +45,6 @@ public class GooglePlaceAPI{
                                 }
                             }
                         }
-                        println(autoSuggestions)
                         completion(autosuggests: autoSuggestions, error: nil)
                     }
                 }

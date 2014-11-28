@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var fbGraphUserObjectId:String?
-    let urlCacheMemoryCapacityMB = 24
+    let urlCacheMemoryCapacityMB = 48
     let urlCacheDiskCapacityMB = 128
     
     class func sharedInstance() -> AppDelegate

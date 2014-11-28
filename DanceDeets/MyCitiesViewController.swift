@@ -50,6 +50,11 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
         citySearchTextField.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         citySearchTextField.font = FontFactory.textFieldFont()
         citySearchTextField.addTarget(self, action: "textFieldUpdated", forControlEvents: UIControlEvents.EditingChanged)
+        var attributedPlaceholder = NSMutableAttributedString(string: "City Search")
+        attributedPlaceholder.setColor(ColorFactory.white50())
+        attributedPlaceholder.setFont(FontFactory.textFieldFont())
+        citySearchTextField.attributedPlaceholder = attributedPlaceholder
+        citySearchTextField.hidden = true
         
         titleLabel.textColor = UIColor.whiteColor()
         titleLabel.font = FontFactory.navigationTitleFont()
@@ -88,6 +93,7 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(mode == MyCitiesViewController.Mode.ViewMode){
+            // first row is always current location
             return cities.count + 1
         }else if(mode == MyCitiesViewController.Mode.EntryMode){
             return autosuggestedCities.count
@@ -103,6 +109,7 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
                 return cell
             }else{
                 let cell = tableView.dequeueReusableCellWithIdentifier("citySearchCell", forIndexPath: indexPath) as CitySearchCell
+                cell.citiesVC = self
                 cell.cityLabel.text = cities[indexPath.row - 1]
                 return cell
             }
@@ -125,6 +132,7 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
         return 44;
     }
     
+    /*
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         if(mode == MyCitiesViewController.Mode.ViewMode){
             if(indexPath.row != 0){
@@ -146,6 +154,7 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
         cities = UserSettings.getUserCities()
         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
     }
+*/
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(mode == MyCitiesViewController.Mode.ViewMode){
@@ -187,6 +196,19 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
                 doneButton.hidden = true
                 autosuggestedCities = []
                 myCitiesTableView.reloadData()
+            }
+        }
+    }
+    
+    // MARK: Instance
+    func deleteCityRow(city:String){
+        for(var i = 0;i < cities.count; i++){
+            if(cities[i] == city){
+                let indexPathToDelete = NSIndexPath(forRow: i+1, inSection: 0)
+                cities.removeAtIndex(indexPathToDelete.row - 1)
+                UserSettings.deleteUserCity(city)
+                myCitiesTableView.deleteRowsAtIndexPaths([indexPathToDelete], withRowAnimation: UITableViewRowAnimation.Automatic)
+                return
             }
         }
     }

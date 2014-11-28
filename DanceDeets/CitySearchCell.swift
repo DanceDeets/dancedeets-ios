@@ -7,9 +7,15 @@
 //
 
 class CitySearchCell: UITableViewCell {
-
+    
+    var citiesVC:MyCitiesViewController?
     
     @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    @IBAction func deleteButtonTapped(sender: AnyObject) {
+        citiesVC?.deleteCityRow(cityLabel.text!)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
