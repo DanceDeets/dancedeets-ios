@@ -32,6 +32,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var searchController:UISearchController?
     var blurOverlay:UIView?
     var backgroundBlurOverlay:UIView?
+    var selectedIndexPath:NSIndexPath?
     
     // MARK: Outlets
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -40,7 +41,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: Action
     @IBAction func searchBarButtonTapped(sender: AnyObject) {
-        blurOverlay?.fadeIn(0.4)
+        blurOverlay?.fadeIn(0.4,nil)
         searchController?.searchBar.hidden = false
         self.searchController?.searchBar.becomeFirstResponder()
     }
@@ -57,7 +58,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: UISearchControllerDelegate
     func willDismissSearchController(searchController: UISearchController) {
-        blurOverlay?.fadeOut(0.4)
+        blurOverlay?.fadeOut(0.4,nil)
         searchController.searchBar.hidden = true
     }
     
@@ -106,6 +107,11 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "eventDetailSegue"{
             
+            // convert frame of the image 
+            let eventCell = eventCollectionView.cellForItemAtIndexPath(selectedIndexPath!) as EventCollectionViewCell
+            let convertCoverImageRect = view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
+            println(convertCoverImageRect)
+            
             
             var destination:EventDetailViewController? = segue.destinationViewController as? EventDetailViewController
             let event = sender as? Event
@@ -135,6 +141,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     // MARK: UICollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         var selectedEvent:Event = events[indexPath.row]
+        selectedIndexPath = indexPath
         segueIntoEventDetail(selectedEvent)
     }
     
@@ -363,7 +370,23 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func segueIntoEventDetail(event:Event){
         if event.detailsLoaded{
-            performSegueWithIdentifier("eventDetailSegue", sender: event)
+           // performSegueWithIdentifier("eventDetailSegue", sender: event)
+            
+            // convert frame of the image
+            let eventCell = eventCollectionView.cellForItemAtIndexPath(selectedIndexPath!) as EventCollectionViewCell
+            let convertCoverImageRect = view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
+            println(convertCoverImageRect)
+            
+            let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as? EventDetailViewController
+            destination?.event = event
+            destination?.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
+            destination?.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+            
+           // backgroundBlurOverlay?.fadeIn(0.6)
+            
+            self.navigationController?.pushViewController(destination!, animated: false)
+            
+            
         }else{
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             self.eventCollectionView.userInteractionEnabled = false

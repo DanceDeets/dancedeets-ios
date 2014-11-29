@@ -44,16 +44,24 @@ extension UIView{
         self.superview?.addConstraint(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Right, multiplier: 1.0, constant: 0.0))
         self.superview?.layoutIfNeeded()
     }
-    
-    func fadeOut(time:NSTimeInterval){
+
+    func fadeOut(time:NSTimeInterval,completion:(()->Void)?){
         UIView.animateWithDuration(time, animations: { () -> Void in
             self.alpha = 0.0
+            },completion:{(bool:Bool) -> Void in
+                if(completion != nil){
+                    completion!()
+                }
         })
     }
 
-    func fadeIn(time:NSTimeInterval){
+    func fadeIn(time:NSTimeInterval,completion:(()->Void)?){
         UIView.animateWithDuration(time, animations: { () -> Void in
             self.alpha = 1.0
+            },completion:{(bool:Bool) -> Void in
+                if(completion != nil){
+                    completion!()
+                }
         })
     }
     

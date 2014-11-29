@@ -12,25 +12,35 @@ import QuartzCore
 
 class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate {
 
-    let DETAILS_TABLE_VIEW_TOP_MARGIN:CGFloat = 64.0
-    let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 20.0
+    let DETAILS_TABLE_VIEW_TOP_MARGIN:CGFloat = 70.0
+    let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
     let DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING:CGFloat = 10.0
     var BLUR_THRESHOLD_OFFSET:CGFloat = 0.0
     let BLUR_MAX_ALPHA:CGFloat = 0.65
     let PARALLAX_SCROLL_OFFSET:CGFloat = 80.0
+    var COVER_IMAGE_TOP_OFFSET:CGFloat = 0.0
+    var COVER_IMAGE_HEIGHT:CGFloat = 0.0
+    let EVENT_TITLE_CELL_HEIGHT:CGFloat = 99.0
+    let EVENT_TIME_CELL_HEIGHT:CGFloat = 31.0
     
     var event:Event?
     var overlayView:UIVisualEffectView?
     var addCalendarAlert:UIAlertView?
     var facebookAlert:UIAlertView?
     var gradientLayer:CAGradientLayer?
+    var backgroundOverlay:UIView?
     
+    @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var detailsTableView: UITableView!
     @IBOutlet weak var backgroundViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var eventCoverImageViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var eventCoverImageViewRightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var eventCoverImageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var eventCoverImageViewLeftConstraint: NSLayoutConstraint!
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,10 +48,16 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         eventTitleLabel.textColor = UIColor.whiteColor()
         eventTitleLabel.font = FontFactory.navigationTitleFont()
         eventTitleLabel.text = event!.title!.uppercaseString
+        eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET
+        eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
+        
+        backgroundOverlay = coverImageView.addDarkBlurOverlay()
+        backgroundOverlay?.alpha = 0
         
         detailsTableView.delegate = self
         detailsTableView.dataSource = self
         detailsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        detailsTableView.backgroundColor = UIColor.clearColor() 
         BLUR_THRESHOLD_OFFSET = (view.frame.size.height * 4)/5
         
         // to enable default pop gesture recognizer
@@ -53,11 +69,13 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         if (event!.eventImageUrl != nil){
             let imageRequest:NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
-                coverImageView.image = image
+              //  coverImageView.image = image
+                eventCoverImageView.image = image
             }else{
                 event?.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
                     if(image != nil && error == nil){
-                        self.coverImageView.image = image
+                   //     self.coverImageView.image = image
+                        self.eventCoverImageView.image = image
                     }
                 })
             }
@@ -78,7 +96,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         let outerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor
         let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         gradientLayer?.colors = [outerColor,innerColor,innerColor]
-        gradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.1), NSNumber(float: 1.0)]
+        gradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.01), NSNumber(float: 1.0)]
         gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - DETAILS_TABLE_VIEW_TOP_MARGIN)
         gradientLayer?.anchorPoint = CGPoint.zeroPoint
         self.detailsTableView.layer.mask = gradientLayer
@@ -92,21 +110,25 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-      //  self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        backgroundOverlay?.fadeIn(0.8,nil)
         
-      //  let snap:UIView = coverImageView.snapshotViewAfterScreenUpdates(true)
-       // coverImageView.removeFromSuperview()
-       //
-     //   backgroundView.addSubview(snap)
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.eventCoverImageViewLeftConstraint.constant = 0
+            self.eventCoverImageViewRightConstraint.constant = 0
+            self.view.layoutIfNeeded()
+        })
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
       //  self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
+   
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -115,7 +137,20 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     // MARK: Action
     @IBAction func backButtonTapped(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+        //self.navigationController?.popViewControllerAnimated(true)
+        
+        backgroundOverlay?.fadeOut(0.7, completion: { () -> Void in
+          //  self.navigationController?.popViewControllerAnimated(false)
+            
+            println("pop")
+            self.navigationController?.popViewControllerAnimated(false)
+        })
+        
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.eventCoverImageViewLeftConstraint.constant = 15
+            self.eventCoverImageViewRightConstraint.constant = 15
+            self.view.layoutIfNeeded()
+            })
     }
     
     @IBAction func calendarButtonTapped(sender: AnyObject) {
@@ -200,12 +235,30 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             cell.updateViewForEvent(event!)
             return cell
         }else if(indexPath.row == 2){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as EventDetailDescriptionCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as EventDetailLocationCell
             cell.updateViewForEvent(event!)
             return cell
         }
         else if(indexPath.row == 3){
+           // let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as EventDetailDescriptionCell
+           // cell.updateViewForEvent(event!)
+           // return cell
+            let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) as UITableViewCell
+            return cell
+        }
+        else if(indexPath.row == 4){
+            //let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as EventDetailLocationCell
+           // cell.updateViewForEvent(event!)
+           // return cell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventTimeCell", forIndexPath: indexPath) as EventDetailTimeCell
+            cell.updateViewForEvent(event!)
+            return cell
+        }else if(indexPath.row == 5){
             let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as EventDetailLocationCell
+             cell.updateViewForEvent(event!)
+             return cell
+        }else if(indexPath.row == 6){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as EventDetailDescriptionCell
             cell.updateViewForEvent(event!)
             return cell
         }
@@ -216,7 +269,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 7
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -224,34 +277,33 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
+        var displayAddressHeight:CGFloat = 0.0
+        displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress!, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
+        
         if(indexPath.row == 0){
-            return view.frame.size.height - DETAILS_TABLE_VIEW_TOP_MARGIN
+            return 99;
         }else if(indexPath.row == 1){
-            return 40.0;
-        }else if(indexPath.row == 2){
+            return EVENT_TIME_CELL_HEIGHT
+        }else if (indexPath.row == 2){
+            return displayAddressHeight;
+        }else if(indexPath.row == 3){
+            return COVER_IMAGE_HEIGHT - EVENT_TIME_CELL_HEIGHT - displayAddressHeight;
+        }else if(indexPath.row == 4){
+            return EVENT_TIME_CELL_HEIGHT
+        }else if(indexPath.row == 5){
+            return displayAddressHeight;
+        }else if(indexPath.row == 6){
             let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
             
             let height = Utilities.heightRequiredForText(event!.shortDescription!,
-                lineHeight: EventDetailDescriptionCell.descriptionLineHeight(),
-                font: EventDetailDescriptionCell.descriptionFont(),
+                lineHeight: FontFactory.eventDescriptionLineHeight(),
+                font: FontFactory.eventDescriptionFont(),
                 width:width)
             return height + (2*DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING)
             
-        }else if(indexPath.row == 3){
-            let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
-            var height:CGFloat = 0.0
-            
-            height += 2 * DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING
-            
-            height += Utilities.heightRequiredForText(event!.venue!, lineHeight: EventDetailLocationCell.venueLineHeight(), font: EventDetailLocationCell.venueFont(), width: width)
-            
-            if(event?.placemark != nil){
-                // to fit the full adress + map if there is a placemark
-                height += 210
-            }
-            return height
-        }
-        else{
+        }else{
             return CGFloat.min
         }
     }

@@ -14,11 +14,14 @@ class EventDetailTimeCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = UIColor.clearColor()
-        self.selectionStyle = UITableViewCellSelectionStyle.None
-        timeLabel.font = UIFont(name: "BebasNeueBold", size: 30)
+        selectionStyle = UITableViewCellSelectionStyle.None
+        
+        timeLabel.font = FontFactory.eventDateFont()
+        timeLabel.textColor =  ColorFactory.lightBlue()
     }
     
     func updateViewForEvent(event:Event){
         timeLabel.text = event.displayTime
+        contentView.layoutIfNeeded()
     }
 }

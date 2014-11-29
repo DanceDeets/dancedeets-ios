@@ -10,18 +10,10 @@ import UIKit
 class EventDetailDescriptionCell: UITableViewCell {
     @IBOutlet weak var eventDescriptionLabel: UILabel!
     
-    // TODO clean up when class variables supported
-    class func descriptionFont()->UIFont{
-        return UIFont(name: "Montserrat-Regular", size: 16.0)!
-    }
-    class func descriptionLineHeight()->CGFloat{
-        return 20.0
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = UIColor.clearColor()
-        self.selectionStyle = UITableViewCellSelectionStyle.None
+        selectionStyle = UITableViewCellSelectionStyle.None
         eventDescriptionLabel.numberOfLines = 0
         eventDescriptionLabel.backgroundColor = UIColor.clearColor()
     }
@@ -29,8 +21,8 @@ class EventDetailDescriptionCell: UITableViewCell {
     func updateViewForEvent(event:Event){
         
         var attributedDescription = NSMutableAttributedString(string: event.shortDescription!)
-        attributedDescription.setLineHeight(EventDetailDescriptionCell.descriptionLineHeight())
-        attributedDescription.setFont(EventDetailDescriptionCell.descriptionFont())
+        attributedDescription.setLineHeight(FontFactory.eventDescriptionLineHeight())
+        attributedDescription.setFont(FontFactory.eventDescriptionFont())
         attributedDescription.setColor(UIColor.whiteColor())
         
         eventDescriptionLabel.attributedText = attributedDescription

@@ -15,27 +15,20 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
     @IBOutlet weak var venueLabel: UILabel!
     
     @IBOutlet weak var getDirectionButton: UIButton!
-    @IBOutlet weak var addressContainerView: UIView!
     
-    @IBOutlet weak var mapView: MKMapView!
+    //@IBOutlet weak var mapView: MKMapView!
     
     var event:Event?
     var directionAlert:UIAlertView?
-    
-    class func venueFont()->UIFont{
-        return UIFont(name: "Montserrat-Regular", size: 14.0)!
-    }
-    class func venueLineHeight()->CGFloat{
-        return 18.0
-    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.backgroundColor = UIColor.clearColor()
         selectionStyle = UITableViewCellSelectionStyle.None
         
-        let mapTapped = UITapGestureRecognizer(target: self, action: "mapTapped")
-        mapView.addGestureRecognizer(mapTapped)
+        venueLabel.numberOfLines = 0
+       // let mapTapped = UITapGestureRecognizer(target: self, action: "mapTapped")
+        //mapView.addGestureRecognizer(mapTapped)
         
         directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
     }
@@ -67,21 +60,16 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
         if (self.event == nil){
             self.event = event
             
-            if(event.placemark != nil){
-                addressContainerView.hidden = false
-            }else{
-                addressContainerView.hidden = true
-            }
-            
-            if(event.venue != nil){
-                var attributedDescription = NSMutableAttributedString(string: event.venue!)
-                attributedDescription.setLineHeight(EventDetailLocationCell.venueLineHeight())
-                attributedDescription.setFont(EventDetailLocationCell.venueFont())
-                attributedDescription.setColor(ColorFactory.darkYellow())
+            if(event.displayAddress != nil){
+                var attributedDescription = NSMutableAttributedString(string: event.displayAddress!)
+                attributedDescription.setLineHeight(FontFactory.eventVenueLineHeight())
+                attributedDescription.setFont(FontFactory.eventVenueFont())
+                attributedDescription.setColor(UIColor.whiteColor())
                 venueLabel.attributedText = attributedDescription
                 venueLabel.sizeToFit()
             }
             
+            /*
             if(event.placemark != nil && event.placemark?.addressDictionary != nil){
                 
                 var line1:String?
@@ -112,15 +100,16 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
                 if(event.geoloc != nil){
                     let annotation:MKPointAnnotation = MKPointAnnotation()
                     annotation.setCoordinate(event.geoloc!.coordinate)
-                    mapView.addAnnotation(annotation)
-                    mapView.centerCoordinate = event.geoloc!.coordinate
+                   // mapView.addAnnotation(annotation)
+                   // mapView.centerCoordinate = event.geoloc!.coordinate
                     
                     let region = MKCoordinateRegionMakeWithDistance(event.geoloc!.coordinate, 1500,1500)
-                    mapView.setRegion(region,animated:false)
+                   // mapView.setRegion(region,animated:false)
                     
                 }
                 
             }
+*/
             contentView.setNeedsLayout()
             contentView.layoutIfNeeded()
         }

@@ -16,15 +16,15 @@ class EventDetailCoverCell: UITableViewCell {
         super.awakeFromNib()
         backgroundColor = UIColor.clearColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
-   
+        
+        titleLabel.font = FontFactory.eventHeadlineFont()
         titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.font = UIFont(name: "BebasNeueBold", size: 50)
+        titleLabel.numberOfLines = 3
+        titleLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
     }
     
     func updateViewForEvent(event:Event){
         titleLabel.text = event.title
-        contentView.setNeedsLayout()
         contentView.layoutIfNeeded()
     }
-    
 }

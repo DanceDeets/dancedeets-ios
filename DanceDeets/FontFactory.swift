@@ -20,8 +20,17 @@ class FontFactory {
     class func eventDateFont()->UIFont{
         return UIFont(name:"Interstate-BoldCondensed",size:15)!
     }
+    class func eventDescriptionFont()->UIFont{
+        return UIFont(name:"Interstate-Light",size:13)!
+    }
+    class func eventDescriptionLineHeight()->CGFloat{
+        return 18.0
+    }
     class func eventVenueFont()->UIFont{
         return UIFont(name:"Interstate-Light",size:13)!
+    }
+    class func eventVenueLineHeight()->CGFloat{
+        return 18.0
     }
     class func barButtonFont()->UIFont{
         return UIFont(name:"Interstate-Light",size:13)!

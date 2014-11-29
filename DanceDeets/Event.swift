@@ -13,18 +13,18 @@ public class Event: NSObject {
     let eventImageUrl:NSURL?
     let eventImageWidth:CGFloat?
     let eventImageHeight:CGFloat?
-    let venue:NSString?
-    let shortDescription:NSString?
+    let venue:String?
+    let shortDescription:String?
     let startTime:NSDate?
     let endTime:NSDate?
     let keywords:[String]?
-    let tagString:NSString?
-    let title:NSString?
-    let location:NSString?
-    let identifier:NSString?
-    let displayTime:NSString?
+    let tagString:String?
+    let title:String?
+    let location:String?
+    let identifier:String?
+    let displayTime:String?
     let facebookUrl:NSURL?
-    var displayAddress:NSString?
+    var displayAddress:String?
     var geoloc:CLLocation?
     var admins:[EventAdmin]?
     var placemark:CLPlacemark?
@@ -36,10 +36,11 @@ public class Event: NSObject {
         super.init()
         admins = []
         venue = dictionary["city"] as? String
+        displayAddress = dictionary["city"] as? String
         title = dictionary["title"] as? String
         identifier = dictionary["id"] as? String
         
-        if identifier?.length > 0{
+        if countElements(identifier!) > 0 {
             facebookUrl = NSURL(string: "http://www.facebook.com/"+identifier!)
         }
         
@@ -183,6 +184,16 @@ public class Event: NSObject {
                             geocoder.reverseGeocodeLocation(self.geoloc, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
                                 if placemarks.count > 0{
                                     self.placemark = placemarks.first as? CLPlacemark
+                                    
+                                    // set up a display address
+                                    if let lines = self.placemark?.addressDictionary["FormattedAddressLines"] as? [String]{
+                                        if lines.count >= 2{
+                                            self.displayAddress! += "\n"
+                                            self.displayAddress! += lines[0]
+                                            self.displayAddress! += "\n"
+                                            self.displayAddress! += lines[1]
+                                        }
+                                    }
                                 }
                                 completion(nil)
                             })
