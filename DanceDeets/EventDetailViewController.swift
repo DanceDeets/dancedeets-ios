@@ -111,7 +111,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
         var displayAddressHeight:CGFloat = 0.0
         displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress!, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
-        SCROLL_LIMIT = EVENT_TIME_CELL_HEIGHT + displayAddressHeight + 40
+        SCROLL_LIMIT = EVENT_TIME_CELL_HEIGHT + displayAddressHeight + 50
         
     }
     
@@ -299,7 +299,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
                 lineHeight: FontFactory.eventDescriptionLineHeight(),
                 font: FontFactory.eventDescriptionFont(),
                 width:width)
-            return height + 70
+            return height + 80
             
         }else{
             return CGFloat.min
@@ -332,13 +332,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         }
         
         var redirectGradientPosition:CGPoint?
-        if(eventCoverImageViewTopConstraint.constant < DETAILS_TABLE_VIEW_TOP_MARGIN){
-            var diff =  (DETAILS_TABLE_VIEW_TOP_MARGIN - eventCoverImageViewTopConstraint.constant)
-            redirectGradientPosition = CGPointMake(0, diff)
-        }else{
-            redirectGradientPosition = CGPointMake(0, -10)
-        }
-        println(redirectGradientPosition)
+        redirectGradientPosition = CGPointMake(0,(DETAILS_TABLE_VIEW_TOP_MARGIN - eventCoverImageViewTopConstraint.constant))
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
@@ -346,12 +340,10 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         redirectGradientLayer?.position = redirectGradientPosition!
         CATransaction.commit()
         
-        // handle map to image dissolve
+        // image / map cross fade with scroll
         if(yOff < 0){
-            // only show image
             eventCoverImageView.alpha = 1
             mapView.alpha = 0
-            
         }else if(yOff >= 0 && yOff < SCROLL_LIMIT){
             let percentageShow:CGFloat = yOff / SCROLL_LIMIT
             mapView.alpha = percentageShow
