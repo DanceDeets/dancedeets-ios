@@ -9,27 +9,28 @@
 import UIKit
 import EventKit
 import QuartzCore
+import MapKit
 
 class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate {
 
     let DETAILS_TABLE_VIEW_TOP_MARGIN:CGFloat = 70.0
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
-    let DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING:CGFloat = 10.0
-    var BLUR_THRESHOLD_OFFSET:CGFloat = 0.0
-    let BLUR_MAX_ALPHA:CGFloat = 0.65
-    let PARALLAX_SCROLL_OFFSET:CGFloat = 80.0
+    let DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING:CGFloat = 20.0
     var COVER_IMAGE_TOP_OFFSET:CGFloat = 0.0
     var COVER_IMAGE_HEIGHT:CGFloat = 0.0
     let EVENT_TITLE_CELL_HEIGHT:CGFloat = 99.0
-    let EVENT_TIME_CELL_HEIGHT:CGFloat = 31.0
+    let EVENT_TIME_CELL_HEIGHT:CGFloat = 30.5
+    var SCROLL_LIMIT:CGFloat = 0.0
     
     var event:Event?
-    var overlayView:UIVisualEffectView?
     var addCalendarAlert:UIAlertView?
     var facebookAlert:UIAlertView?
     var gradientLayer:CAGradientLayer?
+    var redirectGradientLayer:CAGradientLayer?
     var backgroundOverlay:UIView?
     
+    @IBOutlet weak var redirectView: RedirectView!
+    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var backgroundView: UIView!
@@ -45,6 +46,9 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        redirectView.redirectedView = detailsTableView
+        mapView.userInteractionEnabled = false
+        
         eventTitleLabel.textColor = UIColor.whiteColor()
         eventTitleLabel.font = FontFactory.navigationTitleFont()
         eventTitleLabel.text = event!.title!.uppercaseString
@@ -58,7 +62,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         detailsTableView.dataSource = self
         detailsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         detailsTableView.backgroundColor = UIColor.clearColor() 
-        BLUR_THRESHOLD_OFFSET = (view.frame.size.height * 4)/5
         
         // to enable default pop gesture recognizer
         // it seems to turns off when you hide the nav bar
@@ -69,26 +72,20 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         if (event!.eventImageUrl != nil){
             let imageRequest:NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
-              //  coverImageView.image = image
                 eventCoverImageView.image = image
             }else{
                 event?.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
                     if(image != nil && error == nil){
-                   //     self.coverImageView.image = image
                         self.eventCoverImageView.image = image
                     }
                 })
             }
+        }else{
+            eventCoverImageView.image = UIImage(named: "placeholderCover")
         }
         
         addCalendarAlert = UIAlertView(title: "Want to add this event to your calendar?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
         facebookAlert = UIAlertView(title: "RSVP on Facebook?", message: "", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
-        
-        // the blur effect view over the entire cover image
-        overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
-        coverImageView.addSubview(overlayView!)
-        overlayView?.constrainToSuperViewEdges()
-        overlayView?.alpha = 0
         
         // this sets up a gradient mask on the table view layer, which gives the fade out effect
         // when you scroll 
@@ -97,11 +94,25 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         gradientLayer?.colors = [outerColor,innerColor,innerColor]
         gradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.01), NSNumber(float: 1.0)]
-        gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - DETAILS_TABLE_VIEW_TOP_MARGIN)
+        gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
         gradientLayer?.anchorPoint = CGPoint.zeroPoint
         self.detailsTableView.layer.mask = gradientLayer
         
+        redirectGradientLayer = CAGradientLayer()
+        redirectGradientLayer?.colors = [outerColor,innerColor,innerColor]
+        redirectGradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.01), NSNumber(float: 1.0)]
+        redirectGradientLayer?.bounds = view.bounds
+        redirectGradientLayer?.anchorPoint = CGPoint.zeroPoint
+        redirectGradientLayer?.position = CGPointMake(0, -10)
+        redirectView.layer.mask = redirectGradientLayer
+        
         self.view.layoutIfNeeded()
+        
+        let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
+        var displayAddressHeight:CGFloat = 0.0
+        displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress!, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
+        SCROLL_LIMIT = EVENT_TIME_CELL_HEIGHT + displayAddressHeight + 40
+        
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -114,7 +125,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        backgroundOverlay?.fadeIn(0.8,nil)
+        backgroundOverlay?.fadeIn(0.6,nil)
         
         UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.eventCoverImageViewLeftConstraint.constant = 0
@@ -125,10 +136,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-      //  self.navigationController?.setNavigationBarHidden(false, animated: true)
-        
-   
-       
     }
 
     override func didReceiveMemoryWarning() {
@@ -137,20 +144,17 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     // MARK: Action
     @IBAction func backButtonTapped(sender: AnyObject) {
-        //self.navigationController?.popViewControllerAnimated(true)
         
-        backgroundOverlay?.fadeOut(0.7, completion: { () -> Void in
-          //  self.navigationController?.popViewControllerAnimated(false)
-            
-            println("pop")
+        backgroundOverlay?.fadeOut(0.6, completion: { () -> Void in
+            println("backButtonTapped()")
             self.navigationController?.popViewControllerAnimated(false)
         })
         
         UIView.animateWithDuration(0.4, animations: { () -> Void in
-            self.eventCoverImageViewLeftConstraint.constant = 15
-            self.eventCoverImageViewRightConstraint.constant = 15
+            self.eventCoverImageViewLeftConstraint.constant = self.DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING
+            self.eventCoverImageViewRightConstraint.constant = self.DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING
             self.view.layoutIfNeeded()
-            })
+        })
     }
     
     @IBAction func calendarButtonTapped(sender: AnyObject) {
@@ -240,16 +244,10 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             return cell
         }
         else if(indexPath.row == 3){
-           // let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as EventDetailDescriptionCell
-           // cell.updateViewForEvent(event!)
-           // return cell
             let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) as UITableViewCell
             return cell
         }
         else if(indexPath.row == 4){
-            //let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as EventDetailLocationCell
-           // cell.updateViewForEvent(event!)
-           // return cell
             let cell = tableView.dequeueReusableCellWithIdentifier("eventTimeCell", forIndexPath: indexPath) as EventDetailTimeCell
             cell.updateViewForEvent(event!)
             return cell
@@ -301,7 +299,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
                 lineHeight: FontFactory.eventDescriptionLineHeight(),
                 font: FontFactory.eventDescriptionFont(),
                 width:width)
-            return height + (2*DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING)
+            return height + 70
             
         }else{
             return CGFloat.min
@@ -320,26 +318,48 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     // MARK: UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
+       
+        let yOff = scrollView.contentOffset.y
+        println(yOff)
+        
+        if(yOff > SCROLL_LIMIT){
+            let diff = yOff - SCROLL_LIMIT
+            eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET - diff
+            view.layoutIfNeeded()
+        }else if(yOff < 0){
+            eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET - yOff
+            view.layoutIfNeeded()
+        }
+        
+        var redirectGradientPosition:CGPoint?
+        if(eventCoverImageViewTopConstraint.constant < DETAILS_TABLE_VIEW_TOP_MARGIN){
+            var diff =  (DETAILS_TABLE_VIEW_TOP_MARGIN - eventCoverImageViewTopConstraint.constant)
+            redirectGradientPosition = CGPointMake(0, diff)
+        }else{
+            redirectGradientPosition = CGPointMake(0, -10)
+        }
+        println(redirectGradientPosition)
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        gradientLayer?.position = CGPointMake(0, scrollView.contentOffset.y);
+        gradientLayer?.position = CGPointMake(0, scrollView.contentOffset.y)
+        redirectGradientLayer?.position = redirectGradientPosition!
         CATransaction.commit()
         
-        // blurs and slight parallax when scrolling down
-        let currentVertOffset = scrollView.contentOffset.y
-        var boundedOffset:CGFloat = currentVertOffset
-        
-        if(currentVertOffset < 0){
-            boundedOffset = 0
-        }else if(currentVertOffset > BLUR_THRESHOLD_OFFSET){
-            boundedOffset = BLUR_THRESHOLD_OFFSET
+        // handle map to image dissolve
+        if(yOff < 0){
+            // only show image
+            eventCoverImageView.alpha = 1
+            mapView.alpha = 0
+            
+        }else if(yOff >= 0 && yOff < SCROLL_LIMIT){
+            let percentageShow:CGFloat = yOff / SCROLL_LIMIT
+            mapView.alpha = percentageShow
+            eventCoverImageView.alpha = 1 - mapView.alpha
+        }else{
+            eventCoverImageView.alpha = 0
+            mapView.alpha = 1
         }
-        
-        backgroundViewTopConstraint.constant = -(boundedOffset/BLUR_THRESHOLD_OFFSET) * PARALLAX_SCROLL_OFFSET;
-        view.layoutIfNeeded()
-        
-        overlayView?.alpha = min(BLUR_MAX_ALPHA,boundedOffset/BLUR_THRESHOLD_OFFSET)
     }
-
+    
 }

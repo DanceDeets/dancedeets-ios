@@ -24,9 +24,11 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
     override func awakeFromNib() {
         super.awakeFromNib()
         self.backgroundColor = UIColor.clearColor()
+      //  self.backgroundColor = UIColor.redColor()
         selectionStyle = UITableViewCellSelectionStyle.None
         
         venueLabel.numberOfLines = 0
+      //  venueLabel.backgroundColor = UIColor.greenColor()
        // let mapTapped = UITapGestureRecognizer(target: self, action: "mapTapped")
         //mapView.addGestureRecognizer(mapTapped)
         
@@ -57,16 +59,14 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
     }
     
     func updateViewForEvent(event:Event){
-        if (self.event == nil){
-            self.event = event
-            
+        
             if(event.displayAddress != nil){
                 var attributedDescription = NSMutableAttributedString(string: event.displayAddress!)
                 attributedDescription.setLineHeight(FontFactory.eventVenueLineHeight())
                 attributedDescription.setFont(FontFactory.eventVenueFont())
                 attributedDescription.setColor(UIColor.whiteColor())
                 venueLabel.attributedText = attributedDescription
-                venueLabel.sizeToFit()
+                println(venueLabel.frame)
             }
             
             /*
@@ -112,6 +112,6 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
 */
             contentView.setNeedsLayout()
             contentView.layoutIfNeeded()
-        }
-}
+            layoutIfNeeded()
+    }
 }
