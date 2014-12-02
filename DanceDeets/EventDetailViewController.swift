@@ -104,14 +104,27 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         redirectGradientLayer?.bounds = view.bounds
         redirectGradientLayer?.anchorPoint = CGPoint.zeroPoint
         redirectGradientLayer?.position = CGPointMake(0, -10)
-        redirectView.layer.mask = redirectGradientLayer
+       // redirectView.layer.mask = redirectGradientLayer
         
         self.view.layoutIfNeeded()
         
         let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
         var displayAddressHeight:CGFloat = 0.0
         displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress!, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
-        SCROLL_LIMIT = EVENT_TIME_CELL_HEIGHT + displayAddressHeight + 50
+        SCROLL_LIMIT = EVENT_TIME_CELL_HEIGHT + displayAddressHeight + 15
+        
+        
+        // setup map if possible
+        if(event?.geoloc != nil){
+            let annotation:MKPointAnnotation = MKPointAnnotation()
+            annotation.setCoordinate(event!.geoloc!.coordinate)
+             mapView.addAnnotation(annotation)
+             mapView.centerCoordinate = annotation.coordinate
+          
+            let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 1500,1500)
+             mapView.setRegion(region,animated:false)
+        }
+        
         
     }
     
@@ -299,7 +312,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
                 lineHeight: FontFactory.eventDescriptionLineHeight(),
                 font: FontFactory.eventDescriptionFont(),
                 width:width)
-            return height + 80
+            return height + 50
             
         }else{
             return CGFloat.min
@@ -321,7 +334,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
        
         let yOff = scrollView.contentOffset.y
         println(yOff)
-        
+        /*
         if(yOff > SCROLL_LIMIT){
             let diff = yOff - SCROLL_LIMIT
             eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET - diff
@@ -330,6 +343,27 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET - yOff
             view.layoutIfNeeded()
         }
+        
+*/
+        if(yOff < 0){
+            eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT - yOff
+            eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET + yOff
+        }else{
+        
+        eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET - yOff
+            
+            
+            // println(COVER_IMAGE_TOP_OFFSET)
+            // println(eventCoverImageViewTopConstraint.constant)
+            if eventCoverImageViewTopConstraint.constant < DETAILS_TABLE_VIEW_TOP_MARGIN{
+                eventCoverImageViewTopConstraint.constant = DETAILS_TABLE_VIEW_TOP_MARGIN
+                
+                println(yOff -  EVENT_TITLE_CELL_HEIGHT)
+                eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT - (yOff -  EVENT_TITLE_CELL_HEIGHT)
+                view.layoutIfNeeded()
+            }
+        }
+      
         
         var redirectGradientPosition:CGPoint?
         redirectGradientPosition = CGPointMake(0,(DETAILS_TABLE_VIEW_TOP_MARGIN - eventCoverImageViewTopConstraint.constant))

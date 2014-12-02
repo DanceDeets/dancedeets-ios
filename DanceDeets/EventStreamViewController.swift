@@ -375,14 +375,11 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             // convert frame of the image
             let eventCell = eventCollectionView.cellForItemAtIndexPath(selectedIndexPath!) as EventCollectionViewCell
             let convertCoverImageRect = view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
-            println(convertCoverImageRect)
             
             let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as? EventDetailViewController
             destination?.event = event
             destination?.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
             destination?.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-            
-           // backgroundBlurOverlay?.fadeIn(0.6)
             
             self.navigationController?.pushViewController(destination!, animated: false)
             
@@ -395,7 +392,20 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 dispatch_async(dispatch_get_main_queue(), {
                     self.eventCollectionView.userInteractionEnabled = true
                     if(error == nil){
-                        self.performSegueWithIdentifier("eventDetailSegue", sender: event)
+                       // self.performSegueWithIdentifier("eventDetailSegue", sender: event)
+                        
+                        // convert frame of the image
+                        let eventCell = self.eventCollectionView.cellForItemAtIndexPath(self.selectedIndexPath!) as EventCollectionViewCell
+                        let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
+                        
+                        let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as? EventDetailViewController
+                        destination?.event = event
+                        destination?.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
+                        destination?.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+                        
+                        self.navigationController?.pushViewController(destination!, animated: false)
+                        
+                        
                     }else{
                         let alert:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get the deets to that event right now", delegate: nil, cancelButtonTitle: "OK")
                         alert.show()
