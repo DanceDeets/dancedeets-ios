@@ -15,10 +15,9 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
 
     let DETAILS_TABLE_VIEW_TOP_MARGIN:CGFloat = 70.0
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
-    let DETAILS_TABLE_VIEW_CELL_VERTICAL_PADDING:CGFloat = 20.0
     var COVER_IMAGE_TOP_OFFSET:CGFloat = 0.0
     var COVER_IMAGE_HEIGHT:CGFloat = 0.0
-    let EVENT_TITLE_CELL_HEIGHT:CGFloat = 99.0
+    let EVENT_TITLE_CELL_HEIGHT:CGFloat = 100.0
     let EVENT_TIME_CELL_HEIGHT:CGFloat = 30.5
     var SCROLL_LIMIT:CGFloat = 0.0
     
@@ -52,6 +51,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         eventTitleLabel.textColor = UIColor.whiteColor()
         eventTitleLabel.font = FontFactory.navigationTitleFont()
         eventTitleLabel.text = event!.title!.uppercaseString
+        
         eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET
         eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
         
@@ -120,12 +120,9 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             annotation.setCoordinate(event!.geoloc!.coordinate)
              mapView.addAnnotation(annotation)
              mapView.centerCoordinate = annotation.coordinate
-          
             let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 1500,1500)
              mapView.setRegion(region,animated:false)
         }
-        
-        
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -294,7 +291,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress!, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
         
         if(indexPath.row == 0){
-            return 99;
+            return 100;
         }else if(indexPath.row == 1){
             return EVENT_TIME_CELL_HEIGHT
         }else if (indexPath.row == 2){
@@ -334,19 +331,9 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
        
         let yOff = scrollView.contentOffset.y
         println(yOff)
-        /*
-        if(yOff > SCROLL_LIMIT){
-            let diff = yOff - SCROLL_LIMIT
-            eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET - diff
-            view.layoutIfNeeded()
-        }else if(yOff < 0){
-            eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET - yOff
-            view.layoutIfNeeded()
-        }
-        
-*/
+ 
         if(yOff < 0){
-            eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT - yOff
+            eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT - (yOff*2)
             eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET + yOff
         }else{
         
@@ -360,7 +347,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
                 
                 println(yOff -  EVENT_TITLE_CELL_HEIGHT)
                 eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT - (yOff -  EVENT_TITLE_CELL_HEIGHT)
-                view.layoutIfNeeded()
+             //   view.layoutIfNeeded()
             }
         }
       
@@ -371,7 +358,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         gradientLayer?.position = CGPointMake(0, scrollView.contentOffset.y)
-        redirectGradientLayer?.position = redirectGradientPosition!
+      //  redirectGradientLayer?.position = redirectGradientPosition!
         CATransaction.commit()
         
         // image / map cross fade with scroll
