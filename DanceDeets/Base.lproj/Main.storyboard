@@ -359,39 +359,7 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vxJ-Y9-D4f" id="UwV-8x-1vZ">
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NSf-w2-Ayo">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="jA4-et-iwj"/>
-                                                    </constraints>
-                                                </view>
-                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y3w-O0-hfI">
-                                                    <rect key="frame" x="150" y="15" width="300" height="30"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="emd-C5-7oa"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstItem="y3w-O0-hfI" firstAttribute="top" secondItem="NSf-w2-Ayo" secondAttribute="bottom" constant="-29" id="B9C-k6-soQ"/>
-                                                <constraint firstAttribute="trailing" secondItem="y3w-O0-hfI" secondAttribute="trailing" constant="15" id="CZD-Df-Y6k"/>
-                                                <constraint firstAttribute="centerY" secondItem="y3w-O0-hfI" secondAttribute="centerY" id="MmJ-9o-jM2"/>
-                                                <constraint firstItem="NSf-w2-Ayo" firstAttribute="leading" secondItem="y3w-O0-hfI" secondAttribute="trailing" constant="60" id="Ord-O1-4oQ"/>
-                                                <constraint firstItem="NSf-w2-Ayo" firstAttribute="leading" secondItem="UwV-8x-1vZ" secondAttribute="leadingMargin" constant="15" id="W4c-Ez-BTS"/>
-                                                <constraint firstAttribute="centerY" secondItem="NSf-w2-Ayo" secondAttribute="centerY" constant="8" id="afx-zI-zzl"/>
-                                                <constraint firstItem="NSf-w2-Ayo" firstAttribute="leading" secondItem="y3w-O0-hfI" secondAttribute="trailing" id="cvy-pX-t3m"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="Ord-O1-4oQ"/>
-                                                    <exclude reference="cvy-pX-t3m"/>
-                                                    <exclude reference="B9C-k6-soQ"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -632,11 +600,11 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d0K-ga-aIs" id="22w-fP-KjE">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="pinLogo" translatesAutoresizingMaskIntoConstraints="NO" id="oCt-8R-5wu">
-                                                    <rect key="frame" x="15" y="14" width="11" height="16"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinLogo" translatesAutoresizingMaskIntoConstraints="NO" id="oCt-8R-5wu">
+                                                    <rect key="frame" x="15" y="16" width="10" height="12"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2a0-DK-eli">
-                                                    <rect key="frame" x="41" y="12" width="31" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2a0-DK-eli">
+                                                    <rect key="frame" x="40" y="12" width="31" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
