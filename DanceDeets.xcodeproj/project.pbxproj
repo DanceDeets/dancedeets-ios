@@ -22,6 +22,7 @@
 		1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */; };
 		1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15802A1A05695400658A1D /* EventAdmin.swift */; };
 		1D19871F1A2A9528004156B2 /* RedirectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D19871E1A2A9528004156B2 /* RedirectView.swift */; };
+		1D22A4591A2EC5D200C4BC03 /* EventDetailActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22A4581A2EC5D200C4BC03 /* EventDetailActionCell.swift */; };
 		1D43347819D7552B001A5381 /* BebasNeueRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347319D7552B001A5381 /* BebasNeueRegular.otf */; };
 		1D43347919D7552B001A5381 /* BebasNeueLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347419D7552B001A5381 /* BebasNeueLight.otf */; };
 		1D43347A19D7552B001A5381 /* BebasNeueBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347519D7552B001A5381 /* BebasNeueBook.otf */; };
@@ -81,6 +82,7 @@
 		1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1D15802A1A05695400658A1D /* EventAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAdmin.swift; sourceTree = "<group>"; };
 		1D19871E1A2A9528004156B2 /* RedirectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedirectView.swift; sourceTree = "<group>"; };
+		1D22A4581A2EC5D200C4BC03 /* EventDetailActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailActionCell.swift; sourceTree = "<group>"; };
 		1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DanceDeets-Bridging-Header.h"; sourceTree = "<group>"; };
 		1D43347319D7552B001A5381 /* BebasNeueRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueRegular.otf; sourceTree = "<group>"; };
 		1D43347419D7552B001A5381 /* BebasNeueLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueLight.otf; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				1D08924C1A27BF8700A9EAC4 /* CitySearchCell.swift */,
 				1D08924E1A27C49D00A9EAC4 /* CurrentLocationCell.swift */,
 				1D0892521A28406300A9EAC4 /* AutosuggestCityCell.swift */,
+				1D22A4581A2EC5D200C4BC03 /* EventDetailActionCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				1D08924D1A27BF8700A9EAC4 /* CitySearchCell.swift in Sources */,
 				1D0892511A27C97700A9EAC4 /* UserSettings.swift in Sources */,
 				1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */,
+				1D22A4591A2EC5D200C4BC03 /* EventDetailActionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

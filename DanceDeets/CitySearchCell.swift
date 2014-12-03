@@ -10,6 +10,7 @@ class CitySearchCell: UITableViewCell {
     
     var citiesVC:MyCitiesViewController?
     
+    @IBOutlet weak var pinLogo: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     
@@ -27,6 +28,8 @@ class CitySearchCell: UITableViewCell {
         
         cityLabel.font = FontFactory.standardTableLabelFont()
         cityLabel.textColor = UIColor.whiteColor()
+        
+        pinLogo.tintColor = ColorFactory.white50()
     }
     
 }

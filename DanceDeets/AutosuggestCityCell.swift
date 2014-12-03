@@ -11,7 +11,7 @@ import UIKit
 class AutosuggestCityCell: UITableViewCell {
 
     @IBOutlet weak var cityLabel: UILabel!
-    
+    @IBOutlet weak var pinLogo: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = UIColor.clearColor()
@@ -20,6 +20,8 @@ class AutosuggestCityCell: UITableViewCell {
         
         cityLabel.font = FontFactory.standardTableLabelFont()
         cityLabel.textColor = UIColor.whiteColor()
+        
+        pinLogo.tintColor = ColorFactory.white50()
     }
     
 }

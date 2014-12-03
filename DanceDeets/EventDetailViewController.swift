@@ -333,7 +333,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         println(yOff)
  
         if(yOff < 0){
-            eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT - (yOff*2)
+            eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT - (yOff)
             eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET + yOff
         }else{
         
