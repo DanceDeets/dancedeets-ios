@@ -31,7 +31,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var searchResultsTableView:UITableView?
     var searchController:UISearchController?
     var blurOverlay:UIView?
-    var backgroundBlurOverlay:UIView?
     var selectedIndexPath:NSIndexPath?
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     
@@ -210,9 +209,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         blurOverlay = view.addDarkBlurOverlay()
         blurOverlay?.alpha = 0
-        
-        backgroundBlurOverlay = self.backgroundImageView.addDarkBlurOverlay()
-        backgroundBlurOverlay?.alpha = 0
     }
     
     // MARK: - CLLocationManagerDelegate
@@ -441,10 +437,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             })
         }
     }
-
+    
     func filterContentForSearchText(searchText: String) {
-        self.filteredEvents = self.events.filter({( event: Event) -> Bool in
-            // simple filter, check is search text is in description, title, or tags
+        filteredEvents = events.filter({( event: Event) -> Bool in
+            // simple filter, check is search text is in title or tags
             if (event.title?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil){
                 return true;
             }
@@ -458,12 +454,12 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func checkFaceBookToken(){
         let currentState:FBSessionState = FBSession.activeSession().state
         
-        // don't do anything if session is open
         if( currentState == FBSessionState.Open ||
             currentState == FBSessionState.OpenTokenExtended){
+                // don't need to do anything if session already open
                 return;
         }else if( currentState == FBSessionState.CreatedTokenLoaded){
-            //FBSession.openActiveSessionWithAllowLoginUI(false)
+            // open up the session and update things
             FBSession.openActiveSessionWithReadPermissions(FaceBookLoginViewController.getFacebookPermissions, allowLoginUI: false, completionHandler: { (session:FBSession!, state:FBSessionState, error:NSError!) -> Void in
                 
                 ServerInterface.sharedInstance.updateFacebookToken()

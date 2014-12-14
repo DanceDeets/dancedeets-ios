@@ -61,7 +61,8 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
                 let accessToken = tokenData.accessToken
                 
                 let dateFormatter:NSDateFormatter  = NSDateFormatter()
-                dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+                dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
+                dateFormatter.timeZone = NSTimeZone.systemTimeZone()
                 
                 var session = NSURLSession.sharedSession()
                 var urlString = "http://www.dancedeets.com/api/auth"
@@ -80,9 +81,8 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
                 
                 // post it up
                 let task = session.dataTaskWithRequest(urlRequest, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
-                    
-                    let dataString = NSString(data: data, encoding: NSUTF8StringEncoding)
-                    println(dataString)
+                    println("Posted up token")
+                    println(response)
                 })
                 task.resume()
             }
