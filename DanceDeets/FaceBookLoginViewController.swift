@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate {
+class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate,CLLocationManagerDelegate {
     
     let facebookPermission:[String] = ["public_profile", "email", "user_friends","rsvp_event","user_events"]
 
@@ -36,8 +36,11 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate {
         println("User Name: \(user.name)")
         var userEmail = user.objectForKey("email") as String
         println("User Email: \(userEmail)")
-        
+
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        
+        // update token on back
+        ServerInterface.sharedInstance.updateFacebookToken()
     }
 
 }

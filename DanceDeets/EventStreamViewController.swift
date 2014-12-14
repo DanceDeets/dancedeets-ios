@@ -438,6 +438,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         }else if( currentState == FBSessionState.CreatedTokenLoaded){
             FBSession.openActiveSessionWithAllowLoginUI(false)
             
+            // get the latest graph object id
             FBRequestConnection.startForMeWithCompletionHandler({ (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
                 if (error == nil){
                     if let resultDictionary:NSDictionary? = result as? NSDictionary{
@@ -445,6 +446,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     }
                 }
             })
+            
+            // update token on back
+            ServerInterface.sharedInstance.updateFacebookToken()
+            
         }else{
             navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
         }

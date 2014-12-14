@@ -375,6 +375,7 @@
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="MSj-eE-Wa9" secondAttribute="trailing" id="Faw-19-ljA"/>
                                     <constraint firstAttribute="height" constant="290" id="OTG-cM-x0H"/>
@@ -386,6 +387,9 @@
                                     <constraint firstItem="MSj-eE-Wa9" firstAttribute="leading" secondItem="5no-XM-ku6" secondAttribute="leading" id="nwk-eQ-FTT"/>
                                     <constraint firstItem="aIu-5i-zz6" firstAttribute="top" secondItem="5no-XM-ku6" secondAttribute="top" id="tff-Hb-nec"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Hsk-Du-pVm" appends="YES" id="wNR-sQ-4Tx"/>
+                                </connections>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Uu-Au-n76">
                                 <rect key="frame" x="50" y="32" width="500" height="21"/>
@@ -479,6 +483,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Tr-Mo-faF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Hsk-Du-pVm">
+                    <connections>
+                        <action selector="redirectViewTapped:" destination="2zh-F8-7u4" id="aRg-Zx-7bW"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1011" y="-1953"/>
         </scene>
@@ -739,13 +748,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoBackground" translatesAutoresizingMaskIntoConstraints="NO" id="omW-zL-uBD">
-                                <rect key="frame" x="100" y="20" width="400" height="300"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="UnY-hA-JGc"/>
-                                    <constraint firstAttribute="width" constant="400" id="UrC-aP-aFl"/>
-                                </constraints>
-                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance Deets" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3G-TZ-jeS">
+                                <rect key="frame" x="250" y="60" width="99" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="se0-3f-EIf" customClass="FBLoginView">
                                 <rect key="frame" x="160" y="480" width="280" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -757,23 +765,15 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="omW-zL-uBD" secondAttribute="centerX" id="27f-vx-Scc"/>
-                            <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="omW-zL-uBD" secondAttribute="bottom" id="6j3-h4-cJK"/>
                             <constraint firstAttribute="centerY" secondItem="se0-3f-EIf" secondAttribute="centerY" id="IYR-ev-Hfl"/>
-                            <constraint firstItem="omW-zL-uBD" firstAttribute="leading" secondItem="KvK-Th-Fj8" secondAttribute="leadingMargin" id="TiN-D2-iCp"/>
-                            <constraint firstItem="omW-zL-uBD" firstAttribute="top" secondItem="4yA-So-u3K" secondAttribute="bottom" id="dcN-UF-NIn"/>
+                            <constraint firstAttribute="centerX" secondItem="I3G-TZ-jeS" secondAttribute="centerX" id="ZHe-RI-Lfy"/>
+                            <constraint firstItem="I3G-TZ-jeS" firstAttribute="top" secondItem="4yA-So-u3K" secondAttribute="bottom" constant="40" id="akp-M5-Uma"/>
                             <constraint firstAttribute="centerX" secondItem="se0-3f-EIf" secondAttribute="centerX" id="re2-WZ-pTy"/>
-                            <constraint firstItem="omW-zL-uBD" firstAttribute="top" secondItem="4yA-So-u3K" secondAttribute="bottom" id="ucb-K7-TJZ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="omW-zL-uBD" secondAttribute="trailing" id="wdq-lu-gRQ"/>
                             <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="se0-3f-EIf" secondAttribute="bottom" constant="60" id="zcc-jM-MUS"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="TiN-D2-iCp"/>
-                                <exclude reference="dcN-UF-NIn"/>
-                                <exclude reference="wdq-lu-gRQ"/>
                                 <exclude reference="IYR-ev-Hfl"/>
-                                <exclude reference="6j3-h4-cJK"/>
                             </mask>
                         </variation>
                     </view>
@@ -810,7 +810,6 @@
         <image name="backIcon" width="11" height="19"/>
         <image name="deleteIcon" width="15" height="15"/>
         <image name="locationPin" width="16" height="24"/>
-        <image name="logoBackground" width="400" height="300"/>
         <image name="nearMeIcon" width="15" height="15"/>
         <image name="pinLogo" width="10" height="12"/>
         <image name="plus-50" width="16" height="16"/>

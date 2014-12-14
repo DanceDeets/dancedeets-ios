@@ -24,6 +24,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     var event:Event?
     var addCalendarAlert:UIAlertView?
     var facebookAlert:UIAlertView?
+    var directionAlert:UIAlertView?
     var gradientLayer:CAGradientLayer?
     var redirectGradientLayer:CAGradientLayer?
     var backgroundOverlay:UIView?
@@ -84,6 +85,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             eventCoverImageView.image = UIImage(named: "placeholderCover")
         }
         
+         directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
         addCalendarAlert = UIAlertView(title: "Want to add this event to your calendar?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
         facebookAlert = UIAlertView(title: "RSVP on Facebook?", message: "", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
         
@@ -153,6 +155,12 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     }
     
     // MARK: Action
+    @IBAction func redirectViewTapped(sender: AnyObject) {
+        if(event?.placemark != nil){
+            directionAlert?.show()
+        }
+    }
+    
     @IBAction func backButtonTapped(sender: AnyObject) {
         
         backgroundOverlay?.fadeOut(0.6, completion: { () -> Void in
@@ -233,6 +241,20 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
                         errorAlert.show()
                     }
                 })
+            }
+        }else if(alertView == directionAlert){
+            if(buttonIndex == 1){
+                let placemark = MKPlacemark(placemark: event!.placemark!)
+                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
+                
+                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
+                mapItem.openInMapsWithLaunchOptions(launchOptions)
+            }else if(buttonIndex == 2){
+                let placemark = MKPlacemark(placemark: event!.placemark!)
+                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
+                
+                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
+                mapItem.openInMapsWithLaunchOptions(launchOptions)
             }
         }
     }
