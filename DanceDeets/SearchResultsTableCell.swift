@@ -21,7 +21,7 @@ class SearchResultsTableCell: UITableViewCell {
         
         titleLabel = UILabel(frame: CGRectZero)
         titleLabel?.textColor = UIColor.whiteColor()
-        titleLabel?.font = UIFont(name: "BebasNeueBold", size: 26)
+        titleLabel?.font = FontFactory.eventHeadlineFont()
         titleLabel?.numberOfLines = 0
         titleLabel?.setTranslatesAutoresizingMaskIntoConstraints(false)
         contentView.addSubview(titleLabel!)
@@ -31,7 +31,7 @@ class SearchResultsTableCell: UITableViewCell {
         
         tagLabel = UILabel(frame: CGRectZero)
         tagLabel?.textColor = ColorFactory.lightBlue()
-        tagLabel?.font =  UIFont(name:"Montserrat-Bold", size:14)
+        tagLabel?.font =  FontFactory.eventDateFont()
         tagLabel?.numberOfLines = 0
         tagLabel?.setTranslatesAutoresizingMaskIntoConstraints(false)
         contentView.addSubview(tagLabel!)

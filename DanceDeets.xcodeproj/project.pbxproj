@@ -209,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
+				1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */,
 				1D19871D1A2A950A004156B2 /* Custom Views */,
 				1D8A063D19CDE5D4004607B6 /* Models */,
 				1DB901C619E099810018B434 /* Utilities */,
@@ -297,7 +298,6 @@
 				1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */,
 				1D0892501A27C97700A9EAC4 /* UserSettings.swift */,
 				1DAB49EF1A17E4D70002BBDD /* Utilities.swift */,
-				1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";

@@ -37,7 +37,6 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
     
-    
     // MARK: - CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         locationManager.stopUpdatingLocation()
@@ -65,26 +64,25 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
                 dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
                 
                 var session = NSURLSession.sharedSession()
-                var urlString = "http://www.dancedeets.com/api/author/"
+                var urlString = "http://www.dancedeets.com/api/auth"
                 let url = NSURL(string:urlString)
                 var urlRequest = NSMutableURLRequest(URL: url!)
                 urlRequest.HTTPMethod = "POST"
                 urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
                 
                 let params = NSMutableDictionary()
                 params["client"] = "ios"
                 params["location"] = geocodeString
                 params["access_token"] = accessToken
                 params["access_token_expires"] = dateFormatter.stringFromDate(expiration)
-                let postData = NSJSONSerialization.dataWithJSONObject(params, options: NSJSONWritingOptions(0), error: nil)
+                let postData = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: nil)
                 urlRequest.HTTPBody = postData
                 
                 // post it up
                 let task = session.dataTaskWithRequest(urlRequest, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
                     
-                    println(response)
-                    println(data)
+                    let dataString = NSString(data: data, encoding: NSUTF8StringEncoding)
+                    println(dataString)
                 })
                 task.resume()
             }
@@ -96,6 +94,5 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
         println("Couldn't update location")
        
     }
-    
     
 }

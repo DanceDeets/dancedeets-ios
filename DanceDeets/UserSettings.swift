@@ -8,45 +8,56 @@
 
 import Foundation
 
-
+/*
+ * Persisting basic user city search setting in user defaults 
+ */
 class UserSettings
 {
+    class var DEFAULT_CITIES : [String] {
+        return ["New York City","Los Angeles", "San Francisco"]
+    }
+    class var USER_CITIES_KEY : String{
+        return "userCities"
+    }
+    class var USER_SEARCH_CITY_KEY : String{
+        return "searchCity"
+    }
+    
     class func getUserCities()->[String]{
-        let userCities = NSUserDefaults.standardUserDefaults().arrayForKey("userCities")
+        let userCities = NSUserDefaults.standardUserDefaults().arrayForKey(UserSettings.USER_CITIES_KEY)
         if(userCities == nil){
             // default cities
-            let defaultCities = ["New York City","Los Angeles", "San Francisco"]
-            NSUserDefaults.standardUserDefaults().setObject(defaultCities, forKey: "userCities")
+            NSUserDefaults.standardUserDefaults().setObject(UserSettings.DEFAULT_CITIES, forKey: UserSettings.USER_CITIES_KEY)
             NSUserDefaults.standardUserDefaults().synchronize()
-            return defaultCities
+            return UserSettings.DEFAULT_CITIES
         }else{
             return userCities as [String]
         }
     }
     
     class func addUserCity(city:String){
-        var userCities = NSUserDefaults.standardUserDefaults().arrayForKey("userCities")
+        var userCities = NSUserDefaults.standardUserDefaults().arrayForKey(UserSettings.USER_CITIES_KEY)
         if(userCities != nil){
             userCities!.append(city)
-            NSUserDefaults.standardUserDefaults().setObject(userCities, forKey: "userCities")
+            NSUserDefaults.standardUserDefaults().setObject(userCities, forKey: UserSettings.USER_CITIES_KEY)
             NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
     
     class func deleteUserCity(city:String){
-        var userCities = NSUserDefaults.standardUserDefaults().arrayForKey("userCities") as [String]
+        var userCities = NSUserDefaults.standardUserDefaults().arrayForKey(UserSettings.USER_CITIES_KEY) as [String]
         if let index = find(userCities,city){
             userCities.removeAtIndex(index)
-            NSUserDefaults.standardUserDefaults().setObject(userCities, forKey: "userCities")
+            NSUserDefaults.standardUserDefaults().setObject(userCities, forKey: UserSettings.USER_CITIES_KEY)
             NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
     
     class func getUserCitySearch()->String{
-        let city = NSUserDefaults.standardUserDefaults().stringForKey("searchCity")
+        let city = NSUserDefaults.standardUserDefaults().stringForKey(UserSettings.USER_SEARCH_CITY_KEY)
         if(city == nil){
             // default cities
-            NSUserDefaults.standardUserDefaults().setObject("", forKey: "searchCity")
+            NSUserDefaults.standardUserDefaults().setObject("", forKey: UserSettings.USER_SEARCH_CITY_KEY)
             NSUserDefaults.standardUserDefaults().synchronize()
             return ""
         }else{
@@ -55,7 +66,7 @@ class UserSettings
     }
     
     class func setUserCitySearch(city:String){
-        NSUserDefaults.standardUserDefaults().setObject(city, forKey: "searchCity")
+        NSUserDefaults.standardUserDefaults().setObject(city, forKey: UserSettings.USER_SEARCH_CITY_KEY)
         NSUserDefaults.standardUserDefaults().synchronize()
     }
 }

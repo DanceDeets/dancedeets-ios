@@ -8,17 +8,19 @@
 
 import UIKit
 
-class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate,CLLocationManagerDelegate {
+class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate{
     
-    let facebookPermission:[String] = ["public_profile", "email", "user_friends","rsvp_event","user_events"]
-
     @IBOutlet weak var fbLoginView: FBLoginView!
     
     // MARK: UIViewController
     override func viewDidLoad() {
         self.fbLoginView.delegate = self
-        self.fbLoginView.readPermissions = facebookPermission
+        self.fbLoginView.readPermissions = FaceBookLoginViewController.getFacebookPermissions
         view.backgroundColor = UIColor.blackColor()
+    }
+    
+    class var getFacebookPermissions : [String]{
+        return ["public_profile", "email", "user_friends","rsvp_event","user_events"]
     }
 
     // MARK: FBLoginViewDelegate

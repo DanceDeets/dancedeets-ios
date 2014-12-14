@@ -33,6 +33,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var blurOverlay:UIView?
     var backgroundBlurOverlay:UIView?
     var selectedIndexPath:NSIndexPath?
+    var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     
     // MARK: Outlets
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -86,6 +87,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             self,
             selector: "handleKeyboardShown:",
             name: UIKeyboardDidShowNotification,
+            object: nil)
+        
+        // notification registration
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "handleKeyboardHidden:",
+            name: UIKeyboardDidHideNotification,
             object: nil)
     }
     
@@ -259,9 +267,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let event:Event = filteredEvents[indexPath.row]
+        
+        if let indexPath = find(events,event){
+            selectedIndexPath = NSIndexPath(forItem: indexPath, inSection: 0)
+        }
+        
         self.searchController?.active = false
         segueIntoEventDetail(event)
-   
     }
     
     // MARK: Private
@@ -362,15 +374,31 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 let frame:CGRect = keyboardFrame.CGRectValue()
                 let keyboardHeight = frame.height
                 let searchResultsController = self.searchController?.searchResultsController
-                searchResultsTableView?.superview?.addConstraint(NSLayoutConstraint(item: searchResultsTableView!, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: searchResultsTableView?.superview, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: -keyboardHeight))
+                if searchResultsTableViewBottomConstraint != nil{
+                    searchResultsTableView?.superview?.removeConstraint(searchResultsTableViewBottomConstraint!)
+                }
+                
+                searchResultsTableViewBottomConstraint = NSLayoutConstraint(item: searchResultsTableView!, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: searchResultsTableView?.superview, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: -keyboardHeight)
+                searchResultsTableView?.superview?.addConstraint(searchResultsTableViewBottomConstraint!)
+                
                 searchResultsTableView?.superview?.layoutIfNeeded()
             }
         }
     }
     
+    func handleKeyboardHidden(notification:NSNotification){
+        if searchResultsTableViewBottomConstraint != nil{
+            searchResultsTableView?.superview?.removeConstraint(searchResultsTableViewBottomConstraint!)
+        }
+        
+        searchResultsTableViewBottomConstraint = NSLayoutConstraint(item: searchResultsTableView!, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: searchResultsTableView?.superview, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: 0)
+        searchResultsTableView?.superview?.addConstraint(searchResultsTableViewBottomConstraint!)
+        searchResultsTableView?.superview?.layoutIfNeeded()
+    }
+    
+    
     func segueIntoEventDetail(event:Event){
         if event.detailsLoaded{
-           // performSegueWithIdentifier("eventDetailSegue", sender: event)
             
             // convert frame of the image
             let eventCell = eventCollectionView.cellForItemAtIndexPath(selectedIndexPath!) as EventCollectionViewCell
@@ -392,17 +420,16 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 dispatch_async(dispatch_get_main_queue(), {
                     self.eventCollectionView.userInteractionEnabled = true
                     if(error == nil){
-                       // self.performSegueWithIdentifier("eventDetailSegue", sender: event)
                         
                         // convert frame of the image
                         let eventCell = self.eventCollectionView.cellForItemAtIndexPath(self.selectedIndexPath!) as EventCollectionViewCell
                         let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
-                        
+
                         let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as? EventDetailViewController
                         destination?.event = event
                         destination?.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
                         destination?.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-                        
+
                         self.navigationController?.pushViewController(destination!, animated: false)
                         
                         
@@ -436,19 +463,20 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             currentState == FBSessionState.OpenTokenExtended){
                 return;
         }else if( currentState == FBSessionState.CreatedTokenLoaded){
-            FBSession.openActiveSessionWithAllowLoginUI(false)
-            
-            // get the latest graph object id
-            FBRequestConnection.startForMeWithCompletionHandler({ (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
-                if (error == nil){
-                    if let resultDictionary:NSDictionary? = result as? NSDictionary{
-                        AppDelegate.sharedInstance().fbGraphUserObjectId = resultDictionary!["id"] as? String
+            //FBSession.openActiveSessionWithAllowLoginUI(false)
+            FBSession.openActiveSessionWithReadPermissions(FaceBookLoginViewController.getFacebookPermissions, allowLoginUI: false, completionHandler: { (session:FBSession!, state:FBSessionState, error:NSError!) -> Void in
+                
+                ServerInterface.sharedInstance.updateFacebookToken()
+                
+                // get the latest graph object id
+                FBRequestConnection.startForMeWithCompletionHandler({ (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
+                    if (error == nil){
+                        if let resultDictionary:NSDictionary? = result as? NSDictionary{
+                            AppDelegate.sharedInstance().fbGraphUserObjectId = resultDictionary!["id"] as? String
+                        }
                     }
-                }
+                })
             })
-            
-            // update token on back
-            ServerInterface.sharedInstance.updateFacebookToken()
             
         }else{
             navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
