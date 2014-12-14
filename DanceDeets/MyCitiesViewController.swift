@@ -41,6 +41,7 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad(){
         super.viewDidLoad()
         
+        searchIcon.tintColor = ColorFactory.white50()
         myCitiesTableView.delegate = self
         myCitiesTableView.dataSource = self
         myCitiesTableView.separatorColor = ColorFactory.tableSeparatorColor()
@@ -129,30 +130,6 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 44;
     }
-    
-    /*
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if(mode == MyCitiesViewController.Mode.ViewMode){
-            if(indexPath.row != 0){
-                return true
-            }else{
-                return false
-            }
-        }else{
-            return false
-        }
-    }
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.Delete
-    }
-    
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        let cityToDelete = cities[indexPath.row - 1]
-        UserSettings.deleteUserCity(cityToDelete)
-        cities = UserSettings.getUserCities()
-        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-    }
-    */
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(mode == MyCitiesViewController.Mode.ViewMode){
