@@ -24,7 +24,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     var event:Event?
     var addCalendarAlert:UIAlertView?
     var facebookAlert:UIAlertView?
-    var directionAlert:UIAlertView?
     var gradientLayer:CAGradientLayer?
     var redirectGradientLayer:CAGradientLayer?
     var backgroundOverlay:UIView?
@@ -47,11 +46,17 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         super.viewDidLoad()
         
         redirectView.redirectedView = detailsTableView
-        mapView.userInteractionEnabled = false
         
-        eventTitleLabel.textColor = UIColor.whiteColor()
-        eventTitleLabel.font = FontFactory.navigationTitleFont()
-        eventTitleLabel.text = event!.title!.uppercaseString
+        
+        title = event!.title!.uppercaseString
+        let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
+        navigationItem.rightBarButtonItem = shareButton
+        
+        let titleOptions:NSMutableDictionary = NSMutableDictionary()
+        titleOptions[NSForegroundColorAttributeName] = UIColor.whiteColor()
+        titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
+        navigationController?.navigationBar.titleTextAttributes = titleOptions
+        
         
         eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET
         eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
@@ -85,10 +90,10 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             eventCoverImageView.image = UIImage(named: "placeholderCover")
         }
         
-         directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
         addCalendarAlert = UIAlertView(title: "Want to add this event to your calendar?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
         facebookAlert = UIAlertView(title: "RSVP on Facebook?", message: "", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
         
+        /*
         // this sets up a gradient mask on the table view layer, which gives the fade out effect
         // when you scroll 
         gradientLayer = CAGradientLayer()
@@ -107,6 +112,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         redirectGradientLayer?.anchorPoint = CGPoint.zeroPoint
         redirectGradientLayer?.position = CGPointMake(0, -10)
        // redirectView.layer.mask = redirectGradientLayer
+*/
         
         self.view.layoutIfNeeded()
         
@@ -115,6 +121,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress!, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
         SCROLL_LIMIT = EVENT_TIME_CELL_HEIGHT + displayAddressHeight + 15
         
+        /*
         
         // setup map if possible
         if(event?.geoloc != nil){
@@ -125,6 +132,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 1500,1500)
              mapView.setRegion(region,animated:false)
         }
+*/
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -137,17 +145,40 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        backgroundOverlay?.fadeIn(0.6,nil)
         
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
-            self.eventCoverImageViewLeftConstraint.constant = 0
-            self.eventCoverImageViewRightConstraint.constant = 0
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        backgroundOverlay?.fadeIn(0.6,nil)
+       
+        UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.eventCoverImageViewLeftConstraint.constant = -100
+            self.eventCoverImageViewRightConstraint.constant = -100
+            self.eventCoverImageViewTopConstraint.constant = 20
+            
+            self.eventCoverImageViewHeightConstraint.constant =  self.COVER_IMAGE_HEIGHT + 175
             self.view.layoutIfNeeded()
-        })
+            
+            }) { (bool:Bool) -> Void in
+                
+                        self.navigationController?.setNavigationBarHidden(false, animated: true)
+                
+                UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                    self.eventCoverImageViewLeftConstraint.constant = 0
+                    self.eventCoverImageViewRightConstraint.constant = 0
+                    self.eventCoverImageViewTopConstraint.constant = 64
+                    self.eventCoverImageViewHeightConstraint.constant =  self.COVER_IMAGE_HEIGHT
+                    self.view.layoutIfNeeded()
+                    
+                    }) { (bool:Bool) -> Void in
+                        
+                        self.eventCoverImageView.hidden = true
+                }
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -157,7 +188,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     // MARK: Action
     @IBAction func redirectViewTapped(sender: AnyObject) {
         if(event?.placemark != nil){
-            directionAlert?.show()
         }
     }
     
@@ -242,26 +272,50 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
                     }
                 })
             }
-        }else if(alertView == directionAlert){
-            if(buttonIndex == 1){
-                let placemark = MKPlacemark(placemark: event!.placemark!)
-                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                
-                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
-                mapItem.openInMapsWithLaunchOptions(launchOptions)
-            }else if(buttonIndex == 2){
-                let placemark = MKPlacemark(placemark: event!.placemark!)
-                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                
-                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
-                mapItem.openInMapsWithLaunchOptions(launchOptions)
-            }
         }
     }
     
     
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if(indexPath.row == 0){
+            let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) as UITableViewCell
+            cell.backgroundColor = UIColor.clearColor()
+            return cell
+        }
+        else if(indexPath.row == 1){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventImageCell", forIndexPath: indexPath) as EventDetailImageCell
+            cell.updateViewForEvent(event!)
+            return cell
+        }else if(indexPath.row == 2){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as EventDetailCoverCell
+            cell.updateViewForEvent(event!)
+            return cell
+        }else if(indexPath.row == 3){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventTimeCell", forIndexPath: indexPath) as EventDetailTimeCell
+            cell.updateViewForEvent(event!)
+            return cell
+        }else if(indexPath.row == 4){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as EventDetailLocationCell
+            cell.updateViewForEvent(event!)
+            return cell
+        }else if(indexPath.row == 5){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as EventDetailDescriptionCell
+            cell.updateViewForEvent(event!)
+            return cell
+        }else if(indexPath.row == 6){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventMapCell", forIndexPath: indexPath) as EventDetailMapCell
+            cell.updateViewForEvent(event!)
+            return cell
+            
+        }
+        else{
+            let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "default")
+            return cell
+        }
+        
+        
+        /*
         if(indexPath.row == 0){
             let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as EventDetailCoverCell
             cell.updateViewForEvent(event!)
@@ -296,6 +350,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "default")
             return cell
         }
+*/
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -309,9 +364,9 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
-        var displayAddressHeight:CGFloat = 0.0
-        displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress!, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
+
         
+        /*
         if(indexPath.row == 0){
             return 100;
         }else if(indexPath.row == 1){
@@ -336,6 +391,45 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         }else{
             return CGFloat.min
         }
+*/
+        if(indexPath.row == 0){
+            // under nav bar + status bar
+            return navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.size.height
+        }
+        else if(indexPath.row == 1){
+            // cover image
+            return COVER_IMAGE_HEIGHT
+        }else if(indexPath.row == 2){
+            // title
+            let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
+            
+            let height = Utilities.heightRequiredForText(event!.title!,
+                lineHeight: FontFactory.eventHeadlineLineHeight(),
+                font: FontFactory.eventHeadlineFont(),
+                width:width)
+            return height + 20
+        }else if(indexPath.row == 3){
+            // time
+            return EVENT_TIME_CELL_HEIGHT
+        }else if(indexPath.row == 4){
+            // display address
+            var displayAddressHeight:CGFloat = 0.0
+            displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress!, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
+            return displayAddressHeight
+        }else if(indexPath.row == 5){
+            //description
+            let height = Utilities.heightRequiredForText(event!.shortDescription!,
+                lineHeight: FontFactory.eventDescriptionLineHeight(),
+                font: FontFactory.eventDescriptionFont(),
+                width:width)
+            return height + 20
+        }else if(indexPath.row == 6){
+            return 300;
+            
+        }
+        else{
+            return CGFloat.min
+        }
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -353,6 +447,8 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
        
         let yOff = scrollView.contentOffset.y
         println(yOff)
+        
+        /*
  
         if(yOff < 0){
             eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT - (yOff)
@@ -395,6 +491,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             eventCoverImageView.alpha = 0
             mapView.alpha = 1
         }
+*/
     }
     
 }

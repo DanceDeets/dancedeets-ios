@@ -40,6 +40,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         layoutIfNeeded()
         
         eventTitleLabel.text = event.title
+        eventTitleLabel.backgroundColor = UIColor.redColor()
         eventTimeLabel.text = event.displayTime
         eventVenueLabel.text = event.venue
         

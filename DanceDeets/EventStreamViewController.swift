@@ -200,6 +200,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         navigationTitle.textColor = UIColor.whiteColor()
         navigationTitle.font = FontFactory.navigationTitleFont()
         navigationTitle.text = ""
+        navigationItem.title = " "
         
         eventCollectionView.layoutIfNeeded()
         let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout

@@ -17,6 +17,9 @@ class FontFactory {
     class func eventHeadlineFont()->UIFont{
         return UIFont(name:"Interstate-ExtraLight",size:22)!
     }
+    class func eventHeadlineLineHeight()->CGFloat{
+        return 24.0
+    }
     class func eventDateFont()->UIFont{
         return UIFont(name:"Interstate-BoldCondensed",size:15)!
     }

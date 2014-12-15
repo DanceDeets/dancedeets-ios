@@ -13,7 +13,7 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
     @IBOutlet weak var addressLine2: UILabel!
     @IBOutlet weak var addressLine1: UILabel!
     @IBOutlet weak var venueLabel: UILabel!
-    
+    @IBOutlet weak var pinIcon: UIImageView!
     @IBOutlet weak var getDirectionButton: UIButton!
     
     //@IBOutlet weak var mapView: MKMapView!
@@ -24,13 +24,12 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
     override func awakeFromNib() {
         super.awakeFromNib()
         self.backgroundColor = UIColor.clearColor()
-      //  self.backgroundColor = UIColor.redColor()
         selectionStyle = UITableViewCellSelectionStyle.None
         
+        pinIcon.tintColor = UIColor.whiteColor()
         venueLabel.numberOfLines = 0
-      //  venueLabel.backgroundColor = UIColor.greenColor()
-       // let mapTapped = UITapGestureRecognizer(target: self, action: "mapTapped")
-        //mapView.addGestureRecognizer(mapTapped)
+        
+        backgroundColor = UIColor.greenColor()
         
         directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
     }

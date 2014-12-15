@@ -19,12 +19,21 @@ class EventDetailCoverCell: UITableViewCell {
         
         titleLabel.font = FontFactory.eventHeadlineFont()
         titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.numberOfLines = 3
+        titleLabel.numberOfLines = 0
         titleLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
     }
     
     func updateViewForEvent(event:Event){
-        titleLabel.text = event.title
+        
+        if let title = event.title{
+            var attributedTitle = NSMutableAttributedString(string: title)
+            attributedTitle.setFont(FontFactory.eventHeadlineFont())
+            attributedTitle.setColor(UIColor.whiteColor())
+            attributedTitle.setLineHeight(FontFactory.eventHeadlineLineHeight())
+            titleLabel.attributedText = attributedTitle
+        }
+        titleLabel.backgroundColor = UIColor.redColor()
+        
         contentView.layoutIfNeeded()
     }
 }

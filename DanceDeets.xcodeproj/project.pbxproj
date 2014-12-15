@@ -49,6 +49,8 @@
 		1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */; };
 		1DAB49FA1A182AC90002BBDD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DAB49F91A182AC90002BBDD /* QuartzCore.framework */; };
 		1DAE2C1F1A3D063300F03AD1 /* ServerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */; };
+		1DAE2C211A3E975E00F03AD1 /* EventDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAE2C201A3E975E00F03AD1 /* EventDetailImageCell.swift */; };
+		1DAE2C231A3EB08B00F03AD1 /* EventDetailMapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAE2C221A3EB08B00F03AD1 /* EventDetailMapCell.swift */; };
 		1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C719E0999E0018B434 /* FontFactory.swift */; };
 		1DE70DFA1A0FD55D0044C77C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DE70DF91A0FD55D0044C77C /* FacebookSDK.framework */; };
 		1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */; };
@@ -115,6 +117,8 @@
 		1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFactory.swift; sourceTree = "<group>"; };
 		1DAB49F91A182AC90002BBDD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerInterface.swift; sourceTree = "<group>"; };
+		1DAE2C201A3E975E00F03AD1 /* EventDetailImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailImageCell.swift; sourceTree = "<group>"; };
+		1DAE2C221A3EB08B00F03AD1 /* EventDetailMapCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailMapCell.swift; sourceTree = "<group>"; };
 		1DB901C719E0999E0018B434 /* FontFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontFactory.swift; sourceTree = "<group>"; };
 		1DE70DF91A0FD55D0044C77C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -274,16 +278,18 @@
 		1D8A064119CE0CA6004607B6 /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
-				1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */,
-				1D89F6A91A0ECDC100D3E4BE /* EventDetailCoverCell.swift */,
-				1DAB49ED1A17E31E0002BBDD /* EventDetailDescriptionCell.swift */,
-				1DAB49F31A18020D0002BBDD /* EventDetailTimeCell.swift */,
-				1DAB49F51A1807F40002BBDD /* EventDetailLocationCell.swift */,
-				1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */,
+				1D0892521A28406300A9EAC4 /* AutosuggestCityCell.swift */,
 				1D08924C1A27BF8700A9EAC4 /* CitySearchCell.swift */,
 				1D08924E1A27C49D00A9EAC4 /* CurrentLocationCell.swift */,
-				1D0892521A28406300A9EAC4 /* AutosuggestCityCell.swift */,
 				1D22A4581A2EC5D200C4BC03 /* EventDetailActionCell.swift */,
+				1D89F6A91A0ECDC100D3E4BE /* EventDetailCoverCell.swift */,
+				1DAB49ED1A17E31E0002BBDD /* EventDetailDescriptionCell.swift */,
+				1DAE2C201A3E975E00F03AD1 /* EventDetailImageCell.swift */,
+				1DAB49F51A1807F40002BBDD /* EventDetailLocationCell.swift */,
+				1DAB49F31A18020D0002BBDD /* EventDetailTimeCell.swift */,
+				1D8A064219CE0CB8004607B6 /* EventTableViewCell.swift */,
+				1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */,
+				1DAE2C221A3EB08B00F03AD1 /* EventDetailMapCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -423,6 +429,7 @@
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */,
 				1D0892531A28406300A9EAC4 /* AutosuggestCityCell.swift in Sources */,
+				1DAE2C211A3E975E00F03AD1 /* EventDetailImageCell.swift in Sources */,
 				1D0892491A278DCB00A9EAC4 /* GooglePlaceAPI.swift in Sources */,
 				1D08924B1A279DFF00A9EAC4 /* MyCitiesViewController.swift in Sources */,
 				1D4343471A1DB06D00E0B0A3 /* SearchResultsTableCell.swift in Sources */,
@@ -432,6 +439,7 @@
 				1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */,
 				1DAB49EE1A17E31E0002BBDD /* EventDetailDescriptionCell.swift in Sources */,
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
+				1DAE2C231A3EB08B00F03AD1 /* EventDetailMapCell.swift in Sources */,
 				1DAB49F61A1807F40002BBDD /* EventDetailLocationCell.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,
 				1D19871F1A2A9528004156B2 /* RedirectView.swift in Sources */,
