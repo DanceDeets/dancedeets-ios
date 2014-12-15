@@ -300,9 +300,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 if(error != nil){
                     let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
                     errorAlert.show()
+                    self.events = []
+                    self.eventCollectionView.reloadData()
+                    
                 }else if(events.count == 0){
                     let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                     noEventAlert.show()
+                    self.events = []
+                    self.eventCollectionView.reloadData()
                 }else{
                     self.events = events
                     self.eventCollectionView.reloadData()

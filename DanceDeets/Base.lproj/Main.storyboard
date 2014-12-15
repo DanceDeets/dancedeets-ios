@@ -612,7 +612,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d0K-ga-aIs" id="22w-fP-KjE">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinLogo" translatesAutoresizingMaskIntoConstraints="NO" id="oCt-8R-5wu">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="oCt-8R-5wu">
                                                     <rect key="frame" x="15" y="16" width="10" height="12"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2a0-DK-eli">
@@ -657,7 +657,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M7r-ne-NUC" id="zju-MA-XFB">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinLogo" translatesAutoresizingMaskIntoConstraints="NO" id="xpM-Po-zcY">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="xpM-Po-zcY">
                                                     <rect key="frame" x="15" y="16" width="10" height="12"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autosuggested City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6Q-8i-Ulb">
@@ -816,7 +816,7 @@
         <image name="backIcon" width="11" height="19"/>
         <image name="cityVector" width="30" height="23"/>
         <image name="currentLocationVector" width="15" height="15"/>
-        <image name="pinLogo" width="10" height="12"/>
+        <image name="pinIcon" width="10" height="12"/>
         <image name="plusIcon" width="15" height="15"/>
         <image name="removeIcon" width="15" height="15"/>
         <image name="searchIcon" width="20" height="20"/>
