@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import EventKit
 import QuartzCore
 import MapKit
 
@@ -22,8 +21,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     var SCROLL_LIMIT:CGFloat = 0.0
     
     var event:Event?
-    var addCalendarAlert:UIAlertView?
-    var facebookAlert:UIAlertView?
     var gradientLayer:CAGradientLayer?
     var redirectGradientLayer:CAGradientLayer?
     var backgroundOverlay:UIView?
@@ -90,8 +87,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             eventCoverImageView.image = UIImage(named: "placeholderCover")
         }
         
-        addCalendarAlert = UIAlertView(title: "Want to add this event to your calendar?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
-        facebookAlert = UIAlertView(title: "RSVP on Facebook?", message: "", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
+     
         
         /*
         // this sets up a gradient mask on the table view layer, which gives the fade out effect
@@ -205,76 +201,12 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         })
     }
     
-    @IBAction func calendarButtonTapped(sender: AnyObject) {
-        addCalendarAlert?.show()
-    }
-    @IBAction func facebookButtonTapped(sender: AnyObject) {
-        facebookAlert?.show()
-    }
-    
     @IBAction func shareButtonTapped(sender: AnyObject) {
         if (event != nil){
             let activityViewController = UIActivityViewController(activityItems: event!.createSharingItems(), applicationActivities: nil)
             self.presentViewController(activityViewController, animated: true, completion: nil)
         }
     }
-    
-    // MARK: UIAlertViewDelegate
-    func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
-        if(alertView == addCalendarAlert)
-        {
-            if (buttonIndex == 1){
-                var store = EKEventStore()
-                store.requestAccessToEntityType(EKEntityTypeEvent) { (granted:Bool, error:NSError!) -> Void in
-                    
-                    if(!granted && error != nil){
-                        return
-                    }
-                    
-                    var newEvent:EKEvent = EKEvent(eventStore: store)
-                    newEvent.title = self.event?.title
-                    newEvent.startDate = self.event?.startTime
-                    if let endTime = self.event?.endTime{
-                        newEvent.endDate = endTime
-                    }else{
-                        // no end time parsed out, default 2 hours
-                        newEvent.endDate = newEvent.startDate.dateByAddingTimeInterval(2*60*60)
-                    }
-                    newEvent.calendar = store.defaultCalendarForNewEvents
-                    var saveError:NSError?
-                    store.saveEvent(newEvent, span: EKSpanThisEvent, commit: true, error: &saveError)
-                    self.event?.savedEventId = newEvent.eventIdentifier
-                    
-                    if(saveError == nil){
-                        var message:String?
-                        if let title = self.event?.title{
-                            message = "Added " + title + " to your calendar!"
-                        }else{
-                            message = "Added to your calendar!"
-                        }
-                        dispatch_async(dispatch_get_main_queue(), {
-                            let successAlert:UIAlertView = UIAlertView(title: "Dope", message: message, delegate: nil, cancelButtonTitle: "OK")
-                            successAlert.show()
-                        })
-                    }
-                }
-            }
-        }else if(alertView == facebookAlert){
-            if(buttonIndex == 1){
-                let graphPath = "/" + event!.identifier! + "/attending"
-                FBRequestConnection.startWithGraphPath(graphPath, parameters: nil, HTTPMethod: "POST", completionHandler: { (conn:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
-                    if(error == nil){
-                        let successAlert = UIAlertView(title: "RSVP'd on Facebook!", message: "",delegate:nil, cancelButtonTitle: "OK")
-                        successAlert.show()
-                    }else{
-                        let errorAlert = UIAlertView(title: "Couldn't RSVP right now, try again later.", message: "",delegate:nil, cancelButtonTitle: "OK")
-                        errorAlert.show()
-                    }
-                })
-            }
-        }
-    }
-    
     
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -308,6 +240,10 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             cell.updateViewForEvent(event!)
             return cell
             
+        }else if(indexPath.row == 7){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventActionCell", forIndexPath: indexPath) as EventDetailActionCell
+            cell.updateViewForEvent(event!)
+            return cell
         }
         else{
             let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "default")
@@ -354,7 +290,7 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return 8
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -425,7 +361,8 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
             return height + 20
         }else if(indexPath.row == 6){
             return 300;
-            
+        }else if(indexPath.row == 7){
+            return 55;
         }
         else{
             return CGFloat.min
