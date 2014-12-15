@@ -10,6 +10,7 @@ import UIKit
 
 class AutosuggestCityCell: UITableViewCell {
 
+    @IBOutlet weak var addLogoButton: UIButton!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var pinLogo: UIImageView!
     override func awakeFromNib() {

@@ -14,7 +14,7 @@ import Foundation
 class UserSettings
 {
     class var DEFAULT_CITIES : [String] {
-        return ["New York City","Los Angeles", "San Francisco"]
+        return ["New York","Los Angeles", "San Francisco"]
     }
     class var USER_CITIES_KEY : String{
         return "userCities"
@@ -36,11 +36,14 @@ class UserSettings
     }
     
     class func addUserCity(city:String){
-        var userCities = NSUserDefaults.standardUserDefaults().arrayForKey(UserSettings.USER_CITIES_KEY)
-        if(userCities != nil){
-            userCities!.append(city)
-            NSUserDefaults.standardUserDefaults().setObject(userCities, forKey: UserSettings.USER_CITIES_KEY)
-            NSUserDefaults.standardUserDefaults().synchronize()
+        var userCities = NSUserDefaults.standardUserDefaults().arrayForKey(UserSettings.USER_CITIES_KEY) as? [String]
+        if(userCities != nil ){
+            let index = find(userCities!,city)
+            if(index == nil){
+                userCities!.append(city)
+                NSUserDefaults.standardUserDefaults().setObject(userCities, forKey: UserSettings.USER_CITIES_KEY)
+                NSUserDefaults.standardUserDefaults().synchronize()
+            }
         }
     }
     

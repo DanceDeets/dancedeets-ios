@@ -688,6 +688,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="addLogoButton" destination="naB-Pa-gjs" id="jNs-hu-RgR"/>
                                             <outlet property="cityLabel" destination="n6Q-8i-Ulb" id="BaT-oy-Ox0"/>
                                             <outlet property="pinLogo" destination="xpM-Po-zcY" id="UDx-VV-wpH"/>
                                         </connections>

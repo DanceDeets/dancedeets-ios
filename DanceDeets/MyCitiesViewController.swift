@@ -115,6 +115,18 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as AutosuggestCityCell
             cell.cityLabel.text = autosuggestedCities[indexPath.row]
+            
+            let userCities = UserSettings.getUserCities()
+            if(find(userCities,autosuggestedCities[indexPath.row]) != nil){
+                let checkImage = UIImage(named: "checkIcon")
+                cell.addLogoButton.setImage(checkImage, forState: UIControlState.Normal)
+                cell.addLogoButton.tintColor = UIColor.whiteColor()
+            }else{
+                let checkImage = UIImage(named: "addIcon")
+                cell.addLogoButton.setImage(checkImage, forState: UIControlState.Normal)
+                cell.addLogoButton.tintColor = ColorFactory.white50()
+            }
+            
             return cell
         }
     }
@@ -140,6 +152,8 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
                 UserSettings.setUserCitySearch(newCity)
             }
             AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
+            presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+            })
         }else if(mode == MyCitiesViewController.Mode.EntryMode){
             let newSearchCity = autosuggestedCities[indexPath.row]
             UserSettings.addUserCity(newSearchCity)

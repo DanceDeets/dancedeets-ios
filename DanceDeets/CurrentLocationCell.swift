@@ -19,6 +19,7 @@ class CurrentLocationCell: UITableViewCell {
         var bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
         selectedBackgroundView = bgColorView
+        nearMeImageView.tintColor = ColorFactory.white50()
         
         currentLocationLabel.font = FontFactory.standardTableLabelFont()
         currentLocationLabel.textColor = UIColor.whiteColor()
