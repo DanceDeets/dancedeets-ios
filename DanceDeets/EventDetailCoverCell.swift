@@ -32,7 +32,6 @@ class EventDetailCoverCell: UITableViewCell {
             attributedTitle.setLineHeight(FontFactory.eventHeadlineLineHeight())
             titleLabel.attributedText = attributedTitle
         }
-        titleLabel.backgroundColor = UIColor.redColor()
         
         contentView.layoutIfNeeded()
     }

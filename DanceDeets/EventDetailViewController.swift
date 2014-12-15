@@ -10,14 +10,14 @@ import UIKit
 import QuartzCore
 import MapKit
 
-class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate {
+class EventDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
     let DETAILS_TABLE_VIEW_TOP_MARGIN:CGFloat = 70.0
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
     var COVER_IMAGE_TOP_OFFSET:CGFloat = 0.0
     var COVER_IMAGE_HEIGHT:CGFloat = 0.0
     let EVENT_TITLE_CELL_HEIGHT:CGFloat = 100.0
-    let EVENT_TIME_CELL_HEIGHT:CGFloat = 30.5
+    let EVENT_TIME_CELL_HEIGHT:CGFloat = 24
     var SCROLL_LIMIT:CGFloat = 0.0
     
     var event:Event?
@@ -25,8 +25,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     var redirectGradientLayer:CAGradientLayer?
     var backgroundOverlay:UIView?
     
-    @IBOutlet weak var redirectView: RedirectView!
-    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var backgroundView: UIView!
@@ -38,12 +36,10 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
     
     @IBOutlet weak var eventCoverImageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewLeftConstraint: NSLayoutConstraint!
+    
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        redirectView.redirectedView = detailsTableView
-        
         
         title = event!.title!.uppercaseString
         let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
@@ -68,8 +64,8 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         
         // to enable default pop gesture recognizer
         // it seems to turns off when you hide the nav bar
-        navigationController?.interactivePopGestureRecognizer.enabled = true
-        navigationController?.interactivePopGestureRecognizer.delegate = self
+       // navigationController?.interactivePopGestureRecognizer.enabled = true
+      //  navigationController?.interactivePopGestureRecognizer.delegate = self
         
         // background image
         if (event!.eventImageUrl != nil){
@@ -86,49 +82,6 @@ class EventDetailViewController: UIViewController,UIGestureRecognizerDelegate,UI
         }else{
             eventCoverImageView.image = UIImage(named: "placeholderCover")
         }
-        
-     
-        
-        /*
-        // this sets up a gradient mask on the table view layer, which gives the fade out effect
-        // when you scroll 
-        gradientLayer = CAGradientLayer()
-        let outerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor
-        let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        gradientLayer?.colors = [outerColor,innerColor,innerColor]
-        gradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.01), NSNumber(float: 1.0)]
-        gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
-        gradientLayer?.anchorPoint = CGPoint.zeroPoint
-        self.detailsTableView.layer.mask = gradientLayer
-        
-        redirectGradientLayer = CAGradientLayer()
-        redirectGradientLayer?.colors = [outerColor,innerColor,innerColor]
-        redirectGradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.01), NSNumber(float: 1.0)]
-        redirectGradientLayer?.bounds = view.bounds
-        redirectGradientLayer?.anchorPoint = CGPoint.zeroPoint
-        redirectGradientLayer?.position = CGPointMake(0, -10)
-       // redirectView.layer.mask = redirectGradientLayer
-*/
-        
-        self.view.layoutIfNeeded()
-        
-        let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
-        var displayAddressHeight:CGFloat = 0.0
-        displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress!, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
-        SCROLL_LIMIT = EVENT_TIME_CELL_HEIGHT + displayAddressHeight + 15
-        
-        /*
-        
-        // setup map if possible
-        if(event?.geoloc != nil){
-            let annotation:MKPointAnnotation = MKPointAnnotation()
-            annotation.setCoordinate(event!.geoloc!.coordinate)
-             mapView.addAnnotation(annotation)
-             mapView.centerCoordinate = annotation.coordinate
-            let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 1500,1500)
-             mapView.setRegion(region,animated:false)
-        }
-*/
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {

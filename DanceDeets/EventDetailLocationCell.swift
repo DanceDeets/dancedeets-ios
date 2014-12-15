@@ -29,8 +29,6 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
         pinIcon.tintColor = UIColor.whiteColor()
         venueLabel.numberOfLines = 0
         
-        backgroundColor = UIColor.greenColor()
-        
         directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
     }
     

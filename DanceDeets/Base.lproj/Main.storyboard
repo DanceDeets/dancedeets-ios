@@ -530,9 +530,6 @@
                                     <constraint firstAttribute="trailing" secondItem="aIu-5i-zz6" secondAttribute="trailing" id="loK-ta-CeF"/>
                                     <constraint firstItem="aIu-5i-zz6" firstAttribute="top" secondItem="5no-XM-ku6" secondAttribute="top" id="tff-Hb-nec"/>
                                 </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="Hsk-Du-pVm" appends="YES" id="wNR-sQ-4Tx"/>
-                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -565,7 +562,6 @@
                         <outlet property="eventCoverImageViewLeftConstraint" destination="FRk-MY-kiV" id="ugx-Nu-Qbc"/>
                         <outlet property="eventCoverImageViewRightConstraint" destination="e8t-vY-LQ7" id="0xE-VM-VM5"/>
                         <outlet property="eventCoverImageViewTopConstraint" destination="6V6-R9-d55" id="f5y-eX-Pkv"/>
-                        <outlet property="redirectView" destination="5no-XM-ku6" id="faH-Ir-RSV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Tr-Mo-faF" userLabel="First Responder" sceneMemberID="firstResponder"/>
