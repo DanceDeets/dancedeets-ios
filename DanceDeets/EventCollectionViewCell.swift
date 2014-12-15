@@ -18,8 +18,14 @@ class EventCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var eventCoverImageActivityIndicator: UIActivityIndicatorView!
     var currentEvent:Event?
     
+    @IBOutlet weak var pinIconImageView: UIImageView!
+    @IBOutlet weak var clockIconImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        clockIconImageView.tintColor = ColorFactory.lightBlue()
+        pinIconImageView.tintColor = UIColor.whiteColor()
         
         eventTitleLabel.font = FontFactory.eventHeadlineFont()
         eventTitleLabel.textColor = UIColor.whiteColor()

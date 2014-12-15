@@ -93,7 +93,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UqS-83-RSC">
-                                                    <rect key="frame" x="15" y="70" width="570" height="21"/>
+                                                    <rect key="frame" x="15" y="69" width="570" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -108,14 +108,28 @@
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="c3Z-Kc-ZMs">
                                                     <rect key="frame" x="290" y="235" width="20" height="20"/>
                                                 </activityIndicatorView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="vSu-Xp-DK7">
+                                                    <rect key="frame" x="15" y="405" width="14" height="14"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="14" id="FWd-2T-jLC"/>
+                                                        <constraint firstAttribute="width" constant="14" id="hAB-OE-ecF"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTb-eV-ET0">
-                                                    <rect key="frame" x="15" y="402" width="570" height="21"/>
+                                                    <rect key="frame" x="38" y="402" width="95" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="G83-KJ-tlA">
+                                                    <rect key="frame" x="17" y="432" width="10" height="12"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="10" id="dHW-Mf-TVD"/>
+                                                        <constraint firstAttribute="height" constant="12" id="iMj-yL-ccQ"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fT-c4-V0N">
-                                                    <rect key="frame" x="15" y="428" width="570" height="21"/>
+                                                    <rect key="frame" x="38" y="428" width="95" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -127,33 +141,42 @@
                                         <constraints>
                                             <constraint firstItem="gTb-eV-ET0" firstAttribute="trailing" secondItem="UqS-83-RSC" secondAttribute="trailing" id="0BX-2d-cc5"/>
                                             <constraint firstItem="c3Z-Kc-ZMs" firstAttribute="centerY" secondItem="gNx-2E-d4m" secondAttribute="centerY" id="1YN-87-40M"/>
+                                            <constraint firstItem="gTb-eV-ET0" firstAttribute="leading" secondItem="vSu-Xp-DK7" secondAttribute="trailing" constant="9" id="2Qr-cV-Jex"/>
                                             <constraint firstItem="c3Z-Kc-ZMs" firstAttribute="centerX" secondItem="gNx-2E-d4m" secondAttribute="centerX" id="7Zv-82-1xM"/>
                                             <constraint firstItem="8fT-c4-V0N" firstAttribute="trailing" secondItem="gTb-eV-ET0" secondAttribute="trailing" id="8MK-xK-CQF"/>
                                             <constraint firstItem="UqS-83-RSC" firstAttribute="trailing" secondItem="gNx-2E-d4m" secondAttribute="trailing" id="ATE-sH-YxW"/>
+                                            <constraint firstItem="vSu-Xp-DK7" firstAttribute="centerY" secondItem="gTb-eV-ET0" secondAttribute="centerY" id="AWa-DQ-3gg"/>
                                             <constraint firstAttribute="trailing" secondItem="UqS-83-RSC" secondAttribute="trailing" constant="15" id="BHW-Tm-cLf"/>
                                             <constraint firstItem="UqS-83-RSC" firstAttribute="leading" secondItem="Gg9-S1-TRF" secondAttribute="leading" constant="15" id="Due-I3-30I"/>
-                                            <constraint firstItem="gTb-eV-ET0" firstAttribute="leading" secondItem="UqS-83-RSC" secondAttribute="leading" id="FYe-1y-BjY"/>
                                             <constraint firstItem="gNx-2E-d4m" firstAttribute="top" secondItem="Gg9-S1-TRF" secondAttribute="top" constant="100" id="JMh-8U-fD2"/>
                                             <constraint firstItem="8fT-c4-V0N" firstAttribute="top" secondItem="gTb-eV-ET0" secondAttribute="bottom" constant="5" id="RdW-CV-cti"/>
+                                            <constraint firstItem="vSu-Xp-DK7" firstAttribute="leading" secondItem="Gg9-S1-TRF" secondAttribute="leading" constant="15" id="SIu-rc-PyV"/>
+                                            <constraint firstItem="vSu-Xp-DK7" firstAttribute="centerX" secondItem="G83-KJ-tlA" secondAttribute="centerX" id="YSw-zi-4qZ"/>
+                                            <constraint firstItem="8fT-c4-V0N" firstAttribute="centerY" secondItem="G83-KJ-tlA" secondAttribute="centerY" id="dNQ-Gc-F9K"/>
                                             <constraint firstItem="UqS-83-RSC" firstAttribute="leading" secondItem="gNx-2E-d4m" secondAttribute="leading" id="dza-Mz-3je"/>
                                             <constraint firstItem="gTb-eV-ET0" firstAttribute="top" secondItem="gNx-2E-d4m" secondAttribute="bottom" constant="12" id="kWd-qg-XtS"/>
-                                            <constraint firstItem="gTb-eV-ET0" firstAttribute="top" secondItem="8fT-c4-V0N" secondAttribute="bottom" id="mDN-MQ-H6l"/>
                                             <constraint firstItem="gNx-2E-d4m" firstAttribute="top" secondItem="UqS-83-RSC" secondAttribute="bottom" constant="10" id="oSX-my-fSB"/>
-                                            <constraint firstItem="8fT-c4-V0N" firstAttribute="leading" secondItem="gTb-eV-ET0" secondAttribute="leading" id="wKM-WV-ACG"/>
+                                            <constraint firstItem="vSu-Xp-DK7" firstAttribute="leading" secondItem="G83-KJ-tlA" secondAttribute="leading" id="u9N-1n-XmM"/>
+                                            <constraint firstItem="gTb-eV-ET0" firstAttribute="leading" secondItem="Gg9-S1-TRF" secondAttribute="leading" constant="40" id="vEo-pM-n5D"/>
+                                            <constraint firstItem="8fT-c4-V0N" firstAttribute="leading" secondItem="gTb-eV-ET0" secondAttribute="leading" id="yQO-cA-FFZ"/>
                                         </constraints>
                                         <size key="customSize" width="599.5" height="530"/>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="mDN-MQ-H6l"/>
+                                                <exclude reference="0BX-2d-cc5"/>
+                                                <exclude reference="vEo-pM-n5D"/>
+                                                <exclude reference="u9N-1n-XmM"/>
                                             </mask>
                                         </variation>
                                         <connections>
+                                            <outlet property="clockIconImageView" destination="vSu-Xp-DK7" id="MBH-0j-H9t"/>
                                             <outlet property="eventCoverImage" destination="gNx-2E-d4m" id="h8k-gK-RqO"/>
                                             <outlet property="eventCoverImageActivityIndicator" destination="c3Z-Kc-ZMs" id="lNt-TB-pNq"/>
                                             <outlet property="eventCoverImageHeightConstraint" destination="ksu-uN-tKd" id="Zvv-zI-EMs"/>
                                             <outlet property="eventTimeLabel" destination="gTb-eV-ET0" id="XOl-DO-EIh"/>
                                             <outlet property="eventTitleLabel" destination="UqS-83-RSC" id="Ngb-gn-hOj"/>
                                             <outlet property="eventVenueLabel" destination="8fT-c4-V0N" id="ueY-ML-D8i"/>
+                                            <outlet property="pinIconImageView" destination="G83-KJ-tlA" id="l1A-0K-F1W"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -815,6 +838,7 @@
         <image name="addIcon" width="15" height="15"/>
         <image name="backIcon" width="11" height="19"/>
         <image name="cityVector" width="30" height="23"/>
+        <image name="clockIcon" width="14" height="14"/>
         <image name="currentLocationVector" width="15" height="15"/>
         <image name="pinIcon" width="10" height="12"/>
         <image name="plusIcon" width="15" height="15"/>
