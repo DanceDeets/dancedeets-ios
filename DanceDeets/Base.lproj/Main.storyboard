@@ -777,12 +777,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dance Deets" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3G-TZ-jeS">
-                                <rect key="frame" x="250" y="60" width="99" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LandingPage" translatesAutoresizingMaskIntoConstraints="NO" id="D9O-AY-JoL">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="se0-3f-EIf" customClass="FBLoginView">
                                 <rect key="frame" x="160" y="480" width="280" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -794,15 +791,17 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="se0-3f-EIf" secondAttribute="centerY" id="IYR-ev-Hfl"/>
-                            <constraint firstAttribute="centerX" secondItem="I3G-TZ-jeS" secondAttribute="centerX" id="ZHe-RI-Lfy"/>
-                            <constraint firstItem="I3G-TZ-jeS" firstAttribute="top" secondItem="4yA-So-u3K" secondAttribute="bottom" constant="40" id="akp-M5-Uma"/>
+                            <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="D9O-AY-JoL" secondAttribute="bottom" id="BlD-vT-ysg"/>
+                            <constraint firstItem="D9O-AY-JoL" firstAttribute="leading" secondItem="KvK-Th-Fj8" secondAttribute="leading" id="cbZ-OW-1XZ"/>
+                            <constraint firstItem="D9O-AY-JoL" firstAttribute="top" secondItem="KvK-Th-Fj8" secondAttribute="topMargin" id="j8Z-bx-IU4"/>
                             <constraint firstAttribute="centerX" secondItem="se0-3f-EIf" secondAttribute="centerX" id="re2-WZ-pTy"/>
+                            <constraint firstItem="D9O-AY-JoL" firstAttribute="bottom" secondItem="KvK-Th-Fj8" secondAttribute="bottomMargin" id="sZS-X2-qlp"/>
+                            <constraint firstAttribute="trailing" secondItem="D9O-AY-JoL" secondAttribute="trailing" id="z0W-n9-c4C"/>
                             <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="se0-3f-EIf" secondAttribute="bottom" constant="60" id="zcc-jM-MUS"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="IYR-ev-Hfl"/>
+                                <exclude reference="BlD-vT-ysg"/>
                             </mask>
                         </variation>
                     </view>
@@ -835,6 +834,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="LandingPage" width="375" height="667"/>
         <image name="addIcon" width="15" height="15"/>
         <image name="backIcon" width="11" height="19"/>
         <image name="cityVector" width="30" height="23"/>
