@@ -257,7 +257,11 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
 
         if(indexPath.row == 0){
             // under nav bar + status bar
+            if(navigationController != nil){
             return navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.size.height
+            }else{
+                return CGFloat.min
+            }
         }
         else if(indexPath.row == 1){
             // cover image
