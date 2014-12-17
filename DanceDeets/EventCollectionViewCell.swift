@@ -50,7 +50,7 @@ class EventCollectionViewCell: UICollectionViewCell {
             let aspectRatio = event.eventImageWidth! / event.eventImageHeight!
             let calcHeight = eventCoverImage.frame.size.width / aspectRatio
             eventCoverImageHeightConstraint.constant = calcHeight
-            eventCoverImage.contentMode = UIViewContentMode.ScaleToFill
+            eventCoverImage.contentMode = UIViewContentMode.ScaleAspectFill
         }else{
             eventCoverImageHeightConstraint.constant = eventCoverImage.frame.size.width
             eventCoverImage.contentMode = UIViewContentMode.ScaleAspectFill

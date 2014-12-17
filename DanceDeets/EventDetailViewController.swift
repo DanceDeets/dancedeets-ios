@@ -16,14 +16,21 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
     var COVER_IMAGE_TOP_OFFSET:CGFloat = 0.0
     var COVER_IMAGE_HEIGHT:CGFloat = 0.0
-    let EVENT_TITLE_CELL_HEIGHT:CGFloat = 100.0
     let EVENT_TIME_CELL_HEIGHT:CGFloat = 24
-    var SCROLL_LIMIT:CGFloat = 0.0
     
     var event:Event?
     var gradientLayer:CAGradientLayer?
     var redirectGradientLayer:CAGradientLayer?
     var backgroundOverlay:UIView?
+    
+    var detailTableBlur:UIView?
+    let DETAIL_BLUR_DRAG_OFF:CGFloat = 100.0
+    
+    var coverCell:UITableViewCell?
+    var timeCell:UITableViewCell?
+    var venueCell:UITableViewCell?
+    var descriptionCell:UITableViewCell?
+    var mapCell:UITableViewCell?
     
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
@@ -50,22 +57,16 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
         navigationController?.navigationBar.titleTextAttributes = titleOptions
         
-        
         eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET
         eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
         
-        backgroundOverlay = coverImageView.addDarkBlurOverlay()
-        backgroundOverlay?.alpha = 0
+        backgroundOverlay = backgroundView.addDarkBlurOverlay()
+        backgroundOverlay!.alpha = 0
         
         detailsTableView.delegate = self
         detailsTableView.dataSource = self
         detailsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        detailsTableView.backgroundColor = UIColor.clearColor() 
-        
-        // to enable default pop gesture recognizer
-        // it seems to turns off when you hide the nav bar
-       // navigationController?.interactivePopGestureRecognizer.enabled = true
-      //  navigationController?.interactivePopGestureRecognizer.delegate = self
+        detailsTableView.backgroundColor = UIColor.clearColor()
         
         // background image
         if (event!.eventImageUrl != nil){
@@ -82,6 +83,8 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         }else{
             eventCoverImageView.image = UIImage(named: "placeholderCover")
         }
+        
+        detailsTableView.reloadData()
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -95,32 +98,68 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        let finalTopOff = navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.size.height
+        println(finalTopOff)
+        
+        coverCell = detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0))
+        coverCell?.alpha = 0
+        timeCell = detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0))
+        timeCell?.alpha = 0
+        venueCell = detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 4, inSection: 0))
+        venueCell?.alpha = 0
+        descriptionCell = detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 5, inSection: 0))
+        descriptionCell?.alpha = 0
+        mapCell = detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 6, inSection: 0))
+        mapCell?.alpha = 0
+        
+        
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         backgroundOverlay?.fadeIn(0.6,nil)
        
-        UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-            self.eventCoverImageViewLeftConstraint.constant = -100
-            self.eventCoverImageViewRightConstraint.constant = -100
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.eventCoverImageViewLeftConstraint.constant = -75
+            self.eventCoverImageViewRightConstraint.constant = -75
             self.eventCoverImageViewTopConstraint.constant = 20
             
-            self.eventCoverImageViewHeightConstraint.constant =  self.COVER_IMAGE_HEIGHT + 175
+            self.eventCoverImageViewHeightConstraint.constant =  self.COVER_IMAGE_HEIGHT + 150
             self.view.layoutIfNeeded()
             
             }) { (bool:Bool) -> Void in
                 
                         self.navigationController?.setNavigationBarHidden(false, animated: true)
                 
-                UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                UIView.animateWithDuration(0.15, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
                     self.eventCoverImageViewLeftConstraint.constant = 0
                     self.eventCoverImageViewRightConstraint.constant = 0
-                    self.eventCoverImageViewTopConstraint.constant = 64
+                    self.eventCoverImageViewTopConstraint.constant = finalTopOff
                     self.eventCoverImageViewHeightConstraint.constant =  self.COVER_IMAGE_HEIGHT
                     self.view.layoutIfNeeded()
                     
                     }) { (bool:Bool) -> Void in
                         
-                        self.eventCoverImageView.hidden = true
+                       
+                        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                            println("HERE")
+                            self.coverCell?.alpha = 1
+                        }, completion: nil)
+                        UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                            println("HERE")
+                            self.timeCell?.alpha = 1
+                        }, completion: nil)
+                        UIView.animateWithDuration(0.5, delay: 0.2, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                            println("HERE")
+                            self.venueCell?.alpha = 1
+                        }, completion: nil)
+                        UIView.animateWithDuration(0.5, delay: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                            println("HERE")
+                            self.descriptionCell?.alpha = 1
+                        }, completion: nil)
+                        UIView.animateWithDuration(0.5, delay: 0.4, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                            println("HERE")
+                            self.mapCell?.alpha = 1
+                        }, completion: nil)
+                        
                 }
         }
     }
@@ -169,8 +208,8 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             return cell
         }
         else if(indexPath.row == 1){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventImageCell", forIndexPath: indexPath) as EventDetailImageCell
-            cell.updateViewForEvent(event!)
+            let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) as UITableViewCell
+            cell.backgroundColor = UIColor.clearColor()
             return cell
         }else if(indexPath.row == 2){
             let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as EventDetailCoverCell
@@ -202,44 +241,6 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "default")
             return cell
         }
-        
-        
-        /*
-        if(indexPath.row == 0){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as EventDetailCoverCell
-            cell.updateViewForEvent(event!)
-            return cell
-        }else if(indexPath.row == 1){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventTimeCell", forIndexPath: indexPath) as EventDetailTimeCell
-            cell.updateViewForEvent(event!)
-            return cell
-        }else if(indexPath.row == 2){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as EventDetailLocationCell
-            cell.updateViewForEvent(event!)
-            return cell
-        }
-        else if(indexPath.row == 3){
-            let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) as UITableViewCell
-            return cell
-        }
-        else if(indexPath.row == 4){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventTimeCell", forIndexPath: indexPath) as EventDetailTimeCell
-            cell.updateViewForEvent(event!)
-            return cell
-        }else if(indexPath.row == 5){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as EventDetailLocationCell
-             cell.updateViewForEvent(event!)
-             return cell
-        }else if(indexPath.row == 6){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as EventDetailDescriptionCell
-            cell.updateViewForEvent(event!)
-            return cell
-        }
-        else{
-            let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "default")
-            return cell
-        }
-*/
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -254,33 +255,6 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
 
-        
-        /*
-        if(indexPath.row == 0){
-            return 100;
-        }else if(indexPath.row == 1){
-            return EVENT_TIME_CELL_HEIGHT
-        }else if (indexPath.row == 2){
-            return displayAddressHeight;
-        }else if(indexPath.row == 3){
-            return COVER_IMAGE_HEIGHT - EVENT_TIME_CELL_HEIGHT - displayAddressHeight;
-        }else if(indexPath.row == 4){
-            return EVENT_TIME_CELL_HEIGHT
-        }else if(indexPath.row == 5){
-            return displayAddressHeight;
-        }else if(indexPath.row == 6){
-            let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
-            
-            let height = Utilities.heightRequiredForText(event!.shortDescription!,
-                lineHeight: FontFactory.eventDescriptionLineHeight(),
-                font: FontFactory.eventDescriptionFont(),
-                width:width)
-            return height + 50
-            
-        }else{
-            return CGFloat.min
-        }
-*/
         if(indexPath.row == 0){
             // under nav bar + status bar
             return navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.size.height
@@ -338,50 +312,17 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         let yOff = scrollView.contentOffset.y
         println(yOff)
         
-        /*
- 
-        if(yOff < 0){
-            eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT - (yOff)
-            eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET + yOff
-        }else{
+        if(yOff<0){
+            eventCoverImageViewHeightConstraint.constant = (COVER_IMAGE_HEIGHT - (yOff))
         
-        eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET - yOff
             
-            
-            // println(COVER_IMAGE_TOP_OFFSET)
-            // println(eventCoverImageViewTopConstraint.constant)
-            if eventCoverImageViewTopConstraint.constant < DETAILS_TABLE_VIEW_TOP_MARGIN{
-                eventCoverImageViewTopConstraint.constant = DETAILS_TABLE_VIEW_TOP_MARGIN
-                
-                println(yOff -  EVENT_TITLE_CELL_HEIGHT)
-                eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT - (yOff -  EVENT_TITLE_CELL_HEIGHT)
-             //   view.layoutIfNeeded()
-            }
-        }
-      
-        
-        var redirectGradientPosition:CGPoint?
-        redirectGradientPosition = CGPointMake(0,(DETAILS_TABLE_VIEW_TOP_MARGIN - eventCoverImageViewTopConstraint.constant))
-        
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        gradientLayer?.position = CGPointMake(0, scrollView.contentOffset.y)
-      //  redirectGradientLayer?.position = redirectGradientPosition!
-        CATransaction.commit()
-        
-        // image / map cross fade with scroll
-        if(yOff < 0){
-            eventCoverImageView.alpha = 1
-            mapView.alpha = 0
-        }else if(yOff >= 0 && yOff < SCROLL_LIMIT){
-            let percentageShow:CGFloat = yOff / SCROLL_LIMIT
-            mapView.alpha = percentageShow
-            eventCoverImageView.alpha = 1 - mapView.alpha
         }else{
-            eventCoverImageView.alpha = 0
-            mapView.alpha = 1
+            eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
+            eventCoverImageViewTopConstraint.constant = 64 - yOff
         }
-*/
+        
+        view.layoutIfNeeded()
+
     }
     
 }
