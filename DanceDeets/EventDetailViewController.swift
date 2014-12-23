@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 import MapKit
 
-class EventDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
+class EventDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UIGestureRecognizerDelegate{
 
     let DETAILS_TABLE_VIEW_TOP_MARGIN:CGFloat = 70.0
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
@@ -31,18 +31,38 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     var venueCell:UITableViewCell?
     var descriptionCell:UITableViewCell?
     var mapCell:UITableViewCell?
+    var imageViewTapGestureRecognizer:UITapGestureRecognizer?
     
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var backgroundView: UIView!
-    @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var detailsTableView: UITableView!
-    @IBOutlet weak var backgroundViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewRightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var eventCoverImageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewLeftConstraint: NSLayoutConstraint!
+    
+    func imageViewTapped(){
+        AppDelegate.sharedInstance().allowLandscape = true
+        performSegueWithIdentifier("fullScreenImageSegue", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "fullScreenImageSegue"){
+            let destinationController = segue.destinationViewController as FullScreenImageViewController
+            if let image = eventCoverImageView.image{
+                destinationController.image = image
+            }
+            
+        }
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        println(gestureRecognizer)
+        println(otherGestureRecognizer)
+        return false
+    }
     
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -51,6 +71,10 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         title = event!.title!.uppercaseString
         let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
         navigationItem.rightBarButtonItem = shareButton
+        
+        imageViewTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTapped")
+        imageViewTapGestureRecognizer?.delegate = self
+        eventCoverImageView.addGestureRecognizer(imageViewTapGestureRecognizer!)
         
         let titleOptions:NSMutableDictionary = NSMutableDictionary()
         titleOptions[NSForegroundColorAttributeName] = UIColor.whiteColor()
@@ -118,11 +142,11 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         backgroundOverlay?.fadeIn(0.6,nil)
        
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-            self.eventCoverImageViewLeftConstraint.constant = -75
-            self.eventCoverImageViewRightConstraint.constant = -75
+            self.eventCoverImageViewLeftConstraint.constant = -50
+            self.eventCoverImageViewRightConstraint.constant = -50
             self.eventCoverImageViewTopConstraint.constant = 20
             
-            self.eventCoverImageViewHeightConstraint.constant =  self.COVER_IMAGE_HEIGHT + 150
+            self.eventCoverImageViewHeightConstraint.constant =  self.COVER_IMAGE_HEIGHT + 100
             self.view.layoutIfNeeded()
             
             }) { (bool:Bool) -> Void in

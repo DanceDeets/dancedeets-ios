@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var fbGraphUserObjectId:String?
     let urlCacheMemoryCapacityMB = 48
     let urlCacheDiskCapacityMB = 128
+    var allowLandscape:Bool?
     
     class func sharedInstance() -> AppDelegate
     {
@@ -70,7 +71,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> Int {
+        var returnValue:Int = Int(UIInterfaceOrientationMask.Portrait.rawValue)
+        if let allowLandscape = allowLandscape {
+            if(allowLandscape){
+                returnValue = Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+            }
+        }
+        
+        return returnValue
+    }
+    
+    
 }
 

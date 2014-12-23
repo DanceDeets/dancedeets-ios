@@ -22,10 +22,14 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate{
     class var getFacebookPermissions : [String]{
         return ["public_profile", "email", "user_friends","rsvp_event","user_events"]
     }
-
+    
     // MARK: FBLoginViewDelegate
     func loginViewShowingLoggedInUser(loginView : FBLoginView!) {
-       println("loginViewShowingLoggedInUser")
+        println("loginViewShowingLoggedInUser")
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        
+        // update token on back
+        ServerInterface.sharedInstance.updateFacebookToken()
     }
     
     func loginViewFetchedUserInfo(loginView : FBLoginView!, user: FBGraphUser) {

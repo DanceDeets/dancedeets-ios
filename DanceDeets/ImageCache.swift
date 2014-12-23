@@ -11,7 +11,6 @@ import NotificationCenter
 class ImageCache: NSCache {
     
     // swift doesn't support class constant variables yet, but you can do it in a struct
-    
     class var sharedInstance : ImageCache{
         struct Static{
             static var onceToken : dispatch_once_t = 0
