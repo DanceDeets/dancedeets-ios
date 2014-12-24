@@ -134,6 +134,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             
             destination?.view.insertSubview(snapShot, atIndex: 0)
             snapShot.constrainToSuperViewEdges()
+            destination?.backgroundBlurView = snapShot
         }
     }
     

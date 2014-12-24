@@ -30,6 +30,7 @@
 		1D43347C19D7552B001A5381 /* BebasNeueThin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347719D7552B001A5381 /* BebasNeueThin.otf */; };
 		1D4343471A1DB06D00E0B0A3 /* SearchResultsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */; };
 		1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */; };
+		1D6C3EA71A4B4BC90081A43C /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA61A4B4BC90081A43C /* AddCityViewController.swift */; };
 		1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */; };
 		1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */; };
 		1D8856C219CDE510005FFDB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C019CDE510005FFDB2 /* Main.storyboard */; };
@@ -95,6 +96,7 @@
 		1D43347719D7552B001A5381 /* BebasNeueThin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueThin.otf; sourceTree = "<group>"; };
 		1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableCell.swift; sourceTree = "<group>"; };
 		1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
+		1D6C3EA61A4B4BC90081A43C /* AddCityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
 		1D8856B719CDE510005FFDB2 /* DanceDeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceDeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856BB19CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -269,11 +271,12 @@
 		1D8A063E19CDE5D9004607B6 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1D6C3EA61A4B4BC90081A43C /* AddCityViewController.swift */,
 				1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */,
-				1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */,
 				1D08923B1A266D7A00A9EAC4 /* EventStreamViewController.swift */,
-				1D08924A1A279DFF00A9EAC4 /* MyCitiesViewController.swift */,
+				1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */,
 				1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */,
+				1D08924A1A279DFF00A9EAC4 /* MyCitiesViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
 				1DAE2C231A3EB08B00F03AD1 /* EventDetailMapCell.swift in Sources */,
 				1DAB49F61A1807F40002BBDD /* EventDetailLocationCell.swift in Sources */,
+				1D6C3EA71A4B4BC90081A43C /* AddCityViewController.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,
 				1D19871F1A2A9528004156B2 /* RedirectView.swift in Sources */,
 				1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */,

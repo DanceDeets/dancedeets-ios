@@ -641,37 +641,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vF-By-ZAi">
-                                <rect key="frame" x="-2" y="16" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="baS-12-Rvg"/>
-                                    <constraint firstAttribute="width" constant="50" id="jDq-Xz-LN6"/>
-                                </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="plusIcon">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="addCityButtonTapped:" destination="Gdp-6o-WzI" eventType="touchUpInside" id="HSO-Hn-ubl"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchIcon" translatesAutoresizingMaskIntoConstraints="NO" id="sy5-nb-YKj">
-                                <rect key="frame" x="0.0" y="15" width="50" height="50"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="3Kf-Ae-4aE"/>
-                                    <constraint firstAttribute="width" constant="50" id="Wd1-hD-PfD"/>
-                                </constraints>
-                            </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City Search" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aXr-MQ-6OQ">
-                                <rect key="frame" x="50" y="32" width="535" height="17"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY CITIES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfq-kp-eKO">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SETTINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfq-kp-eKO">
                                 <rect key="frame" x="120" y="32" width="360" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="z4g-OG-VAN"/>
@@ -699,10 +669,10 @@
                                     <action selector="doneButtonTapped:" destination="Gdp-6o-WzI" eventType="touchUpInside" id="TrB-ME-tT7"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="nbK-7C-w60">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="nbK-7C-w60">
                                 <rect key="frame" x="0.0" y="70" width="600" height="530"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="currentLocationCell" id="i0p-54-Hpl" customClass="CurrentLocationCell" customModule="DanceDeets" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -836,22 +806,12 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Pfq-kp-eKO" firstAttribute="centerY" secondItem="aXr-MQ-6OQ" secondAttribute="centerY" id="4Of-Hl-cpc"/>
-                            <constraint firstItem="sy5-nb-YKj" firstAttribute="leading" secondItem="ntT-me-6lC" secondAttribute="leading" id="4V6-x5-udK"/>
-                            <constraint firstAttribute="trailing" secondItem="aXr-MQ-6OQ" secondAttribute="trailing" constant="15" id="5ML-3N-fm9"/>
-                            <constraint firstItem="6vF-By-ZAi" firstAttribute="top" secondItem="5Vi-nh-fRU" secondAttribute="bottom" id="CIu-rH-HcN"/>
                             <constraint firstItem="5IE-B2-vbr" firstAttribute="top" secondItem="ntT-me-6lC" secondAttribute="topMargin" constant="16" id="Gp2-nz-iNp"/>
-                            <constraint firstItem="sy5-nb-YKj" firstAttribute="top" secondItem="ntT-me-6lC" secondAttribute="topMargin" constant="15" id="KAU-y7-Lw6"/>
                             <constraint firstItem="nbK-7C-w60" firstAttribute="width" secondItem="ntT-me-6lC" secondAttribute="width" id="KpK-nh-f0C"/>
-                            <constraint firstItem="sy5-nb-YKj" firstAttribute="centerY" secondItem="aXr-MQ-6OQ" secondAttribute="centerY" id="R0l-id-Kt0"/>
-                            <constraint firstItem="aXr-MQ-6OQ" firstAttribute="leading" secondItem="sy5-nb-YKj" secondAttribute="trailing" id="RF4-rZ-By1"/>
                             <constraint firstAttribute="bottomMargin" secondItem="nbK-7C-w60" secondAttribute="bottom" id="UZ1-XU-yx3"/>
-                            <constraint firstItem="6vF-By-ZAi" firstAttribute="top" secondItem="ntT-me-6lC" secondAttribute="topMargin" constant="16" id="Vpp-04-F6Y"/>
-                            <constraint firstItem="aXr-MQ-6OQ" firstAttribute="leading" secondItem="ntT-me-6lC" secondAttribute="leadingMargin" constant="50" id="bNt-gc-4hh"/>
                             <constraint firstAttribute="trailing" secondItem="5IE-B2-vbr" secondAttribute="trailing" id="fgO-PI-ahh"/>
                             <constraint firstItem="nbK-7C-w60" firstAttribute="top" secondItem="ntT-me-6lC" secondAttribute="topMargin" constant="70" id="hL9-PH-2JN"/>
                             <constraint firstAttribute="centerX" secondItem="nbK-7C-w60" secondAttribute="centerX" id="jbd-Mb-h1w"/>
-                            <constraint firstItem="6vF-By-ZAi" firstAttribute="leading" secondItem="ntT-me-6lC" secondAttribute="leading" constant="-2" id="q02-GI-zga"/>
                             <constraint firstItem="Pfq-kp-eKO" firstAttribute="top" secondItem="ntT-me-6lC" secondAttribute="topMargin" constant="32" id="r9u-25-3oa"/>
                             <constraint firstAttribute="centerX" secondItem="Pfq-kp-eKO" secondAttribute="centerX" id="sQe-vp-UPF"/>
                             <constraint firstItem="Pfq-kp-eKO" firstAttribute="width" secondItem="ntT-me-6lC" secondAttribute="width" multiplier="0.6" id="tWX-v8-cly"/>
@@ -859,25 +819,121 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="CIu-rH-HcN"/>
-                                <exclude reference="bNt-gc-4hh"/>
-                                <exclude reference="4Of-Hl-cpc"/>
                                 <exclude reference="yQ9-S6-nja"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="addCityButton" destination="6vF-By-ZAi" id="hPb-bF-jxx"/>
-                        <outlet property="citySearchTextField" destination="aXr-MQ-6OQ" id="rxQ-lw-tGl"/>
                         <outlet property="doneButton" destination="5IE-B2-vbr" id="RKQ-zv-XsL"/>
                         <outlet property="myCitiesTableView" destination="nbK-7C-w60" id="vEZ-hY-N9h"/>
-                        <outlet property="searchIcon" destination="sy5-nb-YKj" id="ynq-cP-mCH"/>
                         <outlet property="titleLabel" destination="Pfq-kp-eKO" id="4sg-R7-UXt"/>
+                        <segue destination="x1g-PC-VIU" kind="presentation" identifier="addCitySegue" animates="NO" id="Rf2-m1-Iii"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PZ6-Yr-WYy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136" y="-1220"/>
+        </scene>
+        <!--Add City View Controller-->
+        <scene sceneID="83b-wG-vGG">
+            <objects>
+                <viewController id="x1g-PC-VIU" customClass="AddCityViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7Yf-g7-4H8"/>
+                        <viewControllerLayoutGuide type="bottom" id="1IG-uH-SHI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kKG-qU-iDh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchIcon" translatesAutoresizingMaskIntoConstraints="NO" id="D5l-Dj-xNn">
+                                <rect key="frame" x="0.0" y="15" width="50" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ssI-og-vgn"/>
+                                    <constraint firstAttribute="width" constant="50" id="t9y-C1-9MI"/>
+                                </constraints>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City Search" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pe4-ic-bnm">
+                                <rect key="frame" x="50" y="31" width="535" height="17"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done"/>
+                            </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Jx1-Hk-Oup">
+                                <rect key="frame" x="0.0" y="70" width="600" height="530"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="autosuggestCityCell" id="Zlc-4C-wXV" customClass="AutosuggestCityCell" customModule="DanceDeets" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="278" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zlc-4C-wXV" id="msW-jh-35w">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="pRe-us-xiM">
+                                                    <rect key="frame" x="15" y="16" width="10" height="12"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autosuggested City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzH-j6-dMK">
+                                                    <rect key="frame" x="40" y="12" width="152" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqE-62-zWI">
+                                                    <rect key="frame" x="525" y="0.0" width="60" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="Ud7-PN-DIZ"/>
+                                                        <constraint firstAttribute="height" constant="44" id="WAh-XW-31M"/>
+                                                    </constraints>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <state key="normal" image="addIcon">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hzH-j6-dMK" firstAttribute="leading" secondItem="pRe-us-xiM" secondAttribute="trailing" constant="15" id="26L-AQ-DeQ"/>
+                                                <constraint firstAttribute="centerY" secondItem="fqE-62-zWI" secondAttribute="centerY" id="2YF-gq-ehJ"/>
+                                                <constraint firstAttribute="centerY" secondItem="pRe-us-xiM" secondAttribute="centerY" id="2ny-TI-YHH"/>
+                                                <constraint firstItem="hzH-j6-dMK" firstAttribute="centerY" secondItem="pRe-us-xiM" secondAttribute="centerY" id="By3-QM-koB"/>
+                                                <constraint firstAttribute="trailing" secondItem="fqE-62-zWI" secondAttribute="trailing" constant="15" id="efc-p1-r5C"/>
+                                                <constraint firstItem="pRe-us-xiM" firstAttribute="leading" secondItem="msW-jh-35w" secondAttribute="leading" constant="15" id="pOY-Rd-m4F"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addLogoButton" destination="fqE-62-zWI" id="0dr-lM-LSR"/>
+                                            <outlet property="cityLabel" destination="hzH-j6-dMK" id="n9W-Gn-Qoo"/>
+                                            <outlet property="pinLogo" destination="pRe-us-xiM" id="6Nl-5d-XR7"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Jx1-Hk-Oup" secondAttribute="centerX" id="5Ry-eR-II9"/>
+                            <constraint firstItem="Jx1-Hk-Oup" firstAttribute="top" secondItem="kKG-qU-iDh" secondAttribute="topMargin" constant="70" id="6ht-k3-KKJ"/>
+                            <constraint firstItem="Pe4-ic-bnm" firstAttribute="centerY" secondItem="D5l-Dj-xNn" secondAttribute="centerY" id="Peh-9a-1p2"/>
+                            <constraint firstItem="Pe4-ic-bnm" firstAttribute="leading" secondItem="D5l-Dj-xNn" secondAttribute="trailing" id="UU7-Hr-uEF"/>
+                            <constraint firstItem="Jx1-Hk-Oup" firstAttribute="width" secondItem="kKG-qU-iDh" secondAttribute="width" id="am5-Wg-v0m"/>
+                            <constraint firstItem="D5l-Dj-xNn" firstAttribute="leading" secondItem="kKG-qU-iDh" secondAttribute="leading" id="fQn-tq-4Hq"/>
+                            <constraint firstItem="D5l-Dj-xNn" firstAttribute="top" secondItem="kKG-qU-iDh" secondAttribute="topMargin" constant="15" id="lwL-h4-2ig"/>
+                            <constraint firstItem="1IG-uH-SHI" firstAttribute="top" secondItem="Jx1-Hk-Oup" secondAttribute="bottom" id="vJC-SD-u9J"/>
+                            <constraint firstAttribute="trailing" secondItem="Pe4-ic-bnm" secondAttribute="trailing" constant="15" id="xQ7-MZ-qft"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="citySearchTextField" destination="Pe4-ic-bnm" id="h2X-my-Aqi"/>
+                        <outlet property="searchIcon" destination="D5l-Dj-xNn" id="EBC-f5-mAj"/>
+                        <outlet property="tableView" destination="Jx1-Hk-Oup" id="zYG-Ya-bir"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CTe-lo-hNS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="871" y="-1220"/>
         </scene>
         <!--Face Book Login View Controller-->
         <scene sceneID="w5m-Gb-xdx">
@@ -955,7 +1011,6 @@
         <image name="currentLocationVector" width="15" height="15"/>
         <image name="directionIcon" width="16" height="18"/>
         <image name="pinIcon" width="10" height="12"/>
-        <image name="plusIcon" width="15" height="15"/>
         <image name="removeIcon" width="15" height="15"/>
         <image name="searchIcon" width="20" height="20"/>
         <image name="streamBackground" width="375" height="667"/>
