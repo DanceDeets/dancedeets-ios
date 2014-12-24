@@ -46,7 +46,7 @@ class AddCityViewController : UIViewController, UITextFieldDelegate, UITableView
     }
     
     // MARK: Private
-    private func textFieldUpdated(){
+    func textFieldUpdated(){
         let currentText = citySearchTextField.text
         if(countElements(currentText) > 0){
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true

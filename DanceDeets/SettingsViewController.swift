@@ -15,6 +15,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     let TOOLS_SECTION:Int = 1
     
     var cities:[String] = []
+    var city:String!
     var autosuggestedCities:[String] = []
     var backgroundBlurView:UIView?
     
@@ -55,23 +56,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         doneButton.titleLabel?.textColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         doneButton.titleLabel?.font = FontFactory.barButtonFont()
         
-        let city = UserSettings.getUserCitySearch()
-        var indexPathToHighlight:NSIndexPath?
-        if(city == ""){
-            indexPathToHighlight = NSIndexPath(forRow: 0, inSection: 0)
-        }else{
-            for(var i = 0;  i < cities.count; ++i){
-                if(cities[i] == city){
-                    indexPathToHighlight = NSIndexPath(forRow: i+1, inSection: 0)
-                    break
-                }
-            }
-        }
-        if(indexPathToHighlight != nil){
-            let cell = myCitiesTableView.cellForRowAtIndexPath(indexPathToHighlight!)
-            myCitiesTableView.selectRowAtIndexPath(indexPathToHighlight, animated: false, scrollPosition: UITableViewScrollPosition.None)
-        }
+        city = UserSettings.getUserCitySearch()
     }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -123,12 +110,16 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(indexPath.section == MY_CITIES_SECTION){
             if(indexPath.row == 0){
-                let cell = tableView.dequeueReusableCellWithIdentifier("currentLocationCell", forIndexPath: indexPath) as CurrentLocationCell
-                return cell
-            }else if(indexPath.row == cities.count + 1){
                 let cell = tableView.dequeueReusableCellWithIdentifier("citySearchCell", forIndexPath: indexPath) as CitySearchCell
                 cell.deleteButton.hidden = true
                 cell.cityLabel.text = "Add a City"
+                cell.backgroundColor = UIColor.clearColor()
+                return cell
+            }else if(indexPath.row == cities.count + 1){
+                let cell = tableView.dequeueReusableCellWithIdentifier("currentLocationCell", forIndexPath: indexPath) as CurrentLocationCell
+                if(city == ""){
+                    cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
+                }
                 return cell
             }
             else{
@@ -136,11 +127,13 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.settingsVC = self
                 cell.deleteButton.hidden = false
                 cell.cityLabel.text = cities[indexPath.row - 1]
+                if(city == cities[indexPath.row - 1]){
+                    cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
+                }
                 return cell
             }
         }else if(indexPath.section == TOOLS_SECTION){
             if(indexPath.row == 0){
-                
                 let cell = tableView.dequeueReusableCellWithIdentifier("sendFeedbackCell", forIndexPath: indexPath) as SendFeedbackCell
                 return cell
                 
@@ -170,15 +163,15 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.section == MY_CITIES_SECTION){
             if(indexPath.row == 0){
+                performSegueWithIdentifier("addCitySegue", sender: self)
+            }else if(indexPath.row == cities.count + 1){
                 UserSettings.setUserCitySearch("")
                 AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
-                presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-            }else if(indexPath.row == cities.count + 1){
-                performSegueWithIdentifier("addCitySegue", sender: self)
+                presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
             }else{
                 UserSettings.setUserCitySearch(cities[indexPath.row - 1])
                 AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
-                presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
             }
         }else if(indexPath.section == TOOLS_SECTION){
             if(indexPath.row == 0){
@@ -191,7 +184,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             }else if(indexPath.row == 1){
                 FBSession.activeSession().closeAndClearTokenInformation()
                 FBSession.setActiveSession(nil)
-                presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
             }
         }
     }
