@@ -14,7 +14,7 @@ import Foundation
 class UserSettings
 {
     class var DEFAULT_CITIES : [String] {
-        return ["New York","Los Angeles", "San Francisco"]
+        return ["New York","Los Angeles", "San Francisco", "Paris"]
     }
     class var USER_CITIES_KEY : String{
         return "userCities"

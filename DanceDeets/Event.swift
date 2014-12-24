@@ -24,6 +24,7 @@ public class Event: NSObject {
     let identifier:String?
     let displayTime:String?
     let facebookUrl:NSURL?
+    let danceDeetsUrl:NSURL?
     var displayAddress:String?
     var geoloc:CLLocation?
     var admins:[EventAdmin]?
@@ -42,6 +43,7 @@ public class Event: NSObject {
         
         if countElements(identifier!) > 0 {
             facebookUrl = NSURL(string: "http://www.facebook.com/"+identifier!)
+            danceDeetsUrl = NSURL(string: "http://www.dancedeets.com/events/"+identifier!)
         }
         
         shortDescription = dictionary["description"] as? String
@@ -102,9 +104,10 @@ public class Event: NSObject {
             sharingItems.append("Check out this event: " + title!)
         }
         
-        if(facebookUrl != nil){
-            sharingItems.append(facebookUrl!)
+        if(danceDeetsUrl != nil){
+            sharingItems.append(danceDeetsUrl!)
         }
+        
         return sharingItems
     }
     

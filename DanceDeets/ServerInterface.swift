@@ -9,7 +9,6 @@
 import Foundation
 import CoreLocation
 
-
 /* Any kind of interfacing with the back end should go in here */
 class ServerInterface : NSObject, CLLocationManagerDelegate {
     
@@ -28,7 +27,6 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
         })
         return Static.instance!
     }
-    
     
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
@@ -56,35 +54,36 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
                 }
                 
                 // construct payload
-                let tokenData = FBSession.activeSession().accessTokenData
-                let expiration = tokenData.expirationDate
-                let accessToken = tokenData.accessToken
-                
-                let dateFormatter:NSDateFormatter  = NSDateFormatter()
-                dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
-                dateFormatter.timeZone = NSTimeZone.systemTimeZone()
-                
-                var session = NSURLSession.sharedSession()
-                var urlString = "http://www.dancedeets.com/api/auth"
-                let url = NSURL(string:urlString)
-                var urlRequest = NSMutableURLRequest(URL: url!)
-                urlRequest.HTTPMethod = "POST"
-                urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                
-                let params = NSMutableDictionary()
-                params["client"] = "ios"
-                params["location"] = geocodeString
-                params["access_token"] = accessToken
-                params["access_token_expires"] = dateFormatter.stringFromDate(expiration)
-                let postData = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: nil)
-                urlRequest.HTTPBody = postData
-                
-                // post it up
-                let task = session.dataTaskWithRequest(urlRequest, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
-                    println("Posted up token")
-                    println(response)
-                })
-                task.resume()
+                if let tokenData = FBSession.activeSession().accessTokenData{
+                    let expiration = tokenData.expirationDate
+                    let accessToken = tokenData.accessToken
+                    
+                    let dateFormatter:NSDateFormatter  = NSDateFormatter()
+                    dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
+                    dateFormatter.timeZone = NSTimeZone.systemTimeZone()
+                    
+                    var session = NSURLSession.sharedSession()
+                    var urlString = "http://www.dancedeets.com/api/auth"
+                    let url = NSURL(string:urlString)
+                    var urlRequest = NSMutableURLRequest(URL: url!)
+                    urlRequest.HTTPMethod = "POST"
+                    urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                    
+                    let params = NSMutableDictionary()
+                    params["client"] = "ios"
+                    params["location"] = geocodeString
+                    params["access_token"] = accessToken
+                    params["access_token_expires"] = dateFormatter.stringFromDate(expiration)
+                    let postData = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: nil)
+                    urlRequest.HTTPBody = postData
+                    
+                    // post it up
+                    let task = session.dataTaskWithRequest(urlRequest, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
+                        println("Posted up token")
+                        println(response)
+                    })
+                    task.resume()
+                }
             }
         })
     }
@@ -92,7 +91,6 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         locationManager.stopUpdatingLocation()
         println("Couldn't update location")
-       
     }
     
 }
