@@ -703,6 +703,35 @@
                                             <outlet property="logoutLabel" destination="Eun-8Q-8OI" id="Zp1-m0-V3U"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sendFeedbackCell" id="Mr2-mN-zvR" customClass="SendFeedbackCell" customModule="DanceDeets" customModuleProvider="target">
+                                        <rect key="frame" x="140" y="278" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mr2-mN-zvR" id="vO5-dj-yCl">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="feedbackIcon" translatesAutoresizingMaskIntoConstraints="NO" id="RYr-XX-9A2">
+                                                    <rect key="frame" x="15" y="14" width="16" height="16"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Feedback" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A7q-Ic-8dA">
+                                                    <rect key="frame" x="40" y="12" width="121" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="RYr-XX-9A2" secondAttribute="centerY" id="NAx-Ts-TRf"/>
+                                                <constraint firstItem="RYr-XX-9A2" firstAttribute="centerY" secondItem="A7q-Ic-8dA" secondAttribute="centerY" id="VIE-hK-0Dp"/>
+                                                <constraint firstItem="RYr-XX-9A2" firstAttribute="leading" secondItem="vO5-dj-yCl" secondAttribute="leading" constant="15" id="eNR-yk-Q2y"/>
+                                                <constraint firstItem="A7q-Ic-8dA" firstAttribute="leading" secondItem="RYr-XX-9A2" secondAttribute="trailing" constant="9" id="m3b-2F-5Tl"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="feedbackIcon" destination="RYr-XX-9A2" id="dCa-s7-xck"/>
+                                            <outlet property="feedbackLabel" destination="A7q-Ic-8dA" id="SBs-hV-n6Q"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="currentLocationCell" id="i0p-54-Hpl" customClass="CurrentLocationCell" customModule="DanceDeets" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -990,6 +1019,7 @@
         <image name="clockIcon" width="14" height="14"/>
         <image name="currentLocationVector" width="15" height="15"/>
         <image name="directionIcon" width="16" height="18"/>
+        <image name="feedbackIcon" width="16" height="16"/>
         <image name="logoutIcon" width="16" height="16"/>
         <image name="pinIcon" width="10" height="12"/>
         <image name="removeIcon" width="15" height="15"/>

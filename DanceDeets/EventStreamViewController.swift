@@ -459,30 +459,34 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func checkFaceBookToken(){
-        let currentState:FBSessionState = FBSession.activeSession().state
-        
-        if( currentState == FBSessionState.Open ||
-            currentState == FBSessionState.OpenTokenExtended){
-                // don't need to do anything if session already open
-                return;
-        }else if( currentState == FBSessionState.CreatedTokenLoaded){
-            // open up the session and update things
-            FBSession.openActiveSessionWithReadPermissions(FaceBookLoginViewController.getFacebookPermissions, allowLoginUI: false, completionHandler: { (session:FBSession!, state:FBSessionState, error:NSError!) -> Void in
-                
-                ServerInterface.sharedInstance.updateFacebookToken()
-                
-                // get the latest graph object id
-                FBRequestConnection.startForMeWithCompletionHandler({ (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
-                    if (error == nil){
-                        if let resultDictionary:NSDictionary? = result as? NSDictionary{
-                            AppDelegate.sharedInstance().fbGraphUserObjectId = resultDictionary!["id"] as? String
-                        }
-                    }
-                })
-            })
-            
-        }else{
+        if(FBSession.activeSession() == nil){
             navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
+        }else{
+            let currentState:FBSessionState = FBSession.activeSession().state
+            
+            if( currentState == FBSessionState.Open ||
+                currentState == FBSessionState.OpenTokenExtended){
+                    // don't need to do anything if session already open
+                    return;
+            }else if( currentState == FBSessionState.CreatedTokenLoaded){
+                // open up the session and update things
+                FBSession.openActiveSessionWithReadPermissions(FaceBookLoginViewController.getFacebookPermissions, allowLoginUI: false, completionHandler: { (session:FBSession!, state:FBSessionState, error:NSError!) -> Void in
+                    
+                    ServerInterface.sharedInstance.updateFacebookToken()
+                    
+                    // get the latest graph object id
+                    FBRequestConnection.startForMeWithCompletionHandler({ (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
+                        if (error == nil){
+                            if let resultDictionary:NSDictionary? = result as? NSDictionary{
+                                AppDelegate.sharedInstance().fbGraphUserObjectId = resultDictionary!["id"] as? String
+                            }
+                        }
+                    })
+                })
+                
+            }else{
+                navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
+            }
         }
     }
     

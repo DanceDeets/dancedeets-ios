@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MessageUI
 
-class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate {
+class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate, MFMailComposeViewControllerDelegate {
     
     let MY_CITIES_SECTION:Int = 0
     let TOOLS_SECTION:Int = 1
@@ -89,7 +90,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             // last row is 'Add to City'
             return cities.count + 2
         }else if(section == TOOLS_SECTION){
-            return 1
+            return 2
         }else{
             return 0
         }
@@ -138,8 +139,15 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 return cell
             }
         }else if(indexPath.section == TOOLS_SECTION){
-            let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as LogoutCell
-            return cell
+            if(indexPath.row == 0){
+                
+                let cell = tableView.dequeueReusableCellWithIdentifier("sendFeedbackCell", forIndexPath: indexPath) as SendFeedbackCell
+                return cell
+                
+            }else{
+                let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as LogoutCell
+                return cell
+            }
             
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as LogoutCell
@@ -174,6 +182,13 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }else if(indexPath.section == TOOLS_SECTION){
             if(indexPath.row == 0){
+                let composer = MFMailComposeViewController()
+                let recipients:[String] = ["feedback@dancedeets.com"]
+                composer.mailComposeDelegate = self
+                composer.setSubject("Dance Deets Feedback")
+                composer.setToRecipients(recipients)
+                presentViewController(composer, animated: true, completion: nil)
+            }else if(indexPath.row == 1){
                 FBSession.activeSession().closeAndClearTokenInformation()
                 FBSession.setActiveSession(nil)
                 presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
@@ -192,6 +207,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 return
             }
         }
+    }
+    
+    // MARK: MFMailComposeViewControllerDelegate
+    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
 }

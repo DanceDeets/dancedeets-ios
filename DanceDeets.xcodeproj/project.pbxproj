@@ -32,6 +32,7 @@
 		1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */; };
 		1D6C3EA71A4B4BC90081A43C /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA61A4B4BC90081A43C /* AddCityViewController.swift */; };
 		1D6C3EA91A4B66A70081A43C /* LogoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA81A4B66A70081A43C /* LogoutCell.swift */; };
+		1D6C3EAB1A4B70590081A43C /* SendFeedbackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EAA1A4B70590081A43C /* SendFeedbackCell.swift */; };
 		1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */; };
 		1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */; };
 		1D8856C219CDE510005FFDB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C019CDE510005FFDB2 /* Main.storyboard */; };
@@ -99,6 +100,7 @@
 		1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
 		1D6C3EA61A4B4BC90081A43C /* AddCityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
 		1D6C3EA81A4B66A70081A43C /* LogoutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutCell.swift; sourceTree = "<group>"; };
+		1D6C3EAA1A4B70590081A43C /* SendFeedbackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeedbackCell.swift; sourceTree = "<group>"; };
 		1D8856B719CDE510005FFDB2 /* DanceDeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceDeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856BB19CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */,
 				1DAE2C221A3EB08B00F03AD1 /* EventDetailMapCell.swift */,
 				1D6C3EA81A4B66A70081A43C /* LogoutCell.swift */,
+				1D6C3EAA1A4B70590081A43C /* SendFeedbackCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 				1D8A064019CDE605004607B6 /* Event.swift in Sources */,
 				1DAB49F41A18020D0002BBDD /* EventDetailTimeCell.swift in Sources */,
 				1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */,
+				1D6C3EAB1A4B70590081A43C /* SendFeedbackCell.swift in Sources */,
 				1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */,
 				1DAB49EE1A17E31E0002BBDD /* EventDetailDescriptionCell.swift in Sources */,
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
