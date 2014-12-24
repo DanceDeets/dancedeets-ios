@@ -8,14 +8,14 @@
 
 class CitySearchCell: UITableViewCell {
     
-    var citiesVC:MyCitiesViewController?
+    var settingsVC:SettingsViewController?
     
     @IBOutlet weak var pinLogo: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     
     @IBAction func deleteButtonTapped(sender: AnyObject) {
-        citiesVC?.deleteCityRow(cityLabel.text!)
+        settingsVC?.deleteCityRow(cityLabel.text!)
     }
     
     override func awakeFromNib() {

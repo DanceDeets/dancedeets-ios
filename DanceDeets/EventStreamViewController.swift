@@ -124,7 +124,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             let event = sender as? Event
             destination?.event = sender as? Event
         }else if segue.identifier == "myCitiesSegue"{
-            var destination:MyCitiesViewController? = segue.destinationViewController as? MyCitiesViewController
+            var destination:SettingsViewController? = segue.destinationViewController as? SettingsViewController
             
             let snapShot:UIView = self.view.snapshotViewAfterScreenUpdates(false)
             

@@ -8,7 +8,10 @@
 
 import UIKit
 
-class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate {
+class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate {
+    
+    let MY_CITIES_SECTION:Int = 0
+    let TOOLS_SECTION:Int = 1
     
     var cities:[String] = []
     var autosuggestedCities:[String] = []
@@ -81,37 +84,67 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if(section == MY_CITIES_SECTION){
             // first row is always current location
+            // last row is 'Add to City'
             return cities.count + 2
+        }else if(section == TOOLS_SECTION){
+            return 1
+        }else{
+            return 0
+        }
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UILabel(frame: CGRectZero)
-        header.text = "MY CITIES"
-        header.textAlignment = NSTextAlignment.Center
-        header.font = UIFont(name:"UniversLTStd-UltraCn",size: 16)!
-        header.textColor = ColorFactory.white50()
-        header.sizeToFit()
-        return header
+        if(section == MY_CITIES_SECTION){
+            let header = UILabel(frame: CGRectZero)
+            header.text = "MY CITIES"
+            header.textAlignment = NSTextAlignment.Center
+            header.font = FontFactory.settingsHeaderFont()
+            header.textColor = ColorFactory.white50()
+            return header
+        }else if(section == TOOLS_SECTION){
+            let header = UILabel(frame: CGRectZero)
+            header.text = "TOOLS"
+            header.textAlignment = NSTextAlignment.Center
+            header.font = FontFactory.settingsHeaderFont()
+            header.textColor = ColorFactory.white50()
+            return header
+        }else{
+            return nil
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if(indexPath.row == 0){
-            let cell = tableView.dequeueReusableCellWithIdentifier("currentLocationCell", forIndexPath: indexPath) as CurrentLocationCell
+        if(indexPath.section == MY_CITIES_SECTION){
+            if(indexPath.row == 0){
+                let cell = tableView.dequeueReusableCellWithIdentifier("currentLocationCell", forIndexPath: indexPath) as CurrentLocationCell
+                return cell
+            }else if(indexPath.row == cities.count + 1){
+                let cell = tableView.dequeueReusableCellWithIdentifier("citySearchCell", forIndexPath: indexPath) as CitySearchCell
+                cell.deleteButton.hidden = true
+                cell.cityLabel.text = "Add a City"
+                return cell
+            }
+            else{
+                let cell = tableView.dequeueReusableCellWithIdentifier("citySearchCell", forIndexPath: indexPath) as CitySearchCell
+                cell.settingsVC = self
+                cell.deleteButton.hidden = false
+                cell.cityLabel.text = cities[indexPath.row - 1]
+                return cell
+            }
+        }else if(indexPath.section == TOOLS_SECTION){
+            let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as LogoutCell
             return cell
-        }else if(indexPath.row == cities.count + 1){
-            let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as AutosuggestCityCell
-            cell.addLogoButton.hidden = true
-            cell.cityLabel.text = "Add a City"
+            
+        }else{
+            let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as LogoutCell
             return cell
         }
-        else{
-            let cell = tableView.dequeueReusableCellWithIdentifier("citySearchCell", forIndexPath: indexPath) as CitySearchCell
-            cell.citiesVC = self
-            cell.cityLabel.text = cities[indexPath.row - 1]
-            return cell
-        }
-        
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -119,7 +152,7 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
+        return 30
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -127,16 +160,24 @@ class MyCitiesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(indexPath.row == 0){
-            UserSettings.setUserCitySearch("")
-            AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
-            presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-        }else if(indexPath.row == cities.count + 1){
-            performSegueWithIdentifier("addCitySegue", sender: self)
-        }else{
-            UserSettings.setUserCitySearch(cities[indexPath.row - 1])
-            AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
-            presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        if(indexPath.section == MY_CITIES_SECTION){
+            if(indexPath.row == 0){
+                UserSettings.setUserCitySearch("")
+                AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
+                presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            }else if(indexPath.row == cities.count + 1){
+                performSegueWithIdentifier("addCitySegue", sender: self)
+            }else{
+                UserSettings.setUserCitySearch(cities[indexPath.row - 1])
+                AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
+                presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }else if(indexPath.section == TOOLS_SECTION){
+            if(indexPath.row == 0){
+                FBSession.activeSession().closeAndClearTokenInformation()
+                FBSession.setActiveSession(nil)
+                presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            }
         }
     }
     

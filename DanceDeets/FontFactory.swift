@@ -44,4 +44,7 @@ class FontFactory {
     class func textFieldFont()->UIFont{
         return UIFont(name:"Interstate-Light",size:18)!
     }
+    class func settingsHeaderFont()->UIFont{
+        return UIFont(name:"Interstate-BoldCondensed",size:15)!
+    }
 }
