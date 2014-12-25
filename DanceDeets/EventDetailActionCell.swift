@@ -15,7 +15,7 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
     @IBOutlet weak var facebookButton: UIButton!
     
     var addCalendarAlert:UIAlertView?
-    var facebookAlert:UIAlertView?
+    var permissionAlert:UIAlertView?
     var currentEvent:Event?
     
     override func awakeFromNib() {
@@ -27,15 +27,25 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
         addToCalendarButton.setBackgroundImage(UIImage(named: "button_calendar_blue"), forState: UIControlState.Highlighted)
         facebookButton.setBackgroundImage(UIImage(named:"button_facebook"), forState: UIControlState.Normal)
         
-        addCalendarAlert = UIAlertView(title: "Want to add this event to your calendar?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
-        facebookAlert = UIAlertView(title: "RSVP on Facebook?", message: "", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
+        addCalendarAlert = UIAlertView(title: "Added to your calendar!", message: "", delegate: self, cancelButtonTitle: "Undo", otherButtonTitles: "OK")
+        permissionAlert = UIAlertView(title: "Dance Deets doesn't have permission to do that.", message: "Please enable calendar permissions in Settings->Dance Deets", delegate: self, cancelButtonTitle: "Not Now", otherButtonTitles: "Open Settings")
     }
     
     func updateViewForEvent(event:Event){
         currentEvent = event
     }
+    
     @IBAction func addToCalendarButtonTapped(sender: AnyObject) {
-        addCalendarAlert?.show()
+        var store = EKEventStore()
+        store.requestAccessToEntityType(EKEntityTypeEvent) { (granted:Bool, error:NSError!) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                if(!granted || error != nil){
+                    self.permissionAlert?.show()
+                }else{
+                    self.addCalendarAlert?.show()
+                }
+            })
+        }
     }
     
     @IBAction func facebookRSVPButtonTapped(sender: AnyObject) {
@@ -74,11 +84,9 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
             if (buttonIndex == 1){
                 var store = EKEventStore()
                 store.requestAccessToEntityType(EKEntityTypeEvent) { (granted:Bool, error:NSError!) -> Void in
-                    
                     if(!granted && error != nil){
                         return
                     }
-                    
                     var newEvent:EKEvent = EKEvent(eventStore: store)
                     newEvent.title = self.currentEvent?.title
                     newEvent.startDate = self.currentEvent?.startTime
@@ -92,33 +100,11 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
                     var saveError:NSError?
                     store.saveEvent(newEvent, span: EKSpanThisEvent, commit: true, error: &saveError)
                     self.currentEvent?.savedEventId = newEvent.eventIdentifier
-                    
-                    if(saveError == nil){
-                        var message:String?
-                        if let title = self.currentEvent?.title{
-                            message = "Added " + title + " to your calendar!"
-                        }else{
-                            message = "Added to your calendar!"
-                        }
-                        dispatch_async(dispatch_get_main_queue(), {
-                            let successAlert:UIAlertView = UIAlertView(title: "Dope", message: message, delegate: nil, cancelButtonTitle: "OK")
-                            successAlert.show()
-                        })
-                    }
                 }
             }
-        }else if(alertView == facebookAlert){
+        }else if(alertView == permissionAlert){
             if(buttonIndex == 1){
-                let graphPath = "/" + currentEvent!.identifier! + "/attending"
-                FBRequestConnection.startWithGraphPath(graphPath, parameters: nil, HTTPMethod: "POST", completionHandler: { (conn:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
-                    if(error == nil){
-                        let successAlert = UIAlertView(title: "RSVP'd on Facebook!", message: "",delegate:nil, cancelButtonTitle: "OK")
-                        successAlert.show()
-                    }else{
-                        let errorAlert = UIAlertView(title: "Couldn't RSVP right now, try again later.", message: "",delegate:nil, cancelButtonTitle: "OK")
-                        errorAlert.show()
-                    }
-                })
+                UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!);
             }
         }
     }
