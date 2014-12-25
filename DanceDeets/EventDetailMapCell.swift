@@ -23,8 +23,9 @@ class EventDetailMapCell:UITableViewCell, UIAlertViewDelegate
         directionButton.backgroundColor = ColorFactory.lightBlue().colorWithAlphaComponent(0.5)
              directionButton.layer.cornerRadius = 3.0
           directionButton.layer.masksToBounds = true
-        
         directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
+        let tapGesture = UITapGestureRecognizer(target: self, action: "getDirectionButtonTapped:")
+        eventMapView.addGestureRecognizer(tapGesture)
     }
     
     @IBAction func getDirectionButtonTapped(sender: AnyObject) {

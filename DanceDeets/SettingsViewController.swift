@@ -53,7 +53,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         titleLabel.textColor = UIColor.whiteColor()
         titleLabel.font = FontFactory.navigationTitleFont()
         
-        doneButton.titleLabel?.textColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+        doneButton.titleLabel?.textColor = ColorFactory.white50()
         doneButton.titleLabel?.font = FontFactory.barButtonFont()
         
         city = UserSettings.getUserCitySearch()
@@ -61,7 +61,6 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         cities = UserSettings.getUserCities()
         myCitiesTableView.reloadData()
     }
@@ -73,11 +72,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == MY_CITIES_SECTION){
-            // first row is always current location
-            // last row is 'Add to City'
-            return cities.count + 2
+            return cities.count + 1
         }else if(section == TOOLS_SECTION){
-            return 2
+            return 3
         }else{
             return 0
         }
@@ -109,13 +106,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(indexPath.section == MY_CITIES_SECTION){
-            if(indexPath.row == 0){
-                let cell = tableView.dequeueReusableCellWithIdentifier("citySearchCell", forIndexPath: indexPath) as CitySearchCell
-                cell.deleteButton.hidden = true
-                cell.cityLabel.text = "Add a City"
-                cell.backgroundColor = UIColor.clearColor()
-                return cell
-            }else if(indexPath.row == cities.count + 1){
+            if(indexPath.row == cities.count){
                 let cell = tableView.dequeueReusableCellWithIdentifier("currentLocationCell", forIndexPath: indexPath) as CurrentLocationCell
                 if(city == ""){
                     cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
@@ -126,17 +117,19 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 let cell = tableView.dequeueReusableCellWithIdentifier("citySearchCell", forIndexPath: indexPath) as CitySearchCell
                 cell.settingsVC = self
                 cell.deleteButton.hidden = false
-                cell.cityLabel.text = cities[indexPath.row - 1]
-                if(city == cities[indexPath.row - 1]){
+                cell.cityLabel.text = cities[indexPath.row]
+                if(city == cities[indexPath.row ]){
                     cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
                 }
                 return cell
             }
         }else if(indexPath.section == TOOLS_SECTION){
             if(indexPath.row == 0){
+                let cell = tableView.dequeueReusableCellWithIdentifier("addCityCell", forIndexPath: indexPath) as AddCityCell
+                return cell
+            }else  if(indexPath.row == 1){
                 let cell = tableView.dequeueReusableCellWithIdentifier("sendFeedbackCell", forIndexPath: indexPath) as SendFeedbackCell
                 return cell
-                
             }else{
                 let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as LogoutCell
                 return cell
@@ -162,19 +155,19 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.section == MY_CITIES_SECTION){
-            if(indexPath.row == 0){
-                performSegueWithIdentifier("addCitySegue", sender: self)
-            }else if(indexPath.row == cities.count + 1){
+            if(indexPath.row == cities.count){
                 UserSettings.setUserCitySearch("")
                 AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
                 presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
             }else{
-                UserSettings.setUserCitySearch(cities[indexPath.row - 1])
+                UserSettings.setUserCitySearch(cities[indexPath.row])
                 AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
                 presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
             }
         }else if(indexPath.section == TOOLS_SECTION){
             if(indexPath.row == 0){
+                performSegueWithIdentifier("addCitySegue", sender: self)
+            }else if(indexPath.row == 1){
                 let composer = MFMailComposeViewController()
                 let recipients:[String] = ["feedback@dancedeets.com"]
                 composer.mailComposeDelegate = self
@@ -189,12 +182,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    // MARK: Instance
     func deleteCityRow(city:String){
         for(var i = 0;i < cities.count; i++){
             if(cities[i] == city){
-                let indexPathToDelete = NSIndexPath(forRow: i+1, inSection: 0)
-                cities.removeAtIndex(indexPathToDelete.row - 1)
+                let indexPathToDelete = NSIndexPath(forRow: i, inSection: 0)
+                cities.removeAtIndex(indexPathToDelete.row)
                 UserSettings.deleteUserCity(city)
                 myCitiesTableView.deleteRowsAtIndexPaths([indexPathToDelete], withRowAnimation: UITableViewRowAnimation.Automatic)
                 return

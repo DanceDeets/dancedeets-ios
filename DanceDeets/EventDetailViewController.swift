@@ -18,19 +18,13 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     let EVENT_TIME_CELL_HEIGHT:CGFloat = 24
     
     var event:Event?
-    var gradientLayer:CAGradientLayer?
-    var redirectGradientLayer:CAGradientLayer?
     var backgroundOverlay:UIView?
-    
-    var detailTableBlur:UIView?
-    let DETAIL_BLUR_DRAG_OFF:CGFloat = 100.0
     
     var coverCell:UITableViewCell?
     var timeCell:UITableViewCell?
     var venueCell:UITableViewCell?
     var descriptionCell:UITableViewCell?
     var mapCell:UITableViewCell?
-    var imageViewTapGestureRecognizer:UITapGestureRecognizer?
     
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
@@ -71,10 +65,6 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
         navigationItem.rightBarButtonItem = shareButton
         
-        imageViewTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTapped")
-        imageViewTapGestureRecognizer?.delegate = self
-        eventCoverImageView.addGestureRecognizer(imageViewTapGestureRecognizer!)
-        
         let titleOptions:NSMutableDictionary = NSMutableDictionary()
         titleOptions[NSForegroundColorAttributeName] = UIColor.whiteColor()
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
@@ -91,7 +81,6 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         detailsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         detailsTableView.backgroundColor = UIColor.clearColor()
         
-        // background image
         if (event!.eventImageUrl != nil){
             let imageRequest:NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
@@ -348,7 +337,6 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         if(yOff<0){
             eventCoverImageViewHeightConstraint.constant = (COVER_IMAGE_HEIGHT - (yOff))
             eventCoverImageViewTopConstraint.constant = 64
-            
         }else{
             eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
             eventCoverImageViewTopConstraint.constant = 64 - yOff

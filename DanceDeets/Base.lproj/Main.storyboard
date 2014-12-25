@@ -817,6 +817,38 @@
                                             <outlet property="pinLogo" destination="oCt-8R-5wu" id="kyM-75-Q8s"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addCityCell" id="aeL-pG-5EZ" customClass="AddCityCell" customModule="DanceDeets" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aeL-pG-5EZ" id="Mb9-4Y-DiJ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cityVector" translatesAutoresizingMaskIntoConstraints="NO" id="SsD-fg-dgi">
+                                                    <rect key="frame" x="15" y="14" width="16" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="16" id="0mE-RY-FVX"/>
+                                                        <constraint firstAttribute="height" constant="16" id="KYz-Bt-iSt"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35u-iS-cwJ">
+                                                    <rect key="frame" x="40" y="12" width="80.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="SsD-fg-dgi" secondAttribute="centerY" id="JV1-2m-zRO"/>
+                                                <constraint firstItem="SsD-fg-dgi" firstAttribute="leading" secondItem="Mb9-4Y-DiJ" secondAttribute="leading" constant="15" id="M0h-wf-iOJ"/>
+                                                <constraint firstItem="35u-iS-cwJ" firstAttribute="centerY" secondItem="SsD-fg-dgi" secondAttribute="centerY" id="e07-p6-7nD"/>
+                                                <constraint firstItem="35u-iS-cwJ" firstAttribute="leading" secondItem="SsD-fg-dgi" secondAttribute="trailing" constant="9" id="iGf-4w-LAr"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addCityLabel" destination="35u-iS-cwJ" id="0oi-0R-QX5"/>
+                                            <outlet property="cityIcon" destination="SsD-fg-dgi" id="I4P-xo-A0A"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
@@ -1017,6 +1049,7 @@
     <resources>
         <image name="LandingPage" width="375" height="667"/>
         <image name="addIcon" width="15" height="15"/>
+        <image name="cityVector" width="30" height="23"/>
         <image name="clockIcon" width="14" height="14"/>
         <image name="currentLocationVector" width="15" height="15"/>
         <image name="directionIcon" width="16" height="18"/>
