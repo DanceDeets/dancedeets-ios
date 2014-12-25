@@ -106,7 +106,7 @@
 		1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceBookLoginViewController.swift; sourceTree = "<group>"; };
 		1D8856C119CDE510005FFDB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1D8856C319CDE510005FFDB2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1D8856C319CDE510005FFDB2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = DanceDeets/Images.xcassets; sourceTree = "<group>"; };
 		1D8856C619CDE510005FFDB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1D8856CC19CDE510005FFDB2 /* DanceDeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DanceDeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856D119CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -170,6 +170,8 @@
 		1D19871D1A2A950A004156B2 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				1D8A064119CE0CA6004607B6 /* Table View Cells */,
+				1D08923D1A26724400A9EAC4 /* Collection View Cells */,
 				1D19871E1A2A9528004156B2 /* RedirectView.swift */,
 			);
 			name = "Custom Views";
@@ -225,6 +227,7 @@
 			children = (
 				1DAB49F91A182AC90002BBDD /* QuartzCore.framework */,
 				1D8856B919CDE510005FFDB2 /* DanceDeets */,
+				1D8856C319CDE510005FFDB2 /* Images.xcassets */,
 				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
 				1D8856B819CDE510005FFDB2 /* Products */,
 				1DE70DF91A0FD55D0044C77C /* FacebookSDK.framework */,
@@ -247,19 +250,15 @@
 		1D8856B919CDE510005FFDB2 /* DanceDeets */ = {
 			isa = PBXGroup;
 			children = (
+				1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */,
+				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
 				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
 				1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */,
 				1D0892501A27C97700A9EAC4 /* UserSettings.swift */,
+				1DB901C619E099810018B434 /* Extensions and Utilities */,
+				1D8A063E19CDE5D9004607B6 /* View Controllers */,
 				1D19871D1A2A950A004156B2 /* Custom Views */,
 				1D8A063D19CDE5D4004607B6 /* Models */,
-				1DB901C619E099810018B434 /* Utilities */,
-				1D08923D1A26724400A9EAC4 /* Collection View Cells */,
-				1D8A064119CE0CA6004607B6 /* Table View Cells */,
-				1D8A063E19CDE5D9004607B6 /* View Controllers */,
-				1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */,
-				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
-				1D8856C319CDE510005FFDB2 /* Images.xcassets */,
-				1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */,
 				1D8856BA19CDE510005FFDB2 /* Supporting Files */,
 			);
 			path = DanceDeets;
@@ -268,6 +267,7 @@
 		1D8856BA19CDE510005FFDB2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */,
 				1D43347219D7551D001A5381 /* Fonts */,
 				1D8856BB19CDE510005FFDB2 /* Info.plist */,
 			);
@@ -323,7 +323,7 @@
 			name = "Table View Cells";
 			sourceTree = "<group>";
 		};
-		1DB901C619E099810018B434 /* Utilities */ = {
+		1DB901C619E099810018B434 /* Extensions and Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */,
@@ -333,7 +333,7 @@
 				1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */,
 				1DAB49EF1A17E4D70002BBDD /* Utilities.swift */,
 			);
-			name = Utilities;
+			name = "Extensions and Utilities";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

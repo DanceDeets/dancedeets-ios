@@ -461,8 +461,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             if (event.title?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil){
                 return true;
             }
-            if(event.tagString?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil){
-                return true;
+            for keyword in event.keywords {
+                if(keyword.lowercaseString.rangeOfString(searchText.lowercaseString) != nil){
+                    return true
+                }
             }
             return false;
         })

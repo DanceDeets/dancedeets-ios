@@ -50,7 +50,13 @@ class SearchResultsTableCell: UITableViewCell {
         titleLabel?.text = event.title
         titleLabel?.sizeToFit()
         
-        tagLabel?.text = event.tagString
+        var tagString = ""
+        for keyword in event.keywords{
+            tagString += keyword
+            tagString += ", "
+        }
+        
+        tagLabel?.text = tagString
         tagLabel?.sizeToFit()
         
         contentView.layoutIfNeeded()

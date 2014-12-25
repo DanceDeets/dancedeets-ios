@@ -17,8 +17,7 @@ public class Event: NSObject {
     let shortDescription:String?
     let startTime:NSDate?
     let endTime:NSDate?
-    let keywords:[String]?
-    let tagString:String?
+    let keywords:[String] = []
     let title:String?
     let id:String?
     let displayTime:String?
