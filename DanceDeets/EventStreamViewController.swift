@@ -20,12 +20,12 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     let COLLECTION_VIEW_TOP_MARGIN:CGFloat = 70.0
     let SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET:CGFloat = 70.0
+    let locationManager:CLLocationManager  = CLLocationManager()
+    let geocoder:CLGeocoder = CLGeocoder()
     var events:[Event] = []
     var filteredEvents:[Event] = []
     var currentCity:String? = String()
     var searchMode:SearchMode = SearchMode.CurrentLocation
-    let locationManager:CLLocationManager  = CLLocationManager()
-    let geocoder:CLGeocoder = CLGeocoder()
     var requiresRefresh = true
     var gradientLayer:CAGradientLayer?
     var searchResultsTableView:UITableView?
@@ -38,6 +38,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var navigationTitle: UILabel!
     @IBOutlet weak var eventCollectionView: UICollectionView!
+    @IBOutlet weak var pageControl: UIPageControl!
     
     // MARK: Action
     @IBAction func searchBarButtonTapped(sender: AnyObject) {
@@ -45,10 +46,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchController?.searchBar.hidden = false
         self.searchController?.searchBar.becomeFirstResponder()
     }
-    @IBOutlet weak var pageControl: UIPageControl!
     
-    @IBAction func myCitiesButtonTapped(sender: AnyObject) {
-        performSegueWithIdentifier("myCitiesSegue", sender: sender)
+    @IBAction func settingsButtonTapped(sender: AnyObject) {
+        performSegueWithIdentifier("settingsSegue", sender: sender)
     }
     
     // MARK: UISearchResultsUpdating
@@ -119,21 +119,17 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             // convert frame of the image 
             let eventCell = eventCollectionView.cellForItemAtIndexPath(selectedIndexPath!) as EventCollectionViewCell
             let convertCoverImageRect = view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
-            println(convertCoverImageRect)
-            
             
             var destination:EventDetailViewController? = segue.destinationViewController as? EventDetailViewController
             let event = sender as? Event
             destination?.event = sender as? Event
-        }else if segue.identifier == "myCitiesSegue"{
+        }else if segue.identifier == "settingsSegue"{
             var destination:SettingsViewController? = segue.destinationViewController as? SettingsViewController
             
             let snapShot:UIView = self.view.snapshotViewAfterScreenUpdates(false)
-            
             let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
             snapShot.addSubview(overlayView)
             overlayView.constrainToSuperViewEdges()
-            
             destination?.view.insertSubview(snapShot, atIndex: 0)
             snapShot.constrainToSuperViewEdges()
             destination?.backgroundBlurView = snapShot

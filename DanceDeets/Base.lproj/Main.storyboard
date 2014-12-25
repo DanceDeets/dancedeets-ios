@@ -72,7 +72,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="myCitiesButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="4G7-go-iz8"/>
+                                    <action selector="settingsButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="ywh-wY-Yll"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="IbI-W0-Nu5">
@@ -234,7 +234,7 @@
                         <outlet property="navigationTitle" destination="dCA-Tc-CJh" id="Rh3-hf-Zjx"/>
                         <outlet property="pageControl" destination="JXY-wj-LzV" id="m3Q-mr-sHK"/>
                         <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="vjg-jf-Ol8"/>
-                        <segue destination="Gdp-6o-WzI" kind="presentation" identifier="myCitiesSegue" modalTransitionStyle="crossDissolve" id="jGw-rt-6UH"/>
+                        <segue destination="Gdp-6o-WzI" kind="presentation" identifier="settingsSegue" modalTransitionStyle="crossDissolve" id="jGw-rt-6UH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5E-47-ysN" userLabel="First Responder" sceneMemberID="firstResponder"/>
