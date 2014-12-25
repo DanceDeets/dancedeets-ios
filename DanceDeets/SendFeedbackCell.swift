@@ -18,7 +18,9 @@ class SendFeedbackCell : UITableViewCell
         super.awakeFromNib()
         backgroundColor = UIColor.clearColor()
         
-        self.selectionStyle = UITableViewCellSelectionStyle.None
+        var bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
+        selectedBackgroundView = bgColorView
         
         feedbackLabel.font = FontFactory.standardTableLabelFont()
         feedbackLabel.textColor = UIColor.whiteColor()

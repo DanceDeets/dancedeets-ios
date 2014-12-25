@@ -470,7 +470,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     return;
             }else if( currentState == FBSessionState.CreatedTokenLoaded){
                 // open up the session and update things
-                FBSession.openActiveSessionWithReadPermissions(FaceBookLoginViewController.getFacebookPermissions, allowLoginUI: false, completionHandler: { (session:FBSession!, state:FBSessionState, error:NSError!) -> Void in
+                FBSession.openActiveSessionWithReadPermissions(FaceBookLoginViewController.getDefaultFacebookPermissions, allowLoginUI: false, completionHandler: { (session:FBSession!, state:FBSessionState, error:NSError!) -> Void in
                     
                     ServerInterface.sharedInstance.updateFacebookToken()
                     

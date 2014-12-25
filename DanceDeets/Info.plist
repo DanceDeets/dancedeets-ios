@@ -36,7 +36,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Let Dance Deets find events near you</string>
+	<string>We use your location to find all the best dance events near you!</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Interstate-BoldCondensed.ttf</string>

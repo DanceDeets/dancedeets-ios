@@ -39,7 +39,32 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
     }
     
     @IBAction func facebookRSVPButtonTapped(sender: AnyObject) {
-        facebookAlert?.show()
+        if(FBSession.activeSession().hasGranted("rsvp_event")){
+            rsvpFacebook()
+        }else{
+            FBSession.activeSession().requestNewPublishPermissions(["rsvp_event"], defaultAudience: FBSessionDefaultAudience.OnlyMe) { (session:FBSession!, error:NSError!) -> Void in
+                if(error == nil && session.hasGranted("rsvp_event") == true){
+                    self.rsvpFacebook()
+                }else{
+                    let errorAlert = UIAlertView(title: "Permissions weren't granted.", message: "",delegate:nil, cancelButtonTitle: "OK")
+                    errorAlert.show()
+                }
+                
+            }
+        }
+    }
+    
+    func rsvpFacebook(){
+        let graphPath = "/" + self.currentEvent!.identifier! + "/attending"
+        FBRequestConnection.startWithGraphPath(graphPath, parameters: nil, HTTPMethod: "POST", completionHandler: { (conn:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
+            if(error == nil){
+                let successAlert = UIAlertView(title: "RSVP'd on Facebook!", message: "",delegate:nil, cancelButtonTitle: "OK")
+                successAlert.show()
+            }else{
+                let errorAlert = UIAlertView(title: "Couldn't RSVP right now, try again later.", message: "",delegate:nil, cancelButtonTitle: "OK")
+                errorAlert.show()
+            }
+        })
     }
     
     // MARK: UIAlertViewDelegate

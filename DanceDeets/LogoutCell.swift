@@ -18,7 +18,9 @@ class LogoutCell : UITableViewCell
         super.awakeFromNib()
         backgroundColor = UIColor.clearColor()
         
-        self.selectionStyle = UITableViewCellSelectionStyle.None
+        var bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
+        selectedBackgroundView = bgColorView
         
         logoutLabel.font = FontFactory.standardTableLabelFont()
         logoutLabel.textColor = UIColor.whiteColor()

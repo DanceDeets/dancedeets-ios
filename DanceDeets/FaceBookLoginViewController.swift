@@ -15,12 +15,12 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate{
     // MARK: UIViewController
     override func viewDidLoad() {
         self.fbLoginView.delegate = self
-        self.fbLoginView.readPermissions = FaceBookLoginViewController.getFacebookPermissions
+        self.fbLoginView.readPermissions = FaceBookLoginViewController.getDefaultFacebookPermissions
         view.backgroundColor = UIColor.blackColor()
     }
     
-    class var getFacebookPermissions : [String]{
-        return ["public_profile", "email", "user_friends","rsvp_event","user_events"]
+    class var getDefaultFacebookPermissions : [String]{
+        return ["public_profile", "email", "user_friends"]
     }
     
     // MARK: FBLoginViewDelegate
