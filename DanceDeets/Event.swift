@@ -130,12 +130,12 @@ public class Event: NSObject {
                         }else{
                             let error = NSError(domain: "Couldn't create image from data", code: 0, userInfo: nil)
                             dispatch_async(dispatch_get_main_queue(), {
-                                completion(UIImage(named: "placeholderCover")!, error)
+                                completion(nil, error)
                             })
                         }
                     }else{
                         dispatch_async(dispatch_get_main_queue(), {
-                            completion(UIImage(named: "placeholderCover")!, error)
+                            completion(nil, error)
                         })
                     }
             })

@@ -33,8 +33,6 @@ class EventDetailImageCell: UITableViewCell
                     }
                 })
             }
-        }else{
-            eventImageView.image = UIImage(named: "placeholderCover")
         }
         
         contentView.layoutIfNeeded()

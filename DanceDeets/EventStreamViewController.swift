@@ -175,8 +175,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     }
                 })
             }
-        }else{
-            cell?.eventCoverImage?.image = UIImage(named: "placeholderCover")
         }
         
         if(indexPath.row < events.count - 1){

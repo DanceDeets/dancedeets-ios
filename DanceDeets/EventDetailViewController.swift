@@ -103,8 +103,6 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                 })
             }
-        }else{
-            eventCoverImageView.image = UIImage(named: "placeholderCover")
         }
         
         detailsTableView.reloadData()
@@ -227,12 +225,14 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(indexPath.row == 0){
             let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) as UITableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.backgroundColor = UIColor.clearColor()
             return cell
         }
         else if(indexPath.row == 1){
             let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) as UITableViewCell
             cell.backgroundColor = UIColor.clearColor()
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         }else if(indexPath.row == 2){
             let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as EventDetailCoverCell
@@ -332,6 +332,12 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     // MARK: UITableViewDelegate
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if(indexPath.row == 1){
+            AppDelegate.sharedInstance().allowLandscape = true
+            performSegueWithIdentifier("fullScreenImageSegue", sender: self)
+        }
+    }
     
     // MARK: UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -341,15 +347,12 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         if(yOff<0){
             eventCoverImageViewHeightConstraint.constant = (COVER_IMAGE_HEIGHT - (yOff))
-        
+            eventCoverImageViewTopConstraint.constant = 64
             
         }else{
             eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
             eventCoverImageViewTopConstraint.constant = 64 - yOff
         }
-        
-        view.layoutIfNeeded()
-
     }
     
 }
