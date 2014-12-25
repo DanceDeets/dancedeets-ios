@@ -45,6 +45,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchController?.searchBar.hidden = false
         self.searchController?.searchBar.becomeFirstResponder()
     }
+    @IBOutlet weak var pageControl: UIPageControl!
     
     @IBAction func myCitiesButtonTapped(sender: AnyObject) {
         performSegueWithIdentifier("myCitiesSegue", sender: sender)
@@ -78,6 +79,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         self.loadViewController()
         self.loadSearchController()
+
         
         locationManager.requestWhenInUseAuthorization()
         
@@ -163,6 +165,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         let event = events[indexPath.row] as Event
         cell?.updateForEvent(event)
         cell?.eventCoverImage?.image = nil
+        pageControl.currentPage = indexPath.row
         
         if event.eventImageUrl != nil{
             let imageRequest:NSURLRequest = NSURLRequest(URL: event.eventImageUrl!)
@@ -189,12 +192,17 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     // MARK: Private
     func loadViewController(){
         
+        pageControl.pageIndicatorTintColor = UIColor.whiteColor().colorWithAlphaComponent(0.3)
+        pageControl.currentPageIndicatorTintColor = UIColor.whiteColor()
+        pageControl.addTarget(self, action: "pageControllerChanged", forControlEvents: UIControlEvents.ValueChanged)
+        pageControl.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+        
         locationManager.delegate = self
         
         eventCollectionView.delegate = self
         eventCollectionView.dataSource = self
         
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         
         navigationTitle.textColor = UIColor.whiteColor()
         navigationTitle.font = FontFactory.navigationTitleFont()
@@ -310,6 +318,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     self.eventCollectionView.reloadData()
                 }else{
                     self.events = events
+                    self.pageControl.numberOfPages = self.events.count
+                    self.pageControl.currentPage = 0
                     self.eventCollectionView.reloadData()
                     let indexPath = NSIndexPath(forRow: 0, inSection: 0)
                     self.eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: true)
@@ -454,6 +464,12 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             }
             return false;
         })
+    }
+    
+    func pageControllerChanged(){
+        let pageIndex = pageControl.currentPage
+        let indexPath = NSIndexPath(forRow: pageIndex, inSection: 0)
+        eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: true)
     }
     
     func checkFaceBookToken(){

@@ -174,7 +174,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 composer.setSubject("Dance Deets Feedback")
                 composer.setToRecipients(recipients)
                 presentViewController(composer, animated: true, completion: nil)
-            }else if(indexPath.row == 1){
+            }else if(indexPath.row == 2){
                 FBSession.activeSession().closeAndClearTokenInformation()
                 FBSession.setActiveSession(nil)
                 presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
