@@ -73,13 +73,28 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         }
     }
     
+    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if(scrollView == eventCollectionView){
+            let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
+            let itemHeight = Int(flowLayout!.itemSize.height)
+            let targetOff = Int(targetContentOffset.memory.y)
+            pageControl.currentPage = targetOff / itemHeight
+        }
+    }
+    
+    func scrollViewDidScrollToTop(scrollView: UIScrollView) {
+        if(scrollView == eventCollectionView){
+            pageControl.currentPage = 0
+        }
+    }
+    
+    
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.loadViewController()
         self.loadSearchController()
-
         
         locationManager.requestWhenInUseAuthorization()
         
@@ -145,6 +160,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     // MARK: UICollectionViewDelegate
+    func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         var selectedEvent:Event = events[indexPath.row]
         selectedIndexPath = indexPath
@@ -161,7 +178,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         let event = events[indexPath.row] as Event
         cell?.updateForEvent(event)
         cell?.eventCoverImage?.image = nil
-        pageControl.currentPage = indexPath.row
         
         if event.eventImageUrl != nil{
             let imageRequest:NSURLRequest = NSURLRequest(URL: event.eventImageUrl!)
@@ -306,12 +322,16 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     errorAlert.show()
                     self.events = []
                     self.eventCollectionView.reloadData()
+                    self.pageControl.numberOfPages = 0
+                    self.pageControl.currentPage = 0
                     
                 }else if(events.count == 0){
                     let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                     noEventAlert.show()
                     self.events = []
                     self.eventCollectionView.reloadData()
+                    self.pageControl.numberOfPages = 0
+                    self.pageControl.currentPage = 0
                 }else{
                     self.events = events
                     self.pageControl.numberOfPages = self.events.count
