@@ -292,7 +292,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         }else if(indexPath.row == 4){
             // display address
             var displayAddressHeight:CGFloat = 0.0
-            displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress!, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
+            displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
             return displayAddressHeight
         }else if(indexPath.row == 5){
             //description

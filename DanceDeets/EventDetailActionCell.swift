@@ -65,7 +65,7 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
     }
     
     func rsvpFacebook(){
-        let graphPath = "/" + self.currentEvent!.identifier! + "/attending"
+        let graphPath = "/" + self.currentEvent!.id! + "/attending"
         FBRequestConnection.startWithGraphPath(graphPath, parameters: nil, HTTPMethod: "POST", completionHandler: { (conn:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
             if(error == nil){
                 let successAlert = UIAlertView(title: "RSVP'd on Facebook!", message: "",delegate:nil, cancelButtonTitle: "OK")

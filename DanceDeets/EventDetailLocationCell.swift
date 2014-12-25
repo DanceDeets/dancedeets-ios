@@ -57,14 +57,14 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
     
     func updateViewForEvent(event:Event){
         
-            if(event.displayAddress != nil){
-                var attributedDescription = NSMutableAttributedString(string: event.displayAddress!)
+           // if(event.displayAddress != nil){
+                var attributedDescription = NSMutableAttributedString(string: event.displayAddress)
                 attributedDescription.setLineHeight(FontFactory.eventVenueLineHeight())
                 attributedDescription.setFont(FontFactory.eventVenueFont())
                 attributedDescription.setColor(UIColor.whiteColor())
                 venueLabel.attributedText = attributedDescription
                 println(venueLabel.frame)
-            }
+           // }
             
             /*
             if(event.placemark != nil && event.placemark?.addressDictionary != nil){

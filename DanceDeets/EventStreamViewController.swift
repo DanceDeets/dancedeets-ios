@@ -129,16 +129,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "eventDetailSegue"{
-            
-            // convert frame of the image 
-            let eventCell = eventCollectionView.cellForItemAtIndexPath(selectedIndexPath!) as EventCollectionViewCell
-            let convertCoverImageRect = view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
-            
-            var destination:EventDetailViewController? = segue.destinationViewController as? EventDetailViewController
-            let event = sender as? Event
-            destination?.event = sender as? Event
-        }else if segue.identifier == "settingsSegue"{
+        if segue.identifier == "settingsSegue"{
             var destination:SettingsViewController? = segue.destinationViewController as? SettingsViewController
             
             let snapShot:UIView = self.view.snapshotViewAfterScreenUpdates(false)
@@ -160,8 +151,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     // MARK: UICollectionViewDelegate
-    func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-    }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         var selectedEvent:Event = events[indexPath.row]
         selectedIndexPath = indexPath
@@ -219,7 +208,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         navigationTitle.textColor = UIColor.whiteColor()
         navigationTitle.font = FontFactory.navigationTitleFont()
         navigationTitle.text = ""
-        navigationItem.title = " "
+        navigationItem.title = ""
         
         eventCollectionView.layoutIfNeeded()
         let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
@@ -295,7 +284,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     // MARK: Private
     func refreshEvents(){
         let searchCity = UserSettings.getUserCitySearch()
-        println(locationManager)
         if(countElements(searchCity) > 0){
             println("Custom search city is set as: " + searchCity)
             searchMode = SearchMode.CustomCity
@@ -311,7 +299,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func refreshEventsForCurrentCity(){
-        println("Refreshing events for: " + currentCity!)
         self.navigationTitle.text = "LOADING EVENTS..."
         Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error:NSError!) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -324,7 +311,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     self.eventCollectionView.reloadData()
                     self.pageControl.numberOfPages = 0
                     self.pageControl.currentPage = 0
-                    
                 }else if(events.count == 0){
                     let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                     noEventAlert.show()
@@ -437,7 +423,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             destination?.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
             
             self.navigationController?.pushViewController(destination!, animated: false)
-            
+        
             
         }else{
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true

@@ -20,50 +20,80 @@ public class Event: NSObject {
     let keywords:[String]?
     let tagString:String?
     let title:String?
-    let location:String?
-    let identifier:String?
+    let id:String?
     let displayTime:String?
     let facebookUrl:NSURL?
     let danceDeetsUrl:NSURL?
-    var displayAddress:String?
+    var displayAddress:String = ""
     var geoloc:CLLocation?
-    var admins:[EventAdmin]?
+    var admins:[EventAdmin] = []
     var placemark:CLPlacemark?
     public var detailsLoaded:Bool = false
-    
     var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
     
     init(dictionary:NSDictionary){
         super.init()
-        admins = []
-        venue = dictionary["city"] as? String
-        displayAddress = dictionary["city"] as? String
-        title = dictionary["title"] as? String
-        identifier = dictionary["id"] as? String
         
-        if countElements(identifier!) > 0 {
-            facebookUrl = NSURL(string: "http://www.facebook.com/"+identifier!)
-            danceDeetsUrl = NSURL(string: "http://www.dancedeets.com/events/"+identifier!)
-        }
-        
+        title = dictionary["name"] as? String
+        id = dictionary["id"] as? String
         shortDescription = dictionary["description"] as? String
         
-        let coverUrlKey:NSString = "cover_url"
+        if id != nil && countElements(id!) > 0 {
+            facebookUrl = NSURL(string: "http://www.facebook.com/"+id!)
+            danceDeetsUrl = NSURL(string: "http://www.dancedeets.com/events/"+id!)
+        }
         
-        if let coverDictionary = dictionary[coverUrlKey] as? NSDictionary{
-            if let coverImageUrl = coverDictionary["source"] as? String {
-                eventImageUrl = NSURL(string: coverImageUrl)
-            }
-            if let height = coverDictionary["height"] as? CGFloat{
-                eventImageHeight = height
-            }
-            if let width = coverDictionary["width"] as? CGFloat {
-                eventImageWidth = width
+        // admins
+        if let admins = dictionary["admins"] as? NSArray{
+            for admin in admins{
+                if let adminDict = admin as? NSDictionary{
+                    let name:String? = admin["name"] as? String
+                    let identifier:String? = admin["id"] as? String
+                    if name != nil && identifier != nil{
+                        var newAdmin = EventAdmin(name:name!, identifier:identifier!)
+                        self.admins.append(newAdmin)
+                    }
+                }
             }
         }
         
+        // venue
+        if let venue = dictionary["venue"] as? NSDictionary{
+            if let geocodeDict = venue["geocode"] as? NSDictionary{
+                let lat:CLLocationDegrees = geocodeDict["latitude"] as CLLocationDegrees
+                let long:CLLocationDegrees = geocodeDict["longitude"] as CLLocationDegrees
+                self.geoloc = CLLocation(latitude: lat, longitude: long)
+                
+                
+            }
+            if let name = venue["name"] as? String{
+                self.venue = name
+                displayAddress = name
+            }
+        }
+     
+        // cover image
+        if let coverDictionary = dictionary["cover"] as? NSDictionary{
+            if let images = coverDictionary["images"] as? NSArray{
+                if images.count > 0{
+                    if let firstImage = images[0] as? NSDictionary{
+                        if let source = firstImage["source"] as? String{
+                            eventImageUrl = NSURL(string:source)
+                        }
+                        if let height = firstImage["height"] as? CGFloat {
+                            eventImageHeight = height
+                        }
+                        if let width = firstImage["width"] as? CGFloat {
+                            eventImageWidth = width
+                        }
+                    }
+                }
+            }
+        }
+        
+        // times
         let dateFormatter:NSDateFormatter  = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
         if let startTimeString = dictionary["start_time"] as? String{
             startTime = dateFormatter.dateFromString(startTimeString)
         }
@@ -71,10 +101,9 @@ public class Event: NSObject {
             endTime = dateFormatter.dateFromString(endTimeString)
         }
         
-        // Set up display time
         var dateFormatterStart:NSDateFormatter  = NSDateFormatter()
         var dateFormatterEnd:NSDateFormatter = NSDateFormatter()
-        var dateDisplayString:String  = String()
+        var dateDisplayString:String  =  String()
         dateFormatterStart.dateFormat = "MMM dd, yyyy  |  ha"
         dateFormatterEnd.dateFormat = "ha"
         if (startTime != nil && endTime != nil){
@@ -88,11 +117,11 @@ public class Event: NSObject {
         }
         displayTime = dateDisplayString.uppercaseString
         
-        location = dictionary["location"] as? String
-        
-        if let keywordString = dictionary["keywords"] as? String{
-            tagString = keywordString
-            keywords = keywordString.componentsSeparatedByString(",")
+        // annotations
+        if let annotations = dictionary["annotations"] as? NSDictionary{
+            if let danceKeywords = annotations["dance_keywords"] as? [String]{
+                keywords = danceKeywords
+            }
         }
     }
     
@@ -111,8 +140,7 @@ public class Event: NSObject {
         return sharingItems
     }
     
-    // Attempts to download the cover image for this event
-    // Callback on mainthread
+    // Attempts to download the cover image for this event, callbacks on mainthread
     public func downloadCoverImage(completion:((UIImage!,NSError!)->Void)) ->Void
     {
         if(eventImageUrl != nil){
@@ -145,77 +173,38 @@ public class Event: NSObject {
     
     public func getMoreDetails(completion: ((NSError!)->Void)) -> Void
     {
-        var urlString = "http://www.dancedeets.com/api/events/" + identifier!
-        let url = NSURL(string:urlString)
-        
-        var session = NSURLSession.sharedSession()
-        var task:NSURLSessionTask = session.dataTaskWithURL(url!, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
-            if(error != nil){
-                completion(error)
-            }else{
-                var jsonError:NSError?
-                var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
-                if (jsonError != nil){
-                    completion(jsonError)
-                }else{
-                    // got something, mark this event as loaded we so dont do it again
-                    self.detailsLoaded = true
-                    
-                    if let admins = json!["admins"] as? NSArray{
-                        for admin in admins{
-                            if let adminDict = admin as? NSDictionary{
-                                let name:String? = admin["name"] as? String
-                                let identifier:String? = admin["id"] as? String
-                                if name != nil && identifier != nil{
-                                    var newAdmin = EventAdmin(name:name!, identifier:identifier!)
-                                    self.admins?.append(newAdmin)
-                                }
+        if(!detailsLoaded){
+            detailsLoaded = true
+            if(geoloc != nil){
+                // address info is in the response, but usually we get more details
+                // by using Apples geocoder
+                let geocoder:CLGeocoder = CLGeocoder()
+                geocoder.reverseGeocodeLocation(self.geoloc, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
+                    if placemarks.count > 0{
+                        self.placemark = placemarks.first as? CLPlacemark
+                        
+                        // set up a display address
+                        if let lines = self.placemark?.addressDictionary["FormattedAddressLines"] as? [String]{
+                            if lines.count >= 2{
+                                self.displayAddress += "\n"
+                                self.displayAddress += lines[0]
+                                self.displayAddress += "\n"
+                                self.displayAddress += lines[1]
                             }
                         }
                     }
-                    
-                    // If venue exists, try to reverse geocode an address and callback when that's done
-                    if let venue = json!["venue"] as? NSDictionary{
-                        if let geocodeDict = venue["geocode"] as? NSDictionary{
-                            let lat:CLLocationDegrees = geocodeDict["latitude"] as CLLocationDegrees
-                            let long:CLLocationDegrees = geocodeDict["longitude"] as CLLocationDegrees
-                            self.geoloc = CLLocation(latitude: lat, longitude: long)
-                            
-                            // address info is in the response, but usually we get more details
-                            // by using Apples geocoder
-                            let geocoder:CLGeocoder = CLGeocoder()
-                            geocoder.reverseGeocodeLocation(self.geoloc, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
-                                if placemarks.count > 0{
-                                    self.placemark = placemarks.first as? CLPlacemark
-                                    
-                                    // set up a display address
-                                    if let lines = self.placemark?.addressDictionary["FormattedAddressLines"] as? [String]{
-                                        if lines.count >= 2{
-                                            self.displayAddress! += "\n"
-                                            self.displayAddress! += lines[0]
-                                            self.displayAddress! += "\n"
-                                            self.displayAddress! += lines[1]
-                                        }
-                                    }
-                                }
-                                completion(nil)
-                            })
-                        }else{
-                            completion(nil)
-                        }
-                    }else{
-                        completion(nil)
-                    }
-                }
+                    completion(nil)
+                })
+            }else{
+                completion(nil)
             }
-        })
-        task.resume()
+        }
     }
     
     public class func loadEventsForCity(city:String, completion: (([Event]!, NSError!)->Void)) -> Void
     {
         var cityString:String? = city.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-        var urlString = "http://www.dancedeets.com/events/feed?format=json&distance=10&min_attendees=0&distance_units=miles&location=" + cityString!
+        var urlString = "http://www.dancedeets.com/api/search?location=" + cityString!
         let url = NSURL(string:urlString)
         
         var session = NSURLSession.sharedSession()
@@ -224,18 +213,20 @@ public class Event: NSObject {
                 completion([], error)
             }else{
                 var jsonError:NSError?
-                var json:NSArray? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSArray
+                var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
                 if (jsonError != nil) {
                     completion([], jsonError)
                 }
                 else {
                     var eventList:[Event] = []
-                    if(json != nil && json?.count > 0){
-                        for item in json!{
-                            if let eventDictionary = item as? NSDictionary{
-                                let newEvent:Event? = Event(dictionary: eventDictionary)
-                                if newEvent != nil{
-                                    eventList.append(newEvent!)
+                    if(json != nil){
+                        if let results = json!["results"] as? NSArray{
+                            for item in results{
+                                if let eventDictionary = item as? NSDictionary{
+                                    let newEvent:Event? = Event(dictionary: eventDictionary)
+                                    if newEvent != nil{
+                                        eventList.append(newEvent!)
+                                    }
                                 }
                             }
                         }
