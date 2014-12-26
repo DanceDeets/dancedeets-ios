@@ -19,7 +19,7 @@ class SendFeedbackCell : UITableViewCell
         backgroundColor = UIColor.clearColor()
         
         var bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
+        bgColorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         selectedBackgroundView = bgColorView
         
         feedbackLabel.font = FontFactory.standardTableLabelFont()

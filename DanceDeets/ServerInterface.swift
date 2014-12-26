@@ -10,10 +10,10 @@ import Foundation
 import CoreLocation
 
 /* Any kind of interfacing with the back end should go in here */
-class ServerInterface : NSObject, CLLocationManagerDelegate {
+public class ServerInterface : NSObject, CLLocationManagerDelegate {
     
     // swift doesn't support class constant variables yet, but you can do it in a struct
-    class var sharedInstance : ServerInterface{
+    public class var sharedInstance : ServerInterface{
         struct Static{
             static var onceToken : dispatch_once_t = 0
             static var instance : ServerInterface? = nil
@@ -23,20 +23,30 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
             Static.instance = ServerInterface()
             Static.instance?.locationManager.requestWhenInUseAuthorization()
             Static.instance?.locationManager.delegate = Static.instance
-    
         })
+        
         return Static.instance!
     }
     
+    let baseUrl:String = "http://www.dancedeets.com/api/v1.0"
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
+    
+    func getAuthUrl() -> NSURL {
+        return NSURL(string: baseUrl + "/auth")!
+    }
+    
+    func getEventSearchUrl(city:String) -> NSURL{
+        var cityString:String = city.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        return NSURL(string: baseUrl + "/search?location=" + cityString)!
+    }
     
     func updateFacebookToken(){
         locationManager.startUpdatingLocation()
     }
     
     // MARK: - CLLocationManagerDelegate
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
+    public func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         locationManager.stopUpdatingLocation()
         
         let locationObject:CLLocation = locations.first as CLLocation
@@ -62,10 +72,7 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
                     dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
                     dateFormatter.timeZone = NSTimeZone.systemTimeZone()
                     
-                    var session = NSURLSession.sharedSession()
-                    var urlString = "http://www.dancedeets.com/api/auth"
-                    let url = NSURL(string:urlString)
-                    var urlRequest = NSMutableURLRequest(URL: url!)
+                    var urlRequest = NSMutableURLRequest(URL: self.getAuthUrl())
                     urlRequest.HTTPMethod = "POST"
                     urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
                     
@@ -78,9 +85,8 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
                     urlRequest.HTTPBody = postData
                     
                     // post it up
-                    let task = session.dataTaskWithRequest(urlRequest, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
-                        println("Posted up token")
-                        println(response)
+                    let task = NSURLSession.sharedSession().dataTaskWithRequest(urlRequest, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
+                        println("Posted up token with error: \(error)")
                     })
                     task.resume()
                 }
@@ -88,9 +94,11 @@ class ServerInterface : NSObject, CLLocationManagerDelegate {
         })
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    public func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         locationManager.stopUpdatingLocation()
         println("Couldn't update location")
     }
+    
+
     
 }

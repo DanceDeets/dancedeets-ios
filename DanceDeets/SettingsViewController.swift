@@ -109,7 +109,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             if(indexPath.row == cities.count){
                 let cell = tableView.dequeueReusableCellWithIdentifier("currentLocationCell", forIndexPath: indexPath) as CurrentLocationCell
                 if(city == ""){
-                    cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
+                    cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
                 }
                 return cell
             }
@@ -119,7 +119,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.deleteButton.hidden = false
                 cell.cityLabel.text = cities[indexPath.row]
                 if(city == cities[indexPath.row ]){
-                    cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
+                    cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
                 }
                 return cell
             }

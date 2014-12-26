@@ -17,7 +17,7 @@ class CurrentLocationCell: UITableViewCell {
         backgroundColor = UIColor.clearColor()
         
         var bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
+        bgColorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         selectedBackgroundView = bgColorView
         nearMeImageView.tintColor = ColorFactory.white50()
         

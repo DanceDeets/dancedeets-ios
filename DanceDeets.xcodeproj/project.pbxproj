@@ -250,13 +250,13 @@
 		1D8856B919CDE510005FFDB2 /* DanceDeets */ = {
 			isa = PBXGroup;
 			children = (
+				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
 				1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */,
 				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
-				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
 				1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */,
 				1D0892501A27C97700A9EAC4 /* UserSettings.swift */,
-				1DB901C619E099810018B434 /* Extensions and Utilities */,
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,
+				1DB901C619E099810018B434 /* Extensions and Utilities */,
 				1D19871D1A2A950A004156B2 /* Custom Views */,
 				1D8A063D19CDE5D4004607B6 /* Models */,
 				1D8856BA19CDE510005FFDB2 /* Supporting Files */,

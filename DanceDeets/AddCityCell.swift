@@ -21,7 +21,7 @@ class AddCityCell : UITableViewCell
         cityIcon.tintColor = ColorFactory.white50()
         
         var bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
+        bgColorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         selectedBackgroundView = bgColorView
         
         addCityLabel.font = FontFactory.standardTableLabelFont()

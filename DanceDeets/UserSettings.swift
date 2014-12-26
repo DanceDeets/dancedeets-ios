@@ -9,7 +9,7 @@
 import Foundation
 
 /*
- * Persisting basic user city search setting in user defaults 
+ * Persisting basic user city search settings
  */
 class UserSettings
 {
@@ -26,7 +26,6 @@ class UserSettings
     class func getUserCities()->[String]{
         let userCities = NSUserDefaults.standardUserDefaults().arrayForKey(UserSettings.USER_CITIES_KEY)
         if(userCities == nil){
-            // default cities
             NSUserDefaults.standardUserDefaults().setObject(UserSettings.DEFAULT_CITIES, forKey: UserSettings.USER_CITIES_KEY)
             NSUserDefaults.standardUserDefaults().synchronize()
             return UserSettings.DEFAULT_CITIES
@@ -59,7 +58,6 @@ class UserSettings
     class func getUserCitySearch()->String{
         let city = NSUserDefaults.standardUserDefaults().stringForKey(UserSettings.USER_SEARCH_CITY_KEY)
         if(city == nil){
-            // default cities
             NSUserDefaults.standardUserDefaults().setObject("", forKey: UserSettings.USER_SEARCH_CITY_KEY)
             NSUserDefaults.standardUserDefaults().synchronize()
             return ""

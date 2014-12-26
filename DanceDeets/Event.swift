@@ -62,12 +62,17 @@ public class Event: NSObject {
                 let lat:CLLocationDegrees = geocodeDict["latitude"] as CLLocationDegrees
                 let long:CLLocationDegrees = geocodeDict["longitude"] as CLLocationDegrees
                 self.geoloc = CLLocation(latitude: lat, longitude: long)
-                
-                
             }
             if let name = venue["name"] as? String{
                 self.venue = name
                 displayAddress = name
+            }
+        }
+        
+        // annotations
+        if let annotations = dictionary["annotations"] as? NSDictionary{
+            if let danceKeywords = annotations["dance_keywords"] as? [String]{
+                keywords = danceKeywords
             }
         }
      
@@ -109,19 +114,23 @@ public class Event: NSObject {
             dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
             dateDisplayString += " - "
             dateDisplayString += dateFormatterEnd.stringFromDate(endTime!)
-        } else if(startTime != nil){
+        }else if(startTime != nil){
             dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
         }else{
-            dateDisplayString = "Unknown Time"
-        }
-        displayTime = dateDisplayString.uppercaseString
-        
-        // annotations
-        if let annotations = dictionary["annotations"] as? NSDictionary{
-            if let danceKeywords = annotations["dance_keywords"] as? [String]{
-                keywords = danceKeywords
+            // check for full day event
+            let dateFormatter:NSDateFormatter  = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy'-'MM'-'dd"
+            
+            if let startTimeString = dictionary["start_time"] as? String{
+                startTime = dateFormatter.dateFromString(startTimeString)
+                if(startTime != nil){
+                    var displayFormatter:NSDateFormatter = NSDateFormatter()
+                    displayFormatter.dateFormat = "MMM dd, yyyy  |  'All Day'"
+                    dateDisplayString = displayFormatter.stringFromDate(startTime!)
+                }
             }
         }
+        displayTime = dateDisplayString.uppercaseString
     }
     
     // Create sharing items for the activity sheet
@@ -170,6 +179,38 @@ public class Event: NSObject {
         }
     }
     
+    public class func loadEventsForCity(city:String, completion: (([Event]!, NSError!)->Void)) -> Void
+    {
+        var task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(ServerInterface.sharedInstance.getEventSearchUrl(city), completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
+            if(error != nil){
+                completion([], error)
+            }else{
+                var jsonError:NSError?
+                var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
+                if (jsonError != nil) {
+                    completion([], jsonError)
+                }
+                else {
+                    var eventList:[Event] = []
+                    if(json != nil){
+                        if let results = json!["results"] as? NSArray{
+                            for item in results{
+                                if let eventDictionary = item as? NSDictionary{
+                                    let newEvent:Event? = Event(dictionary: eventDictionary)
+                                    if newEvent != nil{
+                                        eventList.append(newEvent!)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    completion(eventList, nil)
+                }
+            }
+        })
+        task.resume()
+    }
+    
     public func getMoreDetails(completion: ((NSError!)->Void)) -> Void
     {
         if(!detailsLoaded){
@@ -198,43 +239,6 @@ public class Event: NSObject {
                 completion(nil)
             }
         }
-    }
-    
-    public class func loadEventsForCity(city:String, completion: (([Event]!, NSError!)->Void)) -> Void
-    {
-        var cityString:String? = city.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-        var urlString = "http://www.dancedeets.com/api/search?location=" + cityString!
-        let url = NSURL(string:urlString)
-        
-        var session = NSURLSession.sharedSession()
-        var task:NSURLSessionTask = session.dataTaskWithURL(url!, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
-            if(error != nil){
-                completion([], error)
-            }else{
-                var jsonError:NSError?
-                var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
-                if (jsonError != nil) {
-                    completion([], jsonError)
-                }
-                else {
-                    var eventList:[Event] = []
-                    if(json != nil){
-                        if let results = json!["results"] as? NSArray{
-                            for item in results{
-                                if let eventDictionary = item as? NSDictionary{
-                                    let newEvent:Event? = Event(dictionary: eventDictionary)
-                                    if newEvent != nil{
-                                        eventList.append(newEvent!)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    completion(eventList, nil)
-                }
-            }
-        })
-        task.resume()
     }
     
 }
