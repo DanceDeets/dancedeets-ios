@@ -94,6 +94,11 @@ public class Event: NSObject {
                 }
             }
         }
+        if(eventImageUrl == nil){
+            if let picture = dictionary["picture"] as? String{
+                eventImageUrl = NSURL(string:picture)
+            }
+        }
         
         // times
         let dateFormatter:NSDateFormatter  = NSDateFormatter()
@@ -211,15 +216,14 @@ public class Event: NSObject {
         task.resume()
     }
     
-    public func getMoreDetails(completion: ((NSError!)->Void)) -> Void
+    public func getMoreDetails(completion: (()->Void)) -> Void
     {
+        // using Apple's geocoder to reverse geocode the lat long
         if(!detailsLoaded){
             detailsLoaded = true
             if(geoloc != nil){
-                // address info is in the response, but usually we get more details
-                // by using Apples geocoder
                 let geocoder:CLGeocoder = CLGeocoder()
-                geocoder.reverseGeocodeLocation(self.geoloc, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
+                geocoder.reverseGeocodeLocation(geoloc, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
                     if placemarks.count > 0{
                         self.placemark = placemarks.first as? CLPlacemark
                         
@@ -233,11 +237,13 @@ public class Event: NSObject {
                             }
                         }
                     }
-                    completion(nil)
+                    completion()
                 })
             }else{
-                completion(nil)
+                completion()
             }
+        }else{
+            completion()
         }
     }
     

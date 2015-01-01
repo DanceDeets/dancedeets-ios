@@ -37,6 +37,7 @@ class EventCollectionViewCell: UICollectionViewCell {
     
     func updateForEvent(event:Event){
         layoutIfNeeded()
+        currentEvent = event
         
         eventTitleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
@@ -45,15 +46,14 @@ class EventCollectionViewCell: UICollectionViewCell {
         eventCoverImageHeightConstraint.constant = eventCoverImage.frame.size.width
         eventCoverImage.contentMode = UIViewContentMode.ScaleAspectFill
         
-        // if height and width are available, re calc the constraints to keep a nice aspect ratio
+        // if height and width are available, re calc the constraints to keep the same aspect ratio
         if(event.eventImageHeight != nil && event.eventImageWidth != nil){
             let aspectRatio = event.eventImageWidth! / event.eventImageHeight!
             let calcHeight = eventCoverImage.frame.size.width / aspectRatio
             eventCoverImageHeightConstraint.constant = calcHeight
-            eventCoverImage.contentMode = UIViewContentMode.ScaleAspectFill
+        // else square
         }else{
             eventCoverImageHeightConstraint.constant = eventCoverImage.frame.size.width
-            eventCoverImage.contentMode = UIViewContentMode.ScaleAspectFill
         }
        
         contentView.layoutIfNeeded()

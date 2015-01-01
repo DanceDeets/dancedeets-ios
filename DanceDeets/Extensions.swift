@@ -31,6 +31,12 @@ extension NSMutableAttributedString{
             value: color,
             range: NSMakeRange(0, countElements(self.string)))
     }
+    
+    func setBackgroundColor(color:UIColor){
+        self.addAttribute(NSBackgroundColorAttributeName,
+            value: color,
+            range: NSMakeRange(0, countElements(self.string)))
+    }
 }
 
 

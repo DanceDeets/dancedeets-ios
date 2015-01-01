@@ -165,6 +165,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
         let cell:EventCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("eventCollectionViewCell", forIndexPath: indexPath) as? EventCollectionViewCell
         let event = events[indexPath.row] as Event
+        let currentEvent = event
         cell?.updateForEvent(event)
         cell?.eventCoverImage?.image = nil
         
@@ -174,8 +175,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 cell?.eventCoverImage?.image = image
             }else{
                 event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
-                    if(image != nil){
-                        cell?.eventCoverImage?.image = image
+                    if(currentEvent == cell?.currentEvent){
+                        if(image != nil){
+                            cell?.eventCoverImage?.image = image
+                        }
                     }
                 })
             }
@@ -197,6 +200,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         pageControl.currentPageIndicatorTintColor = UIColor.whiteColor()
         pageControl.addTarget(self, action: "pageControllerChanged", forControlEvents: UIControlEvents.ValueChanged)
         pageControl.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+        pageControl.numberOfPages = 0
         
         locationManager.delegate = self
         
@@ -275,6 +279,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         if let indexPath = find(events,event){
             selectedIndexPath = NSIndexPath(forItem: indexPath, inSection: 0)
+            println(selectedIndexPath)
+            pageControl.currentPage = indexPath
+            eventCollectionView.scrollToItemAtIndexPath(selectedIndexPath!, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
         }
         
         self.searchController?.active = false
@@ -411,48 +418,28 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     
     func segueIntoEventDetail(event:Event){
-        if event.detailsLoaded{
-            
-            // convert frame of the image
-            let eventCell = eventCollectionView.cellForItemAtIndexPath(selectedIndexPath!) as EventCollectionViewCell
-            let convertCoverImageRect = view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
-            
-            let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as? EventDetailViewController
-            destination?.event = event
-            destination?.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
-            destination?.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-            
-            self.navigationController?.pushViewController(destination!, animated: false)
-        
-            
-        }else{
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            self.eventCollectionView.userInteractionEnabled = false
-            event.getMoreDetails({ (error:NSError!) -> Void in
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.eventCollectionView.userInteractionEnabled = true
-                    if(error == nil){
-                        
-                        // convert frame of the image
-                        let eventCell = self.eventCollectionView.cellForItemAtIndexPath(self.selectedIndexPath!) as EventCollectionViewCell
-                        let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
-
-                        let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as? EventDetailViewController
-                        destination?.event = event
-                        destination?.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
-                        destination?.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-
-                        self.navigationController?.pushViewController(destination!, animated: false)
-                        
-                        
-                    }else{
-                        let alert:UIAlertView = UIAlertView(title: "Sorry", message: "Couldn't get the deets to that event right now", delegate: nil, cancelButtonTitle: "OK")
-                        alert.show()
-                    }
-                })
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        self.eventCollectionView.userInteractionEnabled = false
+        event.getMoreDetails({ () -> Void in
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            dispatch_async(dispatch_get_main_queue(), {
+                self.eventCollectionView.userInteractionEnabled = true
+                
+                // the collection cell of the selected event
+                let eventCell = self.eventCollectionView.cellForItemAtIndexPath(self.selectedIndexPath!) as EventCollectionViewCell
+                
+                // convert event cover image relative to view controller view
+                let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
+                
+                // set up destination view controller w/ cover image dimensions
+                let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as? EventDetailViewController
+                destination?.event = event
+                destination?.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
+                destination?.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+                
+                self.navigationController?.pushViewController(destination!, animated: false)
             })
-        }
+        })
     }
     
     func filterContentForSearchText(searchText: String) {

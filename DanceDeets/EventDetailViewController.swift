@@ -47,7 +47,11 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     @IBOutlet weak var eventCoverImageViewLeftConstraint: NSLayoutConstraint!
     
     func getTopOffset()->CGFloat{
-       return navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.size.height
+        if(navigationController != nil){
+            return navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.size.height
+        }else{
+            return CGFloat.min
+        }
     }
     
     // MARK: UIViewController
@@ -76,12 +80,11 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET
         eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
         
-        
         detailsTableView.delegate = self
         detailsTableView.dataSource = self
         
-        if (event.eventImageUrl != nil){
-            let imageRequest:NSURLRequest = NSURLRequest(URL: event!.eventImageUrl!)
+        if let url = event.eventImageUrl{
+            let imageRequest:NSURLRequest = NSURLRequest(URL: url)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
                 eventCoverImageView.image = image
             }else{
@@ -95,13 +98,14 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         backgroundOverlay = backgroundView.addDarkBlurOverlay()
         backgroundOverlay.alpha = 0
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        detailsTableView.reloadData()
-        coverCell?.alpha = 0
-        timeCell?.alpha = 0
-        venueCell?.alpha = 0
-        descriptionCell?.alpha = 0
-        mapCell?.alpha = 0
+        // fade in animation on load
+        if(!loaded){
+            cell.alpha = 0
+        }
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -258,7 +262,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                 lineHeight: FontFactory.eventDescriptionLineHeight(),
                 font: FontFactory.eventDescriptionFont(),
                 width:width)
-            return height + 20
+            return height + 30
         }else if(indexPath.row == 5){
             // map
             return 300;

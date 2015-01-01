@@ -40,7 +40,7 @@ class DanceDeetsTests: XCTestCase {
             
             let firstEvent:Event? = events.first
             XCTAssert(firstEvent?.detailsLoaded == false)
-            firstEvent?.getMoreDetails({ (error:NSError!) -> Void in
+            firstEvent?.getMoreDetails({ () -> Void in
                 XCTAssert(error == nil)
                 XCTAssert(firstEvent?.detailsLoaded == true)
                 expectation.fulfill()

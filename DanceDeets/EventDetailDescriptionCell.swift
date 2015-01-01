@@ -8,14 +8,19 @@
 import UIKit
 
 class EventDetailDescriptionCell: UITableViewCell {
-    @IBOutlet weak var eventDescriptionLabel: UILabel!
+    
+    @IBOutlet weak var textView: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = UIColor.clearColor()
         selectionStyle = UITableViewCellSelectionStyle.None
-        eventDescriptionLabel.numberOfLines = 0
-        eventDescriptionLabel.backgroundColor = UIColor.clearColor()
+        
+        textView.backgroundColor = UIColor.clearColor()
+        textView.scrollEnabled = false
+        textView.textContainerInset = UIEdgeInsetsZero
+        textView.font = FontFactory.eventDescriptionFont()
+        textView.tintColor = ColorFactory.lightBlue()
     }
     
     func updateViewForEvent(event:Event){
@@ -25,7 +30,7 @@ class EventDetailDescriptionCell: UITableViewCell {
         attributedDescription.setFont(FontFactory.eventDescriptionFont())
         attributedDescription.setColor(UIColor.whiteColor())
         
-        eventDescriptionLabel.attributedText = attributedDescription
+        textView.attributedText = attributedDescription
         contentView.setNeedsLayout()
         contentView.layoutIfNeeded()
     }
