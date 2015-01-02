@@ -10,13 +10,8 @@ import MapKit
 
 class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAlertViewDelegate {
 
-    @IBOutlet weak var addressLine2: UILabel!
-    @IBOutlet weak var addressLine1: UILabel!
     @IBOutlet weak var venueLabel: UILabel!
     @IBOutlet weak var pinIcon: UIImageView!
-    @IBOutlet weak var getDirectionButton: UIButton!
-    
-    //@IBOutlet weak var mapView: MKMapView!
     
     var event:Event?
     var directionAlert:UIAlertView?
@@ -56,59 +51,10 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
     }
     
     func updateViewForEvent(event:Event){
-        
-           // if(event.displayAddress != nil){
-                var attributedDescription = NSMutableAttributedString(string: event.displayAddress)
-                attributedDescription.setLineHeight(FontFactory.eventVenueLineHeight())
-                attributedDescription.setFont(FontFactory.eventVenueFont())
-                attributedDescription.setColor(UIColor.whiteColor())
-                venueLabel.attributedText = attributedDescription
-                println(venueLabel.frame)
-           // }
-            
-            /*
-            if(event.placemark != nil && event.placemark?.addressDictionary != nil){
-                
-                var line1:String?
-                if let lines = event.placemark?.addressDictionary["FormattedAddressLines"] as? [String]{
-                    if lines.count >= 2{
-                       // let line1String = event.placemark!.subThoroughfare + " " + event.placemark!.thoroughfare
-                        var line1 = NSMutableAttributedString(string:lines[0])
-                        line1.setLineHeight(EventDetailLocationCell.venueLineHeight())
-                        line1.setFont(EventDetailLocationCell.venueFont())
-                        line1.setColor(ColorFactory.darkYellow())
-                        addressLine1.attributedText = line1
-                        addressLine1.sizeToFit()
-                        
-                        //let line2String = event.placemark!.locality + ", " +
-                          //  event.placemark!.administrativeArea + ", " +
-                           // event.placemark!.postalCode
-                        var line2 = NSMutableAttributedString(string:lines[1])
-                        line2.setLineHeight(EventDetailLocationCell.venueLineHeight())
-                        line2.setFont(EventDetailLocationCell.venueFont())
-                        line2.setColor(ColorFactory.darkYellow())
-                        addressLine2.attributedText = line2
-                        addressLine2.sizeToFit()
-                    }
-                }
-                
-          
-                
-                if(event.geoloc != nil){
-                    let annotation:MKPointAnnotation = MKPointAnnotation()
-                    annotation.setCoordinate(event.geoloc!.coordinate)
-                   // mapView.addAnnotation(annotation)
-                   // mapView.centerCoordinate = event.geoloc!.coordinate
-                    
-                    let region = MKCoordinateRegionMakeWithDistance(event.geoloc!.coordinate, 1500,1500)
-                   // mapView.setRegion(region,animated:false)
-                    
-                }
-                
-            }
-*/
-            contentView.setNeedsLayout()
-            contentView.layoutIfNeeded()
-            layoutIfNeeded()
+        var attributedDescription = NSMutableAttributedString(string: event.displayAddress)
+        attributedDescription.setLineHeight(FontFactory.eventVenueLineHeight())
+        attributedDescription.setFont(FontFactory.eventVenueFont())
+        attributedDescription.setColor(UIColor.whiteColor())
+        venueLabel.attributedText = attributedDescription
     }
 }

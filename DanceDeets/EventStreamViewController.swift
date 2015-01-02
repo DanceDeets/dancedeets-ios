@@ -11,7 +11,7 @@ import CoreLocation
 import MessageUI
 import QuartzCore
 
-class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UISearchResultsUpdating,UISearchControllerDelegate, UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate {
+class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UISearchResultsUpdating,UISearchControllerDelegate, UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate {
     
     enum SearchMode{
         case CurrentLocation
@@ -33,6 +33,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var blurOverlay:UIView?
     var selectedIndexPath:NSIndexPath?
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
+    var titleTapGestureRecognizer:UITapGestureRecognizer?
     
     // MARK: Outlets
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -41,6 +42,15 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var pageControl: UIPageControl!
     
     // MARK: Action
+    @IBAction func refreshButtonTapped(sender: AnyObject) {
+        if(events.count > 0){
+            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+            pageControl.currentPage = 0
+            eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: true)
+        }
+        refreshEvents()
+    }
+    
     @IBAction func searchBarButtonTapped(sender: AnyObject) {
         blurOverlay?.fadeIn(0.4,nil)
         searchController?.searchBar.hidden = false
@@ -75,6 +85,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if(scrollView == eventCollectionView){
+            // updates the highlighted page control
             let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
             let itemHeight = Int(flowLayout!.itemSize.height)
             let targetOff = Int(targetContentOffset.memory.y)
@@ -88,24 +99,22 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         }
     }
     
-    
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.loadViewController()
-        self.loadSearchController()
+        loadViewController()
+        loadSearchController()
         
         locationManager.requestWhenInUseAuthorization()
         
-        // notification registration
+        // notifications for keyboard
         NSNotificationCenter.defaultCenter().addObserver(
             self,
             selector: "handleKeyboardShown:",
             name: UIKeyboardDidShowNotification,
             object: nil)
         
-        // notification registration
         NSNotificationCenter.defaultCenter().addObserver(
             self,
             selector: "handleKeyboardHidden:",
@@ -114,7 +123,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     override func viewWillAppear(animated: Bool) {
-        println("EventStreamViewController -> viewWillAppear")
         super.viewWillAppear(animated)
         
         if(requiresRefresh){
@@ -152,9 +160,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: UICollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        var selectedEvent:Event = events[indexPath.row]
         selectedIndexPath = indexPath
-        segueIntoEventDetail(selectedEvent)
+        segueIntoEventDetail(events[indexPath.row])
     }
     
     // MARK: UICollectionViewDataSource
@@ -167,14 +174,16 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         let event = events[indexPath.row] as Event
         let currentEvent = event
         cell?.updateForEvent(event)
-        cell?.eventCoverImage?.image = nil
         
         if event.eventImageUrl != nil{
             let imageRequest:NSURLRequest = NSURLRequest(URL: event.eventImageUrl!)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
                 cell?.eventCoverImage?.image = image
             }else{
+                
+                cell?.eventCoverImage?.image = nil
                 event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
+                    // guard against cell reuse + async download
                     if(currentEvent == cell?.currentEvent){
                         if(image != nil){
                             cell?.eventCoverImage?.image = image
@@ -182,12 +191,21 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     }
                 })
             }
+        }else{
+            cell?.eventCoverImage?.image = nil
         }
         
+        // prefetch next image if possible
         if(indexPath.row < events.count - 1){
-            let prefetchEvent:Event = events[indexPath.row+1]
-            prefetchEvent.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
-            })
+            let prefetchEvent:Event = events[indexPath.row + 1]
+            if prefetchEvent.eventImageUrl != nil{
+                let imageRequest:NSURLRequest = NSURLRequest(URL: prefetchEvent.eventImageUrl!)
+                if ImageCache.sharedInstance.cachedImageForRequest(imageRequest) ==  nil{
+                    prefetchEvent.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
+                    })
+                }
+            }
+            
         }
         
         return cell!
@@ -214,7 +232,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         navigationTitle.text = ""
         navigationItem.title = ""
         
-        eventCollectionView.layoutIfNeeded()
         let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
         flowLayout?.sectionInset = UIEdgeInsetsZero
         flowLayout?.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height - COLLECTION_VIEW_TOP_MARGIN)
@@ -222,12 +239,17 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         blurOverlay = view.addDarkBlurOverlay()
         blurOverlay?.alpha = 0
+        
+        titleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "refreshButtonTapped:")
+        titleTapGestureRecognizer?.delegate = self
+        navigationTitle.userInteractionEnabled = true
+        navigationTitle.addGestureRecognizer(titleTapGestureRecognizer!)
+        
     }
     
     // MARK: - CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         locationManager.stopUpdatingLocation()
-        self.title = ""
         
         let locationObject:CLLocation = locations.first as CLLocation
         geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
@@ -237,6 +259,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 self.refreshEventsForCurrentCity()
             }else{
                 let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
+                self.navigationTitle.text = "RETRY"
                 locationFailure.show()
             }
         })
@@ -244,9 +267,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         locationManager.stopUpdatingLocation()
-        
         let locationFailure:UIAlertView = UIAlertView(title: "Having some trouble getting your location", message: "", delegate: nil, cancelButtonTitle: "OK")
         locationFailure.show()
+        navigationTitle.text = "RETRY"
     }
     
     // MARK: UITableViewDataSource / UITableViewDelegate
@@ -267,7 +290,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("filteredEventCell", forIndexPath: indexPath) as SearchResultsTableCell
         let event:Event = self.filteredEvents[indexPath.row]
         cell.updateForEvent(event)
@@ -277,9 +299,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let event:Event = filteredEvents[indexPath.row]
         
+        // locate the filtered event's position in the main event array
         if let indexPath = find(events,event){
             selectedIndexPath = NSIndexPath(forItem: indexPath, inSection: 0)
-            println(selectedIndexPath)
             pageControl.currentPage = indexPath
             eventCollectionView.scrollToItemAtIndexPath(selectedIndexPath!, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
         }
@@ -290,26 +312,22 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: Private
     func refreshEvents(){
+        navigationTitle.text = "LOADING..."
         let searchCity = UserSettings.getUserCitySearch()
         if(countElements(searchCity) > 0){
-            println("Custom search city is set as: " + searchCity)
             searchMode = SearchMode.CustomCity
             currentCity = searchCity
             refreshEventsForCurrentCity()
         }else{
-            println("Custom search city not set, using location manager")
             searchMode = SearchMode.CurrentLocation
             currentCity = ""
-            navigationTitle.text = "UPDATING LOCATION..."
             locationManager.startUpdatingLocation()
         }
     }
     
     func refreshEventsForCurrentCity(){
-        self.navigationTitle.text = "LOADING EVENTS..."
         Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error:NSError!) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.navigationTitle.text = self.currentCity!.uppercaseString
                 // check response
                 if(error != nil){
                     let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
@@ -318,6 +336,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     self.eventCollectionView.reloadData()
                     self.pageControl.numberOfPages = 0
                     self.pageControl.currentPage = 0
+                    self.navigationTitle.text = "TRY AGAIN"
                 }else if(events.count == 0){
                     let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                     noEventAlert.show()
@@ -325,7 +344,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     self.eventCollectionView.reloadData()
                     self.pageControl.numberOfPages = 0
                     self.pageControl.currentPage = 0
+                    self.navigationTitle.text = "TRY AGAIN"
                 }else{
+                    self.navigationTitle.text = self.currentCity!.uppercaseString
                     self.events = events
                     self.pageControl.numberOfPages = self.events.count
                     self.pageControl.currentPage = 0
@@ -385,7 +406,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         gradientLayer?.anchorPoint = CGPoint.zeroPoint
         searchResultsTableView!.layer.mask = gradientLayer
     }
-    
     
     func handleKeyboardShown(notification:NSNotification){
         // when keyboard pops up we want to layout the search results table view to end right at the top of the keyboard

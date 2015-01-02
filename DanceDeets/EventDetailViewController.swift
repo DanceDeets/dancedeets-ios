@@ -291,7 +291,9 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             AppDelegate.sharedInstance().allowLandscape = true
             performSegueWithIdentifier("fullScreenImageSegue", sender: self)
         }else if(indexPath.row == 3 || indexPath.row == 5){
-            directionAlert?.show()
+            if ( event.placemark != nil){
+                directionAlert?.show()
+            }
         }
     }
     
@@ -311,7 +313,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     
     // MARK: UIAlertViewDelegate
     func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
-        if(alertView == directionAlert && event.placemark != nil){
+        if(alertView == directionAlert){
             if(buttonIndex == 1){
                 let placemark = MKPlacemark(placemark: event.placemark!)
                 let mapItem:MKMapItem = MKMapItem(placemark: placemark)

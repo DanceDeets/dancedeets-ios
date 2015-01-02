@@ -34,7 +34,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Navigation Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCA-Tc-CJh">
-                                <rect key="frame" x="120" y="32" width="360" height="21"/>
+                                <rect key="frame" x="241" y="32" width="119" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="YFD-3q-WUA"/>
                                 </constraints>
@@ -47,6 +47,20 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cxa-HD-ust">
+                                <rect key="frame" x="365" y="15" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="wAr-rS-lbg"/>
+                                    <constraint firstAttribute="width" constant="50" id="zyG-9S-8vj"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="refreshIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="refreshButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="Ndh-kW-qtJ"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Snq-oY-pp0">
                                 <rect key="frame" x="551" y="15" width="50" height="50"/>
                                 <constraints>
@@ -89,7 +103,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="599.5" height="530"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="530"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UqS-83-RSC">
@@ -205,6 +219,7 @@
                             <constraint firstAttribute="centerX" secondItem="IbI-W0-Nu5" secondAttribute="centerX" id="F9r-Iq-1v6"/>
                             <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="CIT-1y-Jqu" secondAttribute="bottom" constant="-20" id="Jep-dV-Up0"/>
                             <constraint firstAttribute="trailing" secondItem="Snq-oY-pp0" secondAttribute="trailing" constant="-1" id="LE3-7J-IKr"/>
+                            <constraint firstItem="Cxa-HD-ust" firstAttribute="leading" secondItem="dCA-Tc-CJh" secondAttribute="trailing" constant="5" id="LWc-zE-eDi"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="bottom" secondItem="h61-S6-mbM" secondAttribute="bottom" id="Pi8-1U-Qdb"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="Wqz-Fa-g7r"/>
                             <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" id="Zdg-L6-KEx"/>
@@ -213,6 +228,7 @@
                             <constraint firstAttribute="width" secondItem="IbI-W0-Nu5" secondAttribute="width" id="nRy-Kc-KtG"/>
                             <constraint firstItem="dCA-Tc-CJh" firstAttribute="width" secondItem="h61-S6-mbM" secondAttribute="width" multiplier="0.6" id="oWQ-Kx-ymd"/>
                             <constraint firstAttribute="trailing" secondItem="JXY-wj-LzV" secondAttribute="trailing" constant="-143" id="sGN-xj-KlL"/>
+                            <constraint firstItem="Cxa-HD-ust" firstAttribute="centerY" secondItem="dCA-Tc-CJh" secondAttribute="centerY" constant="-3" id="xQK-dI-cbJ"/>
                             <constraint firstAttribute="centerY" secondItem="JXY-wj-LzV" secondAttribute="centerY" id="yf3-gQ-cIR"/>
                         </constraints>
                         <variation key="default">
@@ -220,6 +236,7 @@
                                 <exclude reference="dAf-Ey-3gB"/>
                                 <exclude reference="Jep-dV-Up0"/>
                                 <exclude reference="Zdg-L6-KEx"/>
+                                <exclude reference="oWQ-Kx-ymd"/>
                                 <exclude reference="47d-u7-58g"/>
                             </mask>
                         </variation>
@@ -1084,6 +1101,7 @@
         <image name="feedbackIcon" width="16" height="16"/>
         <image name="logoutIcon" width="16" height="16"/>
         <image name="pinIcon" width="10" height="12"/>
+        <image name="refreshIcon" width="16" height="16"/>
         <image name="removeIcon" width="15" height="15"/>
         <image name="searchIcon" width="20" height="20"/>
         <image name="settingsIcon" width="25" height="25"/>

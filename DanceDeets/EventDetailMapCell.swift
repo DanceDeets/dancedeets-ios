@@ -29,7 +29,9 @@ class EventDetailMapCell:UITableViewCell, UIAlertViewDelegate
     }
     
     @IBAction func getDirectionButtonTapped(sender: AnyObject) {
-        directionAlert?.show()
+        if(currentEvent != nil && currentEvent?.placemark != nil){
+            directionAlert?.show()
+        }
     }
     
     func updateViewForEvent(event:Event){
@@ -50,23 +52,21 @@ class EventDetailMapCell:UITableViewCell, UIAlertViewDelegate
     
     // MARK: UIAlertViewDelegate
     func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
-        if(currentEvent != nil && currentEvent?.placemark != nil){
-            if(alertView == directionAlert){
-                if(buttonIndex == 1){
-                    let placemark = MKPlacemark(placemark: currentEvent!.placemark!)
-                    let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                    
-                    let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
-                    mapItem.openInMapsWithLaunchOptions(launchOptions)
-                }else if(buttonIndex == 2){
-                    let placemark = MKPlacemark(placemark: currentEvent!.placemark!)
-                    let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                    
-                    let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
-                    mapItem.openInMapsWithLaunchOptions(launchOptions)
-                }
+        if(alertView == directionAlert){
+            if(buttonIndex == 1){
+                let placemark = MKPlacemark(placemark: currentEvent!.placemark!)
+                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
                 
+                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
+                mapItem.openInMapsWithLaunchOptions(launchOptions)
+            }else if(buttonIndex == 2){
+                let placemark = MKPlacemark(placemark: currentEvent!.placemark!)
+                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
+                
+                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
+                mapItem.openInMapsWithLaunchOptions(launchOptions)
             }
+            
         }
     }
     
