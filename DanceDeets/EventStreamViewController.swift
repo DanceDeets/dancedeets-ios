@@ -34,8 +34,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var selectedIndexPath:NSIndexPath?
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
+    var refreshAnimating:Bool = false
     
     // MARK: Outlets
+    @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var navigationTitle: UILabel!
     @IBOutlet weak var eventCollectionView: UICollectionView!
@@ -212,6 +214,32 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     // MARK: Private
+    func rotateRefresh(options: UIViewAnimationOptions){
+        UIView.animateWithDuration(0.5, delay: 0, options: options, animations: { () -> Void in
+            self.refreshButton.transform = CGAffineTransformRotate(self.refreshButton.transform, CGFloat(M_PI_2))
+            }) { (bool:Bool) -> Void in
+                if bool {
+                    if(self.refreshAnimating){
+                        self.rotateRefresh(UIViewAnimationOptions.CurveLinear)
+                    }else if (options != UIViewAnimationOptions.CurveEaseOut){
+                        self.rotateRefresh(UIViewAnimationOptions.CurveEaseOut)
+                    }
+                }
+                return;
+        }
+    }
+    
+    func startSpin(){
+        if(!refreshAnimating){
+            refreshAnimating = true
+            rotateRefresh(UIViewAnimationOptions.CurveEaseIn)
+        }
+    }
+    
+    func stopSpin(){
+        refreshAnimating = false
+    }
+    
     func loadViewController(){
         
         pageControl.pageIndicatorTintColor = UIColor.whiteColor().colorWithAlphaComponent(0.3)
@@ -260,12 +288,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             }else{
                 let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
                 self.navigationTitle.text = "RETRY"
+                self.stopSpin()
                 locationFailure.show()
             }
         })
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        stopSpin()
         locationManager.stopUpdatingLocation()
         let locationFailure:UIAlertView = UIAlertView(title: "Having some trouble getting your location", message: "", delegate: nil, cancelButtonTitle: "OK")
         locationFailure.show()
@@ -313,6 +343,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     // MARK: Private
     func refreshEvents(){
         navigationTitle.text = "LOADING..."
+        startSpin()
         let searchCity = UserSettings.getUserCitySearch()
         if(countElements(searchCity) > 0){
             searchMode = SearchMode.CustomCity
@@ -328,6 +359,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func refreshEventsForCurrentCity(){
         Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error:NSError!) in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.stopSpin()
                 // check response
                 if(error != nil){
                     let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")

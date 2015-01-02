@@ -34,8 +34,9 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Navigation Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCA-Tc-CJh">
-                                <rect key="frame" x="241" y="32" width="119" height="21"/>
+                                <rect key="frame" x="241" y="23" width="119" height="40"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Hk1-kH-DOs"/>
                                     <constraint firstAttribute="height" constant="70" id="YFD-3q-WUA"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -47,8 +48,8 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cxa-HD-ust">
-                                <rect key="frame" x="365" y="15" width="50" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cxa-HD-ust">
+                                <rect key="frame" x="348" y="15" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="wAr-rS-lbg"/>
                                     <constraint firstAttribute="width" constant="50" id="zyG-9S-8vj"/>
@@ -107,7 +108,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UqS-83-RSC">
-                                                    <rect key="frame" x="15" y="69" width="570" height="21"/>
+                                                    <rect key="frame" x="15" y="69" width="570" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -130,7 +131,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTb-eV-ET0">
-                                                    <rect key="frame" x="38" y="402" width="552" height="21"/>
+                                                    <rect key="frame" x="38" y="402" width="552" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -143,7 +144,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fT-c4-V0N">
-                                                    <rect key="frame" x="38" y="427" width="552" height="21"/>
+                                                    <rect key="frame" x="38" y="427" width="552" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -210,7 +211,7 @@
                             <constraint firstItem="985-JS-nOW" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" constant="16" id="2V8-XN-F6P"/>
                             <constraint firstItem="Snq-oY-pp0" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" constant="15" id="3EI-4F-BRj"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="top" id="3jb-Xt-E9m"/>
-                            <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" constant="32" id="3uL-tq-Rhm"/>
+                            <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" constant="23" id="3uL-tq-Rhm"/>
                             <constraint firstItem="Snq-oY-pp0" firstAttribute="top" secondItem="CIT-1y-Jqu" secondAttribute="bottom" id="47d-u7-58g"/>
                             <constraint firstItem="Su9-au-Hmc" firstAttribute="top" secondItem="IbI-W0-Nu5" secondAttribute="bottom" id="7SG-wg-xrd"/>
                             <constraint firstItem="IbI-W0-Nu5" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" constant="70" id="Cpo-hq-1PO"/>
@@ -219,7 +220,7 @@
                             <constraint firstAttribute="centerX" secondItem="IbI-W0-Nu5" secondAttribute="centerX" id="F9r-Iq-1v6"/>
                             <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="CIT-1y-Jqu" secondAttribute="bottom" constant="-20" id="Jep-dV-Up0"/>
                             <constraint firstAttribute="trailing" secondItem="Snq-oY-pp0" secondAttribute="trailing" constant="-1" id="LE3-7J-IKr"/>
-                            <constraint firstItem="Cxa-HD-ust" firstAttribute="leading" secondItem="dCA-Tc-CJh" secondAttribute="trailing" constant="5" id="LWc-zE-eDi"/>
+                            <constraint firstItem="Cxa-HD-ust" firstAttribute="leading" secondItem="dCA-Tc-CJh" secondAttribute="trailing" constant="-12" id="LWc-zE-eDi"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="bottom" secondItem="h61-S6-mbM" secondAttribute="bottom" id="Pi8-1U-Qdb"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="Wqz-Fa-g7r"/>
                             <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" id="Zdg-L6-KEx"/>
@@ -250,6 +251,7 @@
                         <outlet property="eventCollectionView" destination="IbI-W0-Nu5" id="17d-tu-MdE"/>
                         <outlet property="navigationTitle" destination="dCA-Tc-CJh" id="Rh3-hf-Zjx"/>
                         <outlet property="pageControl" destination="JXY-wj-LzV" id="m3Q-mr-sHK"/>
+                        <outlet property="refreshButton" destination="Cxa-HD-ust" id="ygI-MM-GZk"/>
                         <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="vjg-jf-Ol8"/>
                         <segue destination="Gdp-6o-WzI" kind="presentation" identifier="settingsSegue" modalTransitionStyle="crossDissolve" id="jGw-rt-6UH"/>
                     </connections>
