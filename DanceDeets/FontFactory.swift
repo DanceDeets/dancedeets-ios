@@ -47,4 +47,7 @@ class FontFactory {
     class func settingsHeaderFont()->UIFont{
         return UIFont(name:"Interstate-BoldCondensed",size:15)!
     }
+    class func disclaimerFont()->UIFont{
+        return UIFont(name: "Interstate-BoldCondensed", size: 15)!
+    }
 }

@@ -8,15 +8,42 @@
 
 import UIKit
 
-class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate{
+class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate, UITextViewDelegate{
     
     @IBOutlet weak var fbLoginView: FBLoginView!
+    @IBOutlet weak var disclaimerTextView: UITextView!
     
     // MARK: UIViewController
     override func viewDidLoad() {
         self.fbLoginView.delegate = self
         self.fbLoginView.readPermissions = FaceBookLoginViewController.getDefaultFacebookPermissions
         view.backgroundColor = UIColor.blackColor()
+        
+        // set up disclaimer text
+        var terms = NSMutableAttributedString(string: "here")
+        terms.addAttribute(NSLinkAttributeName, value: NSURL(string: "http://www.dancedeets.com")!, range: NSMakeRange(0, terms.length))
+        terms.setColor(ColorFactory.lightBlue())
+        
+        var first = NSMutableAttributedString(string: "You may still access Dance Deets ")
+        first.setColor(UIColor.blackColor())
+        
+        var last = NSMutableAttributedString(string: " if you do not want to log in.")
+        last.setColor(UIColor.blackColor())
+        
+        var disclaimerString = NSMutableAttributedString(string: "")
+        disclaimerString.appendAttributedString(first)
+        disclaimerString.appendAttributedString(terms)
+        disclaimerString.appendAttributedString(last)
+        
+        var centeredStyle:NSMutableParagraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as NSMutableParagraphStyle
+        centeredStyle.alignment = NSTextAlignment.Center
+        disclaimerString.addAttribute(NSParagraphStyleAttributeName, value: centeredStyle, range: NSMakeRange(0, disclaimerString.length))
+        disclaimerString.setFont(FontFactory.disclaimerFont())
+        
+        disclaimerTextView.attributedText = disclaimerString
+        disclaimerTextView.textContainerInset = UIEdgeInsetsZero
+        disclaimerTextView.delegate = self
+        
     }
     
     class var getDefaultFacebookPermissions : [String]{
@@ -47,6 +74,10 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate{
         
         // update token on back
         ServerInterface.sharedInstance.updateFacebookToken()
+    }
+    
+    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+        return true
     }
 
 }

@@ -23,11 +23,6 @@
 		1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15802A1A05695400658A1D /* EventAdmin.swift */; };
 		1D19871F1A2A9528004156B2 /* RedirectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D19871E1A2A9528004156B2 /* RedirectView.swift */; };
 		1D22A4591A2EC5D200C4BC03 /* EventDetailActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22A4581A2EC5D200C4BC03 /* EventDetailActionCell.swift */; };
-		1D43347819D7552B001A5381 /* BebasNeueRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347319D7552B001A5381 /* BebasNeueRegular.otf */; };
-		1D43347919D7552B001A5381 /* BebasNeueLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347419D7552B001A5381 /* BebasNeueLight.otf */; };
-		1D43347A19D7552B001A5381 /* BebasNeueBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347519D7552B001A5381 /* BebasNeueBook.otf */; };
-		1D43347B19D7552B001A5381 /* BebasNeueBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347619D7552B001A5381 /* BebasNeueBold.otf */; };
-		1D43347C19D7552B001A5381 /* BebasNeueThin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D43347719D7552B001A5381 /* BebasNeueThin.otf */; };
 		1D4343471A1DB06D00E0B0A3 /* SearchResultsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */; };
 		1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */; };
 		1D6C3EA71A4B4BC90081A43C /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA61A4B4BC90081A43C /* AddCityViewController.swift */; };
@@ -42,8 +37,6 @@
 		1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */; };
 		1D89F6AA1A0ECDC100D3E4BE /* EventDetailCoverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D89F6A91A0ECDC100D3E4BE /* EventDetailCoverCell.swift */; };
 		1D8A064019CDE605004607B6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A063F19CDE605004607B6 /* Event.swift */; };
-		1DA51AE119F2F01300079DF1 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DA51AE019F2F01300079DF1 /* Montserrat-Regular.ttf */; };
-		1DA51AE319F2F3DF00079DF1 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DA51AE219F2F3DF00079DF1 /* Montserrat-Bold.ttf */; };
 		1DAB49EE1A17E31E0002BBDD /* EventDetailDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49ED1A17E31E0002BBDD /* EventDetailDescriptionCell.swift */; };
 		1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49EF1A17E4D70002BBDD /* Utilities.swift */; };
 		1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F11A17F0310002BBDD /* Extensions.swift */; };
@@ -91,11 +84,6 @@
 		1D19871E1A2A9528004156B2 /* RedirectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedirectView.swift; sourceTree = "<group>"; };
 		1D22A4581A2EC5D200C4BC03 /* EventDetailActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailActionCell.swift; sourceTree = "<group>"; };
 		1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DanceDeets-Bridging-Header.h"; sourceTree = "<group>"; };
-		1D43347319D7552B001A5381 /* BebasNeueRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueRegular.otf; sourceTree = "<group>"; };
-		1D43347419D7552B001A5381 /* BebasNeueLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueLight.otf; sourceTree = "<group>"; };
-		1D43347519D7552B001A5381 /* BebasNeueBook.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueBook.otf; sourceTree = "<group>"; };
-		1D43347619D7552B001A5381 /* BebasNeueBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueBold.otf; sourceTree = "<group>"; };
-		1D43347719D7552B001A5381 /* BebasNeueThin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BebasNeueThin.otf; sourceTree = "<group>"; };
 		1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableCell.swift; sourceTree = "<group>"; };
 		1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
 		1D6C3EA61A4B4BC90081A43C /* AddCityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
@@ -114,8 +102,6 @@
 		1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		1D89F6A91A0ECDC100D3E4BE /* EventDetailCoverCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailCoverCell.swift; sourceTree = "<group>"; };
 		1D8A063F19CDE605004607B6 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		1DA51AE019F2F01300079DF1 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
-		1DA51AE219F2F3DF00079DF1 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		1DAB49ED1A17E31E0002BBDD /* EventDetailDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailDescriptionCell.swift; sourceTree = "<group>"; };
 		1DAB49EF1A17E4D70002BBDD /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		1DAB49F11A17F0310002BBDD /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -184,13 +170,6 @@
 				1D0892401A267EBF00A9EAC4 /* Interstate-Light.ttf */,
 				1D0892411A267EBF00A9EAC4 /* Interstate-ExtraLight.ttf */,
 				1D0892421A267EBF00A9EAC4 /* Interstate-BoldCondensed.ttf */,
-				1DA51AE219F2F3DF00079DF1 /* Montserrat-Bold.ttf */,
-				1DA51AE019F2F01300079DF1 /* Montserrat-Regular.ttf */,
-				1D43347319D7552B001A5381 /* BebasNeueRegular.otf */,
-				1D43347419D7552B001A5381 /* BebasNeueLight.otf */,
-				1D43347519D7552B001A5381 /* BebasNeueBook.otf */,
-				1D43347619D7552B001A5381 /* BebasNeueBold.otf */,
-				1D43347719D7552B001A5381 /* BebasNeueThin.otf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -418,18 +397,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D0892451A267EBF00A9EAC4 /* Interstate-BoldCondensed.ttf in Resources */,
-				1DA51AE319F2F3DF00079DF1 /* Montserrat-Bold.ttf in Resources */,
 				1D0892441A267EBF00A9EAC4 /* Interstate-ExtraLight.ttf in Resources */,
-				1DA51AE119F2F01300079DF1 /* Montserrat-Regular.ttf in Resources */,
-				1D43347A19D7552B001A5381 /* BebasNeueBook.otf in Resources */,
-				1D43347819D7552B001A5381 /* BebasNeueRegular.otf in Resources */,
 				1D0892471A267EE700A9EAC4 /* UniversLTStd-UltraCn.otf in Resources */,
-				1D43347919D7552B001A5381 /* BebasNeueLight.otf in Resources */,
 				1D8856C219CDE510005FFDB2 /* Main.storyboard in Resources */,
 				1D8856C719CDE510005FFDB2 /* LaunchScreen.xib in Resources */,
-				1D43347B19D7552B001A5381 /* BebasNeueBold.otf in Resources */,
 				1D0892431A267EBF00A9EAC4 /* Interstate-Light.ttf in Resources */,
-				1D43347C19D7552B001A5381 /* BebasNeueThin.otf in Resources */,
 				1D8856C419CDE510005FFDB2 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
