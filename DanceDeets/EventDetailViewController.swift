@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 import MapKit
 
-class EventDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UIGestureRecognizerDelegate{
+class EventDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UIGestureRecognizerDelegate, UIAlertViewDelegate{
     
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
     var COVER_IMAGE_TOP_OFFSET:CGFloat = 0.0
@@ -19,6 +19,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     var event:Event!
     var backgroundOverlay:UIView!
     var loaded:Bool = false
+    var directionAlert:UIAlertView?
     
     // table view cells to be computed read only properties
     var coverCell:UITableViewCell?{
@@ -98,12 +99,14 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         backgroundOverlay = backgroundView.addDarkBlurOverlay()
         backgroundOverlay.alpha = 0
+        
+        directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         // fade in animation on load
-        if(!loaded){
+        if(!loaded && indexPath.row >= 1 && indexPath.row <= 5){
             cell.alpha = 0
         }
     }
@@ -287,6 +290,8 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         if(indexPath.row == 0){
             AppDelegate.sharedInstance().allowLandscape = true
             performSegueWithIdentifier("fullScreenImageSegue", sender: self)
+        }else if(indexPath.row == 3 || indexPath.row == 5){
+            directionAlert?.show()
         }
     }
     
@@ -300,6 +305,27 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         }else{
             eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
             eventCoverImageViewTopConstraint.constant = getTopOffset() - yOff
+        }
+    }
+    
+    
+    // MARK: UIAlertViewDelegate
+    func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
+        if(alertView == directionAlert && event.placemark != nil){
+            if(buttonIndex == 1){
+                let placemark = MKPlacemark(placemark: event.placemark!)
+                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
+                
+                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
+                mapItem.openInMapsWithLaunchOptions(launchOptions)
+            }else if(buttonIndex == 2){
+                let placemark = MKPlacemark(placemark: event.placemark!)
+                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
+                
+                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
+                mapItem.openInMapsWithLaunchOptions(launchOptions)
+            }
+            
         }
     }
     

@@ -50,7 +50,7 @@ class EventDetailMapCell:UITableViewCell, UIAlertViewDelegate
     
     // MARK: UIAlertViewDelegate
     func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
-        if(currentEvent != nil){
+        if(currentEvent != nil && currentEvent?.placemark != nil){
             if(alertView == directionAlert){
                 if(buttonIndex == 1){
                     let placemark = MKPlacemark(placemark: currentEvent!.placemark!)
