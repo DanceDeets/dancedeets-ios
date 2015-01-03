@@ -15,6 +15,9 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="streamBackground" translatesAutoresizingMaskIntoConstraints="NO" id="6Hu-PU-18g">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright (c) 2014 DanceDeets. All rights reserved!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
                     <rect key="frame" x="20" y="439" width="441" height="22"/>
                     <fontDescription key="fontDescription" name="Interstate-BoldCondensed" family="Interstate-BoldCondensed" pointSize="19"/>
@@ -24,13 +27,20 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="6Hu-PU-18g" secondAttribute="trailing" id="1dw-Dl-RSH"/>
+                <constraint firstItem="6Hu-PU-18g" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2I4-b2-kvV"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
+                <constraint firstAttribute="bottom" secondItem="6Hu-PU-18g" secondAttribute="bottom" id="TUG-w7-cHl"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
+                <constraint firstItem="6Hu-PU-18g" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fcI-7p-aIa"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="548" y="455"/>
         </view>
     </objects>
+    <resources>
+        <image name="streamBackground" width="375" height="667"/>
+    </resources>
 </document>

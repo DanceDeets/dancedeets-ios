@@ -16,7 +16,6 @@ class Utilities{
         paragraphStyle.minimumLineHeight = lineHeight
         paragraphStyle.maximumLineHeight = lineHeight
         
-        
         var attributesDictionary:[NSObject:AnyObject] =
         [NSParagraphStyleAttributeName: paragraphStyle,
             NSFontAttributeName:font]
