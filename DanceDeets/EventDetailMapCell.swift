@@ -19,7 +19,7 @@ class EventDetailMapCell:UITableViewCell, UIAlertViewDelegate
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        directionButton.tintColor = UIColor.blackColor()
+        directionButton.tintColor = UIColor.whiteColor()
         directionButton.backgroundColor = ColorFactory.lightBlue().colorWithAlphaComponent(0.5)
              directionButton.layer.cornerRadius = 3.0
           directionButton.layer.masksToBounds = true

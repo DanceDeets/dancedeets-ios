@@ -55,6 +55,10 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
+    func backButtonTapped(){
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
     // MARK: UIViewController
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "fullScreenImageSegue"){
@@ -69,9 +73,15 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         super.viewDidLoad()
         
         title = event!.title!.uppercaseString
-        let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
+        var shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
+        shareButton.tintColor = ColorFactory.white50()
         navigationItem.rightBarButtonItem = shareButton
         
+        var backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: UIBarButtonItemStyle.Plain, target: self, action: "backButtonTapped")
+        backButton.imageInsets = UIEdgeInsetsMake(0, -5, 0, 0)
+        backButton.tintColor = ColorFactory.white50()
+        navigationItem.leftBarButtonItem = backButton
+
         let titleOptions:NSMutableDictionary = NSMutableDictionary()
         titleOptions[NSForegroundColorAttributeName] = UIColor.whiteColor()
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
