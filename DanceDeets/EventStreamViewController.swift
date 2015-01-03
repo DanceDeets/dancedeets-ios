@@ -35,6 +35,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
     var refreshAnimating:Bool = false
+    let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
     
     // MARK: Outlets
     @IBOutlet weak var refreshButton: UIButton!
@@ -215,6 +216,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: Private
     func rotateRefresh(options: UIViewAnimationOptions){
+        // animation block, calling itself on completion to give the infinite spin effect
         UIView.animateWithDuration(0.5, delay: 0, options: options, animations: { () -> Void in
             self.refreshButton.transform = CGAffineTransformRotate(self.refreshButton.transform, CGFloat(M_PI_2))
             }) { (bool:Bool) -> Void in
@@ -272,7 +274,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         titleTapGestureRecognizer?.delegate = self
         navigationTitle.userInteractionEnabled = true
         navigationTitle.addGestureRecognizer(titleTapGestureRecognizer!)
-        
     }
     
     // MARK: - CLLocationManagerDelegate
@@ -286,20 +287,18 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 self.currentCity = placemark.locality
                 self.refreshEventsForCurrentCity()
             }else{
-                let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
                 self.navigationTitle.text = "RETRY"
                 self.stopSpin()
-                locationFailure.show()
+                self.locationFailure.show()
             }
         })
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        stopSpin()
         locationManager.stopUpdatingLocation()
-        let locationFailure:UIAlertView = UIAlertView(title: "Having some trouble getting your location", message: "", delegate: nil, cancelButtonTitle: "OK")
-        locationFailure.show()
         navigationTitle.text = "RETRY"
+        stopSpin()
+        locationFailure.show()
     }
     
     // MARK: UITableViewDataSource / UITableViewDelegate
@@ -396,7 +395,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         var searchVC:UIViewController = UIViewController()
         searchVC.automaticallyAdjustsScrollViewInsets = false
         
-        // table view controller listing filtered events
+        // table view controller whichs lists filtered events
         var tbvc:UITableViewController = UITableViewController(style: UITableViewStyle.Plain)
         tbvc.tableView.delegate = self
         tbvc.tableView.dataSource = self
@@ -406,6 +405,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         tbvc.tableView.separatorColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
         tbvc.tableView.registerClass(SearchResultsTableCell.classForCoder(), forCellReuseIdentifier: "filteredEventCell")
         
+        // manually constraint the table view, the bottom constraint is dynamic w/ the keyboard
         searchVC.view.addSubview(tbvc.tableView)
         tbvc.tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
         searchVC.view.addConstraint(NSLayoutConstraint(item: tbvc.tableView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: searchVC.view, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET))
@@ -415,18 +415,18 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchResultsTableView = tbvc.tableView
         
         // search controller set up
-        self.searchController = UISearchController(searchResultsController: searchVC)
-        self.searchController?.delegate = self
-        self.searchController?.searchResultsUpdater = self
-        self.searchController?.searchBar.delegate = self
-        self.searchController?.searchBar.barStyle = UIBarStyle.Black
-        self.searchController?.searchBar.searchBarStyle = UISearchBarStyle.Minimal
-        self.searchController?.searchBar.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
-        self.searchController?.searchBar.placeholder = "Filter Dance Events"
+        searchController = UISearchController(searchResultsController: searchVC)
+        searchController?.delegate = self
+        searchController?.searchResultsUpdater = self
+        searchController?.searchBar.delegate = self
+        searchController?.searchBar.barStyle = UIBarStyle.Black
+        searchController?.searchBar.searchBarStyle = UISearchBarStyle.Minimal
+        searchController?.searchBar.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+        searchController?.searchBar.placeholder = "Filter Dance Events"
         // sets at the top of the main feed
-        self.searchController?.searchBar.frame = CGRect(origin: CGPoint(x: 0, y: 10), size: CGSize(width: self.searchController!.searchBar.frame.size.width, height: 44))
-        self.searchController?.dimsBackgroundDuringPresentation = true
-        self.view.addSubview(self.searchController!.searchBar)
+        searchController?.searchBar.frame = CGRect(origin: CGPoint(x: 0, y: 10), size: CGSize(width: self.searchController!.searchBar.frame.size.width, height: 44))
+        searchController?.dimsBackgroundDuringPresentation = true
+        view.addSubview(searchController!.searchBar)
         
         // gradient fade out at top
         gradientLayer = CAGradientLayer()
@@ -437,6 +437,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET)
         gradientLayer?.anchorPoint = CGPoint.zeroPoint
         searchResultsTableView!.layer.mask = gradientLayer
+        
     }
     
     func handleKeyboardShown(notification:NSNotification){
@@ -467,7 +468,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchResultsTableView?.superview?.addConstraint(searchResultsTableViewBottomConstraint!)
         searchResultsTableView?.superview?.layoutIfNeeded()
     }
-    
     
     func segueIntoEventDetail(event:Event){
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -526,12 +526,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     // don't need to do anything if session already open
                     return;
             }else if( currentState == FBSessionState.CreatedTokenLoaded){
-                // open up the session and update things
+                // open up the session
                 FBSession.openActiveSessionWithReadPermissions(FaceBookLoginViewController.getDefaultFacebookPermissions, allowLoginUI: false, completionHandler: { (session:FBSession!, state:FBSessionState, error:NSError!) -> Void in
                     
+                    // update user location + post token
                     ServerInterface.sharedInstance.updateFacebookToken()
                     
-                    // get the latest graph object id
+                    // get graph object id
                     FBRequestConnection.startForMeWithCompletionHandler({ (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
                         if (error == nil){
                             if let resultDictionary:NSDictionary? = result as? NSDictionary{

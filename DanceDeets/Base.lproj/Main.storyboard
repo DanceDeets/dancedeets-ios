@@ -307,7 +307,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g2F-Jw-AyW" id="6da-pX-5sZ">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yci-Q3-3cF">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yci-Q3-3cF">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
                                                 </imageView>
                                             </subviews>
@@ -584,7 +584,7 @@
                         <outlet property="eventCoverImageViewLeftConstraint" destination="I37-as-7oA" id="aPV-3x-GuV"/>
                         <outlet property="eventCoverImageViewRightConstraint" destination="V0O-nu-Loi" id="ij3-ez-eTU"/>
                         <outlet property="eventCoverImageViewTopConstraint" destination="X7Z-fL-1Pu" id="sOB-6k-hQO"/>
-                        <segue destination="NNj-Xd-7Ej" kind="presentation" identifier="fullScreenImageSegue" modalTransitionStyle="crossDissolve" id="Wix-Xy-cr6"/>
+                        <segue destination="NNj-Xd-7Ej" kind="presentation" identifier="fullScreenImageSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="Wix-Xy-cr6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Tr-Mo-faF" userLabel="First Responder" sceneMemberID="firstResponder"/>

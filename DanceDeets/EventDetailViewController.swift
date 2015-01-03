@@ -21,7 +21,6 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     var loaded:Bool = false
     var directionAlert:UIAlertView?
     
-    // table view cells to be computed read only properties
     var coverCell:UITableViewCell?{
         return detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0))
     }
@@ -109,13 +108,11 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         backgroundOverlay = backgroundView.addDarkBlurOverlay()
         backgroundOverlay.alpha = 0
-        
         directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        // fade in animation on load
+        // to support the fade in effect
         if(!loaded && indexPath.row >= 1 && indexPath.row <= 5){
             cell.alpha = 0
         }

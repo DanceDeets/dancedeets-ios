@@ -218,10 +218,10 @@ public class Event: NSObject {
     
     public func getMoreDetails(completion: (()->Void)) -> Void
     {
-        // using Apple's geocoder to reverse geocode the lat long
         if(!detailsLoaded){
             detailsLoaded = true
             if(geoloc != nil){
+                // currently using Apple's geocoder to reverse geocode the lat/long
                 let geocoder:CLGeocoder = CLGeocoder()
                 geocoder.reverseGeocodeLocation(geoloc, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
                     if placemarks.count > 0{
