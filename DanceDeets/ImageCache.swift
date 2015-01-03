@@ -20,7 +20,7 @@ class ImageCache: NSCache {
         dispatch_once(&Static.onceToken, { () -> Void in
             Static.instance = ImageCache()
             NSNotificationCenter.defaultCenter().addObserver(
-                self,
+                Static.instance!,
                 selector: "memoryWarningReceived",
                 name: UIApplicationDidReceiveMemoryWarningNotification,
                 object: nil)
