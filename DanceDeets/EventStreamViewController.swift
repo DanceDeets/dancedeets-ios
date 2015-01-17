@@ -95,9 +95,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         }
     }
     
-    func scrollViewDidScrollToTop(scrollView: UIScrollView) {
-    }
-    
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -221,6 +218,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                         self.rotateRefresh(UIViewAnimationOptions.CurveLinear)
                     }else if (options != UIViewAnimationOptions.CurveEaseOut){
                         self.rotateRefresh(UIViewAnimationOptions.CurveEaseOut)
+                        self.refreshButton.hidden = true
                     }
                 }
                 return;
@@ -230,6 +228,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func startSpin(){
         if(!refreshAnimating){
             refreshAnimating = true
+            refreshButton.hidden = false
             rotateRefresh(UIViewAnimationOptions.CurveEaseIn)
         }
     }
@@ -268,6 +267,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventCountLabel.textColor = ColorFactory.white50()
         eventCountLabel.font = FontFactory.eventDescriptionFont()
         eventCountLabel.text = ""
+        refreshButton.tintColor = ColorFactory.white50()
+        refreshButton.hidden = true
         
         // gradient fade out at top
         eventStreamGradient = CAGradientLayer()
