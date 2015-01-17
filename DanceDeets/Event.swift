@@ -233,7 +233,6 @@ public class Event: NSObject {
             }else{
                 var jsonError:NSError?
                 let string = NSString(data: data, encoding: NSUTF8StringEncoding)
-                println(string)
                 
                 var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
                 if (jsonError != nil) {

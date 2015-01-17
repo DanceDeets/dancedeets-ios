@@ -93,6 +93,9 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         detailsTableView.delegate = self
         detailsTableView.dataSource = self
         
+        navigationController?.interactivePopGestureRecognizer.delegate = self
+        navigationController?.interactivePopGestureRecognizer.enabled = true
+        
         if let url = event.eventImageUrl{
             let imageRequest:NSURLRequest = NSURLRequest(URL: url)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
