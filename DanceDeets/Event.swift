@@ -27,6 +27,7 @@ public class Event: NSObject {
     var geoloc:CLLocation?
     var admins:[EventAdmin] = []
     var placemark:CLPlacemark?
+    var attendingCount:Int?
     public var detailsLoaded:Bool = false
     var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
     
@@ -40,6 +41,12 @@ public class Event: NSObject {
         if id != nil && countElements(id!) > 0 {
             facebookUrl = NSURL(string: "http://www.facebook.com/"+id!)
             danceDeetsUrl = NSURL(string: "http://www.dancedeets.com/events/"+id!)
+        }
+        
+        if let rsvp = dictionary["rsvp"] as? NSDictionary{
+            if let attending = rsvp["attending_count"] as? Int{
+                self.attendingCount = attending
+            }
         }
         
         // admins

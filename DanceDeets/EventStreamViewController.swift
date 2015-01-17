@@ -81,8 +81,11 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func scrollViewDidScroll(scrollView: UIScrollView) {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        eventStreamGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
-        searchResultsGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
+        if(scrollView == eventCollectionView){
+            eventStreamGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
+        }else if(scrollView == searchResultsTableView){
+            searchResultsGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
+        }
         CATransaction.commit()
     }
     

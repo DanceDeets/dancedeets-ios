@@ -41,7 +41,13 @@ class EventCollectionViewCell: UICollectionViewCell {
         
         eventTitleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
-        eventVenueLabel.text = event.venue
+        if let venueDisplay = event.venue{
+            if(event.attendingCount != nil){
+                eventVenueLabel.text = venueDisplay + "  |  \(event.attendingCount!) attending"
+            }else{
+                eventVenueLabel.text = venueDisplay
+            }
+        }
         
         eventCoverImageHeightConstraint.constant = eventCoverImage.frame.size.width
         eventCoverImage.contentMode = UIViewContentMode.ScaleAspectFill
