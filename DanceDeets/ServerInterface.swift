@@ -41,6 +41,11 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         return NSURL(string: baseUrl + "/search?location=" + cityString)!
     }
     
+    func getEventSearchUrlByLocation(location:CLLocation)->NSURL{
+        let coordinate = location.coordinate
+        return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)")!
+    }
+    
     func updateFacebookToken(){
         locationManager.startUpdatingLocation()
     }

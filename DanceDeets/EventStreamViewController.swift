@@ -24,7 +24,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     let geocoder:CLGeocoder = CLGeocoder()
     var events:[Event] = []
     var filteredEvents:[Event] = []
-    var currentCity:String? = String()
+    var geocodeSearchString:String? = String() // the string to search
+    var displaySearchString:String? = String() // the display string in the title
     var searchMode:SearchMode = SearchMode.CurrentLocation
     var requiresRefresh = true
     var gradientLayer:CAGradientLayer?
@@ -42,13 +43,12 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var navigationTitle: UILabel!
     @IBOutlet weak var eventCollectionView: UICollectionView!
-    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var eventCountLabel: UILabel!
     
     // MARK: Action
     @IBAction func refreshButtonTapped(sender: AnyObject) {
         if(events.count > 0){
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-            pageControl.currentPage = 0
             eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: true)
         }
         refreshEvents()
@@ -92,14 +92,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
             let itemHeight = Int(flowLayout!.itemSize.height)
             let targetOff = Int(targetContentOffset.memory.y)
-            pageControl.currentPage = targetOff / itemHeight
         }
     }
     
     func scrollViewDidScrollToTop(scrollView: UIScrollView) {
-        if(scrollView == eventCollectionView){
-            pageControl.currentPage = 0
-        }
     }
     
     // MARK: UIViewController
@@ -244,12 +240,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func loadViewController(){
         
-        pageControl.pageIndicatorTintColor = UIColor.whiteColor().colorWithAlphaComponent(0.3)
-        pageControl.currentPageIndicatorTintColor = UIColor.whiteColor()
-        pageControl.addTarget(self, action: "pageControllerChanged", forControlEvents: UIControlEvents.ValueChanged)
-        pageControl.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-        pageControl.numberOfPages = 0
-        
         locationManager.delegate = self
         
         eventCollectionView.delegate = self
@@ -280,14 +270,21 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         locationManager.stopUpdatingLocation()
         
+        
         let locationObject:CLLocation = locations.first as CLLocation
         geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
             if( placemarks != nil && placemarks.count > 0){
                 let placemark:CLPlacemark = placemarks.first as CLPlacemark
-                self.currentCity = placemark.locality
-                self.refreshEventsForCurrentCity()
+                self.geocodeSearchString = ""
+                if(placemark.locality != nil && placemark.administrativeArea != nil){
+                    self.displaySearchString = "\(placemark.locality), \(placemark.administrativeArea)"
+                }else{
+                    self.displaySearchString = placemark.locality
+                }
+                Event.loadEventsForLocation(locationObject, completion:self.refreshCityCompletionHandler)
             }else{
                 self.navigationTitle.text = "RETRY"
+                self.eventCountLabel.text = ""
                 self.stopSpin()
                 self.locationFailure.show()
             }
@@ -297,6 +294,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         locationManager.stopUpdatingLocation()
         navigationTitle.text = "RETRY"
+        eventCountLabel.text = ""
         stopSpin()
         locationFailure.show()
     }
@@ -331,7 +329,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         // locate the filtered event's position in the main event array
         if let indexPath = find(events,event){
             selectedIndexPath = NSIndexPath(forItem: indexPath, inSection: 0)
-            pageControl.currentPage = indexPath
             eventCollectionView.scrollToItemAtIndexPath(selectedIndexPath!, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
         }
         
@@ -341,51 +338,48 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: Private
     func refreshEvents(){
-        navigationTitle.text = "LOADING..."
         startSpin()
         let searchCity = UserSettings.getUserCitySearch()
         if(countElements(searchCity) > 0){
             searchMode = SearchMode.CustomCity
-            currentCity = searchCity
-            refreshEventsForCurrentCity()
+            geocodeSearchString = searchCity
+            displaySearchString = searchCity
+            navigationTitle.text = displaySearchString?.uppercaseString
+            eventCountLabel.text = "Loading..."
+            Event.loadEventsForCity(geocodeSearchString!, completion: refreshCityCompletionHandler)
         }else{
             searchMode = SearchMode.CurrentLocation
-            currentCity = ""
+            geocodeSearchString = ""
             locationManager.startUpdatingLocation()
+            navigationTitle.text = "UPDATING LOCATION"
+            eventCountLabel.text = ""
         }
     }
     
-    func refreshEventsForCurrentCity(){
-        Event.loadEventsForCity(currentCity!, completion: {(events:[Event]!, error:NSError!) in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.stopSpin()
-                // check response
-                if(error != nil){
-                    let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
-                    errorAlert.show()
-                    self.events = []
-                    self.eventCollectionView.reloadData()
-                    self.pageControl.numberOfPages = 0
-                    self.pageControl.currentPage = 0
-                    self.navigationTitle.text = "TRY AGAIN"
-                }else if(events.count == 0){
-                    let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
-                    noEventAlert.show()
-                    self.events = []
-                    self.eventCollectionView.reloadData()
-                    self.pageControl.numberOfPages = 0
-                    self.pageControl.currentPage = 0
-                    self.navigationTitle.text = "TRY AGAIN"
-                }else{
-                    self.navigationTitle.text = self.currentCity!.uppercaseString
-                    self.events = events
-                    self.pageControl.numberOfPages = self.events.count
-                    self.pageControl.currentPage = 0
-                    self.eventCollectionView.reloadData()
-                    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                    self.eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: true)
-                }
-            })
+    func refreshCityCompletionHandler(events:[Event]!, error:NSError!){
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.stopSpin()
+            // check response
+            if(error != nil){
+                let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
+                errorAlert.show()
+                self.events = []
+                self.eventCollectionView.reloadData()
+                self.eventCountLabel.text = "Try again"
+            }else if(events.count == 0){
+                let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
+                noEventAlert.show()
+                self.events = []
+                self.eventCollectionView.reloadData()
+                self.eventCountLabel.text = "\(events.count) Events"
+            }else{
+                self.navigationTitle.text = self.displaySearchString!.uppercaseString
+                self.events = events
+                self.eventCollectionView.reloadData()
+                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                self.eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: true)
+                self.eventCountLabel.text = "\(events.count) Events"
+            }
         })
     }
     
@@ -437,6 +431,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET)
         gradientLayer?.anchorPoint = CGPoint.zeroPoint
         searchResultsTableView!.layer.mask = gradientLayer
+        
+        eventCountLabel.textColor = ColorFactory.white50()
+        eventCountLabel.font = FontFactory.eventDescriptionFont()
+        eventCountLabel.text = ""
         
     }
     
@@ -507,12 +505,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             }
             return false;
         })
-    }
-    
-    func pageControllerChanged(){
-        let pageIndex = pageControl.currentPage
-        let indexPath = NSIndexPath(forRow: pageIndex, inSection: 0)
-        eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: true)
     }
     
     func checkFaceBookToken(){

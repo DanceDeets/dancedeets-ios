@@ -184,36 +184,14 @@ public class Event: NSObject {
         }
     }
     
+    public class func loadEventsForLocation(location:CLLocation, completion: (([Event]!, NSError!)->Void)) -> Void
+    {
+        loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrlByLocation(location), completion:completion)
+    }
+    
     public class func loadEventsForCity(city:String, completion: (([Event]!, NSError!)->Void)) -> Void
     {
-        var task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(ServerInterface.sharedInstance.getEventSearchUrl(city), completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
-            if(error != nil){
-                completion([], error)
-            }else{
-                var jsonError:NSError?
-                var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
-                if (jsonError != nil) {
-                    completion([], jsonError)
-                }
-                else {
-                    var eventList:[Event] = []
-                    if(json != nil){
-                        if let results = json!["results"] as? NSArray{
-                            for item in results{
-                                if let eventDictionary = item as? NSDictionary{
-                                    let newEvent:Event? = Event(dictionary: eventDictionary)
-                                    if newEvent != nil{
-                                        eventList.append(newEvent!)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    completion(eventList, nil)
-                }
-            }
-        })
-        task.resume()
+        loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrl(city), completion:completion)
     }
     
     public func getMoreDetails(completion: (()->Void)) -> Void
@@ -246,5 +224,42 @@ public class Event: NSObject {
             completion()
         }
     }
+    
+    public class func loadEventsFromUrl(url:NSURL, completion: (([Event]!, NSError!)->Void)) -> Void
+    {
+        var task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
+            if(error != nil){
+                completion([], error)
+            }else{
+                var jsonError:NSError?
+                let string = NSString(data: data, encoding: NSUTF8StringEncoding)
+                println(string)
+                
+                var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
+                if (jsonError != nil) {
+                    completion([], jsonError)
+                }
+                else {
+                    var eventList:[Event] = []
+                    if(json != nil){
+                        if let results = json!["results"] as? NSArray{
+                            for item in results{
+                                if let eventDictionary = item as? NSDictionary{
+                                    let newEvent:Event? = Event(dictionary: eventDictionary)
+                                    if newEvent != nil{
+                                        eventList.append(newEvent!)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    completion(eventList, nil)
+                }
+            }
+        })
+        task.resume()
+    }
+    
+    
     
 }

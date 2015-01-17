@@ -33,13 +33,9 @@ public class GooglePlaceAPI{
                         if let predictions = json!["predictions"] as? NSArray{
                             for prediction in predictions{
                                 if let predictionDict = prediction as? NSDictionary{
-                                    if let terms = predictionDict["terms"] as? NSArray{
-                                        if (terms.count > 0){
-                                            if let termDict = terms[0] as? NSDictionary{
-                                                if let value = termDict["value"] as? String{
-                                                    autoSuggestions.append(value)
-                                                }
-                                            }
+                                    if let terms = predictionDict["description"] as? String{
+                                        if (countElements(terms) > 0){
+                                            autoSuggestions.append(terms)
                                         }
                                     }
                                 }
@@ -52,5 +48,4 @@ public class GooglePlaceAPI{
             task.resume()
         }
     }
-    
 }
