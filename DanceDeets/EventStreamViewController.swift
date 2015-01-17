@@ -259,6 +259,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         blurOverlay = view.addDarkBlurOverlay()
         blurOverlay?.alpha = 0
         
+        // tapping on the title does a refresh
         titleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "refreshButtonTapped:")
         titleTapGestureRecognizer?.delegate = self
         navigationTitle.userInteractionEnabled = true
@@ -299,7 +300,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 Event.loadEventsForLocation(locationObject, completion:self.refreshCityCompletionHandler)
             }else{
                 self.navigationTitle.text = "RETRY"
-                self.eventCountLabel.text = ""
+                self.eventCountLabel.text = "Couldn't get your location"
                 self.stopSpin()
                 self.locationFailure.show()
             }
@@ -309,7 +310,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         locationManager.stopUpdatingLocation()
         navigationTitle.text = "RETRY"
-        eventCountLabel.text = ""
+        eventCountLabel.text = "Couldn't get your location"
         stopSpin()
         locationFailure.show()
     }
@@ -367,7 +368,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             geocodeSearchString = ""
             locationManager.startUpdatingLocation()
             navigationTitle.text = "UPDATING LOCATION"
-            eventCountLabel.text = ""
+            eventCountLabel.text = "Updating Location..."
         }
     }
     

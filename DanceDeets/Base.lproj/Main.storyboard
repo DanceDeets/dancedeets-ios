@@ -70,7 +70,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cxa-HD-ust">
-                                <rect key="frame" x="349" y="52" width="25" height="25"/>
+                                <rect key="frame" x="349" y="51" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="wAr-rS-lbg"/>
                                     <constraint firstAttribute="width" constant="25" id="zyG-9S-8vj"/>
@@ -221,7 +221,7 @@
                             <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="CIT-1y-Jqu" secondAttribute="bottom" constant="-20" id="Jep-dV-Up0"/>
                             <constraint firstAttribute="trailing" secondItem="Snq-oY-pp0" secondAttribute="trailing" id="LE3-7J-IKr"/>
                             <constraint firstItem="Cxa-HD-ust" firstAttribute="leading" secondItem="dCA-Tc-CJh" secondAttribute="trailing" constant="-12" id="LWc-zE-eDi"/>
-                            <constraint firstItem="Cxa-HD-ust" firstAttribute="centerY" secondItem="1oV-ms-x6i" secondAttribute="centerY" id="NPi-J6-RSx"/>
+                            <constraint firstItem="Cxa-HD-ust" firstAttribute="centerY" secondItem="1oV-ms-x6i" secondAttribute="centerY" constant="-1" id="NPi-J6-RSx"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="bottom" secondItem="h61-S6-mbM" secondAttribute="bottom" id="Pi8-1U-Qdb"/>
                             <constraint firstItem="1oV-ms-x6i" firstAttribute="top" secondItem="dCA-Tc-CJh" secondAttribute="bottom" id="WCx-jp-Wvg"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="Wqz-Fa-g7r"/>
