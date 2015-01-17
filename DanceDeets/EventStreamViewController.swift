@@ -28,7 +28,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var displaySearchString:String? = String() // the display string in the title
     var searchMode:SearchMode = SearchMode.CurrentLocation
     var requiresRefresh = true
-    var gradientLayer:CAGradientLayer?
+    var searchResultsGradient:CAGradientLayer?
+    var eventStreamGradient:CAGradientLayer?
     var searchResultsTableView:UITableView?
     var searchController:UISearchController?
     var blurOverlay:UIView?
@@ -78,12 +79,11 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        if(scrollView == searchResultsTableView){
-            CATransaction.begin()
-            CATransaction.setDisableActions(true)
-            gradientLayer?.position = CGPointMake(0, scrollView.contentOffset.y);
-            CATransaction.commit()
-        }
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        eventStreamGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
+        searchResultsGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
+        CATransaction.commit()
     }
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -264,6 +264,20 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         titleTapGestureRecognizer?.delegate = self
         navigationTitle.userInteractionEnabled = true
         navigationTitle.addGestureRecognizer(titleTapGestureRecognizer!)
+        
+        eventCountLabel.textColor = ColorFactory.white50()
+        eventCountLabel.font = FontFactory.eventDescriptionFont()
+        eventCountLabel.text = ""
+        
+        // gradient fade out at top
+        eventStreamGradient = CAGradientLayer()
+        let outerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor
+        let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        eventStreamGradient?.colors = [outerColor,innerColor,innerColor]
+        eventStreamGradient?.locations = [NSNumber(float: 0.0), NSNumber(float:0.03), NSNumber(float: 1.0)]
+        eventStreamGradient?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-COLLECTION_VIEW_TOP_MARGIN)
+        eventStreamGradient?.anchorPoint = CGPoint.zeroPoint
+        eventCollectionView!.layer.mask = eventStreamGradient
     }
     
     // MARK: - CLLocationManagerDelegate
@@ -423,19 +437,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         view.addSubview(searchController!.searchBar)
         
         // gradient fade out at top
-        gradientLayer = CAGradientLayer()
+        searchResultsGradient = CAGradientLayer()
         let outerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor
         let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        gradientLayer?.colors = [outerColor,innerColor,innerColor]
-        gradientLayer?.locations = [NSNumber(float: 0.0), NSNumber(float:0.03), NSNumber(float: 1.0)]
-        gradientLayer?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET)
-        gradientLayer?.anchorPoint = CGPoint.zeroPoint
-        searchResultsTableView!.layer.mask = gradientLayer
-        
-        eventCountLabel.textColor = ColorFactory.white50()
-        eventCountLabel.font = FontFactory.eventDescriptionFont()
-        eventCountLabel.text = ""
-        
+        searchResultsGradient?.colors = [outerColor,innerColor,innerColor]
+        searchResultsGradient?.locations = [NSNumber(float: 0.0), NSNumber(float:0.03), NSNumber(float: 1.0)]
+        searchResultsGradient?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET)
+        searchResultsGradient?.anchorPoint = CGPoint.zeroPoint
+        searchResultsTableView!.layer.mask = searchResultsGradient
     }
     
     func handleKeyboardShown(notification:NSNotification){
