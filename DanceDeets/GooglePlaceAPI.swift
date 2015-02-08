@@ -16,7 +16,7 @@ public class GooglePlaceAPI{
     
     public class func autoSuggestCity(query:String,completion:((autosuggests:[String]!,error:NSError!)->Void)) ->Void
     {
-        let requestUrlString:String = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="+query+"&types=(cities)&key=" + apiKey()
+        let requestUrlString:String = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="+query+"&types=(regions)&key=" + apiKey()
         if let url:NSURL = NSURL(string: requestUrlString){
             var session = NSURLSession.sharedSession()
             var task:NSURLSessionTask = session.dataTaskWithURL(url, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
