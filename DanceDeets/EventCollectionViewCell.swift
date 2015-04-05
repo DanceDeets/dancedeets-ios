@@ -29,6 +29,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         
         eventTitleLabel.font = FontFactory.eventHeadlineFont()
         eventTitleLabel.textColor = UIColor.whiteColor()
+        eventTitleLabel.numberOfLines = 2
         eventTimeLabel.font = FontFactory.eventDateFont()
         eventTimeLabel.textColor =  ColorFactory.lightBlue()
         eventVenueLabel.textColor = UIColor.whiteColor()
@@ -36,6 +37,8 @@ class EventCollectionViewCell: UICollectionViewCell {
     }
     
     func updateForEvent(event:Event){
+        
+        /// need layout information early
         layoutIfNeeded()
         currentEvent = event
         
@@ -49,28 +52,21 @@ class EventCollectionViewCell: UICollectionViewCell {
             }
         }
         
-        eventCoverImageHeightConstraint.constant = eventCoverImage.frame.size.width
         eventCoverImage.contentMode = UIViewContentMode.ScaleAspectFill
+        eventCoverImage.clipsToBounds = true
         
         // if height and width are available, re calc the constraints to keep the same aspect ratio
         if(event.eventImageHeight != nil && event.eventImageWidth != nil){
             let aspectRatio = event.eventImageWidth! / event.eventImageHeight!
-            let calcHeight = eventCoverImage.frame.size.width / aspectRatio
+            var calcHeight = eventCoverImage.frame.size.width / aspectRatio
+            
+            // height is capped at the width for consistency
+            calcHeight = min(eventCoverImage.frame.size.width, calcHeight)
             eventCoverImageHeightConstraint.constant = calcHeight
-        // else square
         }else{
+            // default to square
             eventCoverImageHeightConstraint.constant = eventCoverImage.frame.size.width
         }
-       
         contentView.layoutIfNeeded()
-        
-        // tricky here, we need to assign the correct aspect ratio, then see if the
-        // bottom venue label runs off the edge. If it's taking up too much space, need 
-        // to re layout and cap the height so everything fits
-        let maxYOffset = eventVenueLabel.frame.origin.y + eventVenueLabel.frame.size.height + 10
-        if(maxYOffset > contentView.frame.size.height){
-            eventCoverImageHeightConstraint.constant -= (maxYOffset - contentView.frame.size.height)
-            contentView.layoutIfNeeded()
-        }
     }
 }
