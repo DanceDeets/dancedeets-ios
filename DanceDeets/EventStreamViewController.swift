@@ -11,14 +11,18 @@ import CoreLocation
 import MessageUI
 import QuartzCore
 
-class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UISearchResultsUpdating,UISearchControllerDelegate, UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate {
+class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UISearchResultsUpdating,UISearchControllerDelegate, UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     enum SearchMode{
         case CurrentLocation
         case CustomCity
     }
     
-    let COLLECTION_VIEW_TOP_MARGIN:CGFloat = 120.0
+    enum ViewMode{
+        case CollectionView
+        case ListView
+    }
+    
     let SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET:CGFloat = 70.0
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
@@ -26,10 +30,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var filteredEvents:[Event] = []
     var geocodeSearchString:String? = String() // the string to search
     var displaySearchString:String? = String() // the display string in the title
-    var searchMode:SearchMode = SearchMode.CurrentLocation
+    var searchMode:SearchMode = .CurrentLocation
+    var viewMode:ViewMode = .CollectionView
     var requiresRefresh = true
     var searchResultsGradient:CAGradientLayer?
-    var eventStreamGradient:CAGradientLayer?
     var searchResultsTableView:UITableView?
     var searchController:UISearchController?
     var blurOverlay:UIView?
@@ -48,6 +52,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var customNavigationView: UIView!
     @IBOutlet weak var customNavigationViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var settingsIcon: UIImageView!
+    @IBOutlet weak var collectionModeImageView: UIImageView!
+    @IBOutlet weak var listModeImageView: UIImageView!
     
     // MARK: Action
     @IBAction func refreshButtonTapped(sender: AnyObject) {
@@ -58,14 +65,28 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         refreshEvents()
     }
     
-    @IBAction func searchBarButtonTapped(sender: AnyObject) {
-        blurOverlay?.fadeIn(0.4,nil)
-        searchController?.searchBar.hidden = false
-        self.searchController?.searchBar.becomeFirstResponder()
+    @IBAction func viewModeButtonTapped(sender: AnyObject) {
+        if(viewMode == .CollectionView){
+            toggleMode(.ListView)
+        }else if(viewMode == .ListView){
+            toggleMode(.CollectionView)
+        }
     }
     
     @IBAction func settingsButtonTapped(sender: AnyObject) {
         performSegueWithIdentifier("settingsSegue", sender: sender)
+    }
+    
+    func toggleMode(mode:ViewMode){
+        if(mode == .CollectionView){
+            viewMode = .CollectionView
+            collectionModeImageView.hidden = true
+            listModeImageView.hidden = false
+        }else if(mode == .ListView){
+            viewMode = .ListView
+            collectionModeImageView.hidden = false
+            listModeImageView.hidden = true
+        }
     }
     
     // MARK: UISearchResultsUpdating
@@ -82,16 +103,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        /*        
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        if(scrollView == eventCollectionView){
-        eventStreamGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
-        }else if(scrollView == searchResultsTableView){
-        searchResultsGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
-        }
-        CATransaction.commit()
-        */
     }
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -101,8 +112,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.layoutIfNeeded()
+        
+        toggleMode(.CollectionView)
+        
         loadViewController()
-        loadSearchController()
+        
+        //loadSearchController()
         
         locationManager.requestWhenInUseAuthorization()
         
@@ -246,8 +262,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventCollectionView.delegate = self
         eventCollectionView.dataSource = self
         
-        navigationController?.setNavigationBarHidden(true, animated: false)
         
+        navigationController?.setNavigationBarHidden(true, animated: false)
         navigationTitle.textColor = UIColor.whiteColor()
         navigationTitle.font = FontFactory.navigationTitleFont()
         navigationTitle.text = ""
@@ -267,25 +283,44 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         navigationTitle.userInteractionEnabled = true
         navigationTitle.addGestureRecognizer(titleTapGestureRecognizer!)
         
+        // labels / icons
+        settingsIcon.tintColor = ColorFactory.white50()
         eventCountLabel.textColor = ColorFactory.white50()
         eventCountLabel.font = FontFactory.eventDescriptionFont()
         eventCountLabel.text = ""
         refreshButton.tintColor = ColorFactory.white50()
         refreshButton.hidden = true
  
+        // custom navigation bar
         var viewNav = customNavigationView.addDarkBlurOverlay()
         viewNav.alpha = 0.95
-        var placeholder = NSMutableAttributedString(string: "Search")
         
+        // search text field styling
+        var placeholder = NSMutableAttributedString(string: "Search")
         placeholder.setColor(UIColor.whiteColor())
         placeholder.setFont(UIFont(name: "HelveticaNeue-Medium", size: 14.0)!)
         searchTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
         searchTextField.attributedPlaceholder = placeholder
         searchTextField.tintColor = UIColor.whiteColor()
         searchTextField.textColor = UIColor.whiteColor()
+        searchTextField.delegate = self
+        
+        let imageView:UIImageView = UIImageView(image: UIImage(named: "searchIconSmall")!)
+        imageView.contentMode = UIViewContentMode.Right
+        let magGlassXOffset = (searchTextField.frame.size.width / 2 ) - 19.0
+        imageView.frame = CGRectMake(0, 0, magGlassXOffset, imageView.image!.size.height)
+        imageView.tintColor = UIColor.whiteColor()
+        searchTextField.leftView = imageView
+        searchTextField.leftViewMode = UITextFieldViewMode.UnlessEditing
     }
     
-    // MARK: - CLLocationManagerDelegate
+    // MARK: UITextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // MARK: CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         locationManager.stopUpdatingLocation()
         
