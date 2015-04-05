@@ -17,6 +17,7 @@ class AddCityViewController : UIViewController, UITextFieldDelegate, UITableView
     
     var autosuggestedCities:[String] = []
     var backgroundView:UIView?
+    var settingsVC:SettingsViewController!
     
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -30,7 +31,7 @@ class AddCityViewController : UIViewController, UITextFieldDelegate, UITableView
         citySearchTextField.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         citySearchTextField.font = FontFactory.textFieldFont()
         citySearchTextField.addTarget(self, action: "textFieldUpdated", forControlEvents: UIControlEvents.EditingChanged)
-        var attributedPlaceholder = NSMutableAttributedString(string: "City Search")
+        var attributedPlaceholder = NSMutableAttributedString(string: "Location Search")
         attributedPlaceholder.setColor(ColorFactory.white50())
         attributedPlaceholder.setFont(FontFactory.textFieldFont())
         citySearchTextField.attributedPlaceholder = attributedPlaceholder
@@ -103,7 +104,9 @@ class AddCityViewController : UIViewController, UITextFieldDelegate, UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let newSearchCity = autosuggestedCities[indexPath.row]
         UserSettings.addUserCity(newSearchCity)
-        presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
+        UserSettings.setUserCitySearch(newSearchCity)
+        AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
+        settingsVC.presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
     }
     
     // MARK: UITextFieldDelegate

@@ -18,7 +18,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         case CustomCity
     }
     
-    let COLLECTION_VIEW_TOP_MARGIN:CGFloat = 70.0
+    let COLLECTION_VIEW_TOP_MARGIN:CGFloat = 120.0
     let SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET:CGFloat = 70.0
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
@@ -45,6 +45,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var navigationTitle: UILabel!
     @IBOutlet weak var eventCollectionView: UICollectionView!
     @IBOutlet weak var eventCountLabel: UILabel!
+    @IBOutlet weak var customNavigationView: UIView!
+    @IBOutlet weak var customNavigationViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var searchTextField: UITextField!
     
     // MARK: Action
     @IBAction func refreshButtonTapped(sender: AnyObject) {
@@ -79,23 +82,19 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        /*        
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         if(scrollView == eventCollectionView){
-            eventStreamGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
+        eventStreamGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
         }else if(scrollView == searchResultsTableView){
-            searchResultsGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
+        searchResultsGradient?.position = CGPointMake(0, scrollView.contentOffset.y);
         }
         CATransaction.commit()
+        */
     }
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if(scrollView == eventCollectionView){
-            // updates the highlighted page control
-            let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
-            let itemHeight = Int(flowLayout!.itemSize.height)
-            let targetOff = Int(targetContentOffset.memory.y)
-        }
     }
     
     // MARK: UIViewController
@@ -256,7 +255,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
         flowLayout?.sectionInset = UIEdgeInsetsZero
-        flowLayout?.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height - COLLECTION_VIEW_TOP_MARGIN)
+        flowLayout?.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height)
         flowLayout?.minimumInteritemSpacing = 0.0
         
         blurOverlay = view.addDarkBlurOverlay()
@@ -273,16 +272,17 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventCountLabel.text = ""
         refreshButton.tintColor = ColorFactory.white50()
         refreshButton.hidden = true
+ 
+        var viewNav = customNavigationView.addDarkBlurOverlay()
+        viewNav.alpha = 0.95
+        var placeholder = NSMutableAttributedString(string: "Search")
         
-        // gradient fade out at top
-        eventStreamGradient = CAGradientLayer()
-        let outerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor
-        let innerColor:CGColorRef = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        eventStreamGradient?.colors = [outerColor,innerColor,innerColor]
-        eventStreamGradient?.locations = [NSNumber(float: 0.0), NSNumber(float:0.03), NSNumber(float: 1.0)]
-        eventStreamGradient?.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-COLLECTION_VIEW_TOP_MARGIN)
-        eventStreamGradient?.anchorPoint = CGPoint.zeroPoint
-        eventCollectionView!.layer.mask = eventStreamGradient
+        placeholder.setColor(UIColor.whiteColor())
+        placeholder.setFont(UIFont(name: "HelveticaNeue-Medium", size: 14.0)!)
+        searchTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
+        searchTextField.attributedPlaceholder = placeholder
+        searchTextField.tintColor = UIColor.whiteColor()
+        searchTextField.textColor = UIColor.whiteColor()
     }
     
     // MARK: - CLLocationManagerDelegate

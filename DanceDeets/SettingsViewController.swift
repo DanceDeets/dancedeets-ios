@@ -11,7 +11,7 @@ import MessageUI
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate, MFMailComposeViewControllerDelegate {
     
-    let MY_CITIES_SECTION:Int = 0
+    let MY_LOCATIONS_SECTION:Int = 0
     let TOOLS_SECTION:Int = 1
     
     var cities:[String] = []
@@ -38,6 +38,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             let snapShot:UIView = backgroundBlurView!.snapshotViewAfterScreenUpdates(false)
             destination.view.insertSubview(snapShot, atIndex: 0)
             snapShot.constrainToSuperViewEdges()
+            destination.settingsVC = self
         }
     }
     
@@ -57,6 +58,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         doneButton.titleLabel?.font = FontFactory.barButtonFont()
         
         city = UserSettings.getUserCitySearch()
+        cities = UserSettings.getUserCities()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -71,10 +73,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(section == MY_CITIES_SECTION){
-            return cities.count + 1
+        if(section == MY_LOCATIONS_SECTION){
+            return cities.count + 2
         }else if(section == TOOLS_SECTION){
-            return 3
+            return 2
         }else{
             return 0
         }
@@ -85,9 +87,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if(section == MY_CITIES_SECTION){
+        if(section == MY_LOCATIONS_SECTION){
             let header = UILabel(frame: CGRectZero)
-            header.text = "MY CITIES"
+            header.text = "MY LOCATIONS"
             header.textAlignment = NSTextAlignment.Center
             header.font = FontFactory.settingsHeaderFont()
             header.textColor = ColorFactory.white50()
@@ -105,32 +107,31 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if(indexPath.section == MY_CITIES_SECTION){
-            if(indexPath.row == cities.count){
+        if(indexPath.section == MY_LOCATIONS_SECTION){
+            if(indexPath.row == 0){
+                let cell = tableView.dequeueReusableCellWithIdentifier("addCityCell", forIndexPath: indexPath) as AddCityCell
+                return cell
+            } else if (indexPath.row == cities.count + 1){
                 let cell = tableView.dequeueReusableCellWithIdentifier("currentLocationCell", forIndexPath: indexPath) as CurrentLocationCell
                 if(city == ""){
                     cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
                 }
                 return cell
-            }
-            else{
+            } else{
                 let cell = tableView.dequeueReusableCellWithIdentifier("citySearchCell", forIndexPath: indexPath) as CitySearchCell
                 cell.settingsVC = self
                 cell.deleteButton.hidden = false
-                cell.cityLabel.text = cities[indexPath.row]
-                if(city == cities[indexPath.row ]){
+                cell.cityLabel.text = cities[indexPath.row - 1]
+                if(city == cities[indexPath.row - 1]){
                     cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
                 }
                 return cell
             }
         }else if(indexPath.section == TOOLS_SECTION){
             if(indexPath.row == 0){
-                let cell = tableView.dequeueReusableCellWithIdentifier("addCityCell", forIndexPath: indexPath) as AddCityCell
-                return cell
-            }else  if(indexPath.row == 1){
                 let cell = tableView.dequeueReusableCellWithIdentifier("sendFeedbackCell", forIndexPath: indexPath) as SendFeedbackCell
                 return cell
-            }else{
+            }else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as LogoutCell
                 return cell
             }
@@ -154,27 +155,27 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(indexPath.section == MY_CITIES_SECTION){
-            if(indexPath.row == cities.count){
+        if(indexPath.section == MY_LOCATIONS_SECTION){
+            if(indexPath.row == 0){
+                performSegueWithIdentifier("addCitySegue", sender: self)
+            } else if(indexPath.row == cities.count + 1){
                 UserSettings.setUserCitySearch("")
                 AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
                 presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
-            }else{
-                UserSettings.setUserCitySearch(cities[indexPath.row])
+            } else{
+                UserSettings.setUserCitySearch(cities[indexPath.row - 1])
                 AppDelegate.sharedInstance().eventStreamViewController()?.requiresRefresh = true
                 presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
             }
         }else if(indexPath.section == TOOLS_SECTION){
             if(indexPath.row == 0){
-                performSegueWithIdentifier("addCitySegue", sender: self)
-            }else if(indexPath.row == 1){
                 let composer = MFMailComposeViewController()
                 let recipients:[String] = ["feedback@dancedeets.com"]
                 composer.mailComposeDelegate = self
                 composer.setSubject("Dance Deets Feedback")
                 composer.setToRecipients(recipients)
                 presentViewController(composer, animated: true, completion: nil)
-            }else if(indexPath.row == 2){
+            }else if(indexPath.row == 1){
                 FBSession.activeSession().closeAndClearTokenInformation()
                 FBSession.setActiveSession(nil)
                 presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
@@ -186,9 +187,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         for(var i = 0;i < cities.count; i++){
             if(cities[i] == city){
                 let indexPathToDelete = NSIndexPath(forRow: i, inSection: 0)
+                let tableIndexPathToDelete = NSIndexPath(forRow: i + 1, inSection: 0)
                 cities.removeAtIndex(indexPathToDelete.row)
                 UserSettings.deleteUserCity(city)
-                myCitiesTableView.deleteRowsAtIndexPaths([indexPathToDelete], withRowAnimation: UITableViewRowAnimation.Automatic)
+                myCitiesTableView.deleteRowsAtIndexPaths([tableIndexPathToDelete], withRowAnimation: UITableViewRowAnimation.Automatic)
                 return
             }
         }
@@ -198,5 +200,4 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
 }
