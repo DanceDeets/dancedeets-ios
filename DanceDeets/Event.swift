@@ -13,6 +13,7 @@ public class Event: NSObject {
     let eventImageUrl:NSURL?
     let eventImageWidth:CGFloat?
     let eventImageHeight:CGFloat?
+    let eventSmallImageUrl:NSURL?
     let venue:String?
     let shortDescription:String?
     let startTime:NSDate?
@@ -107,6 +108,10 @@ public class Event: NSObject {
             }
         }
         
+        if let picture = dictionary["picture"] as? String{
+            eventSmallImageUrl = NSURL(string:picture)
+        }
+        
         // times
         let dateFormatter:NSDateFormatter  = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
@@ -117,16 +122,19 @@ public class Event: NSObject {
             endTime = dateFormatter.dateFromString(endTimeString)
         }
         
+        // date formatting
         var dateFormatterStart:NSDateFormatter  = NSDateFormatter()
         var dateFormatterEnd:NSDateFormatter = NSDateFormatter()
         var dateDisplayString:String  =  String()
-        dateFormatterStart.dateFormat = "MMM dd, yyyy  |  ha"
+        dateFormatterStart.dateFormat = "EEE MMM d  |  ha"
         dateFormatterEnd.dateFormat = "ha"
         if (startTime != nil && endTime != nil){
+            // there's a start and end time
             dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
             dateDisplayString += " - "
             dateDisplayString += dateFormatterEnd.stringFromDate(endTime!)
         }else if(startTime != nil){
+            // start time
             dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
         }else{
             // check for full day event
@@ -137,7 +145,7 @@ public class Event: NSObject {
                 startTime = dateFormatter.dateFromString(startTimeString)
                 if(startTime != nil){
                     var displayFormatter:NSDateFormatter = NSDateFormatter()
-                    displayFormatter.dateFormat = "MMM dd, yyyy  |  'All Day'"
+                    displayFormatter.dateFormat = "EEE MMM dd  |  'All Day'"
                     dateDisplayString = displayFormatter.stringFromDate(startTime!)
                 }
             }
@@ -164,32 +172,50 @@ public class Event: NSObject {
     public func downloadCoverImage(completion:((UIImage!,NSError!)->Void)) ->Void
     {
         if(eventImageUrl != nil){
-            let imageRequest:NSURLRequest = NSURLRequest(URL: eventImageUrl!)
-            var downloadTask:NSURLSessionDownloadTask =
-            NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
-                completionHandler: { (location:NSURL!, resp:NSURLResponse!, error:NSError!) -> Void in
-                    if(error == nil){
-                        let data:NSData? = NSData(contentsOfURL: location)
-                        if let newImage = UIImage(data: data!, scale: UIScreen.mainScreen().scale){
-                            ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
-                            dispatch_async(dispatch_get_main_queue(), {
-                                completion(newImage,nil)
-                            })
-                        }else{
-                            let error = NSError(domain: "Couldn't create image from data", code: 0, userInfo: nil)
-                            dispatch_async(dispatch_get_main_queue(), {
-                                completion(nil, error)
-                            })
-                        }
+            downloadImage(eventImageUrl!, completion: completion)
+        }else{
+            completion(nil,nil)
+        }
+    }
+    
+    public func downloadSmallImage(completion:((UIImage!,NSError!)->Void)) ->Void
+    {
+        if(eventSmallImageUrl != nil){
+            downloadImage(eventSmallImageUrl!, completion: completion)
+        }else{
+            completion(nil,nil)
+        }
+    }
+    
+    func downloadImage(url:NSURL,completion:((UIImage!,NSError!)->Void)) ->Void
+    {
+        let imageRequest:NSURLRequest = NSURLRequest(URL: url)
+        var downloadTask:NSURLSessionDownloadTask =
+        NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
+            completionHandler: { (location:NSURL!, resp:NSURLResponse!, error:NSError!) -> Void in
+                if(error == nil){
+                    let data:NSData? = NSData(contentsOfURL: location)
+                    if let newImage = UIImage(data: data!, scale: UIScreen.mainScreen().scale){
+                        ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            completion(newImage,nil)
+                        })
                     }else{
+                        let error = NSError(domain: "Couldn't create image from data", code: 0, userInfo: nil)
                         dispatch_async(dispatch_get_main_queue(), {
                             completion(nil, error)
                         })
                     }
-            })
-            downloadTask.resume()
-        }
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), {
+                        completion(nil, error)
+                    })
+                }
+        })
+        downloadTask.resume()
+        
     }
+    
     
     public class func loadEventsForLocation(location:CLLocation, completion: (([Event]!, NSError!)->Void)) -> Void
     {

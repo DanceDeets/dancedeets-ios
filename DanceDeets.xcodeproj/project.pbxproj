@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D015B491AD21E0500DBC905 /* EventListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D015B481AD21E0500DBC905 /* EventListItemTableViewCell.swift */; };
 		1D08923C1A266D7A00A9EAC4 /* EventStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08923B1A266D7A00A9EAC4 /* EventStreamViewController.swift */; };
 		1D08923F1A26726500A9EAC4 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08923E1A26726500A9EAC4 /* EventCollectionViewCell.swift */; };
 		1D0892431A267EBF00A9EAC4 /* Interstate-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D0892401A267EBF00A9EAC4 /* Interstate-Light.ttf */; };
@@ -37,6 +38,7 @@
 		1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */; };
 		1D89F6AA1A0ECDC100D3E4BE /* EventDetailCoverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D89F6A91A0ECDC100D3E4BE /* EventDetailCoverCell.swift */; };
 		1D8A064019CDE605004607B6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A063F19CDE605004607B6 /* Event.swift */; };
+		1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA4566A1AD226B900368186 /* UIViewExtensions.swift */; };
 		1DAB49EE1A17E31E0002BBDD /* EventDetailDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49ED1A17E31E0002BBDD /* EventDetailDescriptionCell.swift */; };
 		1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49EF1A17E4D70002BBDD /* Utilities.swift */; };
 		1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F11A17F0310002BBDD /* Extensions.swift */; };
@@ -80,6 +82,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1D015B481AD21E0500DBC905 /* EventListItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListItemTableViewCell.swift; sourceTree = "<group>"; };
 		1D08923B1A266D7A00A9EAC4 /* EventStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventStreamViewController.swift; sourceTree = "<group>"; };
 		1D08923E1A26726500A9EAC4 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
 		1D0892401A267EBF00A9EAC4 /* Interstate-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Interstate-Light.ttf"; sourceTree = "<group>"; };
@@ -115,6 +118,7 @@
 		1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		1D89F6A91A0ECDC100D3E4BE /* EventDetailCoverCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailCoverCell.swift; sourceTree = "<group>"; };
 		1D8A063F19CDE605004607B6 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		1DA4566A1AD226B900368186 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		1DAB49ED1A17E31E0002BBDD /* EventDetailDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailDescriptionCell.swift; sourceTree = "<group>"; };
 		1DAB49EF1A17E4D70002BBDD /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		1DAB49F11A17F0310002BBDD /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -311,6 +315,7 @@
 				1D6C3EAD1A4B79F30081A43C /* Event Detail */,
 				1D6C3EAC1A4B79DA0081A43C /* Settings */,
 				1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */,
+				1D015B481AD21E0500DBC905 /* EventListItemTableViewCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -318,6 +323,7 @@
 		1DB901C619E099810018B434 /* Extensions and Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				1DA4566A1AD226B900368186 /* UIViewExtensions.swift */,
 				1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */,
 				1DAB49F11A17F0310002BBDD /* Extensions.swift */,
 				1DB901C719E0999E0018B434 /* FontFactory.swift */,
@@ -435,6 +441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D08923C1A266D7A00A9EAC4 /* EventStreamViewController.swift in Sources */,
+				1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */,
 				1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */,
 				1D08923F1A26726500A9EAC4 /* EventCollectionViewCell.swift in Sources */,
 				1D89F6AA1A0ECDC100D3E4BE /* EventDetailCoverCell.swift in Sources */,
@@ -456,6 +463,7 @@
 				1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */,
 				1DAB49EE1A17E31E0002BBDD /* EventDetailDescriptionCell.swift in Sources */,
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
+				1D015B491AD21E0500DBC905 /* EventListItemTableViewCell.swift in Sources */,
 				1DAE2C231A3EB08B00F03AD1 /* EventDetailMapCell.swift in Sources */,
 				1DAB49F61A1807F40002BBDD /* EventDetailLocationCell.swift in Sources */,
 				1D6C3EA71A4B4BC90081A43C /* AddCityViewController.swift in Sources */,

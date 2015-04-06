@@ -24,6 +24,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     let SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET:CGFloat = 70.0
+    let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 120.0
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
     var events:[Event] = []
@@ -44,6 +45,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
     
     // MARK: Outlets
+    @IBOutlet weak var eventListTableView: UITableView!
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var navigationTitle: UILabel!
@@ -82,10 +84,16 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             viewMode = .CollectionView
             collectionModeImageView.hidden = true
             listModeImageView.hidden = false
+            eventListTableView.hidden = true
+            eventCollectionView.hidden = false
+            eventCollectionView.reloadData()
         }else if(mode == .ListView){
             viewMode = .ListView
             collectionModeImageView.hidden = false
             listModeImageView.hidden = true
+            eventListTableView.hidden = false
+            eventCollectionView.hidden = true
+            eventListTableView.reloadData()
         }
     }
     
@@ -134,6 +142,11 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             selector: "handleKeyboardHidden:",
             name: UIKeyboardDidHideNotification,
             object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchTextField.endEditing(true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -194,7 +207,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
                 cell?.eventCoverImage?.image = image
             }else{
-                
                 cell?.eventCoverImage?.image = nil
                 event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
                     // guard against cell reuse + async download
@@ -285,6 +297,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         // labels / icons
         settingsIcon.tintColor = ColorFactory.white50()
+        collectionModeImageView.tintColor = ColorFactory.white50()
+        listModeImageView.tintColor = ColorFactory.white50()
         eventCountLabel.textColor = ColorFactory.white50()
         eventCountLabel.font = FontFactory.eventDescriptionFont()
         eventCountLabel.text = ""
@@ -293,7 +307,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
  
         // custom navigation bar
         var viewNav = customNavigationView.addDarkBlurOverlay()
-        viewNav.alpha = 0.95
+        //viewNav.alpha = 0.95
         
         // search text field styling
         var placeholder = NSMutableAttributedString(string: "Search")
@@ -312,6 +326,20 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         imageView.tintColor = UIColor.whiteColor()
         searchTextField.leftView = imageView
         searchTextField.leftViewMode = UITextFieldViewMode.UnlessEditing
+        
+        
+        // event list view 
+        eventListTableView.separatorColor = ColorFactory.white50()
+        eventListTableView.separatorInset = UIEdgeInsetsMake(0, 12, 0, 12)
+        eventListTableView.layoutMargins = UIEdgeInsetsZero
+        eventListTableView.registerClass(EventListItemTableViewCell.classForCoder(), forCellReuseIdentifier:"eventListTableViewCell")
+        eventListTableView.delegate = self
+        eventListTableView.dataSource = self
+        eventListTableView.rowHeight = UITableViewAutomaticDimension
+        eventListTableView.estimatedRowHeight = 142
+        eventListTableView.backgroundColor = UIColor.clearColor()
+        eventListTableView.contentInset = UIEdgeInsetsMake(CUSTOM_NAVIGATION_BAR_HEIGHT, 0, 0, 0)
+        //eventListTableView.delegate
     }
     
     // MARK: UITextFieldDelegate
@@ -355,11 +383,19 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: UITableViewDataSource / UITableViewDelegate
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        if(tableView == eventListTableView){
+            return 1
+        }else{
+            return 1
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.filteredEvents.count
+        if(tableView == eventListTableView){
+            return events.count
+        }else{
+            return self.filteredEvents.count
+        }
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -371,10 +407,37 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("filteredEventCell", forIndexPath: indexPath) as SearchResultsTableCell
-        let event:Event = self.filteredEvents[indexPath.row]
-        cell.updateForEvent(event)
-        return cell
+        if(tableView == eventListTableView){
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventListTableViewCell", forIndexPath: indexPath) as EventListItemTableViewCell
+            let event:Event = events[indexPath.row]
+            //let currentEvent = event
+            cell.updateForEvent(event)
+            
+            if event.eventSmallImageUrl != nil{
+                let imageRequest:NSURLRequest = NSURLRequest(URL: event.eventSmallImageUrl!)
+                if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
+                    cell.eventImageView?.image = image
+                }else{
+                    cell.eventImageView?.image = nil
+                    event.downloadSmallImage({ (image:UIImage!, error:NSError!) -> Void in
+                        // guard against cell reuse + async download
+                        if(event == cell.currentEvent){
+                            if(image != nil){
+                                cell.eventImageView?.image = image
+                            }
+                        }
+                    })
+                }
+            }else{
+                cell.eventImageView?.image = nil
+            }
+            return cell
+        }else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("filteredEventCell", forIndexPath: indexPath) as SearchResultsTableCell
+            let event:Event = self.filteredEvents[indexPath.row]
+            cell.updateForEvent(event)
+            return cell
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -488,6 +551,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func handleKeyboardShown(notification:NSNotification){
+        
+        /*
         // when keyboard pops up we want to layout the search results table view to end right at the top of the keyboard
         if let info = notification.userInfo as? Dictionary<String,NSValue> {
             if let keyboardFrame:NSValue = info[UIKeyboardFrameEndUserInfoKey]{
@@ -504,9 +569,11 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 searchResultsTableView?.superview?.layoutIfNeeded()
             }
         }
+*/
     }
     
     func handleKeyboardHidden(notification:NSNotification){
+        /*
         if searchResultsTableViewBottomConstraint != nil{
             searchResultsTableView?.superview?.removeConstraint(searchResultsTableViewBottomConstraint!)
         }
@@ -514,6 +581,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchResultsTableViewBottomConstraint = NSLayoutConstraint(item: searchResultsTableView!, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: searchResultsTableView?.superview, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: 0)
         searchResultsTableView?.superview?.addConstraint(searchResultsTableViewBottomConstraint!)
         searchResultsTableView?.superview?.layoutIfNeeded()
+*/
     }
     
     func segueIntoEventDetail(event:Event){

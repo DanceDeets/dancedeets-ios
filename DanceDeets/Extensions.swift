@@ -41,15 +41,7 @@ extension NSMutableAttributedString{
 
 
 extension UIView{
-    /* view must have been added to super view before calling this*/
-    func constrainToSuperViewEdges(){
-        self.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.superview?.addConstraint(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 0.0))
-        self.superview?.addConstraint(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: 0.0))
-        self.superview?.addConstraint(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Left, multiplier: 1.0, constant: 0.0))
-        self.superview?.addConstraint(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Right, multiplier: 1.0, constant: 0.0))
-        self.superview?.layoutIfNeeded()
-    }
+
 
     func fadeOut(time:NSTimeInterval,completion:(()->Void)?){
         UIView.animateWithDuration(time, animations: { () -> Void in
