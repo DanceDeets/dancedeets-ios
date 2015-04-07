@@ -62,14 +62,22 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var settingsIcon: UIImageView!
     @IBOutlet weak var collectionModeImageView: UIImageView!
     @IBOutlet weak var listModeImageView: UIImageView!
+    @IBOutlet weak var scrollUpButton: UIButton!
     
     // MARK: Action
     @IBAction func refreshButtonTapped(sender: AnyObject) {
-        if(events.count > 0){
-            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-            eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: true)
-        }
         refreshEvents()
+    }
+    
+    @IBAction func scrollUpButtonTapped(sender: AnyObject) {
+        if(viewMode == .ListView){
+            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+            eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+            
+        }else if(viewMode == .CollectionView){
+            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+            eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
+        }
     }
     
     @IBAction func viewModeButtonTapped(sender: AnyObject) {
@@ -118,9 +126,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func scrollViewDidScroll(scrollView: UIScrollView) {
     }
     
-    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    }
-    
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,23 +135,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         toggleMode(.CollectionView)
         
         loadViewController()
-        
-        //loadSearchController()
+        registerNotifications()
         
         locationManager.requestWhenInUseAuthorization()
-        
-        // notifications for keyboard
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: "handleKeyboardShown:",
-            name: UIKeyboardDidShowNotification,
-            object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: "handleKeyboardHidden:",
-            name: UIKeyboardDidHideNotification,
-            object: nil)
+    
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -271,6 +263,21 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         refreshAnimating = false
     }
     
+    func registerNotifications(){
+        // notifications for keyboard
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "handleKeyboardShown:",
+            name: UIKeyboardDidShowNotification,
+            object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "handleKeyboardHidden:",
+            name: UIKeyboardDidHideNotification,
+            object: nil)
+    }
+    
     func loadViewController(){
         
         locationManager.delegate = self
@@ -300,6 +307,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         navigationTitle.addGestureRecognizer(titleTapGestureRecognizer!)
         
         // labels / icons
+        scrollUpButton.tintColor = UIColor.whiteColor()
         settingsIcon.tintColor = ColorFactory.white50()
         collectionModeImageView.tintColor = ColorFactory.white50()
         listModeImageView.tintColor = ColorFactory.white50()
@@ -484,10 +492,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: Private
     func refreshEvents(){
-        eventsByMonth.removeAllObjects()
-        activeYears.removeAll(keepCapacity: false)
-        activeMonths.removeAllObjects()
-        
         startSpin()
         let searchCity = UserSettings.getUserCitySearch()
         if(countElements(searchCity) > 0){
@@ -507,19 +511,26 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func refreshCityCompletionHandler(events:[Event]!, error:NSError!){
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.stopSpin()
+            
+            // reset event models
+            self.events = []
+            self.eventsByMonth.removeAllObjects()
+            self.activeYears.removeAll(keepCapacity: false)
+            self.activeMonths.removeAllObjects()
+            
             // check response
             if(error != nil){
+                self.navigationTitle.text = "ERROR"
                 let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
                 errorAlert.show()
-                self.events = []
                 self.eventCollectionView.reloadData()
                 self.eventCountLabel.text = "Try again"
             }else if(events.count == 0){
+                self.navigationTitle.text = self.displaySearchString!.uppercaseString
                 let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
-                self.events = []
                 self.eventCollectionView.reloadData()
-                self.eventCountLabel.text = "\(events.count) Events"
+                self.eventCountLabel.text = "No Events"
             }else{
                 self.navigationTitle.text = self.displaySearchString!.uppercaseString
                 self.eventCountLabel.text = "\(events.count) Events"
@@ -527,31 +538,33 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 // for collection view
                 self.events = events
                 self.eventCollectionView.reloadData()
-                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                self.eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: true)
                 
-                // for the list view
-                let calendar = NSCalendar.currentCalendar()
-                let dateFormatter = NSDateFormatter()
+                // for the list view -> group events by months for sections
                 for event in events {
                     if let time = event.startTime {
-                        let components = calendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.DayCalendarUnit, fromDate: event.startTime!)
-                        let monthString = dateFormatter.monthSymbols[components.month-1] as String
-                        if (self.eventsByMonth.objectForKey(monthString) == nil ){
-                            self.eventsByMonth[monthString] = NSMutableArray()
-                        }
+                        let components = NSCalendar.currentCalendar().components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.DayCalendarUnit, fromDate: event.startTime!)
+                        // month as string
+                        let monthString = NSDateFormatter().monthSymbols[components.month-1] as String
                         
+                        // group events into its month
+                        var eventList:NSMutableArray? = self.eventsByMonth[monthString] as? NSMutableArray
+                        if(eventList == nil){
+                            eventList = NSMutableArray()
+                            self.eventsByMonth[monthString] = eventList
+                        }
+                        eventList?.addObject(event)
+                        
+                        // keep track of active month for section headers
                         if(!self.activeMonths.containsObject(monthString)){
                             self.activeMonths.addObject(monthString)
                             self.activeYears.append(components.year)
                         }
                         
-                        var eventList:NSMutableArray = self.eventsByMonth[monthString] as NSMutableArray
-                        eventList.addObject(event)
+                      
                     }
                 }
                 self.eventListTableView.reloadData()
-                self.eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+                self.scrollUpButtonTapped(self)
             }
         })
     }

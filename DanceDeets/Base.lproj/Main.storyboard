@@ -250,6 +250,19 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7r-33-DAL">
+                                <rect key="frame" x="543" y="543" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="Ajb-5J-ZuH"/>
+                                    <constraint firstAttribute="height" constant="45" id="RpW-vt-nFV"/>
+                                </constraints>
+                                <state key="normal" image="scrollUpArrow">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="scrollUpButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="QbB-ZE-1Gz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -285,6 +298,8 @@
                             <constraint firstAttribute="trailing" secondItem="sNC-hk-IIQ" secondAttribute="trailing" constant="12" id="o7P-Xb-bwd"/>
                             <constraint firstItem="x7r-fS-X6k" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="top" id="qc5-hJ-ftR"/>
                             <constraint firstItem="dCA-Tc-CJh" firstAttribute="centerX" secondItem="1oV-ms-x6i" secondAttribute="centerX" id="sjr-jA-1VE"/>
+                            <constraint firstAttribute="trailing" secondItem="z7r-33-DAL" secondAttribute="trailing" constant="12" id="tLi-uD-dXa"/>
+                            <constraint firstAttribute="bottom" secondItem="z7r-33-DAL" secondAttribute="bottom" constant="12" id="tZ0-af-JWC"/>
                             <constraint firstItem="sNC-hk-IIQ" firstAttribute="top" secondItem="1oV-ms-x6i" secondAttribute="bottom" constant="12" id="tcV-hP-imc"/>
                             <constraint firstItem="Cxa-HD-ust" firstAttribute="leading" secondItem="1oV-ms-x6i" secondAttribute="trailing" id="tgf-dR-lx7"/>
                             <constraint firstAttribute="trailing" secondItem="nEP-jS-ldy" secondAttribute="trailing" constant="12" id="zdM-5N-MFL"/>
@@ -305,6 +320,7 @@
                         <outlet property="listModeImageView" destination="ydV-JU-l3w" id="fwR-x7-m6b"/>
                         <outlet property="navigationTitle" destination="dCA-Tc-CJh" id="Rh3-hf-Zjx"/>
                         <outlet property="refreshButton" destination="Cxa-HD-ust" id="ygI-MM-GZk"/>
+                        <outlet property="scrollUpButton" destination="z7r-33-DAL" id="iAN-tA-rf5"/>
                         <outlet property="searchTextField" destination="sNC-hk-IIQ" id="6Bs-GH-PNR"/>
                         <outlet property="settingsIcon" destination="ooa-De-P4m" id="GEQ-37-Jwx"/>
                         <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="vjg-jf-Ol8"/>
@@ -1162,6 +1178,7 @@
         <image name="pinIcon" width="10" height="12"/>
         <image name="refreshIcon" width="16" height="16"/>
         <image name="removeIcon" width="15" height="15"/>
+        <image name="scrollUpArrow" width="45" height="45"/>
         <image name="searchIcon" width="20" height="20"/>
         <image name="settingsIcon" width="39" height="39"/>
         <image name="streamBackground" width="375" height="667"/>
