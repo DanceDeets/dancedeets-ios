@@ -23,13 +23,16 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         case ListView
     }
     
+    // MARK: Constants
     let SEARCH_RESULTS_TABLE_VIEW_TOP_OFFSET:CGFloat = 70.0
     let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 120.0
-    let locationManager:CLLocationManager  = CLLocationManager()
-    let geocoder:CLGeocoder = CLGeocoder()
+    
+    // MARK: Variables
+    var locationManager:CLLocationManager = CLLocationManager()
+    var geocoder:CLGeocoder = CLGeocoder()
+    var locationFailureAlert:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
     var events:[Event] = []
     var filteredEvents:[Event] = []
-    var geocodeSearchString:String? = String() // the string to search
     var displaySearchString:String? = String() // the display string in the title
     var searchMode:SearchMode = .CurrentLocation
     var viewMode:ViewMode = .CollectionView
@@ -42,7 +45,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
     var refreshAnimating:Bool = false
-    let locationFailure:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
+    var eventsByMonth:NSMutableDictionary = NSMutableDictionary()
+    var activeMonths:NSMutableArray = NSMutableArray()
+    var activeYears:[Int] = []
     
     // MARK: Outlets
     @IBOutlet weak var eventListTableView: UITableView!
@@ -166,7 +171,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "settingsSegue"{
             var destination:SettingsViewController? = segue.destinationViewController as? SettingsViewController
-            
             let snapShot:UIView = self.view.snapshotViewAfterScreenUpdates(false)
             let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
             snapShot.addSubview(overlayView)
@@ -307,8 +311,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
  
         // custom navigation bar
         var viewNav = customNavigationView.addDarkBlurOverlay()
-        //viewNav.alpha = 0.95
-        
+       
         // search text field styling
         var placeholder = NSMutableAttributedString(string: "Search")
         placeholder.setColor(UIColor.whiteColor())
@@ -339,7 +342,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventListTableView.estimatedRowHeight = 142
         eventListTableView.backgroundColor = UIColor.clearColor()
         eventListTableView.contentInset = UIEdgeInsetsMake(CUSTOM_NAVIGATION_BAR_HEIGHT, 0, 0, 0)
-        //eventListTableView.delegate
     }
     
     // MARK: UITextFieldDelegate
@@ -357,7 +359,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
             if( placemarks != nil && placemarks.count > 0){
                 let placemark:CLPlacemark = placemarks.first as CLPlacemark
-                self.geocodeSearchString = ""
                 if(placemark.locality != nil && placemark.administrativeArea != nil){
                     self.displaySearchString = "\(placemark.locality), \(placemark.administrativeArea)"
                 }else{
@@ -368,7 +369,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 self.navigationTitle.text = "RETRY"
                 self.eventCountLabel.text = "Couldn't get your location"
                 self.stopSpin()
-                self.locationFailure.show()
+                self.locationFailureAlert.show()
             }
         })
     }
@@ -378,13 +379,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         navigationTitle.text = "RETRY"
         eventCountLabel.text = "Couldn't get your location"
         stopSpin()
-        locationFailure.show()
+        locationFailureAlert.show()
     }
     
     // MARK: UITableViewDataSource / UITableViewDelegate
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if(tableView == eventListTableView){
-            return 1
+            return activeMonths.count
         }else{
             return 1
         }
@@ -392,6 +393,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(tableView == eventListTableView){
+            let month = activeMonths[section] as String
+            let events = eventsByMonth[month] as NSArray
             return events.count
         }else{
             return self.filteredEvents.count
@@ -403,13 +406,39 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.min
+        if(tableView == eventListTableView){
+            return 41
+        }else{
+            return CGFloat.min
+        }
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRectZero)
+        headerView.backgroundColor = UIColor.clearColor()
+        let blur = headerView.addDarkBlurOverlay()
+        let headerLabel = UILabel(frame: CGRectZero)
+        var monthString = activeMonths[section] as String
+        var monthEvents = eventsByMonth[monthString] as [Event]
+        let year = activeYears[section] as Int
+        monthString = "\(monthString.uppercaseString) \(year)"
+        headerLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        headerView.addSubview(headerLabel)
+        headerLabel.constrainLeftToSuperView(13)
+        headerLabel.verticallyCenterToSuperView(0)
+        headerLabel.font = UIFont(name:"Interstate-BoldCondensed",size:15)!
+        headerLabel.textColor = UIColor.whiteColor()
+        headerLabel.text = monthString
+        return headerView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(tableView == eventListTableView){
+            let month = self.activeMonths[indexPath.section] as String
+            let monthEvents = self.eventsByMonth[month] as [Event]
+            
             let cell = tableView.dequeueReusableCellWithIdentifier("eventListTableViewCell", forIndexPath: indexPath) as EventListItemTableViewCell
-            let event:Event = events[indexPath.row]
+            let event:Event = monthEvents[indexPath.row]
             //let currentEvent = event
             cell.updateForEvent(event)
             
@@ -455,18 +484,20 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: Private
     func refreshEvents(){
+        eventsByMonth.removeAllObjects()
+        activeYears.removeAll(keepCapacity: false)
+        activeMonths.removeAllObjects()
+        
         startSpin()
         let searchCity = UserSettings.getUserCitySearch()
         if(countElements(searchCity) > 0){
             searchMode = SearchMode.CustomCity
-            geocodeSearchString = searchCity
             displaySearchString = searchCity
             navigationTitle.text = displaySearchString?.uppercaseString
             eventCountLabel.text = "Loading..."
-            Event.loadEventsForCity(geocodeSearchString!, completion: refreshCityCompletionHandler)
+            Event.loadEventsForCity(displaySearchString!, completion: refreshCityCompletionHandler)
         }else{
             searchMode = SearchMode.CurrentLocation
-            geocodeSearchString = ""
             locationManager.startUpdatingLocation()
             navigationTitle.text = "UPDATING LOCATION"
             eventCountLabel.text = "Updating Location..."
@@ -491,11 +522,36 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 self.eventCountLabel.text = "\(events.count) Events"
             }else{
                 self.navigationTitle.text = self.displaySearchString!.uppercaseString
+                self.eventCountLabel.text = "\(events.count) Events"
+                
+                // for collection view
                 self.events = events
                 self.eventCollectionView.reloadData()
                 let indexPath = NSIndexPath(forRow: 0, inSection: 0)
                 self.eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: true)
-                self.eventCountLabel.text = "\(events.count) Events"
+                
+                // for the list view
+                let calendar = NSCalendar.currentCalendar()
+                let dateFormatter = NSDateFormatter()
+                for event in events {
+                    if let time = event.startTime {
+                        let components = calendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.DayCalendarUnit, fromDate: event.startTime!)
+                        let monthString = dateFormatter.monthSymbols[components.month-1] as String
+                        if (self.eventsByMonth.objectForKey(monthString) == nil ){
+                            self.eventsByMonth[monthString] = NSMutableArray()
+                        }
+                        
+                        if(!self.activeMonths.containsObject(monthString)){
+                            self.activeMonths.addObject(monthString)
+                            self.activeYears.append(components.year)
+                        }
+                        
+                        var eventList:NSMutableArray = self.eventsByMonth[monthString] as NSMutableArray
+                        eventList.addObject(event)
+                    }
+                }
+                self.eventListTableView.reloadData()
+                self.eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
             }
         })
     }
@@ -586,7 +642,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func segueIntoEventDetail(event:Event){
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        self.eventCollectionView.userInteractionEnabled = false
+        eventCollectionView.userInteractionEnabled = false
         event.getMoreDetails({ () -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             dispatch_async(dispatch_get_main_queue(), {

@@ -312,12 +312,28 @@
 		1D8A064119CE0CA6004607B6 /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
+				1DA4566D1AD23B3100368186 /* Search */,
+				1DA4566C1AD23B2600368186 /* Event List View */,
 				1D6C3EAD1A4B79F30081A43C /* Event Detail */,
 				1D6C3EAC1A4B79DA0081A43C /* Settings */,
-				1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */,
-				1D015B481AD21E0500DBC905 /* EventListItemTableViewCell.swift */,
 			);
 			name = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		1DA4566C1AD23B2600368186 /* Event List View */ = {
+			isa = PBXGroup;
+			children = (
+				1D015B481AD21E0500DBC905 /* EventListItemTableViewCell.swift */,
+			);
+			name = "Event List View";
+			sourceTree = "<group>";
+		};
+		1DA4566D1AD23B3100368186 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				1D4343461A1DB06D00E0B0A3 /* SearchResultsTableCell.swift */,
+			);
+			name = Search;
 			sourceTree = "<group>";
 		};
 		1DB901C619E099810018B434 /* Extensions and Utilities */ = {
