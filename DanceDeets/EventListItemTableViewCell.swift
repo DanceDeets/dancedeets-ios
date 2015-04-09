@@ -48,6 +48,8 @@ class EventListItemTableViewCell: UITableViewCell {
         backgroundColor = UIColor.clearColor()
         layoutMargins = UIEdgeInsetsZero
         separatorInset = UIEdgeInsetsMake(0, SEPARATOR_HORIZONTAL_INSETS, 0, SEPARATOR_HORIZONTAL_INSETS)
+        userInteractionEnabled = true
+        selectionStyle = .None
         
         // all layout for this cell in code.
         

@@ -447,7 +447,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             
             let cell = tableView.dequeueReusableCellWithIdentifier("eventListTableViewCell", forIndexPath: indexPath) as EventListItemTableViewCell
             let event:Event = monthEvents[indexPath.row]
-            //let currentEvent = event
             cell.updateForEvent(event)
             
             if event.eventSmallImageUrl != nil{
@@ -478,6 +477,34 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if(tableView == eventListTableView){
+            let month = self.activeMonths[indexPath.section] as String
+            let monthEvents = self.eventsByMonth[month] as [Event]
+            let event:Event = monthEvents[indexPath.row]
+           // segueIntoEventDetail(event)
+            // set up destination view controller w/ cover image dimensions
+         
+            
+            // the collection cell of the selected event
+            let eventCell =  eventListTableView.cellForRowAtIndexPath(indexPath) as EventListItemTableViewCell
+            
+            // convert event cover image relative to view controller view
+            let convertCoverImageRect = view.convertRect(eventCell.eventImageView.frame, fromView: eventCell.eventImageView.superview)
+            
+            
+            let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as EventDetailViewController
+            destination.initialImage = eventCell.eventImageView.image
+            destination.event = event
+            destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
+            destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+            destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
+            destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
+            
+            
+            self.navigationController?.pushViewController(destination, animated: false)
+            
+        }
+        /*
         let event:Event = filteredEvents[indexPath.row]
         
         // locate the filtered event's position in the main event array
@@ -488,6 +515,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         self.searchController?.active = false
         segueIntoEventDetail(event)
+*/
     }
     
     // MARK: Private
@@ -668,12 +696,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
                 
                 // set up destination view controller w/ cover image dimensions
-                let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as? EventDetailViewController
-                destination?.event = event
-                destination?.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
-                destination?.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+                let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as EventDetailViewController
+                destination.event = event
+                destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
+                destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+                destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
+                destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
                 
-                self.navigationController?.pushViewController(destination!, animated: false)
+                self.navigationController?.pushViewController(destination, animated: false)
             })
         })
     }

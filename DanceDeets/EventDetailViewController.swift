@@ -15,11 +15,14 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
     var COVER_IMAGE_TOP_OFFSET:CGFloat = 0.0
     var COVER_IMAGE_HEIGHT:CGFloat = 0.0
+    var COVER_IMAGE_LEFT_OFFSET:CGFloat = 0.0
+    var COVER_IMAGE_RIGHT_OFFSET:CGFloat = 0.0
     
     var event:Event!
     var backgroundOverlay:UIView!
     var loaded:Bool = false
     var directionAlert:UIAlertView?
+    var initialImage:UIImage?
     
     var coverCell:UITableViewCell?{
         return detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0))
@@ -89,6 +92,8 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET
         eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
+        eventCoverImageViewLeftConstraint.constant = COVER_IMAGE_LEFT_OFFSET
+        eventCoverImageViewRightConstraint.constant = COVER_IMAGE_RIGHT_OFFSET
         
         detailsTableView.delegate = self
         detailsTableView.dataSource = self
@@ -96,6 +101,9 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         navigationController?.interactivePopGestureRecognizer.delegate = self
         navigationController?.interactivePopGestureRecognizer.enabled = true
         
+        if let image = initialImage{
+            eventCoverImageView.image = image
+        }
         if let url = event.eventImageUrl{
             let imageRequest:NSURLRequest = NSURLRequest(URL: url)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
@@ -136,9 +144,9 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         // only do the fade in animation once
         if(!loaded){
             loaded = true
+            view.layoutIfNeeded()
             backgroundOverlay?.fadeIn(0.6,nil)
             
-            view.layoutIfNeeded()
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
                 self.eventCoverImageViewLeftConstraint.constant = -25
                 self.eventCoverImageViewRightConstraint.constant = -25
