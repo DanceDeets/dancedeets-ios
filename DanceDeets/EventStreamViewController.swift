@@ -41,7 +41,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var searchResultsTableView:UITableView?
     var searchController:UISearchController?
     var blurOverlay:UIView?
-    var selectedIndexPath:NSIndexPath?
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
     var refreshAnimating:Bool = false
@@ -73,7 +72,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         if(viewMode == .ListView){
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
-            
         }else if(viewMode == .CollectionView){
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
@@ -135,10 +133,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         toggleMode(.CollectionView)
         
         loadViewController()
+        
         registerNotifications()
         
         locationManager.requestWhenInUseAuthorization()
-    
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -163,7 +161,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "settingsSegue"{
             var destination:SettingsViewController? = segue.destinationViewController as? SettingsViewController
-            let snapShot:UIView = self.view.snapshotViewAfterScreenUpdates(false)
+            
+            // take snap shot of our current view, add a blur, this is the background effect for the settings
+            let snapShot:UIView = view.snapshotViewAfterScreenUpdates(false)
             let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
             snapShot.addSubview(overlayView)
             overlayView.constrainToSuperViewEdges()
@@ -183,8 +183,33 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: UICollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        selectedIndexPath = indexPath
-        segueIntoEventDetail(events[indexPath.row])
+        let event = events[indexPath.row]
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        eventCollectionView.userInteractionEnabled = false
+        event.getMoreDetails({ () -> Void in
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            dispatch_async(dispatch_get_main_queue(), {
+                self.eventCollectionView.userInteractionEnabled = true
+                
+                // the collection cell of the selected event
+                let eventCell = self.eventCollectionView.cellForItemAtIndexPath(indexPath) as EventCollectionViewCell
+                
+                // convert event cover image relative to view controller view
+                let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
+                
+                // set up destination view controller w/ cover image dimensions
+                let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as EventDetailViewController
+                destination.initialImage = eventCell.eventCoverImage.image
+                destination.event = event
+                destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
+                destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+                destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
+                destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
+                
+                self.navigationController?.pushViewController(destination, animated: false)
+            })
+        })
     }
     
     // MARK: UICollectionViewDataSource
@@ -193,44 +218,42 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-        let cell:EventCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("eventCollectionViewCell", forIndexPath: indexPath) as? EventCollectionViewCell
+        let cell:EventCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCollectionViewCell", forIndexPath: indexPath) as EventCollectionViewCell
         let event = events[indexPath.row] as Event
-        let currentEvent = event
-        cell?.updateForEvent(event)
+        cell.updateForEvent(event)
         
-        if event.eventImageUrl != nil{
-            let imageRequest:NSURLRequest = NSURLRequest(URL: event.eventImageUrl!)
+        if let imageUrl = event.eventImageUrl{
+            let imageRequest:NSURLRequest = NSURLRequest(URL: imageUrl)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
-                cell?.eventCoverImage?.image = image
+                cell.eventCoverImage?.image = image
             }else{
-                cell?.eventCoverImage?.image = nil
+                cell.eventCoverImage?.image = nil
                 event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
                     // guard against cell reuse + async download
-                    if(currentEvent == cell?.currentEvent){
+                    if(event == cell.currentEvent){
                         if(image != nil){
-                            cell?.eventCoverImage?.image = image
+                            cell.eventCoverImage?.image = image
                         }
                     }
                 })
             }
         }else{
-            cell?.eventCoverImage?.image = nil
+            cell.eventCoverImage?.image = nil
         }
         
         // prefetch next image if possible
         if(indexPath.row < events.count - 1){
             let prefetchEvent:Event = events[indexPath.row + 1]
-            if prefetchEvent.eventImageUrl != nil{
-                let imageRequest:NSURLRequest = NSURLRequest(URL: prefetchEvent.eventImageUrl!)
+            if let imageUrl = prefetchEvent.eventImageUrl{
+                let imageRequest:NSURLRequest = NSURLRequest(URL: imageUrl)
                 if ImageCache.sharedInstance.cachedImageForRequest(imageRequest) ==  nil{
                     prefetchEvent.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
                     })
                 }
             }
-            
         }
         
-        return cell!
+        return cell
     }
     
     // MARK: Private
@@ -285,7 +308,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventCollectionView.delegate = self
         eventCollectionView.dataSource = self
         
-        
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationTitle.textColor = UIColor.whiteColor()
         navigationTitle.font = FontFactory.navigationTitleFont()
@@ -338,8 +360,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchTextField.leftView = imageView
         searchTextField.leftViewMode = UITextFieldViewMode.UnlessEditing
         
-        
-        // event list view 
+        // event list view styling
         eventListTableView.separatorColor = ColorFactory.white50()
         eventListTableView.separatorInset = UIEdgeInsetsMake(0, 12, 0, 12)
         eventListTableView.layoutMargins = UIEdgeInsetsZero
@@ -422,22 +443,27 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRectZero)
-        headerView.backgroundColor = UIColor.clearColor()
-        let blur = headerView.addDarkBlurOverlay()
-        let headerLabel = UILabel(frame: CGRectZero)
-        var monthString = activeMonths[section] as String
-        var monthEvents = eventsByMonth[monthString] as [Event]
-        let year = activeYears[section] as Int
-        monthString = "\(monthString.uppercaseString) \(year)"
-        headerLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        headerView.addSubview(headerLabel)
-        headerLabel.constrainLeftToSuperView(13)
-        headerLabel.verticallyCenterToSuperView(0)
-        headerLabel.font = UIFont(name:"Interstate-BoldCondensed",size:15)!
-        headerLabel.textColor = UIColor.whiteColor()
-        headerLabel.text = monthString
-        return headerView
+        if(tableView == eventListTableView){
+            // headers are the mo/yr for a section of events
+            let headerView = UIView(frame: CGRectZero)
+            headerView.backgroundColor = UIColor.clearColor()
+            let blur = headerView.addDarkBlurOverlay()
+            let headerLabel = UILabel(frame: CGRectZero)
+            var monthString = activeMonths[section] as String
+            var monthEvents = eventsByMonth[monthString] as [Event]
+            let year = activeYears[section] as Int
+            monthString = "\(monthString.uppercaseString) \(year)"
+            headerLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+            headerView.addSubview(headerLabel)
+            headerLabel.constrainLeftToSuperView(13)
+            headerLabel.verticallyCenterToSuperView(0)
+            headerLabel.font = UIFont(name:"Interstate-BoldCondensed",size:15)!
+            headerLabel.textColor = UIColor.whiteColor()
+            headerLabel.text = monthString
+            return headerView
+        }else{
+            return nil
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -481,16 +507,12 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             let month = self.activeMonths[indexPath.section] as String
             let monthEvents = self.eventsByMonth[month] as [Event]
             let event:Event = monthEvents[indexPath.row]
-           // segueIntoEventDetail(event)
-            // set up destination view controller w/ cover image dimensions
-         
             
             // the collection cell of the selected event
             let eventCell =  eventListTableView.cellForRowAtIndexPath(indexPath) as EventListItemTableViewCell
             
             // convert event cover image relative to view controller view
             let convertCoverImageRect = view.convertRect(eventCell.eventImageView.frame, fromView: eventCell.eventImageView.superview)
-            
             
             let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as EventDetailViewController
             destination.initialImage = eventCell.eventImageView.image
@@ -500,22 +522,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
             destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
             
-            
             self.navigationController?.pushViewController(destination, animated: false)
-            
         }
-        /*
-        let event:Event = filteredEvents[indexPath.row]
-        
-        // locate the filtered event's position in the main event array
-        if let indexPath = find(events,event){
-            selectedIndexPath = NSIndexPath(forItem: indexPath, inSection: 0)
-            eventCollectionView.scrollToItemAtIndexPath(selectedIndexPath!, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
-        }
-        
-        self.searchController?.active = false
-        segueIntoEventDetail(event)
-*/
     }
     
     // MARK: Private
@@ -574,7 +582,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                         // month as string
                         let monthString = NSDateFormatter().monthSymbols[components.month-1] as String
                         
-                        // group events into its month
+                        // group events into months
                         var eventList:NSMutableArray? = self.eventsByMonth[monthString] as? NSMutableArray
                         if(eventList == nil){
                             eventList = NSMutableArray()
@@ -679,33 +687,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchResultsTableView?.superview?.addConstraint(searchResultsTableViewBottomConstraint!)
         searchResultsTableView?.superview?.layoutIfNeeded()
 */
-    }
-    
-    func segueIntoEventDetail(event:Event){
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        eventCollectionView.userInteractionEnabled = false
-        event.getMoreDetails({ () -> Void in
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            dispatch_async(dispatch_get_main_queue(), {
-                self.eventCollectionView.userInteractionEnabled = true
-                
-                // the collection cell of the selected event
-                let eventCell = self.eventCollectionView.cellForItemAtIndexPath(self.selectedIndexPath!) as EventCollectionViewCell
-                
-                // convert event cover image relative to view controller view
-                let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
-                
-                // set up destination view controller w/ cover image dimensions
-                let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as EventDetailViewController
-                destination.event = event
-                destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
-                destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-                destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
-                destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
-                
-                self.navigationController?.pushViewController(destination, animated: false)
-            })
-        })
     }
     
     func filterContentForSearchText(searchText: String) {
