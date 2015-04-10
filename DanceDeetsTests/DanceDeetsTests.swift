@@ -78,7 +78,7 @@ class DanceDeetsTests: XCTestCase {
             XCTAssertNotNil(data)
             XCTAssertNil(error)
             
-            if let HTTPResponse = response as NSHTTPURLResponse! {
+            if let HTTPResponse = response as! NSHTTPURLResponse! {
                 XCTAssertEqual(HTTPResponse.statusCode, 200, "HTTP response status code should be 200")
             } else {
                 XCTFail("Response was not NSHTTPURLResponse")
@@ -93,7 +93,7 @@ class DanceDeetsTests: XCTestCase {
 
     func testGooglePlaceAutoSuggest(){
         let expectation = expectationWithDescription("GOOGLE PLACE API GET")
-        GooglePlaceAPI.autoSuggestCity("N", { (autosuggests:[String]!, error:NSError!) -> Void in
+        GooglePlaceAPI.autoSuggestCity("N", completion: { (autosuggests:[String]!, error:NSError!) -> Void in
             expectation.fulfill()
             XCTAssertNotNil(autosuggests)
             XCTAssertNil(error)

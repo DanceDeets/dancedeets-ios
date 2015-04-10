@@ -35,7 +35,7 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate, UIText
         disclaimerString.appendAttributedString(terms)
         disclaimerString.appendAttributedString(last)
         
-        var centeredStyle:NSMutableParagraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as NSMutableParagraphStyle
+        var centeredStyle:NSMutableParagraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         centeredStyle.alignment = NSTextAlignment.Center
         disclaimerString.addAttribute(NSParagraphStyleAttributeName, value: centeredStyle, range: NSMakeRange(0, disclaimerString.length))
         disclaimerString.setFont(FontFactory.disclaimerFont())
@@ -67,7 +67,7 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate, UIText
         println("Facebook fetched Graph User Info")
         println("User ID: \(user.objectID)")
         println("User Name: \(user.name)")
-        var userEmail = user.objectForKey("email") as String
+        var userEmail = user.objectForKey("email") as! String
         println("User Email: \(userEmail)")
 
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)

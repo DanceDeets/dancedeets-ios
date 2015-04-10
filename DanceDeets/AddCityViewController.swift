@@ -49,7 +49,7 @@ class AddCityViewController : UIViewController, UITextFieldDelegate, UITableView
     // MARK: Private
     func textFieldUpdated(){
         let currentText = citySearchTextField.text
-        if(countElements(currentText) > 0){
+        if(count(currentText) > 0){
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             GooglePlaceAPI.autoSuggestCity(currentText, completion: { (autosuggests:[String]!, error:NSError!) -> Void in
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -72,7 +72,7 @@ class AddCityViewController : UIViewController, UITextFieldDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as AutosuggestCityCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! AutosuggestCityCell
         cell.cityLabel.text = autosuggestedCities[indexPath.row]
         
         let userCities = UserSettings.getUserCities()

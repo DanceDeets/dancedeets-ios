@@ -54,10 +54,10 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     public func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         locationManager.stopUpdatingLocation()
         
-        let locationObject:CLLocation = locations.first as CLLocation
+        let locationObject:CLLocation = locations.first as! CLLocation
         geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
             if( placemarks != nil && placemarks.count > 0){
-                let placemark:CLPlacemark = placemarks.first as CLPlacemark
+                let placemark:CLPlacemark = placemarks.first as! CLPlacemark
                 var geocodeString:String = ""
                 
                 // set up a display address

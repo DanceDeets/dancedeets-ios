@@ -10,20 +10,20 @@ import Foundation
 import UIKit
 
 public class Event: NSObject {
-    let eventImageUrl:NSURL?
-    let eventImageWidth:CGFloat?
-    let eventImageHeight:CGFloat?
-    let eventSmallImageUrl:NSURL?
-    let venue:String?
-    let shortDescription:String?
-    let startTime:NSDate?
-    let endTime:NSDate?
-    let keywords:[String] = []
-    let title:String?
-    let id:String?
-    let displayTime:String?
-    let facebookUrl:NSURL?
-    let danceDeetsUrl:NSURL?
+    var eventImageUrl:NSURL?
+    var eventImageWidth:CGFloat?
+    var eventImageHeight:CGFloat?
+    var eventSmallImageUrl:NSURL?
+    var venue:String?
+    var shortDescription:String?
+    var startTime:NSDate?
+    var endTime:NSDate?
+    var keywords:[String] = []
+    var title:String?
+    var id:String?
+    var displayTime:String?
+    var facebookUrl:NSURL?
+    var danceDeetsUrl:NSURL?
     var displayAddress:String = ""
     var geoloc:CLLocation?
     var admins:[EventAdmin] = []
@@ -39,7 +39,7 @@ public class Event: NSObject {
         id = dictionary["id"] as? String
         shortDescription = dictionary["description"] as? String
         
-        if id != nil && countElements(id!) > 0 {
+        if id != nil && count(id!) > 0 {
             facebookUrl = NSURL(string: "http://www.facebook.com/"+id!)
             danceDeetsUrl = NSURL(string: "http://www.dancedeets.com/events/"+id!)
         }
@@ -67,8 +67,8 @@ public class Event: NSObject {
         // venue
         if let venue = dictionary["venue"] as? NSDictionary{
             if let geocodeDict = venue["geocode"] as? NSDictionary{
-                let lat:CLLocationDegrees = geocodeDict["latitude"] as CLLocationDegrees
-                let long:CLLocationDegrees = geocodeDict["longitude"] as CLLocationDegrees
+                let lat:CLLocationDegrees = geocodeDict["latitude"] as! CLLocationDegrees
+                let long:CLLocationDegrees = geocodeDict["longitude"] as! CLLocationDegrees
                 self.geoloc = CLLocation(latitude: lat, longitude: long)
             }
             if let name = venue["name"] as? String{
@@ -80,7 +80,7 @@ public class Event: NSObject {
         // annotations
         if let annotations = dictionary["annotations"] as? NSDictionary{
             if let danceKeywords = annotations["dance_keywords"] as? [String]{
-                keywords = danceKeywords
+                self.keywords = danceKeywords
             }
         }
      

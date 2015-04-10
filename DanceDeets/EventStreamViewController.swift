@@ -116,7 +116,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: UISearchControllerDelegate
     func willDismissSearchController(searchController: UISearchController) {
-        blurOverlay?.fadeOut(0.4,nil)
+        blurOverlay?.fadeOut(0.4,completion:nil)
         searchController.searchBar.hidden = true
     }
     
@@ -193,13 +193,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 self.eventCollectionView.userInteractionEnabled = true
                 
                 // the collection cell of the selected event
-                let eventCell = self.eventCollectionView.cellForItemAtIndexPath(indexPath) as EventCollectionViewCell
+                let eventCell = self.eventCollectionView.cellForItemAtIndexPath(indexPath) as! EventCollectionViewCell
                 
                 // convert event cover image relative to view controller view
                 let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
                 
                 // set up destination view controller w/ cover image dimensions
-                let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as EventDetailViewController
+                let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
                 destination.initialImage = eventCell.eventCoverImage.image
                 destination.event = event
                 destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
@@ -218,7 +218,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-        let cell:EventCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCollectionViewCell", forIndexPath: indexPath) as EventCollectionViewCell
+        let cell:EventCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCollectionViewCell", forIndexPath: indexPath) as! EventCollectionViewCell
         let event = events[indexPath.row] as Event
         cell.updateForEvent(event)
         
@@ -384,10 +384,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         locationManager.stopUpdatingLocation()
         
         
-        let locationObject:CLLocation = locations.first as CLLocation
+        let locationObject:CLLocation = locations.first as! CLLocation
         geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
             if( placemarks != nil && placemarks.count > 0){
-                let placemark:CLPlacemark = placemarks.first as CLPlacemark
+                let placemark:CLPlacemark = placemarks.first as! CLPlacemark
                 if(placemark.locality != nil && placemark.administrativeArea != nil){
                     self.displaySearchString = "\(placemark.locality), \(placemark.administrativeArea)"
                 }else{
@@ -422,8 +422,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(tableView == eventListTableView){
-            let month = activeMonths[section] as String
-            let events = eventsByMonth[month] as NSArray
+            let month = activeMonths[section] as! String
+            let events = eventsByMonth[month] as! NSArray
             return events.count
         }else{
             return self.filteredEvents.count
@@ -449,8 +449,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             headerView.backgroundColor = UIColor.clearColor()
             let blur = headerView.addDarkBlurOverlay()
             let headerLabel = UILabel(frame: CGRectZero)
-            var monthString = activeMonths[section] as String
-            var monthEvents = eventsByMonth[monthString] as [Event]
+            var monthString = activeMonths[section] as! String
+            var monthEvents = eventsByMonth[monthString] as! [Event]
             let year = activeYears[section] as Int
             monthString = "\(monthString.uppercaseString) \(year)"
             headerLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -468,10 +468,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(tableView == eventListTableView){
-            let month = self.activeMonths[indexPath.section] as String
-            let monthEvents = self.eventsByMonth[month] as [Event]
+            let month = self.activeMonths[indexPath.section] as! String
+            let monthEvents = self.eventsByMonth[month] as! [Event]
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventListTableViewCell", forIndexPath: indexPath) as EventListItemTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventListTableViewCell", forIndexPath: indexPath) as! EventListItemTableViewCell
             let event:Event = monthEvents[indexPath.row]
             cell.updateForEvent(event)
             
@@ -495,7 +495,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             }
             return cell
         }else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("filteredEventCell", forIndexPath: indexPath) as SearchResultsTableCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("filteredEventCell", forIndexPath: indexPath) as! SearchResultsTableCell
             let event:Event = self.filteredEvents[indexPath.row]
             cell.updateForEvent(event)
             return cell
@@ -504,17 +504,17 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(tableView == eventListTableView){
-            let month = self.activeMonths[indexPath.section] as String
-            let monthEvents = self.eventsByMonth[month] as [Event]
+            let month = self.activeMonths[indexPath.section] as! String
+            let monthEvents = self.eventsByMonth[month] as! [Event]
             let event:Event = monthEvents[indexPath.row]
             
             // the collection cell of the selected event
-            let eventCell =  eventListTableView.cellForRowAtIndexPath(indexPath) as EventListItemTableViewCell
+            let eventCell =  eventListTableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
             
             // convert event cover image relative to view controller view
             let convertCoverImageRect = view.convertRect(eventCell.eventImageView.frame, fromView: eventCell.eventImageView.superview)
             
-            let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as EventDetailViewController
+            let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
             destination.initialImage = eventCell.eventImageView.image
             destination.event = event
             destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
@@ -530,7 +530,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func refreshEvents(){
         startSpin()
         let searchCity = UserSettings.getUserCitySearch()
-        if(countElements(searchCity) > 0){
+        if(count(searchCity) > 0){
             searchMode = SearchMode.CustomCity
             displaySearchString = searchCity
             navigationTitle.text = displaySearchString?.uppercaseString
@@ -578,9 +578,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 // for the list view -> group events by months for sections
                 for event in events {
                     if let time = event.startTime {
-                        let components = NSCalendar.currentCalendar().components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.DayCalendarUnit, fromDate: event.startTime!)
+                        let components = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay, fromDate: event.startTime!)
                         // month as string
-                        let monthString = NSDateFormatter().monthSymbols[components.month-1] as String
+                        let monthString = NSDateFormatter().monthSymbols[components.month-1] as! String
                         
                         // group events into months
                         var eventList:NSMutableArray? = self.eventsByMonth[monthString] as? NSMutableArray

@@ -30,7 +30,7 @@ class UserSettings
             NSUserDefaults.standardUserDefaults().synchronize()
             return UserSettings.DEFAULT_CITIES
         }else{
-            return userCities as [String]
+            return userCities as! [String]
         }
     }
     
@@ -47,7 +47,7 @@ class UserSettings
     }
     
     class func deleteUserCity(city:String){
-        var userCities = NSUserDefaults.standardUserDefaults().arrayForKey(UserSettings.USER_CITIES_KEY) as [String]
+        var userCities = NSUserDefaults.standardUserDefaults().arrayForKey(UserSettings.USER_CITIES_KEY) as! [String]
         if let index = find(userCities,city){
             userCities.removeAtIndex(index)
             NSUserDefaults.standardUserDefaults().setObject(userCities, forKey: UserSettings.USER_CITIES_KEY)

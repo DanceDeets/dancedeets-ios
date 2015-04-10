@@ -34,7 +34,7 @@ public class GooglePlaceAPI{
                             for prediction in predictions{
                                 if let predictionDict = prediction as? NSDictionary{
                                     if let terms = predictionDict["description"] as? String{
-                                        if (countElements(terms) > 0){
+                                        if (count(terms) > 0){
                                             autoSuggestions.append(terms)
                                         }
                                     }

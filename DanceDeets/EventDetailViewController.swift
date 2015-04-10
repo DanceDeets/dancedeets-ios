@@ -64,7 +64,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     // MARK: UIViewController
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "fullScreenImageSegue"){
-            let destinationController = segue.destinationViewController as FullScreenImageViewController
+            let destinationController = segue.destinationViewController as! FullScreenImageViewController
             if let image = eventCoverImageView.image{
                 destinationController.image = image
             }
@@ -84,7 +84,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         backButton.tintColor = ColorFactory.white50()
         navigationItem.leftBarButtonItem = backButton
 
-        let titleOptions:NSMutableDictionary = NSMutableDictionary()
+        var titleOptions = [NSObject:AnyObject]()
         titleOptions[NSForegroundColorAttributeName] = UIColor.whiteColor()
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
         navigationController?.navigationBar.titleTextAttributes = titleOptions
@@ -145,7 +145,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         if(!loaded){
             loaded = true
             view.layoutIfNeeded()
-            backgroundOverlay?.fadeIn(0.6,nil)
+            backgroundOverlay?.fadeIn(0.6,completion:nil)
             
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
                 self.eventCoverImageViewLeftConstraint.constant = -25
@@ -214,32 +214,32 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(indexPath.row == 0){
-            let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) as! UITableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.backgroundColor = UIColor.clearColor()
             return cell
         }else if(indexPath.row == 1){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as EventDetailCoverCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as! EventDetailCoverCell
             cell.updateViewForEvent(event!)
             return cell
         }else if(indexPath.row == 2){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventTimeCell", forIndexPath: indexPath) as EventDetailTimeCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventTimeCell", forIndexPath: indexPath) as! EventDetailTimeCell
             cell.updateViewForEvent(event!)
             return cell
         }else if(indexPath.row == 3){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as EventDetailLocationCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as! EventDetailLocationCell
             cell.updateViewForEvent(event!)
             return cell
         }else if(indexPath.row == 4){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as EventDetailDescriptionCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as! EventDetailDescriptionCell
             cell.updateViewForEvent(event!)
             return cell
         }else if(indexPath.row == 5){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventMapCell", forIndexPath: indexPath) as EventDetailMapCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventMapCell", forIndexPath: indexPath) as! EventDetailMapCell
             cell.updateViewForEvent(event!)
             return cell
         }else if(indexPath.row == 6){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventActionCell", forIndexPath: indexPath) as EventDetailActionCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventActionCell", forIndexPath: indexPath) as! EventDetailActionCell
             cell.updateViewForEvent(event!)
             return cell
         }else{

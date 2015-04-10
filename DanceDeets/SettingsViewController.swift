@@ -34,7 +34,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: UIViewController
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "addCitySegue"){
-            let destination = segue.destinationViewController as AddCityViewController
+            let destination = segue.destinationViewController as! AddCityViewController
             let snapShot:UIView = backgroundBlurView!.snapshotViewAfterScreenUpdates(false)
             destination.view.insertSubview(snapShot, atIndex: 0)
             snapShot.constrainToSuperViewEdges()
@@ -109,16 +109,16 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(indexPath.section == MY_LOCATIONS_SECTION){
             if(indexPath.row == 0){
-                let cell = tableView.dequeueReusableCellWithIdentifier("addCityCell", forIndexPath: indexPath) as AddCityCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("addCityCell", forIndexPath: indexPath) as! AddCityCell
                 return cell
             } else if (indexPath.row == cities.count + 1){
-                let cell = tableView.dequeueReusableCellWithIdentifier("currentLocationCell", forIndexPath: indexPath) as CurrentLocationCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("currentLocationCell", forIndexPath: indexPath) as! CurrentLocationCell
                 if(city == ""){
                     cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
                 }
                 return cell
             } else{
-                let cell = tableView.dequeueReusableCellWithIdentifier("citySearchCell", forIndexPath: indexPath) as CitySearchCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("citySearchCell", forIndexPath: indexPath) as! CitySearchCell
                 cell.settingsVC = self
                 cell.deleteButton.hidden = false
                 cell.cityLabel.text = cities[indexPath.row - 1]
@@ -129,15 +129,15 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }else if(indexPath.section == TOOLS_SECTION){
             if(indexPath.row == 0){
-                let cell = tableView.dequeueReusableCellWithIdentifier("sendFeedbackCell", forIndexPath: indexPath) as SendFeedbackCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("sendFeedbackCell", forIndexPath: indexPath) as! SendFeedbackCell
                 return cell
             }else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as LogoutCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as! LogoutCell
                 return cell
             }
             
         }else{
-            let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as LogoutCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as! LogoutCell
             return cell
         }
     }
