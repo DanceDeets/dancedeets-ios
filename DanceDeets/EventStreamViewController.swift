@@ -62,7 +62,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var collectionModeImageView: UIImageView!
     @IBOutlet weak var listModeImageView: UIImageView!
     @IBOutlet weak var scrollUpButton: UIButton!
-    
+    @IBOutlet weak var searchTextCancelButton: UIButton!
+    @IBOutlet weak var searchTextTrailingConstraint: NSLayoutConstraint!
     // MARK: Action
     @IBAction func refreshButtonTapped(sender: AnyObject) {
         refreshEvents()
@@ -76,6 +77,17 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
         }
+    }
+    
+    @IBAction func searchTextCancelButtonTapped(sender: AnyObject) {
+        
+        blurOverlay?.fadeOut(0.4, completion: nil)
+        
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.searchTextTrailingConstraint.constant = 12
+            self.searchTextCancelButton.alpha = 0
+        })
+        view.endEditing(true)
     }
     
     @IBAction func viewModeButtonTapped(sender: AnyObject) {
@@ -320,6 +332,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         flowLayout?.minimumInteritemSpacing = 0.0
         
         blurOverlay = view.addDarkBlurOverlay()
+        view.insertSubview(blurOverlay!, belowSubview: customNavigationView)
         blurOverlay?.alpha = 0
         
         // tapping on the title does a refresh
@@ -338,6 +351,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventCountLabel.text = ""
         refreshButton.tintColor = ColorFactory.white50()
         refreshButton.hidden = true
+        searchTextCancelButton.alpha = 0.0
  
         // custom navigation bar
         var viewNav = customNavigationView.addDarkBlurOverlay()
@@ -348,17 +362,21 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         placeholder.setFont(UIFont(name: "HelveticaNeue-Medium", size: 14.0)!)
         searchTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
         searchTextField.attributedPlaceholder = placeholder
+        //searchTextField.text = "Test"
         searchTextField.tintColor = UIColor.whiteColor()
         searchTextField.textColor = UIColor.whiteColor()
         searchTextField.delegate = self
+        searchTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         
         let imageView:UIImageView = UIImageView(image: UIImage(named: "searchIconSmall")!)
         imageView.contentMode = UIViewContentMode.Right
         let magGlassXOffset = (searchTextField.frame.size.width / 2 ) - 19.0
-        imageView.frame = CGRectMake(0, 0, magGlassXOffset, imageView.image!.size.height)
+        //imageView.frame = CGRectMake(0, 0, magGlassXOffset, imageView.image!.size.height)
+        imageView.frame = CGRectMake(0, 0, imageView.image!.size.width + 10, imageView.image!.size.height)
         imageView.tintColor = UIColor.whiteColor()
         searchTextField.leftView = imageView
         searchTextField.leftViewMode = UITextFieldViewMode.UnlessEditing
+        searchTextField.textAlignment = .Left
         
         // event list view styling
         eventListTableView.separatorColor = ColorFactory.white50()
@@ -376,7 +394,18 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     // MARK: UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        blurOverlay?.fadeOut(0.4, completion: nil)
         return true
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        blurOverlay?.fadeIn(0.4, completion: nil)
+        
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.searchTextCancelButton.alpha = 1.0
+            self.searchTextTrailingConstraint.constant = 80
+        })
+        
     }
     
     // MARK: CLLocationManagerDelegate

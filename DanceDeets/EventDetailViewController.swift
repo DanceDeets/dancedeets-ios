@@ -17,6 +17,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     var COVER_IMAGE_HEIGHT:CGFloat = 0.0
     var COVER_IMAGE_LEFT_OFFSET:CGFloat = 0.0
     var COVER_IMAGE_RIGHT_OFFSET:CGFloat = 0.0
+    var ASPECT_RATIO:CGFloat = 1.0
     
     var event:Event!
     var backgroundOverlay:UIView!
@@ -117,6 +118,12 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
         
+        // aspect ratio if available
+        if event.eventImageHeight != nil && event.eventImageWidth != nil{
+            ASPECT_RATIO = min(1.0, event.eventImageHeight! / event.eventImageWidth!)
+        }
+        eventCoverImageView.userInteractionEnabled = false
+        
         backgroundOverlay = backgroundView.addDarkBlurOverlay()
         backgroundOverlay.alpha = 0
         directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
@@ -150,8 +157,8 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
                 self.eventCoverImageViewLeftConstraint.constant = -25
                 self.eventCoverImageViewRightConstraint.constant = -25
-                self.eventCoverImageViewTopConstraint.constant = 40
-                self.eventCoverImageViewHeightConstraint.constant =  self.COVER_IMAGE_HEIGHT + 50
+                self.eventCoverImageViewTopConstraint.constant = 0
+                self.eventCoverImageViewHeightConstraint.constant =  self.eventImageHeight() + 50
                 self.view.layoutIfNeeded()
                 }) { (bool:Bool) -> Void in
                     self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -159,7 +166,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.eventCoverImageViewLeftConstraint.constant = 0
                         self.eventCoverImageViewRightConstraint.constant = 0
                         self.eventCoverImageViewTopConstraint.constant = self.getTopOffset()
-                        self.eventCoverImageViewHeightConstraint.constant =  self.COVER_IMAGE_HEIGHT
+                        self.eventCoverImageViewHeightConstraint.constant = self.eventImageHeight()
                         self.view.layoutIfNeeded()
                         
                         }) { (bool:Bool) -> Void in
@@ -194,16 +201,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     // MARK: Action
-    func imageViewTapped(){
-        AppDelegate.sharedInstance().allowLandscape = true
-        performSegueWithIdentifier("fullScreenImageSegue", sender: self)
-    }
-    
     @IBAction func shareButtonTapped(sender: AnyObject) {
         if (event != nil){
             let activityViewController = UIActivityViewController(activityItems: event!.createSharingItems(), applicationActivities: nil)
@@ -256,12 +254,16 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         return 1
     }
     
+    func eventImageHeight() -> CGFloat{
+        return view.frame.size.width * ASPECT_RATIO
+    }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
 
         if(indexPath.row == 0){
             // gap, cover image sits here but isn't part of the tableview
-            return getTopOffset() + COVER_IMAGE_HEIGHT
+            return getTopOffset() + eventImageHeight()
         }else if(indexPath.row == 1){
             // title
             let height = Utilities.heightRequiredForText(event!.title!,
@@ -307,7 +309,9 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.row == 0){
             AppDelegate.sharedInstance().allowLandscape = true
-            performSegueWithIdentifier("fullScreenImageSegue", sender: self)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
+            })
         }else if(indexPath.row == 3 || indexPath.row == 5){
             if ( event.placemark != nil){
                 directionAlert?.show()
@@ -320,10 +324,10 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         let yOff = scrollView.contentOffset.y
         
         if(yOff < 0){
-            eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT - yOff
+            eventCoverImageViewHeightConstraint.constant = self.eventImageHeight() - yOff
             eventCoverImageViewTopConstraint.constant = getTopOffset()
         }else{
-            eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
+            eventCoverImageViewHeightConstraint.constant = self.eventImageHeight()
             eventCoverImageViewTopConstraint.constant = getTopOffset() - yOff
         }
     }
