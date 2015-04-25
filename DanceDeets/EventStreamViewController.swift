@@ -80,15 +80,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     @IBAction func searchTextCancelButtonTapped(sender: AnyObject) {
-        
-        blurOverlay?.fadeOut(0.4, completion: nil)
-        
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
-            self.searchTextTrailingConstraint.constant = 12
-            self.searchTextCancelButton.alpha = 0
-            self.searchAutoSuggestTableView.alpha = 0
-        })
-        view.endEditing(true)
+        hideAutoSuggestTable()
     }
     
     @IBAction func viewModeButtonTapped(sender: AnyObject) {
@@ -348,6 +340,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         refreshButton.tintColor = ColorFactory.white50()
         refreshButton.hidden = true
         searchTextCancelButton.alpha = 0.0
+        searchTextCancelButton.tintColor = ColorFactory.white50()
  
         // custom navigation bar
         var customNavBlur = customNavigationView.addDarkBlurOverlay()
@@ -355,21 +348,20 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
        
         // search text field styling
         var placeholder = NSMutableAttributedString(string: "Search")
-        placeholder.setColor(UIColor.whiteColor())
+        placeholder.setColor(ColorFactory.white50())
         placeholder.setFont(UIFont(name: "HelveticaNeue-Medium", size: 14.0)!)
         searchTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
         searchTextField.attributedPlaceholder = placeholder
-        //searchTextField.text = "Test"
-        searchTextField.tintColor = UIColor.whiteColor()
-        searchTextField.textColor = UIColor.whiteColor()
+        searchTextField.tintColor = ColorFactory.white50()
+        searchTextField.textColor = ColorFactory.white50()
         searchTextField.delegate = self
         searchTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         
         let imageView:UIImageView = UIImageView(image: UIImage(named: "searchIconSmall")!)
+        imageView.tintColor = ColorFactory.white50()
         imageView.contentMode = UIViewContentMode.Right
         let magGlassXOffset = (searchTextField.frame.size.width / 2 ) - 19.0
         imageView.frame = CGRectMake(0, 0, imageView.image!.size.width + 10, imageView.image!.size.height)
-        imageView.tintColor = UIColor.whiteColor()
         searchTextField.leftView = imageView
         searchTextField.leftViewMode = UITextFieldViewMode.UnlessEditing
         searchTextField.textAlignment = .Left
@@ -575,26 +567,42 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func showAutoSuggestTable(){
-        // displays the search auto suggest tableview
-        blurOverlay?.fadeIn(0.4, completion: nil)
+        blurOverlay?.fadeIn(0.5, completion: nil)
         
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
-            self.searchTextCancelButton.alpha = 1.0
+        view.layoutIfNeeded()
+        UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
             self.searchTextTrailingConstraint.constant = 80
+            self.view.layoutIfNeeded()
+            }) { (bool:Bool) -> Void in
+                return
+        }
+        UIView.animateWithDuration(0.25, delay: 0.25, options: .CurveEaseInOut, animations: { () -> Void in
+            self.searchTextCancelButton.alpha = 1.0
             self.searchAutoSuggestTableView.alpha = 1.0
-        })
+            }) { (bool:Bool) -> Void in
+                return
+        }
+       
         searchTextField.text = ""
         searchTextField.becomeFirstResponder()
     }
     
     func hideAutoSuggestTable(){
-        // hides the search auto suggest tableview
-        blurOverlay?.fadeOut(0.4, completion: nil)
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
+        blurOverlay?.fadeOut(0.5, completion: nil)
+        
+        view.layoutIfNeeded()
+        UIView.animateWithDuration(0.25, delay: 0.25, options: .CurveEaseInOut, animations: { () -> Void in
             self.searchTextTrailingConstraint.constant = 12
+            self.view.layoutIfNeeded()
+            }) { (bool:Bool) -> Void in
+                return
+        }
+        UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
             self.searchTextCancelButton.alpha = 0
             self.searchAutoSuggestTableView.alpha = 0
-        })
+            }) { (bool:Bool) -> Void in
+                return
+        }
         view.endEditing(true)
     }
     
