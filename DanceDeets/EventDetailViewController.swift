@@ -75,6 +75,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // styling
         title = event!.title!.uppercaseString
         var shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
         shareButton.tintColor = ColorFactory.white50()
@@ -91,6 +92,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         navigationController?.navigationBar.titleTextAttributes = titleOptions
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
+        // these constants are set up by the previous view controller that pushed the detail view controller
         eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET
         eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
         eventCoverImageViewLeftConstraint.constant = COVER_IMAGE_LEFT_OFFSET
@@ -98,14 +100,13 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         detailsTableView.delegate = self
         detailsTableView.dataSource = self
-        
         navigationController?.interactivePopGestureRecognizer.delegate = self
         navigationController?.interactivePopGestureRecognizer.enabled = true
         
-        if let image = initialImage{
-            eventCoverImageView.image = image
-        }
+        // set to initial image first, this may be a smaller image if coming from list view
+        eventCoverImageView.image = initialImage
         if let url = event.eventImageUrl{
+            // hero image for detail view is the big image
             let imageRequest:NSURLRequest = NSURLRequest(URL: url)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
                 eventCoverImageView.image = image
@@ -118,10 +119,11 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
         
-        // aspect ratio if available
+        // aspect ratio if available, capped at 1:1 to prevent super tall images
         if event.eventImageHeight != nil && event.eventImageWidth != nil{
             ASPECT_RATIO = min(1.0, event.eventImageHeight! / event.eventImageWidth!)
         }
+        
         eventCoverImageView.userInteractionEnabled = false
         
         backgroundOverlay = backgroundView.addDarkBlurOverlay()

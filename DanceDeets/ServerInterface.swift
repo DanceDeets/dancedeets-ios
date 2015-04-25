@@ -9,10 +9,8 @@
 import Foundation
 import CoreLocation
 
-/* Any kind of interfacing with the back end should go in here */
 public class ServerInterface : NSObject, CLLocationManagerDelegate {
     
-    // swift doesn't support class constant variables yet, but you can do it in a struct
     public class var sharedInstance : ServerInterface{
         struct Static{
             static var onceToken : dispatch_once_t = 0
@@ -24,7 +22,6 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
             Static.instance?.locationManager.requestWhenInUseAuthorization()
             Static.instance?.locationManager.delegate = Static.instance
         })
-        
         return Static.instance!
     }
     
@@ -36,14 +33,22 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         return NSURL(string: baseUrl + "/auth")!
     }
     
-    func getEventSearchUrl(city:String) -> NSURL{
+    func getEventSearchUrl(city:String, eventKeyword:String?) -> NSURL{
         var cityString:String = city.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        return NSURL(string: baseUrl + "/search?location=" + cityString)!
+        if let keyword = eventKeyword{
+            return NSURL(string: baseUrl + "/search?location=\(cityString)&keywords=\(keyword)")!
+        }else{
+            return NSURL(string: baseUrl + "/search?location=\(cityString)")!
+        }
     }
     
-    func getEventSearchUrlByLocation(location:CLLocation)->NSURL{
+    func getEventSearchUrlByLocation(location:CLLocation, eventKeyword:String?)->NSURL{
         let coordinate = location.coordinate
-        return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)")!
+        if let keyword = eventKeyword{
+            return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)&keywords=\(keyword)")!
+        }else{
+            return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)")!
+        }
     }
     
     func updateFacebookToken(){
@@ -101,9 +106,5 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     
     public func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         locationManager.stopUpdatingLocation()
-        println("Couldn't update location")
     }
-    
-
-    
 }

@@ -216,15 +216,14 @@ public class Event: NSObject {
         
     }
     
-    
-    public class func loadEventsForLocation(location:CLLocation, completion: (([Event]!, NSError!)->Void)) -> Void
+    public class func loadEventsForLocation(location:CLLocation, keyword:String?, completion: (([Event]!, NSError!)->Void)) -> Void
     {
-        loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrlByLocation(location), completion:completion)
+        loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrlByLocation(location, eventKeyword:keyword), completion:completion)
     }
     
-    public class func loadEventsForCity(city:String, completion: (([Event]!, NSError!)->Void)) -> Void
+    public class func loadEventsForCity(city:String, keyword:String?, completion: (([Event]!, NSError!)->Void)) -> Void
     {
-        loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrl(city), completion:completion)
+        loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrl(city, eventKeyword:keyword), completion:completion)
     }
     
     public func getMoreDetails(completion: (()->Void)) -> Void
