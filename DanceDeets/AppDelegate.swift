@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let sharedURLCache = NSURLCache(memoryCapacity: urlCacheMemoryCapacityMB*1024*1024,
             diskCapacity: urlCacheDiskCapacityMB*1024*1024, diskPath: nil)
         NSURLCache.setSharedURLCache(sharedURLCache)
-        
+        Fabric.with([Crashlytics()])
         return true
     }
     
