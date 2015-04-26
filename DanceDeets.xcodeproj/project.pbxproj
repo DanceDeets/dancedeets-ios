@@ -110,7 +110,7 @@
 		1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceBookLoginViewController.swift; sourceTree = "<group>"; };
 		1D8856C119CDE510005FFDB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1D8856C319CDE510005FFDB2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = DanceDeets/Images.xcassets; sourceTree = "<group>"; };
+		1D8856C319CDE510005FFDB2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D8856C619CDE510005FFDB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1D8856CC19CDE510005FFDB2 /* DanceDeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DanceDeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856D119CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -221,11 +221,10 @@
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
-				1DAB49F91A182AC90002BBDD /* QuartzCore.framework */,
 				1D8856B919CDE510005FFDB2 /* DanceDeets */,
-				1D8856C319CDE510005FFDB2 /* Images.xcassets */,
 				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
 				1D8856B819CDE510005FFDB2 /* Products */,
+				1DAB49F91A182AC90002BBDD /* QuartzCore.framework */,
 				1DE70DF91A0FD55D0044C77C /* FacebookSDK.framework */,
 				1DFB3B5119FF575C00CF4A72 /* EventKit.framework */,
 				1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */,
@@ -246,9 +245,10 @@
 		1D8856B919CDE510005FFDB2 /* DanceDeets */ = {
 			isa = PBXGroup;
 			children = (
-				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
+				1D8856C319CDE510005FFDB2 /* Images.xcassets */,
 				1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */,
 				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
+				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
 				1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */,
 				1D0892501A27C97700A9EAC4 /* UserSettings.swift */,
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,

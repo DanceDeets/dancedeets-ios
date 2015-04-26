@@ -39,9 +39,7 @@ extension NSMutableAttributedString{
     }
 }
 
-
 extension UIView{
-
 
     func fadeOut(time:NSTimeInterval,completion:(()->Void)?){
         UIView.animateWithDuration(time, animations: { () -> Void in

@@ -128,19 +128,6 @@ public extension UIView{
         constrainWidth(width)
     }
 
-    // adds a blur overlay to the view and returns a reference to it.
-    func addBlurOverlay(style:UIBlurEffectStyle)->UIView{
-        let overlay = UIView(frame: CGRectZero)
-        addSubview(overlay)
-        overlay.constrainToSuperViewEdges()
-        
-        let visualEffect = UIVisualEffectView(effect: UIBlurEffect(style:style)) as UIVisualEffectView
-        overlay.addSubview(visualEffect)
-        visualEffect.constrainToSuperViewEdges()
-        
-        return overlay
-    }
-    
     func hasSuperview()->Bool{
         return superview != nil
     }

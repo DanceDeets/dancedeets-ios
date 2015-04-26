@@ -35,8 +35,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var filteredEvents:[Event] = []
     var displaySearchString:String = String()
     var searchMode:SearchMode = .CurrentLocation
-    var searchKeyword:String = "All"
     var viewMode:ViewMode = .CollectionView
+    var searchKeyword:String = "All"
     var requiresRefresh = true
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
@@ -64,7 +64,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var searchTextTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchAutoSuggestTableView: UITableView!
     
-    // MARK: Action
+    // MARK: Action functions
     @IBAction func refreshButtonTapped(sender: AnyObject) {
         refreshEvents()
     }
@@ -93,28 +93,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     @IBAction func settingsButtonTapped(sender: AnyObject) {
         performSegueWithIdentifier("settingsSegue", sender: sender)
-    }
-    
-    func toggleMode(mode:ViewMode){
-        if(mode == .CollectionView){
-            viewMode = .CollectionView
-            collectionModeImageView.hidden = true
-            listModeImageView.hidden = false
-            eventListTableView.hidden = true
-            eventCollectionView.hidden = false
-            eventCollectionView.reloadData()
-        }else if(mode == .ListView){
-            viewMode = .ListView
-            collectionModeImageView.hidden = false
-            listModeImageView.hidden = true
-            eventListTableView.hidden = false
-            eventCollectionView.hidden = true
-            eventListTableView.reloadData()
-        }
-    }
-    
-    // MARK: UIScrollViewDelegate
-    func scrollViewDidScroll(scrollView: UIScrollView) {
     }
     
     // MARK: UIViewController
@@ -296,6 +274,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func loadViewController(){
         
         locationManager.delegate = self
+        eventCollectionView.delegate = self
+        eventCollectionView.dataSource = self
         
         // auto suggest terms when search text field is tapped
         searchAutoSuggestTableView.alpha = 0
@@ -303,25 +283,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchAutoSuggestTableView.delegate = self
         searchAutoSuggestTableView.dataSource = self
         searchAutoSuggestTableView.registerClass(SearchAutoSuggestTableCell.classForCoder(), forCellReuseIdentifier: "autoSuggestCell")
-        searchAutoSuggestTableView.contentInset = UIEdgeInsetsMake(0, 0, 300, 0)
+        searchAutoSuggestTableView.contentInset = UIEdgeInsetsMake(CUSTOM_NAVIGATION_BAR_HEIGHT, 0, 300, 0)
         
-        eventCollectionView.delegate = self
-        eventCollectionView.dataSource = self
-        
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationTitle.textColor = UIColor.whiteColor()
-        navigationTitle.font = FontFactory.navigationTitleFont()
-        navigationTitle.text = ""
-        navigationItem.title = ""
-        
+        // collection view
         let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
         flowLayout?.sectionInset = UIEdgeInsetsZero
         flowLayout?.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height)
         flowLayout?.minimumInteritemSpacing = 0.0
-        
-        blurOverlay = view.addDarkBlurOverlay()
-        view.insertSubview(blurOverlay!, belowSubview: customNavigationView)
-        blurOverlay?.alpha = 0
         
         // tapping on the title does a refresh
         titleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "refreshButtonTapped:")
@@ -342,9 +310,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchTextCancelButton.alpha = 0.0
         searchTextCancelButton.tintColor = ColorFactory.white50()
  
-        // custom navigation bar
+        // custom navigation styling
         var customNavBlur = customNavigationView.addDarkBlurOverlay()
         customNavigationView.insertSubview(customNavBlur, atIndex: 0)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationTitle.textColor = UIColor.whiteColor()
+        navigationTitle.font = FontFactory.navigationTitleFont()
+        navigationTitle.text = ""
+        navigationItem.title = ""
        
         // search text field styling
         var placeholder = NSMutableAttributedString(string: "Search")
@@ -377,11 +350,16 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventListTableView.estimatedRowHeight = 142
         eventListTableView.backgroundColor = UIColor.clearColor()
         eventListTableView.contentInset = UIEdgeInsetsMake(CUSTOM_NAVIGATION_BAR_HEIGHT, 0, 0, 0)
+        
+        // blur overlay is used for background of auto suggest table
+        blurOverlay = view.addDarkBlurOverlay()
+        view.insertSubview(blurOverlay!, belowSubview: searchAutoSuggestTableView)
+        blurOverlay?.alpha = 0
     }
     
     // MARK: UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        // clicked search on the keyboard
+        // tapped 'search' on the keyboard
         textField.resignFirstResponder()
         searchKeyword = textField.text
         hideAutoSuggestTable()
@@ -396,7 +374,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     // MARK: CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         locationManager.stopUpdatingLocation()
-        
         
         let locationObject:CLLocation = locations.first as! CLLocation
         geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
@@ -459,6 +436,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if(tableView == eventListTableView){
             return 41
+        }else if(tableView == searchAutoSuggestTableView){
+            return CGFloat.min
         }else{
             return CGFloat.min
         }
@@ -607,6 +586,24 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     // MARK: Private
+    func toggleMode(mode:ViewMode){
+        if(mode == .CollectionView){
+            viewMode = .CollectionView
+            collectionModeImageView.hidden = true
+            listModeImageView.hidden = false
+            eventListTableView.hidden = true
+            eventCollectionView.hidden = false
+            eventCollectionView.reloadData()
+        }else if(mode == .ListView){
+            viewMode = .ListView
+            collectionModeImageView.hidden = false
+            listModeImageView.hidden = true
+            eventListTableView.hidden = false
+            eventCollectionView.hidden = true
+            eventListTableView.reloadData()
+        }
+    }
+    
     func refreshEvents(){
         startSpin()
         let searchCity = UserSettings.getUserCitySearch()
@@ -653,24 +650,20 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 self.eventCountLabel.text = "No Events"
             }else{
                 self.navigationTitle.text = self.displaySearchString.uppercaseString
-              //  if let keyword = self.searchKeyword{
-                    self.eventCountLabel.text = "\(events.count) Events | \(self.searchKeyword)"
-              //  }else{
-               //     self.eventCountLabel.text = "\(events.count) Events | All"
-               // }
+                self.eventCountLabel.text = "\(events.count) Events | \(self.searchKeyword)"
                 
-                // for collection view
+                // data source for collection view
                 self.events = events
                 self.eventCollectionView.reloadData()
                 
-                // for the list view -> group events by months for sections
+                // data source for list view -> group events by months for sections
                 for event in events {
                     if let time = event.startTime {
                         let components = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay, fromDate: event.startTime!)
-                        // month as string
+                        // month from event's start time as a string
                         let monthString = NSDateFormatter().monthSymbols[components.month-1] as! String
                         
-                        // group events into months
+                        // each month has an array of events
                         var eventList:NSMutableArray? = self.eventsByMonth[monthString] as? NSMutableArray
                         if(eventList == nil){
                             eventList = NSMutableArray()
@@ -683,8 +676,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                             self.activeMonths.addObject(monthString)
                             self.activeYears.append(components.year)
                         }
-                        
-                      
                     }
                 }
                 self.eventListTableView.reloadData()
