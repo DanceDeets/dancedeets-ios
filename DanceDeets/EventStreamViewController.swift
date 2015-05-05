@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import MessageUI
 import QuartzCore
+import FBSDKCoreKit
 
 class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
@@ -700,35 +701,15 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func checkFaceBookToken(){
-        if(FBSession.activeSession() == nil){
-            navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
+        let token = FBSDKAccessToken.currentAccessToken()
+        println("inside check facebook token with token \(token)")
+        if(token == nil){
+            self.navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
         }else{
-            let currentState:FBSessionState = FBSession.activeSession().state
-            
-            if( currentState == FBSessionState.Open ||
-                currentState == FBSessionState.OpenTokenExtended){
-                    // don't need to do anything if session already open
-                    return;
-            }else if( currentState == FBSessionState.CreatedTokenLoaded){
-                // open up the session
-                FBSession.openActiveSessionWithReadPermissions(FaceBookLoginViewController.getDefaultFacebookPermissions, allowLoginUI: false, completionHandler: { (session:FBSession!, state:FBSessionState, error:NSError!) -> Void in
-                    
-                    // update user location + post token
-                    ServerInterface.sharedInstance.updateFacebookToken()
-                    
-                    // get graph object id
-                    FBRequestConnection.startForMeWithCompletionHandler({ (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
-                        if (error == nil){
-                            if let resultDictionary:NSDictionary? = result as? NSDictionary{
-                                AppDelegate.sharedInstance().fbGraphUserObjectId = resultDictionary!["id"] as? String
-                            }
-                        }
-                    })
-                })
-                
-            }else{
-                navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
-            }
+            FBSDKAccessToken.refreshCurrentAccessToken({ (connect:FBSDKGraphRequestConnection!, obj:AnyObject!, error:NSError!) -> Void in
+                println("Refreshed the token with error: \(error)")
+                ServerInterface.sharedInstance.updateFacebookToken()
+            })
         }
     }
     

@@ -1,4 +1,5 @@
 //
 // Bridging-Header.h
 // SwiftBook
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>

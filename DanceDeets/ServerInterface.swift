@@ -74,9 +74,10 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
                 }
                 
                 // construct payload
-                if let tokenData = FBSession.activeSession().accessTokenData{
+                FBSDKAccessToken.currentAccessToken()
+                if let tokenData =   FBSDKAccessToken.currentAccessToken(){
                     let expiration = tokenData.expirationDate
-                    let accessToken = tokenData.accessToken
+                    let accessToken = tokenData.tokenString
                     
                     let dateFormatter:NSDateFormatter  = NSDateFormatter()
                     dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"

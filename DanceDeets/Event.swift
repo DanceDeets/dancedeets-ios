@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 public class Event: NSObject {
     var eventImageUrl:NSURL?

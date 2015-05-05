@@ -54,7 +54,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="599.5" height="530"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="530"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UqS-83-RSC">
@@ -1131,7 +1131,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Disclaimer" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9EQ-vO-XNU">
-                                <rect key="frame" x="160" y="460" width="280" height="40"/>
+                                <rect key="frame" x="160" y="470" width="280" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="8s5-OX-z3O"/>
@@ -1140,8 +1140,8 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="se0-3f-EIf" customClass="FBLoginView">
-                                <rect key="frame" x="160" y="410" width="280" height="60"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="se0-3f-EIf" customClass="FBSDKLoginButton">
+                                <rect key="frame" x="160" y="400" width="280" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="8zD-x1-Kyp"/>
@@ -1153,14 +1153,14 @@
                         <constraints>
                             <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="D9O-AY-JoL" secondAttribute="bottom" id="BlD-vT-ysg"/>
                             <constraint firstItem="9EQ-vO-XNU" firstAttribute="width" secondItem="se0-3f-EIf" secondAttribute="width" id="KvL-Tw-Krh"/>
-                            <constraint firstItem="9EQ-vO-XNU" firstAttribute="top" secondItem="se0-3f-EIf" secondAttribute="bottom" constant="-10" id="OL9-42-6fO"/>
+                            <constraint firstItem="9EQ-vO-XNU" firstAttribute="top" secondItem="se0-3f-EIf" secondAttribute="bottom" constant="10" id="OL9-42-6fO"/>
                             <constraint firstItem="D9O-AY-JoL" firstAttribute="leading" secondItem="KvK-Th-Fj8" secondAttribute="leading" id="cbZ-OW-1XZ"/>
                             <constraint firstItem="9EQ-vO-XNU" firstAttribute="centerX" secondItem="se0-3f-EIf" secondAttribute="centerX" id="eGP-sM-Yc4"/>
                             <constraint firstItem="D9O-AY-JoL" firstAttribute="top" secondItem="KvK-Th-Fj8" secondAttribute="topMargin" id="j8Z-bx-IU4"/>
                             <constraint firstAttribute="centerX" secondItem="se0-3f-EIf" secondAttribute="centerX" id="re2-WZ-pTy"/>
                             <constraint firstItem="D9O-AY-JoL" firstAttribute="bottom" secondItem="KvK-Th-Fj8" secondAttribute="bottomMargin" id="sZS-X2-qlp"/>
                             <constraint firstAttribute="trailing" secondItem="D9O-AY-JoL" secondAttribute="trailing" id="z0W-n9-c4C"/>
-                            <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="se0-3f-EIf" secondAttribute="bottom" constant="130" id="zcc-jM-MUS"/>
+                            <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="se0-3f-EIf" secondAttribute="bottom" constant="140" id="zcc-jM-MUS"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -1170,7 +1170,7 @@
                     </view>
                     <connections>
                         <outlet property="disclaimerTextView" destination="9EQ-vO-XNU" id="DPC-pY-lAJ"/>
-                        <outlet property="fbLoginView" destination="se0-3f-EIf" id="nQ7-D4-d5X"/>
+                        <outlet property="fbLoginView" destination="se0-3f-EIf" id="59Y-v6-kyZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bmy-Dl-kqu" userLabel="First Responder" sceneMemberID="firstResponder"/>

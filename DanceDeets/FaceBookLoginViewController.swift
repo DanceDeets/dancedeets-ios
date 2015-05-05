@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
-class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate, UITextViewDelegate{
-    
-    @IBOutlet weak var fbLoginView: FBLoginView!
+class FaceBookLoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextViewDelegate{
+    @IBOutlet weak var fbLoginView: FBSDKLoginButton!
     @IBOutlet weak var disclaimerTextView: UITextView!
     
     // MARK: UIViewController
@@ -50,7 +51,23 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate, UIText
         return ["public_profile", "email", "user_friends"]
     }
     
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)
+    {
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        
+        // update token on back
+        ServerInterface.sharedInstance.updateFacebookToken()
+        
+    }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!)
+    {
+        println("logged out")
+        
+    }
+    
     // MARK: FBLoginViewDelegate
+    /*
     func loginViewShowingLoggedInUser(loginView : FBLoginView!) {
         println("loginViewShowingLoggedInUser")
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
@@ -75,6 +92,7 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate, UIText
         // update token on back
         ServerInterface.sharedInstance.updateFacebookToken()
     }
+*/
     
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
         return true
