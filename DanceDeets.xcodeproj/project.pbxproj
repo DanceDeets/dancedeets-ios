@@ -236,15 +236,15 @@
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
+				1D8856B919CDE510005FFDB2 /* DanceDeets */,
+				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
+				1D8856B819CDE510005FFDB2 /* Products */,
 				1D7278B21AF842D400853774 /* FBSDKCoreKit.framework */,
 				1D7278B31AF842D400853774 /* FBSDKLoginKit.framework */,
 				1D7278B41AF842D400853774 /* FBSDKMessengerShareKit.framework */,
 				1D7278B51AF842D400853774 /* FBSDKShareKit.framework */,
 				1D12DE8F1B0A1C0A00BEE249 /* Crashlytics.framework */,
 				1D98D81B1AEC759C00E48E8F /* Fabric.framework */,
-				1D8856B919CDE510005FFDB2 /* DanceDeets */,
-				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
-				1D8856B819CDE510005FFDB2 /* Products */,
 				1DAB49F91A182AC90002BBDD /* QuartzCore.framework */,
 				1DFB3B5119FF575C00CF4A72 /* EventKit.framework */,
 				1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */,
@@ -265,7 +265,6 @@
 		1D8856B919CDE510005FFDB2 /* DanceDeets */ = {
 			isa = PBXGroup;
 			children = (
-				1D8856C319CDE510005FFDB2 /* Images.xcassets */,
 				1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */,
 				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
 				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
@@ -283,6 +282,7 @@
 		1D8856BA19CDE510005FFDB2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1D8856C319CDE510005FFDB2 /* Images.xcassets */,
 				1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */,
 				1D43347219D7551D001A5381 /* Fonts */,
 				1D8856BB19CDE510005FFDB2 /* Info.plist */,

@@ -72,11 +72,15 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     @IBAction func scrollUpButtonTapped(sender: AnyObject) {
         if(viewMode == .ListView){
-            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-            eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+            if(eventListTableView.numberOfSections() > 0 && eventListTableView.numberOfRowsInSection(0) > 0){
+                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+            }
         }else if(viewMode == .CollectionView){
-            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-            eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
+            if(eventCollectionView.numberOfItemsInSection(0) > 0){
+                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
+            }
         }
     }
     
@@ -376,31 +380,33 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         locationManager.stopUpdatingLocation()
         
-        let locationObject:CLLocation = locations.first as! CLLocation
-        geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
-            if( placemarks != nil && placemarks.count > 0){
-                let placemark:CLPlacemark = placemarks.first as! CLPlacemark
-                if(placemark.locality != nil && placemark.administrativeArea != nil){
-                    self.displaySearchString = "\(placemark.locality), \(placemark.administrativeArea)"
-                }else{
-                    self.displaySearchString = placemark.locality
-                }
-                if(self.searchKeyword == "All"){
-                    Event.loadEventsForLocation(locationObject, keyword:nil, completion:self.refreshCityCompletionHandler)
-                }else{
-                    Event.loadEventsForLocation(locationObject, keyword:self.searchKeyword, completion:self.refreshCityCompletionHandler)
-                }
-            }else{
-                self.navigationTitle.text = "RETRY"
-                self.eventCountLabel.text = "Couldn't get your location"
-                self.stopSpin()
-                self.locationFailureAlert.show()
+        if(locations.count == 0){
+            showLocationFailure()
+        }else{
+            if let locationObject:CLLocation = locations.first as? CLLocation {
+                geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
+                    if( placemarks != nil && placemarks.count > 0){
+                        let placemark:CLPlacemark = placemarks.first as! CLPlacemark
+                        self.displaySearchString = "\(placemark.locality), \(placemark.administrativeArea)"
+                        if(self.searchKeyword == "All"){
+                            Event.loadEventsForLocation(locationObject, keyword:nil, completion:self.refreshCityCompletionHandler)
+                        }else{
+                            Event.loadEventsForLocation(locationObject, keyword:self.searchKeyword, completion:self.refreshCityCompletionHandler)
+                        }
+                    }else{
+                        self.showLocationFailure()
+                    }
+                })
             }
-        })
+        }
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         locationManager.stopUpdatingLocation()
+        showLocationFailure()
+    }
+    
+    func showLocationFailure(){
         navigationTitle.text = "RETRY"
         eventCountLabel.text = "Couldn't get your location"
         stopSpin()
@@ -509,34 +515,36 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(tableView == eventListTableView){
-            let month = self.activeMonths[indexPath.section] as! String
-            let monthEvents = self.eventsByMonth[month] as! [Event]
-            let event:Event = monthEvents[indexPath.row]
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            eventListTableView.userInteractionEnabled = false
-            event.getMoreDetails({ () -> Void in
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.eventListTableView.userInteractionEnabled = true
-                    
-                    // the collection cell of the selected event
-                    let eventCell =  self.eventListTableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
-                    
-                    // convert event cover image relative to view controller view
-                    let convertCoverImageRect = self.view.convertRect(eventCell.eventImageView.frame, fromView: eventCell.eventImageView.superview)
-                    
-                    let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
-                    destination.initialImage = eventCell.eventImageView.image
-                    destination.event = event
-                    destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
-                    destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-                    destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
-                    destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
-                    
-                    self.navigationController?.pushViewController(destination, animated: false)
-                })
-            })
+            if let month = self.activeMonths[indexPath.section] as? String{
+                if let monthEvents = self.eventsByMonth[month] as? [Event]{
+                    if(monthEvents.count > indexPath.row){
+                        let event = monthEvents[indexPath.row]
+                        eventListTableView.userInteractionEnabled = false
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                        event.getMoreDetails({ () -> Void in
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            self.eventListTableView.userInteractionEnabled = true
+                            
+                            // the collection cell of the selected event
+                            let eventCell =  self.eventListTableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
+                            
+                            // convert event cover image relative to view controller view
+                            let convertCoverImageRect = self.view.convertRect(eventCell.eventImageView.frame, fromView: eventCell.eventImageView.superview)
+                            
+                            let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
+                            destination.initialImage = eventCell.eventImageView.image
+                            destination.event = event
+                            destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
+                            destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+                            destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
+                            destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
+                            
+                            self.navigationController?.pushViewController(destination, animated: false)
+                        })
+                        
+                    }
+                }
+            }
         }else if(tableView == searchAutoSuggestTableView){
             let term = SEARCH_AUTOSUGGEST_TERMS[indexPath.row] as String
             searchKeyword = term
@@ -642,12 +650,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
                 errorAlert.show()
                 self.eventCollectionView.reloadData()
+                self.eventListTableView.reloadData()
                 self.eventCountLabel.text = "Try again"
             }else if(events.count == 0){
                 self.navigationTitle.text = self.displaySearchString.uppercaseString
                 let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
                 self.eventCollectionView.reloadData()
+                self.eventListTableView.reloadData()
                 self.eventCountLabel.text = "No Events"
             }else{
                 self.navigationTitle.text = self.displaySearchString.uppercaseString
@@ -702,12 +712,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func checkFaceBookToken(){
         let token = FBSDKAccessToken.currentAccessToken()
-        println("inside check facebook token with token \(token)")
         if(token == nil){
             self.navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
         }else{
             FBSDKAccessToken.refreshCurrentAccessToken({ (connect:FBSDKGraphRequestConnection!, obj:AnyObject!, error:NSError!) -> Void in
-                println("Refreshed the token with error: \(error)")
                 ServerInterface.sharedInstance.updateFacebookToken()
             })
         }
