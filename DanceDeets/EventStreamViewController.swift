@@ -661,7 +661,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 self.eventCountLabel.text = "No Events"
             }else{
                 self.navigationTitle.text = self.displaySearchString.uppercaseString
-                self.eventCountLabel.text = "\(events.count) Events | \(self.searchKeyword)"
+                self.eventCountLabel.text = "\(self.searchKeyword) | \(events.count) Events"
                 
                 // data source for collection view
                 self.events = events
