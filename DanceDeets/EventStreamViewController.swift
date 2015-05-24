@@ -42,14 +42,12 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
-    var refreshAnimating:Bool = false
     var eventsByMonth:NSMutableDictionary = NSMutableDictionary()
     var activeMonths:NSMutableArray = NSMutableArray()
     var activeYears:[Int] = []
     
     // MARK: Outlets
     @IBOutlet weak var eventListTableView: UITableView!
-    @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var navigationTitle: UILabel!
     @IBOutlet weak var eventCollectionView: UICollectionView!
@@ -232,34 +230,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     // MARK: Private
-    func rotateRefresh(options: UIViewAnimationOptions){
-        // animation block, calling itself on completion to give the infinite spin effect
-        UIView.animateWithDuration(0.5, delay: 0, options: options, animations: { () -> Void in
-            self.refreshButton.transform = CGAffineTransformRotate(self.refreshButton.transform, CGFloat(M_PI_2))
-            }) { (bool:Bool) -> Void in
-                if bool {
-                    if(self.refreshAnimating){
-                        self.rotateRefresh(UIViewAnimationOptions.CurveLinear)
-                    }else if (options != UIViewAnimationOptions.CurveEaseOut){
-                        self.rotateRefresh(UIViewAnimationOptions.CurveEaseOut)
-                        self.refreshButton.hidden = true
-                    }
-                }
-                return;
-        }
-    }
-    
-    func startSpin(){
-        if(!refreshAnimating){
-            refreshAnimating = true
-            refreshButton.hidden = false
-            rotateRefresh(UIViewAnimationOptions.CurveEaseIn)
-        }
-    }
-    
-    func stopSpin(){
-        refreshAnimating = false
-    }
     
     func registerNotifications(){
         // notifications for keyboard
@@ -310,8 +280,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventCountLabel.textColor = ColorFactory.white50()
         eventCountLabel.font = FontFactory.eventDescriptionFont()
         eventCountLabel.text = ""
-        refreshButton.tintColor = ColorFactory.white50()
-        refreshButton.hidden = true
         searchTextCancelButton.alpha = 0.0
         searchTextCancelButton.tintColor = ColorFactory.white50()
  
@@ -409,7 +377,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func showLocationFailure(){
         navigationTitle.text = "RETRY"
         eventCountLabel.text = "Couldn't get your location"
-        stopSpin()
         locationFailureAlert.show()
     }
     
@@ -614,7 +581,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func refreshEvents(){
-        startSpin()
         let searchCity = UserSettings.getUserCitySearch()
         if(count(searchCity) > 0){
             searchMode = SearchMode.CustomCity
@@ -636,8 +602,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func refreshCityCompletionHandler(events:[Event]!, error:NSError!){
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.stopSpin()
-            
             // reset event models
             self.events = []
             self.eventsByMonth.removeAllObjects()

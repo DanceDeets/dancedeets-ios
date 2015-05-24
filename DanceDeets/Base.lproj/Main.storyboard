@@ -228,20 +228,6 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cxa-HD-ust">
-                                        <rect key="frame" x="347" y="52.5" width="25" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="wAr-rS-lbg"/>
-                                            <constraint firstAttribute="width" constant="25" id="zyG-9S-8vj"/>
-                                        </constraints>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" image="refreshIcon">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="refreshButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="Ndh-kW-qtJ"/>
-                                        </connections>
-                                    </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sNC-hk-IIQ">
                                         <rect key="frame" x="12" y="82" width="576" height="30"/>
                                         <constraints>
@@ -270,7 +256,6 @@
                                     <constraint firstItem="2pn-nZ-0uk" firstAttribute="centerY" secondItem="sNC-hk-IIQ" secondAttribute="centerY" id="C3i-F0-9mA"/>
                                     <constraint firstAttribute="trailing" secondItem="sNC-hk-IIQ" secondAttribute="trailing" constant="12" id="Dvh-VZ-ySy"/>
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="centerX" secondItem="dCA-Tc-CJh" secondAttribute="centerX" id="FHi-VN-MMp"/>
-                                    <constraint firstItem="Cxa-HD-ust" firstAttribute="leading" secondItem="1oV-ms-x6i" secondAttribute="trailing" id="GCY-T8-1Dj"/>
                                     <constraint firstAttribute="trailing" secondItem="nEP-jS-ldy" secondAttribute="trailing" constant="12" id="GgH-9Q-QCG"/>
                                     <constraint firstItem="sNC-hk-IIQ" firstAttribute="top" secondItem="1oV-ms-x6i" secondAttribute="bottom" constant="8" id="GqO-Dh-rqQ"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" constant="33" id="LvJ-CR-je1"/>
@@ -281,7 +266,6 @@
                                     <constraint firstItem="ydV-JU-l3w" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" constant="35" id="V7E-Jh-4is"/>
                                     <constraint firstAttribute="trailing" secondItem="Snq-oY-pp0" secondAttribute="trailing" id="V93-ZM-Jtu"/>
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="top" secondItem="dCA-Tc-CJh" secondAttribute="bottom" id="YXj-zv-B2o"/>
-                                    <constraint firstItem="1oV-ms-x6i" firstAttribute="centerY" secondItem="Cxa-HD-ust" secondAttribute="centerY" constant="-1" id="dKX-74-wye"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" id="eUx-6q-Cam"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" id="p5t-PV-c7y"/>
                                     <constraint firstAttribute="trailing" secondItem="dCA-Tc-CJh" secondAttribute="trailing" constant="50" id="poC-lU-vag"/>
@@ -349,7 +333,6 @@
                         <outlet property="eventListTableView" destination="x7r-fS-X6k" id="efA-OD-zfS"/>
                         <outlet property="listModeImageView" destination="ydV-JU-l3w" id="fwR-x7-m6b"/>
                         <outlet property="navigationTitle" destination="dCA-Tc-CJh" id="Rh3-hf-Zjx"/>
-                        <outlet property="refreshButton" destination="Cxa-HD-ust" id="ygI-MM-GZk"/>
                         <outlet property="scrollUpButton" destination="z7r-33-DAL" id="iAN-tA-rf5"/>
                         <outlet property="searchAutoSuggestTableView" destination="loT-0i-Cp8" id="BpC-SY-zs5"/>
                         <outlet property="searchTextCancelButton" destination="2pn-nZ-0uk" id="hY3-gw-tRU"/>
@@ -1209,7 +1192,6 @@
         <image name="listViewIcon" width="37" height="28"/>
         <image name="logoutIcon" width="16" height="16"/>
         <image name="pinIcon" width="10" height="12"/>
-        <image name="refreshIcon" width="16" height="16"/>
         <image name="removeIcon" width="15" height="15"/>
         <image name="scrollUpArrow" width="45" height="45"/>
         <image name="searchIcon" width="20" height="20"/>
