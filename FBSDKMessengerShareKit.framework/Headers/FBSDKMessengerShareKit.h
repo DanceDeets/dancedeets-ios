@@ -18,7 +18,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define FBSDK_MESSENGER_SHARE_KIT_VERSION @"1.2.1"
+#define FBSDK_MESSENGER_SHARE_KIT_VERSION @"1.2.3"
 
 #import "FBSDKMessengerContext.h"
 #import "FBSDKMessengerSharer.h"
