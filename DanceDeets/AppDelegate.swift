@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let sharedURLCache = NSURLCache(memoryCapacity: urlCacheMemoryCapacityMB*1024*1024,
             diskCapacity: urlCacheDiskCapacityMB*1024*1024, diskPath: nil)
         NSURLCache.setSharedURLCache(sharedURLCache)
+        
         Fabric.with([Crashlytics()])
         
         return true
@@ -54,10 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool
     {
-     //   var wasHandled:Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication! as String)
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
-        //return true
-        //return wasHandled
     }
     
     func applicationWillResignActive(application: UIApplication) {
@@ -85,10 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 returnValue = Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
             }
         }
-        
         return returnValue
     }
-    
-    
 }
 

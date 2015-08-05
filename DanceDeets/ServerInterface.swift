@@ -36,7 +36,8 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     func getEventSearchUrl(city:String, eventKeyword:String?) -> NSURL{
         var cityString:String = city.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         if let keyword = eventKeyword{
-            return NSURL(string: baseUrl + "/search?location=\(cityString)&keywords=\(keyword)")!
+            var keywordString:String = keyword.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            return NSURL(string: baseUrl + "/search?location=\(cityString)&keywords=\(keywordString)")!
         }else{
             return NSURL(string: baseUrl + "/search?location=\(cityString)")!
         }
@@ -45,7 +46,8 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     func getEventSearchUrlByLocation(location:CLLocation, eventKeyword:String?)->NSURL{
         let coordinate = location.coordinate
         if let keyword = eventKeyword{
-            return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)&keywords=\(keyword)")!
+            var keywordString:String = keyword.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)&keywords=\(keywordString)")!
         }else{
             return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)")!
         }
