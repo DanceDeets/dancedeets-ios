@@ -49,24 +49,26 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
     }
     
     @IBAction func facebookRSVPButtonTapped(sender: AnyObject) {
-        if(FBSession.activeSession().hasGranted("rsvp_event")){
+        let token = FBSDKAccessToken.currentAccessToken()
+        if(token.hasGranted("rsvp_event")){
             rsvpFacebook()
         }else{
-            FBSession.activeSession().requestNewPublishPermissions(["rsvp_event"], defaultAudience: FBSessionDefaultAudience.OnlyMe) { (session:FBSession!, error:NSError!) -> Void in
-                if(error == nil && session.hasGranted("rsvp_event") == true){
+            let login = FBSDKLoginManager()
+            login.logInWithPublishPermissions(["rsvp_event"], handler: { (login:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
+                if(error == nil && token.hasGranted("rsvp_event")){
                     self.rsvpFacebook()
                 }else{
                     let errorAlert = UIAlertView(title: "Permissions weren't granted.", message: "",delegate:nil, cancelButtonTitle: "OK")
                     errorAlert.show()
                 }
-                
-            }
+            })
         }
     }
     
     func rsvpFacebook(){
         let graphPath = "/" + self.currentEvent!.id! + "/attending"
-        FBRequestConnection.startWithGraphPath(graphPath, parameters: nil, HTTPMethod: "POST", completionHandler: { (conn:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
+        let request = FBSDKGraphRequest(graphPath: graphPath, parameters: nil, HTTPMethod: "POST")
+        request.startWithCompletionHandler { (connection:FBSDKGraphRequestConnection!, obj:AnyObject!, error:NSError!) -> Void in
             if(error == nil){
                 let successAlert = UIAlertView(title: "RSVP'd on Facebook!", message: "",delegate:nil, cancelButtonTitle: "OK")
                 successAlert.show()
@@ -74,7 +76,7 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
                 let errorAlert = UIAlertView(title: "Couldn't RSVP right now, try again later.", message: "",delegate:nil, cancelButtonTitle: "OK")
                 errorAlert.show()
             }
-        })
+        }
     }
     
     // MARK: UIAlertViewDelegate

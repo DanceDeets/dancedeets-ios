@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 public class Event: NSObject {
     var eventImageUrl:NSURL?
@@ -234,20 +235,22 @@ public class Event: NSObject {
                 // currently using Apple's geocoder to reverse geocode the lat/long
                 let geocoder:CLGeocoder = CLGeocoder()
                 geocoder.reverseGeocodeLocation(geoloc, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
-                    if placemarks.count > 0{
-                        self.placemark = placemarks.first as? CLPlacemark
-                        
-                        // set up a display address
-                        if let lines = self.placemark?.addressDictionary["FormattedAddressLines"] as? [String]{
-                            if lines.count >= 2{
-                                self.displayAddress += "\n"
-                                self.displayAddress += lines[0]
-                                self.displayAddress += "\n"
-                                self.displayAddress += lines[1]
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        if placemarks.count > 0{
+                            self.placemark = placemarks.first as? CLPlacemark
+                            
+                            // set up a display address
+                            if let lines = self.placemark?.addressDictionary["FormattedAddressLines"] as? [String]{
+                                if lines.count >= 2{
+                                    self.displayAddress += "\n"
+                                    self.displayAddress += lines[0]
+                                    self.displayAddress += "\n"
+                                    self.displayAddress += lines[1]
+                                }
                             }
                         }
-                    }
-                    completion()
+                        completion()
+                    })
                 })
             }else{
                 completion()

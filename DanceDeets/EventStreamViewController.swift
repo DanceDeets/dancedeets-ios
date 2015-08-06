@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import MessageUI
 import QuartzCore
+import FBSDKCoreKit
 
 class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
@@ -41,14 +42,12 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
-    var refreshAnimating:Bool = false
     var eventsByMonth:NSMutableDictionary = NSMutableDictionary()
     var activeMonths:NSMutableArray = NSMutableArray()
     var activeYears:[Int] = []
     
     // MARK: Outlets
     @IBOutlet weak var eventListTableView: UITableView!
-    @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var navigationTitle: UILabel!
     @IBOutlet weak var eventCollectionView: UICollectionView!
@@ -71,11 +70,15 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     @IBAction func scrollUpButtonTapped(sender: AnyObject) {
         if(viewMode == .ListView){
-            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-            eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+            if(eventListTableView.numberOfSections() > 0 && eventListTableView.numberOfRowsInSection(0) > 0){
+                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+            }
         }else if(viewMode == .CollectionView){
-            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-            eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
+            if(eventCollectionView.numberOfItemsInSection(0) > 0){
+                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
+            }
         }
     }
     
@@ -163,21 +166,21 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 self.eventCollectionView.userInteractionEnabled = true
                 
                 // the collection cell of the selected event
-                let eventCell = self.eventCollectionView.cellForItemAtIndexPath(indexPath) as! EventCollectionViewCell
-                
-                // convert event cover image relative to view controller view
-                let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
-                
-                // set up destination view controller w/ cover image dimensions
-                let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
-                destination.initialImage = eventCell.eventCoverImage.image
-                destination.event = event
-                destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
-                destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-                destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
-                destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
-                
-                self.navigationController?.pushViewController(destination, animated: false)
+                if let eventCell = self.eventCollectionView.cellForItemAtIndexPath(indexPath) as? EventCollectionViewCell{
+                    // convert event cover image relative to view controller view
+                    let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
+                    
+                    // set up destination view controller w/ cover image dimensions
+                    let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
+                    destination.initialImage = eventCell.eventCoverImage.image
+                    destination.event = event
+                    destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
+                    destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+                    destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
+                    destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
+                    
+                    self.navigationController?.pushViewController(destination, animated: false)
+                }
             })
         })
     }
@@ -227,34 +230,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     // MARK: Private
-    func rotateRefresh(options: UIViewAnimationOptions){
-        // animation block, calling itself on completion to give the infinite spin effect
-        UIView.animateWithDuration(0.5, delay: 0, options: options, animations: { () -> Void in
-            self.refreshButton.transform = CGAffineTransformRotate(self.refreshButton.transform, CGFloat(M_PI_2))
-            }) { (bool:Bool) -> Void in
-                if bool {
-                    if(self.refreshAnimating){
-                        self.rotateRefresh(UIViewAnimationOptions.CurveLinear)
-                    }else if (options != UIViewAnimationOptions.CurveEaseOut){
-                        self.rotateRefresh(UIViewAnimationOptions.CurveEaseOut)
-                        self.refreshButton.hidden = true
-                    }
-                }
-                return;
-        }
-    }
-    
-    func startSpin(){
-        if(!refreshAnimating){
-            refreshAnimating = true
-            refreshButton.hidden = false
-            rotateRefresh(UIViewAnimationOptions.CurveEaseIn)
-        }
-    }
-    
-    func stopSpin(){
-        refreshAnimating = false
-    }
     
     func registerNotifications(){
         // notifications for keyboard
@@ -305,8 +280,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventCountLabel.textColor = ColorFactory.white50()
         eventCountLabel.font = FontFactory.eventDescriptionFont()
         eventCountLabel.text = ""
-        refreshButton.tintColor = ColorFactory.white50()
-        refreshButton.hidden = true
         searchTextCancelButton.alpha = 0.0
         searchTextCancelButton.tintColor = ColorFactory.white50()
  
@@ -375,34 +348,35 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         locationManager.stopUpdatingLocation()
         
-        let locationObject:CLLocation = locations.first as! CLLocation
-        geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
-            if( placemarks != nil && placemarks.count > 0){
-                let placemark:CLPlacemark = placemarks.first as! CLPlacemark
-                if(placemark.locality != nil && placemark.administrativeArea != nil){
-                    self.displaySearchString = "\(placemark.locality), \(placemark.administrativeArea)"
-                }else{
-                    self.displaySearchString = placemark.locality
-                }
-                if(self.searchKeyword == "All"){
-                    Event.loadEventsForLocation(locationObject, keyword:nil, completion:self.refreshCityCompletionHandler)
-                }else{
-                    Event.loadEventsForLocation(locationObject, keyword:self.searchKeyword, completion:self.refreshCityCompletionHandler)
-                }
-            }else{
-                self.navigationTitle.text = "RETRY"
-                self.eventCountLabel.text = "Couldn't get your location"
-                self.stopSpin()
-                self.locationFailureAlert.show()
+        if(locations.count == 0){
+            showLocationFailure()
+        }else{
+            if let locationObject:CLLocation = locations.first as? CLLocation {
+                geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
+                    if( placemarks != nil && placemarks.count > 0){
+                        let placemark:CLPlacemark = placemarks.first as! CLPlacemark
+                        self.displaySearchString = "\(placemark.locality), \(placemark.administrativeArea)"
+                        if(self.searchKeyword == "All"){
+                            Event.loadEventsForLocation(locationObject, keyword:nil, completion:self.refreshCityCompletionHandler)
+                        }else{
+                            Event.loadEventsForLocation(locationObject, keyword:self.searchKeyword, completion:self.refreshCityCompletionHandler)
+                        }
+                    }else{
+                        self.showLocationFailure()
+                    }
+                })
             }
-        })
+        }
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         locationManager.stopUpdatingLocation()
+        showLocationFailure()
+    }
+    
+    func showLocationFailure(){
         navigationTitle.text = "RETRY"
         eventCountLabel.text = "Couldn't get your location"
-        stopSpin()
         locationFailureAlert.show()
     }
     
@@ -508,34 +482,36 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(tableView == eventListTableView){
-            let month = self.activeMonths[indexPath.section] as! String
-            let monthEvents = self.eventsByMonth[month] as! [Event]
-            let event:Event = monthEvents[indexPath.row]
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            eventListTableView.userInteractionEnabled = false
-            event.getMoreDetails({ () -> Void in
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.eventListTableView.userInteractionEnabled = true
-                    
-                    // the collection cell of the selected event
-                    let eventCell =  self.eventListTableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
-                    
-                    // convert event cover image relative to view controller view
-                    let convertCoverImageRect = self.view.convertRect(eventCell.eventImageView.frame, fromView: eventCell.eventImageView.superview)
-                    
-                    let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
-                    destination.initialImage = eventCell.eventImageView.image
-                    destination.event = event
-                    destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
-                    destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-                    destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
-                    destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
-                    
-                    self.navigationController?.pushViewController(destination, animated: false)
-                })
-            })
+            if let month = self.activeMonths[indexPath.section] as? String{
+                if let monthEvents = self.eventsByMonth[month] as? [Event]{
+                    if(monthEvents.count > indexPath.row){
+                        let event = monthEvents[indexPath.row]
+                        eventListTableView.userInteractionEnabled = false
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                        event.getMoreDetails({ () -> Void in
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            self.eventListTableView.userInteractionEnabled = true
+                            
+                            // the collection cell of the selected event
+                            let eventCell =  self.eventListTableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
+                            
+                            // convert event cover image relative to view controller view
+                            let convertCoverImageRect = self.view.convertRect(eventCell.eventImageView.frame, fromView: eventCell.eventImageView.superview)
+                            
+                            let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
+                            destination.initialImage = eventCell.eventImageView.image
+                            destination.event = event
+                            destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
+                            destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+                            destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
+                            destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
+                            
+                            self.navigationController?.pushViewController(destination, animated: false)
+                        })
+                        
+                    }
+                }
+            }
         }else if(tableView == searchAutoSuggestTableView){
             let term = SEARCH_AUTOSUGGEST_TERMS[indexPath.row] as String
             searchKeyword = term
@@ -605,7 +581,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func refreshEvents(){
-        startSpin()
         let searchCity = UserSettings.getUserCitySearch()
         if(count(searchCity) > 0){
             searchMode = SearchMode.CustomCity
@@ -627,8 +602,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func refreshCityCompletionHandler(events:[Event]!, error:NSError!){
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.stopSpin()
-            
             // reset event models
             self.events = []
             self.eventsByMonth.removeAllObjects()
@@ -641,16 +614,18 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
                 errorAlert.show()
                 self.eventCollectionView.reloadData()
+                self.eventListTableView.reloadData()
                 self.eventCountLabel.text = "Try again"
             }else if(events.count == 0){
                 self.navigationTitle.text = self.displaySearchString.uppercaseString
                 let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
                 self.eventCollectionView.reloadData()
+                self.eventListTableView.reloadData()
                 self.eventCountLabel.text = "No Events"
             }else{
                 self.navigationTitle.text = self.displaySearchString.uppercaseString
-                self.eventCountLabel.text = "\(events.count) Events | \(self.searchKeyword)"
+                self.eventCountLabel.text = "\(self.searchKeyword) | \(events.count) Events"
                 
                 // data source for collection view
                 self.events = events
@@ -700,35 +675,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func checkFaceBookToken(){
-        if(FBSession.activeSession() == nil){
-            navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
+        let token = FBSDKAccessToken.currentAccessToken()
+        if(token == nil){
+            self.navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
         }else{
-            let currentState:FBSessionState = FBSession.activeSession().state
-            
-            if( currentState == FBSessionState.Open ||
-                currentState == FBSessionState.OpenTokenExtended){
-                    // don't need to do anything if session already open
-                    return;
-            }else if( currentState == FBSessionState.CreatedTokenLoaded){
-                // open up the session
-                FBSession.openActiveSessionWithReadPermissions(FaceBookLoginViewController.getDefaultFacebookPermissions, allowLoginUI: false, completionHandler: { (session:FBSession!, state:FBSessionState, error:NSError!) -> Void in
-                    
-                    // update user location + post token
-                    ServerInterface.sharedInstance.updateFacebookToken()
-                    
-                    // get graph object id
-                    FBRequestConnection.startForMeWithCompletionHandler({ (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
-                        if (error == nil){
-                            if let resultDictionary:NSDictionary? = result as? NSDictionary{
-                                AppDelegate.sharedInstance().fbGraphUserObjectId = resultDictionary!["id"] as? String
-                            }
-                        }
-                    })
-                })
-                
-            }else{
-                navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
-            }
+            FBSDKAccessToken.refreshCurrentAccessToken({ (connect:FBSDKGraphRequestConnection!, obj:AnyObject!, error:NSError!) -> Void in
+                ServerInterface.sharedInstance.updateFacebookToken()
+            })
         }
     }
     
