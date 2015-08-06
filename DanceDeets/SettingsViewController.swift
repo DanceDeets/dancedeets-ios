@@ -176,8 +176,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 composer.setToRecipients(recipients)
                 presentViewController(composer, animated: true, completion: nil)
             }else if(indexPath.row == 1){
-                FBSession.activeSession().closeAndClearTokenInformation()
-                FBSession.setActiveSession(nil)
+                FBSDKAccessToken.setCurrentAccessToken(nil)
+                FBSDKProfile.setCurrentProfile(nil)
+                
                 presentingViewController?.dismissViewControllerAnimated(false, completion: nil)
             }
         }

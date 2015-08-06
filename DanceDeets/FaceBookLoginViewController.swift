@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
-class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate, UITextViewDelegate{
-    
-    @IBOutlet weak var fbLoginView: FBLoginView!
+class FaceBookLoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextViewDelegate{
+    @IBOutlet weak var fbLoginView: FBSDKLoginButton!
     @IBOutlet weak var disclaimerTextView: UITextView!
     
     // MARK: UIViewController
@@ -50,30 +51,17 @@ class FaceBookLoginViewController: UIViewController, FBLoginViewDelegate, UIText
         return ["public_profile", "email", "user_friends"]
     }
     
-    // MARK: FBLoginViewDelegate
-    func loginViewShowingLoggedInUser(loginView : FBLoginView!) {
-        println("loginViewShowingLoggedInUser")
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)
+    {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         
         // update token on back
         ServerInterface.sharedInstance.updateFacebookToken()
     }
     
-    func loginViewFetchedUserInfo(loginView : FBLoginView!, user: FBGraphUser) {
-        println("loginViewFetchedUserInfo")
-        
-        AppDelegate.sharedInstance().fbGraphUserObjectId = user.objectID
-        
-        println("Facebook fetched Graph User Info")
-        println("User ID: \(user.objectID)")
-        println("User Name: \(user.name)")
-        var userEmail = user.objectForKey("email") as! String
-        println("User Email: \(userEmail)")
-
-        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-        
-        // update token on back
-        ServerInterface.sharedInstance.updateFacebookToken()
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!)
+    {
+        println("logged out")
     }
     
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
