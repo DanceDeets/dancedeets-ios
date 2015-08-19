@@ -48,7 +48,7 @@ class FaceBookLoginViewController: UIViewController, FBSDKLoginButtonDelegate, U
     }
     
     class var getDefaultFacebookPermissions : [String]{
-        return ["public_profile", "email", "user_friends"]
+        return ["public_profile", "email", "user_friends", "user_events"]
     }
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)

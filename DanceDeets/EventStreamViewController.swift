@@ -678,7 +678,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         let token = FBSDKAccessToken.currentAccessToken()
         if(token == nil){
             self.navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
-        }else{
+        } else if (!token.hasGranted("user_events")) {
+            // This user_events check is because for awhile we allowed iOS access without requesting this permission,
+            // and now we wish these users to re-authorize with the additional permissions, even if they have a token.
+            let login = FBSDKLoginManager()
+            login.logInWithReadPermissions(["user_events"], handler: {  (result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
+                ServerInterface.sharedInstance.updateFacebookToken()
+            });
+        } else {
             FBSDKAccessToken.refreshCurrentAccessToken({ (connect:FBSDKGraphRequestConnection!, obj:AnyObject!, error:NSError!) -> Void in
                 ServerInterface.sharedInstance.updateFacebookToken()
             })
