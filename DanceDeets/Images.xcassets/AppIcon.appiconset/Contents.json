@@ -27,7 +27,7 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "DD120-1.png",
+      "filename" : "DD120.png",
       "scale" : "2x"
     },
     {
@@ -45,7 +45,7 @@
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "DD58-1.png",
+      "filename" : "DD58.png",
       "scale" : "2x"
     },
     {
@@ -57,7 +57,7 @@
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "DD80-1.png",
+      "filename" : "DD80.png",
       "scale" : "2x"
     },
     {
