@@ -1,5 +1,5 @@
 //
-//  LogoutCell.swift
+//  SettingsCell.swift
 //  DanceDeets
 //
 //  Created by David Xiang on 12/24/14.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-
-class LogoutCell : UITableViewCell
+class SettingsCell : UITableViewCell
 {
     
-    @IBOutlet weak var logoutLabel: UILabel!
-    @IBOutlet weak var logoutIcon: UIImageView!
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var icon: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = UIColor.clearColor()
@@ -22,10 +22,10 @@ class LogoutCell : UITableViewCell
         bgColorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         selectedBackgroundView = bgColorView
         
-        logoutLabel.font = FontFactory.standardTableLabelFont()
-        logoutLabel.textColor = UIColor.whiteColor()
-        
-        logoutIcon.tintColor = ColorFactory.white50()
+        label.font = FontFactory.standardTableLabelFont()
+        label.textColor = UIColor.whiteColor()
+        label.tintColor = ColorFactory.white50()
+        icon.tintColor = ColorFactory.white50()
     }
     
 }

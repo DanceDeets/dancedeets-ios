@@ -25,7 +25,7 @@ class FaceBookLoginViewController: UIViewController, FBSDKLoginButtonDelegate, U
         terms.addAttribute(NSLinkAttributeName, value: NSURL(string: "http://www.dancedeets.com")!, range: NSMakeRange(0, terms.length))
         terms.setColor(ColorFactory.lightBlue())
         
-        let first = NSMutableAttributedString(string: "You may still access Dance Deets ")
+        let first = NSMutableAttributedString(string: "You may still access DanceDeets ")
         first.setColor(UIColor.blackColor())
         
         let last = NSMutableAttributedString(string: " if you do not want to log in.")

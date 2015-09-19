@@ -9,6 +9,46 @@
 import UIKit
 import MessageUI
 
+//BEGIN MD5
+extension Int {
+    func hexString() -> String {
+        return String(format:"%02x", self)
+    }
+}
+
+extension NSData {
+    func hexString() -> String {
+        var string = String()
+        for i in UnsafeBufferPointer<UInt8>(start: UnsafeMutablePointer<UInt8>(bytes), count: length) {
+            string += Int(i).hexString()
+        }
+        return string
+    }
+    
+    func MD5() -> NSData {
+        let result = NSMutableData(length: Int(CC_MD5_DIGEST_LENGTH))!
+        CC_MD5(bytes, CC_LONG(length), UnsafeMutablePointer<UInt8>(result.mutableBytes))
+        return NSData(data: result)
+    }
+    
+    func SHA1() -> NSData {
+        let result = NSMutableData(length: Int(CC_SHA1_DIGEST_LENGTH))!
+        CC_SHA1(bytes, CC_LONG(length), UnsafeMutablePointer<UInt8>(result.mutableBytes))
+        return NSData(data: result)
+    }
+}
+
+extension String {
+    func MD5() -> String {
+        return (self as NSString).dataUsingEncoding(NSUTF8StringEncoding)!.MD5().hexString()
+    }
+    
+    func SHA1() -> String {
+        return (self as NSString).dataUsingEncoding(NSUTF8StringEncoding)!.SHA1().hexString()
+    }
+}
+//END MD5
+
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate, MFMailComposeViewControllerDelegate {
     
     let MY_LOCATIONS_SECTION:Int = 0
@@ -76,7 +116,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         if(section == MY_LOCATIONS_SECTION){
             return cities.count + 2
         }else if(section == TOOLS_SECTION){
-            return 2
+            return 3
         }else{
             return 0
         }
@@ -109,10 +149,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(indexPath.section == MY_LOCATIONS_SECTION){
             if(indexPath.row == 0){
-                let cell = tableView.dequeueReusableCellWithIdentifier("addCityCell", forIndexPath: indexPath) as! AddCityCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("addCityCell", forIndexPath: indexPath)
                 return cell
             } else if (indexPath.row == cities.count + 1){
-                let cell = tableView.dequeueReusableCellWithIdentifier("currentLocationCell", forIndexPath: indexPath) as! CurrentLocationCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("currentLocationCell", forIndexPath: indexPath)
                 if(city == ""){
                     cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
                 }
@@ -121,7 +161,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 let cell = tableView.dequeueReusableCellWithIdentifier("citySearchCell", forIndexPath: indexPath) as! CitySearchCell
                 cell.settingsVC = self
                 cell.deleteButton.hidden = false
-                cell.cityLabel.text = cities[indexPath.row - 1]
+                cell.label.text = cities[indexPath.row - 1]
                 if(city == cities[indexPath.row - 1]){
                     cell.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
                 }
@@ -129,15 +169,18 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }else if(indexPath.section == TOOLS_SECTION){
             if(indexPath.row == 0){
-                let cell = tableView.dequeueReusableCellWithIdentifier("sendFeedbackCell", forIndexPath: indexPath) as! SendFeedbackCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("sendFeedbackCell", forIndexPath: indexPath)
                 return cell
-            }else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as! LogoutCell
+            } else if(indexPath.row == 1) {
+                let cell = tableView.dequeueReusableCellWithIdentifier("addEventCell", forIndexPath: indexPath)
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath)
                 return cell
             }
             
         }else{
-            let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath) as! LogoutCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath)
             return cell
         }
     }
@@ -172,10 +215,17 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 let composer = MFMailComposeViewController()
                 let recipients:[String] = ["feedback@dancedeets.com"]
                 composer.mailComposeDelegate = self
-                composer.setSubject("Dance Deets Feedback")
+                composer.setSubject("DanceDeets Feedback")
                 composer.setToRecipients(recipients)
                 presentViewController(composer, animated: true, completion: nil)
-            }else if(indexPath.row == 1){
+            } else if(indexPath.row == 1) {
+                let token = FBSDKAccessToken.currentAccessToken()
+                let uid = token.userID
+                let accessTokenMD5 = token.tokenString.MD5()
+                let stringUrl = "http://www.dancedeets.com/events_add?uid="+uid+"&access_token_md5="+accessTokenMD5;
+                print(stringUrl)
+                UIApplication.sharedApplication().openURL(NSURL(string:stringUrl)!);
+            }else if(indexPath.row == 2){
                 FBSDKAccessToken.setCurrentAccessToken(nil)
                 FBSDKProfile.setCurrentProfile(nil)
                 

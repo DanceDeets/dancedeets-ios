@@ -28,7 +28,7 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
         facebookButton.setBackgroundImage(UIImage(named:"button_facebook"), forState: UIControlState.Normal)
         
         addCalendarAlert = UIAlertView(title: "Added to your calendar!", message: "", delegate: self, cancelButtonTitle: "Undo", otherButtonTitles: "OK")
-        permissionAlert = UIAlertView(title: "Dance Deets doesn't have permission to do that.", message: "Please enable calendar permissions in Settings->Dance Deets", delegate: self, cancelButtonTitle: "Not Now", otherButtonTitles: "Open Settings")
+        permissionAlert = UIAlertView(title: "DanceDeets doesn't have permission to do that.", message: "Please enable calendar permissions in Settings->DanceDeets", delegate: self, cancelButtonTitle: "Not Now", otherButtonTitles: "Open Settings")
     }
     
     func updateViewForEvent(event:Event){

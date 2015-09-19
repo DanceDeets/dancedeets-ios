@@ -73,7 +73,7 @@ class AddCityViewController : UIViewController, UITextFieldDelegate, UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! AutosuggestCityCell
-        cell.cityLabel.text = autosuggestedCities[indexPath.row]
+        cell.label.text = autosuggestedCities[indexPath.row]
         
         let userCities = UserSettings.getUserCities()
         if(userCities.indexOf(autosuggestedCities[indexPath.row]) != nil){
