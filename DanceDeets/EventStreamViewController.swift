@@ -340,7 +340,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func completionHandler(placemarks:[CLPlacemark]?, error:NSError?) {
         if( placemarks != nil && placemarks!.count > 0){
             let placemark:CLPlacemark = placemarks!.first!
-            self.displaySearchString = "\(placemark.locality), \(placemark.administrativeArea)"
+            self.displaySearchString = "\(placemark.locality!), \(placemark.administrativeArea!)"
             if(self.searchKeyword == "All"){
                 Event.loadEventsForLocation(self.locationObject!, keyword:nil, completion:self.refreshCityCompletionHandler)
             }else{
