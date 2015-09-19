@@ -419,10 +419,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             // headers are the mo/yr for a section of events
             let headerView = UIView(frame: CGRectZero)
             headerView.backgroundColor = UIColor.clearColor()
-            let blur = headerView.addDarkBlurOverlay()
+            headerView.addDarkBlurOverlay()
             let headerLabel = UILabel(frame: CGRectZero)
             var monthString = activeMonths[section] as! String
-            var monthEvents = eventsByMonth[monthString] as! [Event]
             let year = activeYears[section] as Int
             monthString = "\(monthString.uppercaseString) \(year)"
             headerLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -623,7 +622,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 
                 // data source for list view -> group events by months for sections
                 for event in events {
-                    if let time = event.startTime {
+                    if event.startTime != nil {
                         let components = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day], fromDate: event.startTime!)
                         // month from event's start time as a string
                         let monthString = NSDateFormatter().monthSymbols[components.month-1] 

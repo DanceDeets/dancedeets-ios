@@ -34,9 +34,9 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     }
     
     func getEventSearchUrl(city:String, eventKeyword:String?) -> NSURL{
-        let cityString:String = city.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        let cityString:String = city.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
         if let keyword = eventKeyword{
-            let keywordString:String = keyword.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            let keywordString:String = keyword.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
             return NSURL(string: baseUrl + "/search?location=\(cityString)&keywords=\(keywordString)")!
         }else{
             return NSURL(string: baseUrl + "/search?location=\(cityString)")!
@@ -46,7 +46,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     func getEventSearchUrlByLocation(location:CLLocation, eventKeyword:String?)->NSURL{
         let coordinate = location.coordinate
         if let keyword = eventKeyword{
-            let keywordString:String = keyword.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            let keywordString:String = keyword.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
             return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)&keywords=\(keywordString)")!
         }else{
             return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)")!
@@ -80,7 +80,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
                 dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
                 dateFormatter.timeZone = NSTimeZone.systemTimeZone()
                 
-                var urlRequest = NSMutableURLRequest(URL: self.getAuthUrl())
+                let urlRequest = NSMutableURLRequest(URL: self.getAuthUrl())
                 urlRequest.HTTPMethod = "POST"
                 urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
                 
