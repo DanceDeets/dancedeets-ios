@@ -77,16 +77,16 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         // styling
         title = event!.title!.uppercaseString
-        var shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
+        let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
         shareButton.tintColor = ColorFactory.white50()
         navigationItem.rightBarButtonItem = shareButton
         
-        var backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: UIBarButtonItemStyle.Plain, target: self, action: "backButtonTapped")
+        let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: UIBarButtonItemStyle.Plain, target: self, action: "backButtonTapped")
         backButton.imageInsets = UIEdgeInsetsMake(0, -5, 0, 0)
         backButton.tintColor = ColorFactory.white50()
         navigationItem.leftBarButtonItem = backButton
 
-        var titleOptions = [NSObject:AnyObject]()
+        var titleOptions = [String:AnyObject]()
         titleOptions[NSForegroundColorAttributeName] = UIColor.whiteColor()
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
         navigationController?.navigationBar.titleTextAttributes = titleOptions
@@ -100,8 +100,8 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         detailsTableView.delegate = self
         detailsTableView.dataSource = self
-        navigationController?.interactivePopGestureRecognizer.delegate = self
-        navigationController?.interactivePopGestureRecognizer.enabled = true
+        navigationController?.interactivePopGestureRecognizer!.delegate = self
+        navigationController?.interactivePopGestureRecognizer!.enabled = true
         
         // set to initial image first, this may be a smaller image if coming from list view
         eventCoverImageView.image = initialImage
@@ -315,7 +315,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
             })
         }else if(indexPath.row == 3 || indexPath.row == 5){
-            if ( event.placemark != nil){
+            if ( event.geoloc != nil){
                 directionAlert?.show()
             }
         }
@@ -338,20 +338,17 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     // MARK: UIAlertViewDelegate
     func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
         if(alertView == directionAlert){
-            if(buttonIndex == 1){
-                let placemark = MKPlacemark(placemark: event.placemark!)
+            if let coordinate = event?.geoloc?.coordinate {
+                let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
                 let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                
-                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
-                mapItem.openInMapsWithLaunchOptions(launchOptions)
-            }else if(buttonIndex == 2){
-                let placemark = MKPlacemark(placemark: event.placemark!)
-                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                
-                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
-                mapItem.openInMapsWithLaunchOptions(launchOptions)
+                if (buttonIndex == 1) {
+                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
+                    mapItem.openInMapsWithLaunchOptions(launchOptions)
+                } else if (buttonIndex == 2) {
+                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
+                    mapItem.openInMapsWithLaunchOptions(launchOptions)
+                }
             }
-            
         }
     }
     

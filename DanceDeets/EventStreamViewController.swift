@@ -334,7 +334,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // tapped 'search' on the keyboard
         textField.resignFirstResponder()
-        searchKeyword = textField.text
+        searchKeyword = textField.text!
         hideAutoSuggestTable()
         refreshEvents()
         return true
@@ -351,8 +351,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         if(locations.count == 0){
             showLocationFailure()
         }else{
-            if let locationObject:CLLocation = locations.first as? CLLocation {
-                geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
+            if let locationObject:CLLocation = locations.first! as CLLocation {
+                geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]?, error:NSError?) -> Void in
                     if( placemarks != nil && placemarks.count > 0){
                         let placemark:CLPlacemark = placemarks.first as! CLPlacemark
                         self.displaySearchString = "\(placemark.locality), \(placemark.administrativeArea)"

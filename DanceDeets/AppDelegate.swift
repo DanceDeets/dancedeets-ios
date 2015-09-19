@@ -77,10 +77,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
-        var returnValue:Int = Int(UIInterfaceOrientationMask.Portrait.rawValue)
+        var returnValue:UIInterfaceOrientationMask = UIInterfaceOrientationMask.Portrait
         if let allowLandscape = allowLandscape {
             if(allowLandscape){
-                returnValue = Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+                returnValue = UIInterfaceOrientationMask.AllButUpsideDown
             }
         }
         return returnValue

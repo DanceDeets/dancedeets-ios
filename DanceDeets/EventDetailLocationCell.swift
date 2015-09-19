@@ -8,7 +8,7 @@
 import MapKit
 
 
-class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAlertViewDelegate {
+class EventDetailLocationCell: UITableViewCell, UIAlertViewDelegate {
 
     @IBOutlet weak var venueLabel: UILabel!
     @IBOutlet weak var pinIcon: UIImageView!
@@ -29,19 +29,17 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
     
     // MARK: UIAlertViewDelegate
     func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
-        if(alertView == directionAlert && event != nil && event?.placemark != nil){
-            if(buttonIndex == 1){
-                let placemark = MKPlacemark(placemark: event!.placemark!)
+        if(alertView == directionAlert && event != nil) {
+            if let coordinate = event?.geoloc?.coordinate {
+                let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
                 let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                
-                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
-                mapItem.openInMapsWithLaunchOptions(launchOptions)
-            }else if(buttonIndex == 2){
-                let placemark = MKPlacemark(placemark: event!.placemark!)
-                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                
-                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
-                mapItem.openInMapsWithLaunchOptions(launchOptions)
+                if (buttonIndex == 1) {
+                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
+                    mapItem.openInMapsWithLaunchOptions(launchOptions)
+                } else if (buttonIndex == 2) {
+                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
+                    mapItem.openInMapsWithLaunchOptions(launchOptions)
+                }
             }
         }
     }

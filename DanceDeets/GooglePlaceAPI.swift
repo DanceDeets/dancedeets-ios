@@ -23,9 +23,13 @@ public class GooglePlaceAPI{
                 if(error != nil){
                     completion(autosuggests: [], error: error)
                 }else{
-                    let jsonError:NSError?
-                    let json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
-                    if (json == nil || jsonError != nil) {
+                    let json:NSDictionary?
+                    do {
+                        json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    } catch {
+                        json = nil
+                    }
+                    if (json == nil) {
                         completion(autosuggests: [], error: error)
                     }
                     else {

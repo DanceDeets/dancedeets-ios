@@ -29,7 +29,7 @@ class EventDetailMapCell:UITableViewCell, UIAlertViewDelegate
     }
     
     @IBAction func getDirectionButtonTapped(sender: AnyObject) {
-        if(currentEvent != nil && currentEvent?.placemark != nil){
+        if(currentEvent != nil && currentEvent?.geoloc != nil){
             directionAlert?.show()
         }
     }
@@ -53,20 +53,17 @@ class EventDetailMapCell:UITableViewCell, UIAlertViewDelegate
     // MARK: UIAlertViewDelegate
     func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
         if(alertView == directionAlert){
-            if(buttonIndex == 1){
-                let placemark = MKPlacemark(placemark: currentEvent!.placemark!)
+            if let coordinate = currentEvent?.geoloc?.coordinate {
+                let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
                 let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                
-                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
-                mapItem.openInMapsWithLaunchOptions(launchOptions)
-            }else if(buttonIndex == 2){
-                let placemark = MKPlacemark(placemark: currentEvent!.placemark!)
-                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                
-                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
-                mapItem.openInMapsWithLaunchOptions(launchOptions)
+                if (buttonIndex == 1) {
+                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
+                    mapItem.openInMapsWithLaunchOptions(launchOptions)
+                } else if (buttonIndex == 2) {
+                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
+                    mapItem.openInMapsWithLaunchOptions(launchOptions)
+                }
             }
-            
         }
     }
     

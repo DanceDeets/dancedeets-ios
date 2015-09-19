@@ -36,8 +36,8 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
     }
     
     @IBAction func addToCalendarButtonTapped(sender: AnyObject) {
-        var store = EKEventStore()
-        store.requestAccessToEntityType(EKEntityType.Event) { (granted:Bool, error:NSError!) -> Void in
+        let store = EKEventStore()
+        store.requestAccessToEntityType(EKEntityType.Event) { (granted:Bool, error:NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 if(!granted || error != nil){
                     self.permissionAlert?.show()
@@ -84,14 +84,14 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
         if(alertView == addCalendarAlert)
         {
             if (buttonIndex == 1){
-                var store = EKEventStore()
-                store.requestAccessToEntityType(EKEntityType.Event) { (granted:Bool, error:NSError!) -> Void in
+                let store = EKEventStore()
+                store.requestAccessToEntityType(EKEntityType.Event) { (granted:Bool, error:NSError?) -> Void in
                     if(!granted && error != nil){
                         return
                     }
-                    var newEvent:EKEvent = EKEvent(eventStore: store)
-                    newEvent.title = self.currentEvent?.title
-                    newEvent.startDate = self.currentEvent?.startTime
+                    let newEvent:EKEvent = EKEvent(eventStore: store)
+                    newEvent.title = (self.currentEvent?.title)!
+                    newEvent.startDate = (self.currentEvent?.startTime)!
                     if let endTime = self.currentEvent?.endTime{
                         newEvent.endDate = endTime
                     }else{
@@ -101,8 +101,8 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
                     newEvent.calendar = store.defaultCalendarForNewEvents
                     var saveError:NSError?
                     do {
-                        try store.saveEvent(newEvent, span: EKSpanThisEvent, commit: true)
-                    } catch var error as NSError {
+                        try store.saveEvent(newEvent, span: EKSpan.ThisEvent, commit: true)
+                    } catch let error as NSError {
                         saveError = error
                     } catch {
                         fatalError()
