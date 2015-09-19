@@ -253,7 +253,7 @@ public class Event: NSObject {
                 } catch {
                     json = nil
                 }
-                if (json != nil) {
+                if (json == nil) {
                     completion([], error)
                 }
                 else {
