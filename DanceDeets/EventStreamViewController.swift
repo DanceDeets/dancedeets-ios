@@ -29,7 +29,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     let SEARCH_AUTOSUGGEST_TERMS:[String] = ["All","Bboy","Breaking","Hip-Hop", "House","Popping","Locking","Waacking","Dancehall","Vogue","Krumping","Turfing","Litefeet","Flexing","Bebop","All-Styles"]
     
     // MARK: Variables
-    var locationManager:CLLocationManager = CLLocationManager()
+    var myLocationManager:CLLocationManager = CLLocationManager()
     var geocoder:CLGeocoder = CLGeocoder()
     var locationFailureAlert:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
     var events:[Event] = []
@@ -45,7 +45,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var eventsByMonth:NSMutableDictionary = NSMutableDictionary()
     var activeMonths:NSMutableArray = NSMutableArray()
     var activeYears:[Int] = []
-    
+    var locationObject:CLLocation? = nil
+
     // MARK: Outlets
     @IBOutlet weak var eventListTableView: UITableView!
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -108,7 +109,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         loadViewController()
         
-        locationManager.requestWhenInUseAuthorization()
+        myLocationManager.requestWhenInUseAuthorization()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -158,30 +159,23 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let event = events[indexPath.row]
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        eventCollectionView.userInteractionEnabled = false
-        event.getMoreDetails({ () -> Void in
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            dispatch_async(dispatch_get_main_queue(), {
-                self.eventCollectionView.userInteractionEnabled = true
-                
-                // the collection cell of the selected event
-                if let eventCell = self.eventCollectionView.cellForItemAtIndexPath(indexPath) as? EventCollectionViewCell{
-                    // convert event cover image relative to view controller view
-                    let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
+        dispatch_async(dispatch_get_main_queue(), {
+            // the collection cell of the selected event
+            if let eventCell = self.eventCollectionView.cellForItemAtIndexPath(indexPath) as? EventCollectionViewCell{
+                // convert event cover image relative to view controller view
+                let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
                     
-                    // set up destination view controller w/ cover image dimensions
-                    let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
-                    destination.initialImage = eventCell.eventCoverImage.image
-                    destination.event = event
-                    destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
-                    destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-                    destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
-                    destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
+                // set up destination view controller w/ cover image dimensions
+                let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
+                destination.initialImage = eventCell.eventCoverImage.image
+                destination.event = event
+                destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
+                destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+                destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
+                destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
                     
-                    self.navigationController?.pushViewController(destination, animated: false)
-                }
-            })
+                self.navigationController?.pushViewController(destination, animated: false)
+            }
         })
     }
     
@@ -248,7 +242,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func loadViewController(){
         
-        locationManager.delegate = self
+        myLocationManager.delegate = self
         eventCollectionView.delegate = self
         eventCollectionView.dataSource = self
         
@@ -306,7 +300,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         let imageView:UIImageView = UIImageView(image: UIImage(named: "searchIconSmall")!)
         imageView.tintColor = ColorFactory.white50()
         imageView.contentMode = UIViewContentMode.Right
-        let magGlassXOffset = (searchTextField.frame.size.width / 2 ) - 19.0
         imageView.frame = CGRectMake(0, 0, imageView.image!.size.width + 10, imageView.image!.size.height)
         searchTextField.leftView = imageView
         searchTextField.leftViewMode = UITextFieldViewMode.UnlessEditing
@@ -344,33 +337,37 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         showAutoSuggestTable()
     }
     
+    func completionHandler(placemarks:[CLPlacemark]?, error:NSError?) {
+        if( placemarks != nil && placemarks!.count > 0){
+            let placemark:CLPlacemark = placemarks!.first!
+            self.displaySearchString = "\(placemark.locality), \(placemark.administrativeArea)"
+            if(self.searchKeyword == "All"){
+                Event.loadEventsForLocation(self.locationObject!, keyword:nil, completion:self.refreshCityCompletionHandler)
+            }else{
+                Event.loadEventsForLocation(self.locationObject!, keyword:self.searchKeyword, completion:self.refreshCityCompletionHandler)
+            }
+        }else{
+            self.showLocationFailure()
+        }
+    }
+
+    
     // MARK: CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        locationManager.stopUpdatingLocation()
+        myLocationManager.stopUpdatingLocation()
         
         if(locations.count == 0){
             showLocationFailure()
         }else{
             if let locationObject:CLLocation = locations.first! as CLLocation {
-                geocoder.reverseGeocodeLocation(locationObject, completionHandler: { (placemarks:[AnyObject]?, error:NSError?) -> Void in
-                    if( placemarks != nil && placemarks.count > 0){
-                        let placemark:CLPlacemark = placemarks.first as! CLPlacemark
-                        self.displaySearchString = "\(placemark.locality), \(placemark.administrativeArea)"
-                        if(self.searchKeyword == "All"){
-                            Event.loadEventsForLocation(locationObject, keyword:nil, completion:self.refreshCityCompletionHandler)
-                        }else{
-                            Event.loadEventsForLocation(locationObject, keyword:self.searchKeyword, completion:self.refreshCityCompletionHandler)
-                        }
-                    }else{
-                        self.showLocationFailure()
-                    }
-                })
+                self.locationObject = locationObject
+                geocoder.reverseGeocodeLocation(locationObject, completionHandler: completionHandler)
             }
         }
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        locationManager.stopUpdatingLocation()
+        myLocationManager.stopUpdatingLocation()
         showLocationFailure()
     }
     
@@ -486,29 +483,22 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 if let monthEvents = self.eventsByMonth[month] as? [Event]{
                     if(monthEvents.count > indexPath.row){
                         let event = monthEvents[indexPath.row]
-                        eventListTableView.userInteractionEnabled = false
-                        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-                        event.getMoreDetails({ () -> Void in
-                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            self.eventListTableView.userInteractionEnabled = true
-                            
-                            // the collection cell of the selected event
-                            let eventCell =  self.eventListTableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
-                            
-                            // convert event cover image relative to view controller view
-                            let convertCoverImageRect = self.view.convertRect(eventCell.eventImageView.frame, fromView: eventCell.eventImageView.superview)
-                            
-                            let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
-                            destination.initialImage = eventCell.eventImageView.image
-                            destination.event = event
-                            destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
-                            destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-                            destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
-                            destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
-                            
-                            self.navigationController?.pushViewController(destination, animated: false)
-                        })
+
+                        // the collection cell of the selected event
+                        let eventCell =  self.eventListTableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
                         
+                        // convert event cover image relative to view controller view
+                        let convertCoverImageRect = self.view.convertRect(eventCell.eventImageView.frame, fromView: eventCell.eventImageView.superview)
+                        
+                        let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
+                        destination.initialImage = eventCell.eventImageView.image
+                        destination.event = event
+                        destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
+                        destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
+                        destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
+                        destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
+                            
+                        self.navigationController?.pushViewController(destination, animated: false)
                     }
                 }
             }
@@ -594,7 +584,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             }
         }else{
             searchMode = SearchMode.CurrentLocation
-            locationManager.startUpdatingLocation()
+            myLocationManager.startUpdatingLocation()
             navigationTitle.text = "UPDATING LOCATION"
             eventCountLabel.text = "Updating Location..."
         }

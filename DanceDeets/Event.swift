@@ -241,11 +241,6 @@ public class Event: NSObject {
         loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrl(city, eventKeyword:keyword), completion:completion)
     }
     
-    public func getMoreDetails(completion: (()->Void)) -> Void
-    {
-        completion()
-    }
-    
     public class func loadEventsFromUrl(url:NSURL, completion: (([Event]!, NSError!)->Void)) -> Void
     {
         let task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
