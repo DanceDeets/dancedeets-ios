@@ -51,7 +51,7 @@ class EventDetailLocationCell: UITableViewCell, UIGestureRecognizerDelegate,UIAl
     }
     
     func updateViewForEvent(event:Event){
-        var attributedDescription = NSMutableAttributedString(string: event.displayAddress)
+        let attributedDescription = NSMutableAttributedString(string: event.displayAddress)
         attributedDescription.setLineHeight(FontFactory.eventVenueLineHeight())
         attributedDescription.setFont(FontFactory.eventVenueFont())
         attributedDescription.setColor(UIColor.whiteColor())

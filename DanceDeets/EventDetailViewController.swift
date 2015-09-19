@@ -214,7 +214,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(indexPath.row == 0){
-            let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) 
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.backgroundColor = UIColor.clearColor()
             return cell

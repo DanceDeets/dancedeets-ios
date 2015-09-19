@@ -40,7 +40,7 @@ class EventDetailMapCell:UITableViewCell, UIAlertViewDelegate
             
             // setup map if possible
             if(event.geoloc != nil){
-                var annotation:MKPointAnnotation = MKPointAnnotation()
+                let annotation:MKPointAnnotation = MKPointAnnotation()
                 annotation.coordinate = event.geoloc!.coordinate
                 eventMapView.addAnnotation(annotation)
                 eventMapView.centerCoordinate = annotation.coordinate

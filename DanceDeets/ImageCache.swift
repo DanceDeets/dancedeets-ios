@@ -29,12 +29,12 @@ class ImageCache: NSCache {
     }
     
     func memoryWarningReceived(){
-        println("ImageCache received a memory warning")
+        print("ImageCache received a memory warning")
         ImageCache.sharedInstance.removeAllObjects()
     }
     
     class func cacheKeyFromRequest(request:NSURLRequest)->String{
-        return request.URL!.absoluteString!
+        return request.URL!.absoluteString
     }
     
     func cachedImageForRequest(request:NSURLRequest)->UIImage?{

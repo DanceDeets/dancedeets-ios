@@ -70,7 +70,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     @IBAction func scrollUpButtonTapped(sender: AnyObject) {
         if(viewMode == .ListView){
-            if(eventListTableView.numberOfSections() > 0 && eventListTableView.numberOfRowsInSection(0) > 0){
+            if(eventListTableView.numberOfSections > 0 && eventListTableView.numberOfRowsInSection(0) > 0){
                 let indexPath = NSIndexPath(forRow: 0, inSection: 0)
                 eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
             }
@@ -133,7 +133,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "settingsSegue"{
-            var destination:SettingsViewController? = segue.destinationViewController as? SettingsViewController
+            let destination:SettingsViewController? = segue.destinationViewController as? SettingsViewController
             
             // take snap shot of our current view, add a blur, this is the background effect for the settings
             let snapShot:UIView = view.snapshotViewAfterScreenUpdates(false)
@@ -284,7 +284,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchTextCancelButton.tintColor = ColorFactory.white50()
  
         // custom navigation styling
-        var customNavBlur = customNavigationView.addDarkBlurOverlay()
+        let customNavBlur = customNavigationView.addDarkBlurOverlay()
         customNavigationView.insertSubview(customNavBlur, atIndex: 0)
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationTitle.textColor = UIColor.whiteColor()
@@ -293,7 +293,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         navigationItem.title = ""
        
         // search text field styling
-        var placeholder = NSMutableAttributedString(string: "Search")
+        let placeholder = NSMutableAttributedString(string: "Search")
         placeholder.setColor(ColorFactory.white50())
         placeholder.setFont(UIFont(name: "HelveticaNeue-Medium", size: 14.0)!)
         searchTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
@@ -345,7 +345,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     // MARK: CLLocationManagerDelegate
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         locationManager.stopUpdatingLocation()
         
         if(locations.count == 0){
@@ -369,7 +369,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         locationManager.stopUpdatingLocation()
         showLocationFailure()
     }
@@ -428,7 +428,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             var monthEvents = eventsByMonth[monthString] as! [Event]
             let year = activeYears[section] as Int
             monthString = "\(monthString.uppercaseString) \(year)"
-            headerLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+            headerLabel.translatesAutoresizingMaskIntoConstraints = false
             headerView.addSubview(headerLabel)
             headerLabel.constrainLeftToSuperView(13)
             headerLabel.verticallyCenterToSuperView(0)
@@ -582,7 +582,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func refreshEvents(){
         let searchCity = UserSettings.getUserCitySearch()
-        if(count(searchCity) > 0){
+        if(searchCity.characters.count > 0){
             searchMode = SearchMode.CustomCity
             displaySearchString = searchCity
             navigationTitle.text = displaySearchString.uppercaseString
@@ -634,9 +634,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 // data source for list view -> group events by months for sections
                 for event in events {
                     if let time = event.startTime {
-                        let components = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay, fromDate: event.startTime!)
+                        let components = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day], fromDate: event.startTime!)
                         // month from event's start time as a string
-                        let monthString = NSDateFormatter().monthSymbols[components.month-1] as! String
+                        let monthString = NSDateFormatter().monthSymbols[components.month-1] 
                         
                         // each month has an array of events
                         var eventList:NSMutableArray? = self.eventsByMonth[monthString] as? NSMutableArray

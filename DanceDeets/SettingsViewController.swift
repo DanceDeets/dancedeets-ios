@@ -198,7 +198,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     // MARK: MFMailComposeViewControllerDelegate
-    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         dismissViewControllerAnimated(true, completion: nil)
     }
 }

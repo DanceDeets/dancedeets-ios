@@ -18,13 +18,13 @@ public class GooglePlaceAPI{
     {
         let requestUrlString:String = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="+query+"&types=(regions)&key=" + apiKey()
         if let url:NSURL = NSURL(string: requestUrlString){
-            var session = NSURLSession.sharedSession()
-            var task:NSURLSessionTask = session.dataTaskWithURL(url, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
+            let session = NSURLSession.sharedSession()
+            let task:NSURLSessionTask = session.dataTaskWithURL(url, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
                 if(error != nil){
                     completion(autosuggests: [], error: error)
                 }else{
-                    var jsonError:NSError?
-                    var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
+                    let jsonError:NSError?
+                    let json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
                     if (json == nil || jsonError != nil) {
                         completion(autosuggests: [], error: error)
                     }
@@ -34,7 +34,7 @@ public class GooglePlaceAPI{
                             for prediction in predictions{
                                 if let predictionDict = prediction as? NSDictionary{
                                     if let terms = predictionDict["description"] as? String{
-                                        if (count(terms) > 0){
+                                        if (terms.characters.count > 0){
                                             autoSuggestions.append(terms)
                                         }
                                     }

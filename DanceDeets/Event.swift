@@ -40,7 +40,7 @@ public class Event: NSObject {
         id = dictionary["id"] as? String
         shortDescription = dictionary["description"] as? String
         
-        if id != nil && count(id!) > 0 {
+        if id != nil && (id!).characters.count > 0 {
             facebookUrl = NSURL(string: "http://www.facebook.com/"+id!)
             danceDeetsUrl = NSURL(string: "http://www.dancedeets.com/events/"+id!)
         }
@@ -58,7 +58,7 @@ public class Event: NSObject {
                     let name:String? = admin["name"] as? String
                     let identifier:String? = admin["id"] as? String
                     if name != nil && identifier != nil{
-                        var newAdmin = EventAdmin(name:name!, identifier:identifier!)
+                        let newAdmin = EventAdmin(name:name!, identifier:identifier!)
                         self.admins.append(newAdmin)
                     }
                 }
@@ -124,8 +124,8 @@ public class Event: NSObject {
         }
         
         // date formatting
-        var dateFormatterStart:NSDateFormatter  = NSDateFormatter()
-        var dateFormatterEnd:NSDateFormatter = NSDateFormatter()
+        let dateFormatterStart:NSDateFormatter  = NSDateFormatter()
+        let dateFormatterEnd:NSDateFormatter = NSDateFormatter()
         var dateDisplayString:String  =  String()
         dateFormatterStart.dateFormat = "EEE MMM d  |  ha"
         dateFormatterEnd.dateFormat = "ha"
@@ -145,7 +145,7 @@ public class Event: NSObject {
             if let startTimeString = dictionary["start_time"] as? String{
                 startTime = dateFormatter.dateFromString(startTimeString)
                 if(startTime != nil){
-                    var displayFormatter:NSDateFormatter = NSDateFormatter()
+                    let displayFormatter:NSDateFormatter = NSDateFormatter()
                     displayFormatter.dateFormat = "EEE MMM dd  |  'All Day'"
                     dateDisplayString = displayFormatter.stringFromDate(startTime!)
                 }
@@ -193,7 +193,7 @@ public class Event: NSObject {
         let imageRequest:NSURLRequest = NSURLRequest(URL: url)
         var downloadTask:NSURLSessionDownloadTask =
         NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
-            completionHandler: { (location:NSURL!, resp:NSURLResponse!, error:NSError!) -> Void in
+            completionHandler: { (location:NSURL?, resp:NSURLResponse?, error:NSError?) -> Void in
                 if(error == nil){
                     let data:NSData? = NSData(contentsOfURL: location)
                     if let newImage = UIImage(data: data!, scale: UIScreen.mainScreen().scale){
@@ -262,14 +262,14 @@ public class Event: NSObject {
     
     public class func loadEventsFromUrl(url:NSURL, completion: (([Event]!, NSError!)->Void)) -> Void
     {
-        var task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
+        var task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
             if(error != nil){
                 completion([], error)
             }else{
                 var jsonError:NSError?
                 let string = NSString(data: data, encoding: NSUTF8StringEncoding)
                 
-                var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
+                var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
                 if (jsonError != nil) {
                     completion([], jsonError)
                 }

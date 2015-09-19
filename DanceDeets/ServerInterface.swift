@@ -34,9 +34,9 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     }
     
     func getEventSearchUrl(city:String, eventKeyword:String?) -> NSURL{
-        var cityString:String = city.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        let cityString:String = city.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         if let keyword = eventKeyword{
-            var keywordString:String = keyword.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            let keywordString:String = keyword.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
             return NSURL(string: baseUrl + "/search?location=\(cityString)&keywords=\(keywordString)")!
         }else{
             return NSURL(string: baseUrl + "/search?location=\(cityString)")!
@@ -46,7 +46,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     func getEventSearchUrlByLocation(location:CLLocation, eventKeyword:String?)->NSURL{
         let coordinate = location.coordinate
         if let keyword = eventKeyword{
-            var keywordString:String = keyword.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            let keywordString:String = keyword.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
             return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)&keywords=\(keywordString)")!
         }else{
             return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)")!
@@ -58,7 +58,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     }
     
     // MARK: - CLLocationManagerDelegate
-    public func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
+    public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         locationManager.stopUpdatingLocation()
         
         let locationObject:CLLocation = locations.first as! CLLocation
@@ -94,12 +94,12 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
                     params["location"] = geocodeString
                     params["access_token"] = accessToken
                     params["access_token_expires"] = dateFormatter.stringFromDate(expiration)
-                    let postData = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: nil)
+                    let postData = try? NSJSONSerialization.dataWithJSONObject(params, options: [])
                     urlRequest.HTTPBody = postData
                     
                     // post it up
-                    let task = NSURLSession.sharedSession().dataTaskWithRequest(urlRequest, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
-                        println("Posted up token with error: \(error)")
+                    let task = NSURLSession.sharedSession().dataTaskWithRequest(urlRequest, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+                        print("Posted up token with error: \(error)")
                     })
                     task.resume()
                 }
@@ -107,7 +107,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         })
     }
     
-    public func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    public func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         locationManager.stopUpdatingLocation()
     }
 }

@@ -25,7 +25,7 @@ class EventDetailDescriptionCell: UITableViewCell {
     
     func updateViewForEvent(event:Event){
         
-        var attributedDescription = NSMutableAttributedString(string: event.shortDescription!)
+        let attributedDescription = NSMutableAttributedString(string: event.shortDescription!)
         attributedDescription.setLineHeight(FontFactory.eventDescriptionLineHeight())
         attributedDescription.setFont(FontFactory.eventDescriptionFont())
         attributedDescription.setColor(UIColor.whiteColor())

@@ -37,7 +37,7 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
     
     @IBAction func addToCalendarButtonTapped(sender: AnyObject) {
         var store = EKEventStore()
-        store.requestAccessToEntityType(EKEntityTypeEvent) { (granted:Bool, error:NSError!) -> Void in
+        store.requestAccessToEntityType(EKEntityType.Event) { (granted:Bool, error:NSError!) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 if(!granted || error != nil){
                     self.permissionAlert?.show()
@@ -85,7 +85,7 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
         {
             if (buttonIndex == 1){
                 var store = EKEventStore()
-                store.requestAccessToEntityType(EKEntityTypeEvent) { (granted:Bool, error:NSError!) -> Void in
+                store.requestAccessToEntityType(EKEntityType.Event) { (granted:Bool, error:NSError!) -> Void in
                     if(!granted && error != nil){
                         return
                     }
@@ -100,7 +100,13 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
                     }
                     newEvent.calendar = store.defaultCalendarForNewEvents
                     var saveError:NSError?
-                    store.saveEvent(newEvent, span: EKSpanThisEvent, commit: true, error: &saveError)
+                    do {
+                        try store.saveEvent(newEvent, span: EKSpanThisEvent, commit: true)
+                    } catch var error as NSError {
+                        saveError = error
+                    } catch {
+                        fatalError()
+                    }
                     self.currentEvent?.savedEventId = newEvent.eventIdentifier
                 }
             }

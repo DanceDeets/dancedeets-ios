@@ -31,8 +31,8 @@ class Utilities{
         {
             if let nameString = name as? String{
                 let names = UIFont.fontNamesForFamilyName(nameString)
-                println(nameString)
-                println(names)
+                print(nameString)
+                print(names)
             }
         }
     }

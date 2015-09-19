@@ -12,7 +12,7 @@ public extension UIView{
     
     /// For any view with a superview, constrain all edges flush with superview. e.g. Leading, Top, Bottom, Right all 0
     public func constrainToSuperViewEdges(){
-        setTranslatesAutoresizingMaskIntoConstraints(false)
+        translatesAutoresizingMaskIntoConstraints = false
         constrainLeftToSuperView(0)
         constrainRightToSuperView(0)
         constrainTopToSuperView(0)
@@ -22,7 +22,7 @@ public extension UIView{
     /// Given a reference view, constrain this view to be exactly the same size and position (Useful for overlays that aren't child views). Superviews must be the same
     public func constrainExactlyToView(view:UIView){
         if(hasSuperview() && (superview == view.superview)){
-            setTranslatesAutoresizingMaskIntoConstraints(false)
+            translatesAutoresizingMaskIntoConstraints = false
             superview?.addConstraint(NSLayoutConstraint(item: self, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0.0))
             superview?.addConstraint(NSLayoutConstraint(item: self, attribute: .CenterY, relatedBy: .Equal, toItem: view, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
             superview?.addConstraint(NSLayoutConstraint(item: self, attribute: .Width, relatedBy: .Equal, toItem: view, attribute: .Width, multiplier: 1.0, constant: 0.0))
@@ -33,7 +33,7 @@ public extension UIView{
     /// Given a reference view, align left. Superviews must be the same.
     public func alignLeftToView(view:UIView){
         if(hasSuperview() && (superview == view.superview)){
-            setTranslatesAutoresizingMaskIntoConstraints(false)
+            translatesAutoresizingMaskIntoConstraints = false
             let constraint = NSLayoutConstraint(item: self, attribute: .Left, relatedBy: .Equal, toItem: view, attribute: .Left, multiplier: 1.0, constant: 0)
             superview?.addConstraint(constraint)
         }
@@ -42,7 +42,7 @@ public extension UIView{
     /// Given a reference view, align right. Superviews must be the same.
     public func alignRightToView(view:UIView){
         if(hasSuperview() && (superview == view.superview)){
-            setTranslatesAutoresizingMaskIntoConstraints(false)
+            translatesAutoresizingMaskIntoConstraints = false
             let constraint = NSLayoutConstraint(item: self, attribute: .Right, relatedBy: .Equal, toItem: view, attribute: .Right, multiplier: 1.0, constant: 0)
             superview?.addConstraint(constraint)
         }
@@ -51,7 +51,7 @@ public extension UIView{
     /// Given a reference view, align top. Superviews must be the same.
     public func alignTopToView(view:UIView){
         if(hasSuperview() && (superview == view.superview)){
-            setTranslatesAutoresizingMaskIntoConstraints(false)
+            translatesAutoresizingMaskIntoConstraints = false
             let constraint = NSLayoutConstraint(item: self, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1.0, constant: 0)
             superview?.addConstraint(constraint)
         }
@@ -60,70 +60,70 @@ public extension UIView{
     /// Given a reference view, align bottom. Superviews must be the same.
     public func alignBottomToView(view:UIView){
         if(hasSuperview() && (superview == view.superview)){
-            setTranslatesAutoresizingMaskIntoConstraints(false)
+            translatesAutoresizingMaskIntoConstraints = false
             let constraint = NSLayoutConstraint(item: self, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1.0, constant: 0)
             superview?.addConstraint(constraint)
         }
     }
     
     public func constrainLeftToSuperView(offset:CGFloat)->NSLayoutConstraint{
-        setTranslatesAutoresizingMaskIntoConstraints(false)
+        translatesAutoresizingMaskIntoConstraints = false
         let leftConstraint = NSLayoutConstraint(item: self, attribute: .Left, relatedBy: .Equal, toItem: self.superview, attribute: .Left, multiplier: 1.0, constant: offset)
         superview?.addConstraint(leftConstraint)
         return leftConstraint
     }
     
     public func constrainRightToSuperView(offset:CGFloat)->NSLayoutConstraint{
-        setTranslatesAutoresizingMaskIntoConstraints(false)
+        translatesAutoresizingMaskIntoConstraints = false
         let rightConstraint = NSLayoutConstraint(item: self.superview!, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1.0, constant: offset)
         superview?.addConstraint(rightConstraint)
         return rightConstraint
     }
     
     public func constrainTopToSuperView(offset:CGFloat)->NSLayoutConstraint{
-        setTranslatesAutoresizingMaskIntoConstraints(false)
+        translatesAutoresizingMaskIntoConstraints = false
         let topConstraint = NSLayoutConstraint(item: self, attribute: .Top, relatedBy: .Equal, toItem: self.superview, attribute: .Top, multiplier: 1.0, constant: offset)
         superview?.addConstraint(topConstraint)
         return topConstraint
     }
     
     public func constrainBottomToSuperView(offset:CGFloat)->NSLayoutConstraint{
-        setTranslatesAutoresizingMaskIntoConstraints(false)
+        translatesAutoresizingMaskIntoConstraints = false
         let bottomConstraint = NSLayoutConstraint(item: self.superview!, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: offset)
         superview?.addConstraint(bottomConstraint)
         return bottomConstraint
     }
     
     public func verticallyCenterToSuperView(offset:CGFloat)->NSLayoutConstraint {
-        setTranslatesAutoresizingMaskIntoConstraints(false)
+        translatesAutoresizingMaskIntoConstraints = false
         let yConstraint = NSLayoutConstraint(item: self, attribute: .CenterY, relatedBy: .Equal, toItem: superview, attribute: .CenterY, multiplier: 1.0, constant: offset)
         superview!.addConstraint(yConstraint)
         return yConstraint
     }
     
     public func horizontallyCenterToSuperView(offset:CGFloat)->NSLayoutConstraint {
-        setTranslatesAutoresizingMaskIntoConstraints(false)
+        translatesAutoresizingMaskIntoConstraints = false
         let xConstraint = NSLayoutConstraint(item: self, attribute: .CenterX, relatedBy: .Equal, toItem: superview, attribute: .CenterX, multiplier: 1.0, constant: offset)
         superview!.addConstraint(xConstraint)
         return xConstraint
     }
     
     public func constrainHeight(height:CGFloat)->NSLayoutConstraint{
-        setTranslatesAutoresizingMaskIntoConstraints(false)
+        translatesAutoresizingMaskIntoConstraints = false
         let heightConstraint = NSLayoutConstraint(item: self, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: height)
         addConstraint(heightConstraint)
         return heightConstraint
     }
     
     public func constrainWidth(width:CGFloat)->NSLayoutConstraint{
-        setTranslatesAutoresizingMaskIntoConstraints(false)
+        translatesAutoresizingMaskIntoConstraints = false
         let widthConstraint = NSLayoutConstraint(item: self, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: width)
         addConstraint(widthConstraint)
         return widthConstraint
     }
     
     public func constrainWidth(width:CGFloat, height:CGFloat){
-        setTranslatesAutoresizingMaskIntoConstraints(false)
+        translatesAutoresizingMaskIntoConstraints = false
         constrainHeight(height)
         constrainWidth(width)
     }
@@ -149,7 +149,7 @@ public extension UIView{
     func addBottomBorderWithWidth(width:CGFloat, color:UIColor)->UIView{
         let borderImageView = UIImageView(frame: CGRectZero)
         borderImageView.backgroundColor = color
-        borderImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        borderImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(borderImageView)
         borderImageView.constrainLeftToSuperView(0)
         borderImageView.constrainRightToSuperView(0)
@@ -162,7 +162,7 @@ public extension UIView{
     func addLeftBorderWithWidth(width:CGFloat, color:UIColor)->UIView{
         let borderImageView = UIImageView(frame: CGRectZero)
         borderImageView.backgroundColor = color
-        borderImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        borderImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(borderImageView)
         borderImageView.constrainLeftToSuperView(0)
         borderImageView.constrainTopToSuperView(0)
@@ -175,7 +175,7 @@ public extension UIView{
     func addRightBorderWithWidth(width:CGFloat, color:UIColor)->UIView{
         let borderImageView = UIImageView(frame: CGRectZero)
         borderImageView.backgroundColor = color
-        borderImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        borderImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(borderImageView)
         borderImageView.constrainRightToSuperView(0)
         borderImageView.constrainTopToSuperView(0)
@@ -188,7 +188,7 @@ public extension UIView{
     func addTopBorderWithWidth(width:CGFloat, color:UIColor)->UIView{
         let borderImageView = UIImageView(frame: CGRectZero)
         borderImageView.backgroundColor = color
-        borderImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        borderImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(borderImageView)
         borderImageView.constrainLeftToSuperView(0)
         borderImageView.constrainRightToSuperView(0)

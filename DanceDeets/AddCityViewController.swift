@@ -31,7 +31,7 @@ class AddCityViewController : UIViewController, UITextFieldDelegate, UITableView
         citySearchTextField.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         citySearchTextField.font = FontFactory.textFieldFont()
         citySearchTextField.addTarget(self, action: "textFieldUpdated", forControlEvents: UIControlEvents.EditingChanged)
-        var attributedPlaceholder = NSMutableAttributedString(string: "Location Search")
+        let attributedPlaceholder = NSMutableAttributedString(string: "Location Search")
         attributedPlaceholder.setColor(ColorFactory.white50())
         attributedPlaceholder.setFont(FontFactory.textFieldFont())
         citySearchTextField.attributedPlaceholder = attributedPlaceholder
@@ -49,7 +49,7 @@ class AddCityViewController : UIViewController, UITextFieldDelegate, UITableView
     // MARK: Private
     func textFieldUpdated(){
         let currentText = citySearchTextField.text
-        if(count(currentText) > 0){
+        if(currentText.characters.count > 0){
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             GooglePlaceAPI.autoSuggestCity(currentText, completion: { (autosuggests:[String]!, error:NSError!) -> Void in
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -76,7 +76,7 @@ class AddCityViewController : UIViewController, UITextFieldDelegate, UITableView
         cell.cityLabel.text = autosuggestedCities[indexPath.row]
         
         let userCities = UserSettings.getUserCities()
-        if(find(userCities,autosuggestedCities[indexPath.row]) != nil){
+        if(userCities.indexOf(autosuggestedCities[indexPath.row]) != nil){
             let checkImage = UIImage(named: "checkIcon")
             cell.addLogoButton.setImage(checkImage, forState: UIControlState.Normal)
             cell.addLogoButton.tintColor = UIColor.whiteColor()
