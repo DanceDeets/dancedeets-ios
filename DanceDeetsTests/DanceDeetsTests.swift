@@ -61,7 +61,7 @@ class DanceDeetsTests: XCTestCase {
     }
     
     func testSimpleAsync(){
-        let URL = "http://google.com.com/"
+        let URL = "http://dancedeets.com/"
         let expectation = expectationWithDescription("GET \(URL)")
         
         let session = NSURLSession.sharedSession()
