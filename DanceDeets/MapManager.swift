@@ -41,8 +41,10 @@ public class MapManager : NSObject, UIAlertViewDelegate
                     if #available(iOS 9.0, *) {
                         transitStyle = MKLaunchOptionsDirectionsModeTransit
                     } else {
-                        // Fallback on earlier versions
+                        return;
                     }
+                } else {
+                    return;
                 }
                 let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:transitStyle!]
                 mapItem.openInMapsWithLaunchOptions(launchOptions)
