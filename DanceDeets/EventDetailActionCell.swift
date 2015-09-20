@@ -54,7 +54,7 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
             rsvpFacebook()
         }else{
             let login = FBSDKLoginManager()
-            login.logInWithPublishPermissions(["rsvp_event"], handler: { (login:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
+            login.logInWithPublishPermissions(["rsvp_event"], fromViewController:parentViewController(), handler: { (login:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
                 if(error == nil && token.hasGranted("rsvp_event")){
                     self.rsvpFacebook()
                 }else{
