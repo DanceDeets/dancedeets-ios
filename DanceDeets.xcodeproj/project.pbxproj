@@ -42,6 +42,7 @@
 		1D98D81D1AEC759C00E48E8F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D98D81B1AEC759C00E48E8F /* Fabric.framework */; };
 		1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA4566A1AD226B900368186 /* UIViewExtensions.swift */; };
 		1DA57ACC1BAE241B00370519 /* AutosuggestCityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA57ACB1BAE241B00370519 /* AutosuggestCityCell.swift */; settings = {ASSET_TAGS = (); }; };
+		1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA57ACD1BAE3D4500370519 /* MapManager.swift */; settings = {ASSET_TAGS = (); }; };
 		1DAB49EE1A17E31E0002BBDD /* EventDetailDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49ED1A17E31E0002BBDD /* EventDetailDescriptionCell.swift */; };
 		1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49EF1A17E4D70002BBDD /* Utilities.swift */; };
 		1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F11A17F0310002BBDD /* Extensions.swift */; };
@@ -124,6 +125,7 @@
 		1D98D81B1AEC759C00E48E8F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		1DA4566A1AD226B900368186 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		1DA57ACB1BAE241B00370519 /* AutosuggestCityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutosuggestCityCell.swift; sourceTree = "<group>"; };
+		1DA57ACD1BAE3D4500370519 /* MapManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		1DAB49ED1A17E31E0002BBDD /* EventDetailDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailDescriptionCell.swift; sourceTree = "<group>"; };
 		1DAB49EF1A17E4D70002BBDD /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		1DAB49F11A17F0310002BBDD /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 			children = (
 				1D11311A1B4587A7001CBEDE /* Interface */,
 				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
+				1DA57ACD1BAE3D4500370519 /* MapManager.swift */,
 				1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */,
 				1D0892501A27C97700A9EAC4 /* UserSettings.swift */,
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,
@@ -512,6 +515,7 @@
 				1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */,
 				1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */,
 				1D08923F1A26726500A9EAC4 /* EventCollectionViewCell.swift in Sources */,
+				1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */,
 				1D89F6AA1A0ECDC100D3E4BE /* EventDetailCoverCell.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */,

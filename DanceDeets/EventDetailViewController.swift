@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 import MapKit
 
-class EventDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UIGestureRecognizerDelegate, UIAlertViewDelegate{
+class EventDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UIGestureRecognizerDelegate {
     
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
     var COVER_IMAGE_TOP_OFFSET:CGFloat = 0.0
@@ -20,9 +20,9 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     var ASPECT_RATIO:CGFloat = 1.0
     
     var event:Event!
+    var mapManager:MapManager?
     var backgroundOverlay:UIView!
     var loaded:Bool = false
-    var directionAlert:UIAlertView?
     var initialImage:UIImage?
     
     var coverCell:UITableViewCell?{
@@ -128,7 +128,6 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         backgroundOverlay = backgroundView.addDarkBlurOverlay()
         backgroundOverlay.alpha = 0
-        directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -236,7 +235,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             return cell
         }else if(indexPath.row == 5){
             let cell = tableView.dequeueReusableCellWithIdentifier("eventMapCell", forIndexPath: indexPath) as! EventDetailMapCell
-            cell.updateViewForEvent(event!)
+            cell.updateViewForEvent(event)
             return cell
         }else if(indexPath.row == 6){
             let cell = tableView.dequeueReusableCellWithIdentifier("eventActionCell", forIndexPath: indexPath) as! EventDetailActionCell
@@ -315,9 +314,8 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
             })
         }else if(indexPath.row == 3 || indexPath.row == 5){
-            if ( event.geoloc != nil){
-                directionAlert?.show()
-            }
+            mapManager = MapManager(event: event)
+            mapManager!.show()
         }
     }
     
@@ -334,22 +332,5 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
-    
-    // MARK: UIAlertViewDelegate
-    func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
-        if(alertView == directionAlert){
-            if let coordinate = event?.geoloc?.coordinate {
-                let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
-                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                if (buttonIndex == 1) {
-                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
-                    mapItem.openInMapsWithLaunchOptions(launchOptions)
-                } else if (buttonIndex == 2) {
-                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
-                    mapItem.openInMapsWithLaunchOptions(launchOptions)
-                }
-            }
-        }
-    }
     
 }

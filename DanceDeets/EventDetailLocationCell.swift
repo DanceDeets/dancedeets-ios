@@ -8,13 +8,12 @@
 import MapKit
 
 
-class EventDetailLocationCell: UITableViewCell, UIAlertViewDelegate {
+class EventDetailLocationCell: UITableViewCell {
 
     @IBOutlet weak var venueLabel: UILabel!
     @IBOutlet weak var pinIcon: UIImageView!
     
-    var event:Event?
-    var directionAlert:UIAlertView?
+    var mapManager:MapManager?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,32 +22,15 @@ class EventDetailLocationCell: UITableViewCell, UIAlertViewDelegate {
         
         pinIcon.tintColor = UIColor.whiteColor()
         venueLabel.numberOfLines = 0
-        
-        directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
     }
-    
-    // MARK: UIAlertViewDelegate
-    func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
-        if(alertView == directionAlert && event != nil) {
-            if let coordinate = event?.geoloc?.coordinate {
-                let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
-                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                if (buttonIndex == 1) {
-                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
-                    mapItem.openInMapsWithLaunchOptions(launchOptions)
-                } else if (buttonIndex == 2) {
-                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
-                    mapItem.openInMapsWithLaunchOptions(launchOptions)
-                }
-            }
-        }
-    }
-    
+
     func mapTapped(){
-        directionAlert?.show()
+        mapManager!.show()
     }
     
     func updateViewForEvent(event:Event){
+        mapManager = MapManager(event: event)
+        print(event.displayAddress)
         let attributedDescription = NSMutableAttributedString(string: event.displayAddress)
         attributedDescription.setLineHeight(FontFactory.eventVenueLineHeight())
         attributedDescription.setFont(FontFactory.eventVenueFont())

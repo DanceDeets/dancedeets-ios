@@ -9,10 +9,11 @@
 import Foundation
 import MapKit
 
-class EventDetailMapCell:UITableViewCell, UIAlertViewDelegate
+class EventDetailMapCell:UITableViewCell
 {
     var directionAlert:UIAlertView?
-    var currentEvent:Event?
+    var event:Event?
+    var mapManager:MapManager?
     
     @IBOutlet weak var directionButton: UIButton!
     @IBOutlet weak var eventMapView: MKMapView!
@@ -23,20 +24,18 @@ class EventDetailMapCell:UITableViewCell, UIAlertViewDelegate
         directionButton.backgroundColor = ColorFactory.lightBlue().colorWithAlphaComponent(0.5)
              directionButton.layer.cornerRadius = 3.0
           directionButton.layer.masksToBounds = true
-        directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
         let tapGesture = UITapGestureRecognizer(target: self, action: "getDirectionButtonTapped:")
         eventMapView.addGestureRecognizer(tapGesture)
     }
     
     @IBAction func getDirectionButtonTapped(sender: AnyObject) {
-        if(currentEvent != nil && currentEvent?.geoloc != nil){
-            directionAlert?.show()
-        }
+        mapManager!.show()
     }
     
     func updateViewForEvent(event:Event){
-        if(currentEvent == nil){
-            currentEvent = event
+        if(self.event == nil){
+            self.event = event
+            mapManager = MapManager(event: event)
             
             // setup map if possible
             if(event.geoloc != nil){
@@ -46,23 +45,6 @@ class EventDetailMapCell:UITableViewCell, UIAlertViewDelegate
                 eventMapView.centerCoordinate = annotation.coordinate
                 let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 1000,1000)
                 eventMapView.setRegion(region,animated:true)
-            }
-        }
-    }
-    
-    // MARK: UIAlertViewDelegate
-    func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
-        if(alertView == directionAlert){
-            if let coordinate = currentEvent?.geoloc?.coordinate {
-                let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
-                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                if (buttonIndex == 1) {
-                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
-                    mapItem.openInMapsWithLaunchOptions(launchOptions)
-                } else if (buttonIndex == 2) {
-                    let launchOptions:[String : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
-                    mapItem.openInMapsWithLaunchOptions(launchOptions)
-                }
             }
         }
     }

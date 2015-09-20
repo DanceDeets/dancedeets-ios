@@ -74,21 +74,23 @@ public class Event: NSObject {
                 self.venue = name
                 displayAddress = name
             }
-            if let address = venue["address"] as? String {
-                displayAddress += "\n" + address
-            }
-            var addressComponents = [String]()
-            if let city = venue["city"] as? String {
-                addressComponents.append(city)
-            }
-            if let state = venue["state"] as? String {
-                addressComponents.append(state)
-            }
-            if let country = venue["country"] as? String {
-                addressComponents.append(country)
-            }
-            if addressComponents.count > 0 {
-                displayAddress += "\n" + addressComponents.joinWithSeparator(", ")
+            if let address = venue["address"] {
+                if let street = address["street"] as? String {
+                    displayAddress += "\n" + street
+                }
+                var addressComponents = [String]()
+                if let city = address["city"] as? String {
+                    addressComponents.append(city)
+                }
+                if let state = address["state"] as? String {
+                    addressComponents.append(state)
+                }
+                if let country = address["country"] as? String {
+                    addressComponents.append(country)
+                }
+                if addressComponents.count > 0 {
+                    displayAddress += "\n" + addressComponents.joinWithSeparator(", ")
+                }
             }
         }
         
