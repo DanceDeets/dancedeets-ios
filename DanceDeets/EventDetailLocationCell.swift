@@ -30,7 +30,6 @@ class EventDetailLocationCell: UITableViewCell {
     
     func updateViewForEvent(event:Event){
         mapManager = MapManager(event: event)
-        print(event.displayAddress)
         let attributedDescription = NSMutableAttributedString(string: event.displayAddress)
         attributedDescription.setLineHeight(FontFactory.eventVenueLineHeight())
         attributedDescription.setFont(FontFactory.eventVenueFont())
