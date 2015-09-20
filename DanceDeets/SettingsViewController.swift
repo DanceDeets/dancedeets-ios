@@ -220,9 +220,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 presentViewController(composer, animated: true, completion: nil)
             } else if(indexPath.row == 1) {
                 let token = FBSDKAccessToken.currentAccessToken()
-                let uid = token.userID
-                let accessTokenMD5 = token.tokenString.MD5()
-                let stringUrl = "http://www.dancedeets.com/events_add?uid="+uid+"&access_token_md5="+accessTokenMD5;
+                let stringUrl = "http://www.dancedeets.com/events_add?uid="+token.userID+"&access_token="+token.tokenString;
                 print(stringUrl)
                 UIApplication.sharedApplication().openURL(NSURL(string:stringUrl)!);
             }else if(indexPath.row == 2){
