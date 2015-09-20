@@ -14,12 +14,6 @@ class EventDetailImageCell: UITableViewCell
     
     @IBOutlet weak var eventImageView: UIImageView!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        backgroundColor = UIColor.clearColor()
-        self.selectionStyle = UITableViewCellSelectionStyle.None
-    }
-    
     func updateViewForEvent(event:Event){
         
         if (event.eventImageUrl != nil){

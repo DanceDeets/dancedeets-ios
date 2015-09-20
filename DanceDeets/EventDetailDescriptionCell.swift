@@ -10,28 +10,21 @@ import UIKit
 class EventDetailDescriptionCell: UITableViewCell {
     
     @IBOutlet weak var textView: UITextView!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = UIColor.clearColor()
-        selectionStyle = UITableViewCellSelectionStyle.None
-        
-        textView.backgroundColor = UIColor.clearColor()
-        textView.scrollEnabled = false
         textView.textContainerInset = UIEdgeInsetsZero
-        textView.font = FontFactory.eventDescriptionFont()
-        textView.tintColor = ColorFactory.lightBlue()
     }
-    
+
     func updateViewForEvent(event:Event){
         
         let attributedDescription = NSMutableAttributedString(string: event.shortDescription!)
-        attributedDescription.setLineHeight(FontFactory.eventDescriptionLineHeight())
-        attributedDescription.setFont(FontFactory.eventDescriptionFont())
-        attributedDescription.setColor(UIColor.whiteColor())
-        
+        // TODO: why is setLineHeight and textContainerInset both required to make this fit correctly?
+        attributedDescription.setLineHeight(18)
+        attributedDescription.setFont(textView.font!)
+        attributedDescription.setColor(textView.textColor!)
+
         textView.attributedText = attributedDescription
-        contentView.setNeedsLayout()
         contentView.layoutIfNeeded()
     }
 }

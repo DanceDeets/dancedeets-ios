@@ -20,7 +20,6 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     var ASPECT_RATIO:CGFloat = 1.0
     
     var event:Event!
-    var mapManager:MapManager?
     var backgroundOverlay:UIView!
     var loaded:Bool = false
     var initialImage:UIImage?
@@ -218,7 +217,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.backgroundColor = UIColor.clearColor()
             return cell
         }else if(indexPath.row == 1){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as! EventDetailCoverCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("eventTitleCell", forIndexPath: indexPath) as! EventDetailTitleCell
             cell.updateViewForEvent(event!)
             return cell
         }else if(indexPath.row == 2){
@@ -313,9 +312,8 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
             })
-        }else if(indexPath.row == 3 || indexPath.row == 5){
-            mapManager = MapManager(event: event)
-            mapManager!.show()
+        }else if(indexPath.row == 3){
+            MapManager.showOnMap(event!)
         }
     }
     
