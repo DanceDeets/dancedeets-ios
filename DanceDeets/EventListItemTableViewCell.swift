@@ -14,8 +14,10 @@ class EventListItemTableViewCell: UITableViewCell {
     var eventImageView:UIImageView!
     var eventTitleLabel:UILabel!
     var currentEvent:Event?
+    var danceIconImageView:UIImageView!
     var clockIconImageView:UIImageView!
     var pinIconImageView:UIImageView!
+    var eventCategoriesLabel:UILabel!
     var eventTimeLabel:UILabel!
     var eventVenueLabel:UILabel!
 
@@ -31,6 +33,7 @@ class EventListItemTableViewCell: UITableViewCell {
     
     func updateForEvent(event:Event){
         currentEvent = event
+        eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(",")+")"
         eventTitleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
         if let venueDisplay = event.venue{
@@ -82,13 +85,24 @@ class EventListItemTableViewCell: UITableViewCell {
         contentView.addConstraint(NSLayoutConstraint(item: eventTitleLabel, attribute: .Right, relatedBy: .Equal, toItem: contentView, attribute: .Right, multiplier: 1.0, constant: -12))
         contentView.addConstraint(NSLayoutConstraint(item: eventTitleLabel, attribute: .Top, relatedBy: .Equal, toItem: eventImageView, attribute: .Top, multiplier: 1.0, constant: 5))
         
+        
+        // dance
+        
+        danceIconImageView = UIImageView(image: UIImage(named: "danceIcon"))
+        danceIconImageView.tintColor = UIColor(white: 1, alpha: 1)
+        contentView.addSubview(danceIconImageView)
+        danceIconImageView.constrainWidth(14, height: 14)
+        danceIconImageView.alignLeftToView(eventTitleLabel)
+        contentView.addConstraint(NSLayoutConstraint(item: danceIconImageView, attribute: .Top, relatedBy: .Equal, toItem: eventTitleLabel, attribute: .Bottom, multiplier: 1.0, constant: 10))
+        
         // clock
         clockIconImageView = UIImageView(image: UIImage(named: "clockIcon"))
         clockIconImageView.tintColor = ColorFactory.lightBlue()
         contentView.addSubview(clockIconImageView)
         clockIconImageView.constrainWidth(14, height: 14)
-        clockIconImageView.alignLeftToView(eventTitleLabel)
-        contentView.addConstraint(NSLayoutConstraint(item: clockIconImageView, attribute: .Top, relatedBy: .Equal, toItem: eventTitleLabel, attribute: .Bottom, multiplier: 1.0, constant: 10))
+        clockIconImageView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addConstraint(NSLayoutConstraint(item: clockIconImageView, attribute: .CenterX, relatedBy: .Equal, toItem: danceIconImageView, attribute: .CenterX, multiplier: 1.0, constant: 0))
+        contentView.addConstraint(NSLayoutConstraint(item: clockIconImageView, attribute: .Top, relatedBy: .Equal, toItem: danceIconImageView, attribute: .Bottom, multiplier: 1.0, constant: 8))
         
         // pin
         pinIconImageView = UIImageView(image: UIImage(named: "pinIcon"))
@@ -98,7 +112,17 @@ class EventListItemTableViewCell: UITableViewCell {
         pinIconImageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addConstraint(NSLayoutConstraint(item: pinIconImageView, attribute: .CenterX, relatedBy: .Equal, toItem: clockIconImageView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         contentView.addConstraint(NSLayoutConstraint(item: pinIconImageView, attribute: .Top, relatedBy: .Equal, toItem: clockIconImageView, attribute: .Bottom, multiplier: 1.0, constant: 8))
-        
+
+        // dance label
+        eventCategoriesLabel = UILabel(frame: CGRectZero)
+        eventCategoriesLabel.font = FontFactory.eventVenueFont()
+        eventCategoriesLabel.textColor =  UIColor(white: 1, alpha: 1)
+        contentView.addSubview(eventCategoriesLabel)
+        eventCategoriesLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addConstraint(NSLayoutConstraint(item: eventCategoriesLabel, attribute: .CenterY, relatedBy: .Equal, toItem: danceIconImageView, attribute: .CenterY, multiplier: 1.0, constant: 0))
+        contentView.addConstraint(NSLayoutConstraint(item: eventCategoriesLabel, attribute: .Left, relatedBy: .Equal, toItem: danceIconImageView, attribute: .Right, multiplier: 1.0, constant: 9))
+        contentView.addConstraint(NSLayoutConstraint(item: eventCategoriesLabel, attribute: .Right, relatedBy: .Equal, toItem: contentView, attribute: .Right, multiplier: 1.0, constant: -12))
+
         // time label
         eventTimeLabel = UILabel(frame: CGRectZero)
         eventTimeLabel.font = FontFactory.eventDateFont()
