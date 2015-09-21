@@ -42,8 +42,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
-    var eventsByMonth:NSMutableDictionary = NSMutableDictionary()
-    var activeMonths:NSMutableArray = NSMutableArray()
+    var eventsBySection:NSMutableDictionary = NSMutableDictionary()
+    var sectionNames:NSMutableArray = NSMutableArray()
     var activeYears:[Int] = []
     var locationObject:CLLocation? = nil
 
@@ -374,7 +374,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     // MARK: UITableViewDataSource / UITableViewDelegate
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if(tableView == eventListTableView){
-            return activeMonths.count
+            return sectionNames.count
         }else if(tableView == searchAutoSuggestTableView){
             return 1
         }else{
@@ -384,8 +384,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(tableView == eventListTableView){
-            let month = activeMonths[section] as! String
-            let events = eventsByMonth[month] as! NSArray
+            let sectionName = sectionNames[section] as! String
+            let events = eventsBySection[sectionName] as! NSArray
             return events.count
         }else if(tableView == searchAutoSuggestTableView){
             return SEARCH_AUTOSUGGEST_TERMS.count
@@ -415,16 +415,14 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             headerView.backgroundColor = UIColor.clearColor()
             headerView.addDarkBlurOverlay()
             let headerLabel = UILabel(frame: CGRectZero)
-            var monthString = activeMonths[section] as! String
-            let year = activeYears[section] as Int
-            monthString = "\(monthString.uppercaseString) \(year)"
+            let sectionName = sectionNames[section] as! String
             headerLabel.translatesAutoresizingMaskIntoConstraints = false
             headerView.addSubview(headerLabel)
             headerLabel.constrainLeftToSuperView(13)
             headerLabel.verticallyCenterToSuperView(0)
             headerLabel.font = UIFont(name:"Interstate-BoldCondensed",size:15)!
             headerLabel.textColor = UIColor.whiteColor()
-            headerLabel.text = monthString
+            headerLabel.text = sectionName
             return headerView
         }else{
             return nil
@@ -433,11 +431,11 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(tableView == eventListTableView){
-            let month = self.activeMonths[indexPath.section] as! String
-            let monthEvents = self.eventsByMonth[month] as! [Event]
+            let sectionName = self.sectionNames[indexPath.section] as! String
+            let sectionEvents = self.eventsBySection[sectionName] as! [Event]
             
             let cell = tableView.dequeueReusableCellWithIdentifier("eventListTableViewCell", forIndexPath: indexPath) as! EventListItemTableViewCell
-            let event:Event = monthEvents[indexPath.row]
+            let event:Event = sectionEvents[indexPath.row]
             cell.updateForEvent(event)
             
             if event.eventSmallImageUrl != nil{
@@ -472,10 +470,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(tableView == eventListTableView){
-            if let month = self.activeMonths[indexPath.section] as? String{
-                if let monthEvents = self.eventsByMonth[month] as? [Event]{
-                    if(monthEvents.count > indexPath.row){
-                        let event = monthEvents[indexPath.row]
+            if let sectionName = self.sectionNames[indexPath.section] as? String{
+                if let sectionEvents = self.eventsBySection[sectionName] as? [Event]{
+                    if(sectionEvents.count > indexPath.row){
+                        let event = sectionEvents[indexPath.row]
 
                         // the collection cell of the selected event
                         let eventCell =  self.eventListTableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
@@ -580,9 +578,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             // reset event models
             self.events = []
-            self.eventsByMonth.removeAllObjects()
+            self.eventsBySection.removeAllObjects()
             self.activeYears.removeAll(keepCapacity: false)
-            self.activeMonths.removeAllObjects()
+            self.sectionNames.removeAllObjects()
             
             // check response
             if(error != nil){
@@ -607,25 +605,24 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 self.events = events
                 self.eventCollectionView.reloadData()
                 
-                // data source for list view -> group events by months for sections
+                // data source for list view -> group events into sections by month (or day?)
                 for event in events {
                     if event.startTime != nil {
-                        let components = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day], fromDate: event.startTime!)
                         // month from event's start time as a string
-                        let monthString = NSDateFormatter().monthSymbols[components.month-1] 
-                        
-                        // each month has an array of events
-                        var eventList:NSMutableArray? = self.eventsByMonth[monthString] as? NSMutableArray
-                        if(eventList == nil){
+                        let dateFormatter = NSDateFormatter()
+                        dateFormatter.dateFormat = "EEE MMM d"
+                        let sectionName = dateFormatter.stringFromDate(event.startTime!)
+                        // each section has an array of events
+                        var eventList:NSMutableArray? = self.eventsBySection[sectionName] as? NSMutableArray
+                        if (eventList == nil) {
                             eventList = NSMutableArray()
-                            self.eventsByMonth[monthString] = eventList
+                            self.eventsBySection[sectionName] = eventList
                         }
                         eventList?.addObject(event)
                         
-                        // keep track of active month for section headers
-                        if(!self.activeMonths.containsObject(monthString)){
-                            self.activeMonths.addObject(monthString)
-                            self.activeYears.append(components.year)
+                        // keep track of active sections for section headers
+                        if (!self.sectionNames.containsObject(sectionName)) {
+                            self.sectionNames.addObject(sectionName)
                         }
                     }
                 }
