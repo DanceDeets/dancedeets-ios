@@ -13,11 +13,13 @@ class EventCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var eventCoverImageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventVenueLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
+    @IBOutlet weak var eventCategoriesLabel: UILabel!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventCoverImage: UIImageView!
     @IBOutlet weak var eventCoverImageActivityIndicator: UIActivityIndicatorView!
     var currentEvent:Event?
     
+    @IBOutlet weak var danceIconImageView: UIImageView!
     @IBOutlet weak var pinIconImageView: UIImageView!
     @IBOutlet weak var clockIconImageView: UIImageView!
     
@@ -26,10 +28,13 @@ class EventCollectionViewCell: UICollectionViewCell {
         
         clockIconImageView.tintColor = ColorFactory.lightBlue()
         pinIconImageView.tintColor = UIColor.whiteColor()
+        danceIconImageView.tintColor = UIColor.whiteColor()
         
         eventTitleLabel.font = FontFactory.eventHeadlineFont()
         eventTitleLabel.textColor = UIColor.whiteColor()
         eventTitleLabel.numberOfLines = 2
+        eventCategoriesLabel.textColor = UIColor.whiteColor()
+        eventCategoriesLabel.font = FontFactory.eventVenueFont()
         eventTimeLabel.font = FontFactory.eventDateFont()
         eventTimeLabel.textColor =  ColorFactory.lightBlue()
         eventVenueLabel.textColor = UIColor.whiteColor()
@@ -44,6 +49,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         
         eventTitleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
+        eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(", ")+")"
         if let venueDisplay = event.venue{
             if(event.attendingCount != nil){
                 eventVenueLabel.text = venueDisplay + "  |  \(event.attendingCount!) attending"

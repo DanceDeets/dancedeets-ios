@@ -217,7 +217,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
         }else{
             height = CGFloat.min
         }
-        print("Row \(indexPath.row) has height \(height)")
+        // print("Row \(indexPath.row) has height \(height)")
         return height!
     }
 
