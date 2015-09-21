@@ -29,6 +29,8 @@ public class Event: NSObject {
     var geoloc:CLLocation?
     var admins:[EventAdmin] = []
     var attendingCount:Int?
+    var categories:[String] = []
+    
     var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
     
     init(dictionary:NSDictionary){
@@ -96,8 +98,11 @@ public class Event: NSObject {
         
         // annotations
         if let annotations = dictionary["annotations"] as? NSDictionary{
-            if let danceKeywords = annotations["dance_keywords"] as? [String]{
+            if let danceKeywords = annotations["dance_keywords"] as? [String] {
                 self.keywords = danceKeywords
+            }
+            if let categories = annotations["categories"] as? [String] {
+                self.categories = categories
             }
         }
      

@@ -16,6 +16,7 @@
         <mutableArray key="Interstate-Light.ttf">
             <string>Interstate-Light</string>
             <string>Interstate-Light</string>
+            <string>Interstate-Light</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -416,7 +417,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Event Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0nM-UR-teI">
-                                                    <rect key="frame" x="15" y="13" width="570" height="21"/>
+                                                    <rect key="frame" x="15" y="5" width="570" height="37"/>
                                                     <fontDescription key="fontDescription" name="Interstate-ExtraLight" family="Interstate-ExtraLight" pointSize="22"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -424,16 +425,58 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="0nM-UR-teI" secondAttribute="trailing" constant="7" id="9gC-Eh-lnl"/>
-                                                <constraint firstItem="0nM-UR-teI" firstAttribute="top" secondItem="bIx-TV-Utf" secondAttribute="topMargin" constant="5" id="Aga-wb-qtw"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="0nM-UR-teI" secondAttribute="bottom" constant="1.5" id="OvG-Bb-o4u"/>
+                                                <constraint firstItem="0nM-UR-teI" firstAttribute="top" secondItem="bIx-TV-Utf" secondAttribute="top" constant="5" id="Aga-wb-qtw"/>
+                                                <constraint firstAttribute="bottom" secondItem="0nM-UR-teI" secondAttribute="bottom" constant="2" id="OvG-Bb-o4u"/>
                                                 <constraint firstItem="0nM-UR-teI" firstAttribute="leading" secondItem="bIx-TV-Utf" secondAttribute="leadingMargin" constant="7" id="gYz-1g-QUR"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="eventTimeCell" id="xbb-JG-a8Q">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="eventCategoriesCell" id="qW3-rN-3Dh">
                                         <rect key="frame" x="0.0" y="344" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qW3-rN-3Dh" id="WO8-f1-UBD">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="danceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="37S-By-X1e" userLabel="danceIcon">
+                                                    <rect key="frame" x="15" y="15" width="14" height="14"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="14" id="6gz-oQ-ghO"/>
+                                                        <constraint firstAttribute="height" constant="14" id="b9G-Lr-LsZ"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDd-M8-QVB" userLabel="Event Categories Label">
+                                                    <rect key="frame" x="15" y="0.0" width="584" height="44"/>
+                                                    <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="DDd-M8-QVB" firstAttribute="centerY" secondItem="37S-By-X1e" secondAttribute="centerY" id="HiM-aI-wwq"/>
+                                                <constraint firstItem="37S-By-X1e" firstAttribute="centerY" secondItem="WO8-f1-UBD" secondAttribute="centerY" id="Y9Z-f7-TCI"/>
+                                                <constraint firstItem="DDd-M8-QVB" firstAttribute="leading" secondItem="37S-By-X1e" secondAttribute="trailing" constant="9" id="ixH-TG-6Qe"/>
+                                                <constraint firstItem="DDd-M8-QVB" firstAttribute="trailing" secondItem="WO8-f1-UBD" secondAttribute="trailing" constant="7" id="o0c-4l-ep0"/>
+                                                <constraint firstItem="37S-By-X1e" firstAttribute="leading" secondItem="WO8-f1-UBD" secondAttribute="leading" constant="15" id="qju-KV-znR"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="37S-By-X1e" firstAttribute="top" secondItem="qW3-rN-3Dh" secondAttribute="top" constant="15" id="mk4-BA-gpZ"/>
+                                            <constraint firstItem="37S-By-X1e" firstAttribute="leading" secondItem="qW3-rN-3Dh" secondAttribute="leading" constant="9" id="pQL-Ir-ffA"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="mk4-BA-gpZ"/>
+                                                <exclude reference="pQL-Ir-ffA"/>
+                                            </mask>
+                                        </variation>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="eventTimeCell" id="xbb-JG-a8Q">
+                                        <rect key="frame" x="0.0" y="388" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xbb-JG-a8Q" id="pDg-yP-jhU">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -465,8 +508,8 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" red="0.0" green="0.92549019610000005" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell clearsContextBeforeDrawing="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="eventLocationCell" id="y64-AI-xII">
-                                        <rect key="frame" x="0.0" y="388" width="600" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="eventLocationCell" id="y64-AI-xII">
+                                        <rect key="frame" x="0.0" y="432" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y64-AI-xII" id="Ufs-3w-hY3">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -505,7 +548,7 @@
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="eventDescriptionCell" rowHeight="200" id="sje-AR-MsQ">
-                                        <rect key="frame" x="0.0" y="432" width="600" height="200"/>
+                                        <rect key="frame" x="0.0" y="476" width="600" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sje-AR-MsQ" id="b0c-c3-FuX">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
@@ -531,7 +574,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventMapCell" id="Ap5-ZW-onw">
-                                        <rect key="frame" x="0.0" y="632" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="676" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ap5-ZW-onw" id="0cJ-Pr-hjt">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -550,7 +593,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventActionCell" rowHeight="60" id="vxJ-Y9-D4f" customClass="EventDetailActionCell" customModule="DanceDeets" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="676" width="600" height="60"/>
+                                        <rect key="frame" x="0.0" y="720" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vxJ-Y9-D4f" id="UwV-8x-1vZ">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
@@ -597,7 +640,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="gapCell" id="aNI-Nd-ZPN">
-                                        <rect key="frame" x="0.0" y="736" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="780" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aNI-Nd-ZPN" id="ZLZ-VU-hdL">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -616,6 +659,7 @@
                     <navigationItem key="navigationItem" id="RjL-M3-gWH"/>
                     <connections>
                         <outlet property="eventActionCell" destination="vxJ-Y9-D4f" id="0gq-jN-BYW"/>
+                        <outlet property="eventCategoriesLabel" destination="DDd-M8-QVB" id="3rc-cg-JfF"/>
                         <outlet property="eventCoverImageView" destination="aIu-5i-zz6" id="VWO-WU-s6h"/>
                         <outlet property="eventCoverImageViewHeightConstraint" destination="hEA-r2-jHg" id="IMr-Ek-el7"/>
                         <outlet property="eventCoverImageViewLeftConstraint" destination="XrI-bl-yea" id="xAs-jT-rog"/>
@@ -1176,6 +1220,7 @@
         <image name="cityVector" width="30" height="23"/>
         <image name="clockIcon" width="14" height="14"/>
         <image name="currentLocationVector" width="15" height="15"/>
+        <image name="danceIcon" width="65" height="65"/>
         <image name="feedbackIcon" width="16" height="16"/>
         <image name="listViewIcon" width="37" height="28"/>
         <image name="logoutIcon" width="16" height="16"/>

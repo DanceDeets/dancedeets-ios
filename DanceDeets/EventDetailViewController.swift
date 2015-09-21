@@ -17,30 +17,13 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     var ASPECT_RATIO:CGFloat = 1.0
     
     var event:Event!
-    var backgroundOverlay:UIView!
-    var loaded:Bool = false
     var initialImage:UIImage?
-    
-    var coverCell:UITableViewCell?{
-        return tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0))
-    }
-    var timeCell:UITableViewCell?{
-        return tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0))
-    }
-    var venueCell:UITableViewCell?{
-        return tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0))
-    }
-    var descriptionCell:UITableViewCell?{
-        return tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 4, inSection: 0))
-    }
-    var mapCell:UITableViewCell?{
-        return tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 5, inSection: 0))
-    }
     
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
     @IBOutlet weak var eventVenueLabel: UILabel!
+    @IBOutlet weak var eventCategoriesLabel: UILabel!
     @IBOutlet weak var eventDescriptionLabel: UITextView!
     @IBOutlet weak var eventMapView: MKMapView!
     @IBOutlet weak var eventActionCell: EventDetailActionCell!
@@ -103,6 +86,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
             eventTitleLabel.frame.size.width, 200);
         eventTimeLabel.text = event.displayTime
         eventVenueLabel.text = event.displayAddress
+        eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(", ")+")"
         let attributedDescription = NSMutableAttributedString(string: event.shortDescription!)
         // TODO: why is setLineHeight and textContainerInset both required to make this fit correctly?
         attributedDescription.setLineHeight(18)
@@ -110,7 +94,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
         attributedDescription.setColor(eventDescriptionLabel.textColor!)
         eventDescriptionLabel.attributedText = attributedDescription
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: "getDirectionButtonTapped:")
+        let tapGesture = UITapGestureRecognizer(target: self, action: "mapTapped:")
         eventMapView.addGestureRecognizer(tapGesture)
 
         // setup map if possible
@@ -152,12 +136,10 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
         
         eventCoverImageView.userInteractionEnabled = false
         
-        self.tableView.backgroundView = UIImageView(image:UIImage(named: "streamBackground"))
-        backgroundOverlay = self.tableView.backgroundView!.addDarkBlurOverlay()
-        backgroundOverlay.alpha = 1
+        self.tableView.backgroundColor = UIColor(white: 0, alpha: 1)
     }
     
-    @IBAction func getDirectionButtonTapped(sender: AnyObject) {
+    @IBAction func mapTapped(sender: AnyObject) {
         MapManager.showOnMap(event!)
     }
     
@@ -189,52 +171,56 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let width:CGFloat = tableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
-        print(width)
 
+        var height:CGFloat?
         if(indexPath.row == 0){
             // gap, cover image sits here but isn't part of the tableview
-            return getTopOffset() + eventImageHeight()
+            height = getTopOffset() + eventImageHeight()
         }else if(indexPath.row == 1){
             // title
-            let height = Utilities.heightRequiredForText(event!.title!,
+            let textHeight = Utilities.heightRequiredForText(eventTitleLabel.text!,
                 lineHeight: FontFactory.eventHeadlineLineHeight(),
                 font: eventTitleLabel.font,
                 width:width)
-            return height + 25
+            height = textHeight + 25
         }else if(indexPath.row == 2){
-            // time
-            return 24
+            // categories
+            let textHeight = Utilities.heightRequiredForText(eventCategoriesLabel.text!,
+                lineHeight: FontFactory.eventDescriptionLineHeight(),
+                font: eventCategoriesLabel.font!,
+                width:width)
+            height = textHeight
         }else if(indexPath.row == 3){
+            // time
+            height = 24
+        }else if(indexPath.row == 4){
             // display address
             var displayAddressHeight:CGFloat = 0.0
-            displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
-            return displayAddressHeight
-        }else if(indexPath.row == 4){
-            //description
-            let height = Utilities.heightRequiredForText(event!.shortDescription!,
-                lineHeight: FontFactory.eventDescriptionLineHeight(),
-                font: FontFactory.eventDescriptionFont(),
-                width:width)
-            return height + 30
+            displayAddressHeight += Utilities.heightRequiredForText(eventVenueLabel.text!,
+                lineHeight: FontFactory.eventVenueLineHeight(),
+                font: eventVenueLabel.font,
+                width: width)
+            height = displayAddressHeight
         }else if(indexPath.row == 5){
-            // map
-            return 300;
+            //description
+            let textHeight = Utilities.heightRequiredForText(eventDescriptionLabel.text,
+                lineHeight: FontFactory.eventDescriptionLineHeight(),
+                font: eventDescriptionLabel.font!,
+                width:width)
+            height = textHeight + 30
         }else if(indexPath.row == 6){
+            // map
+            height = 300;
+        }else if(indexPath.row == 7){
             // CTAs
-            return 55;
+            height = 55;
         }else{
-            return CGFloat.min
+            height = CGFloat.min
         }
+        print("Row \(indexPath.row) has height \(height)")
+        return height!
     }
-    
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat.min
-    }
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.min
-    }
-    
+
     // MARK: UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.row == 0){
@@ -246,20 +232,5 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
             MapManager.showOnMap(event!)
         }
     }
-
-    /*
-    // MARK: UIScrollViewDelegate
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
-        let yOff = scrollView.contentOffset.y
-        
-        if(yOff < 0){
-            eventCoverImageViewHeightConstraint.constant = self.eventImageHeight() - yOff
-            eventCoverImageViewTopConstraint.constant = getTopOffset()
-        }else{
-            eventCoverImageViewHeightConstraint.constant = self.eventImageHeight()
-            eventCoverImageViewTopConstraint.constant = getTopOffset() - yOff
-        }
-    }*/
-    
     
 }
