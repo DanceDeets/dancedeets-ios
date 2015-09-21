@@ -73,6 +73,7 @@ class EventDetailActionCell: UITableViewCell,UIAlertViewDelegate {
                 let successAlert = UIAlertView(title: "RSVP'd on Facebook!", message: "",delegate:nil, cancelButtonTitle: "OK")
                 successAlert.show()
             }else{
+                print(error)
                 let errorAlert = UIAlertView(title: "Couldn't RSVP right now, try again later.", message: "",delegate:nil, cancelButtonTitle: "OK")
                 errorAlert.show()
             }

@@ -162,19 +162,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         dispatch_async(dispatch_get_main_queue(), {
             // the collection cell of the selected event
             if let eventCell = self.eventCollectionView.cellForItemAtIndexPath(indexPath) as? EventCollectionViewCell{
-                // convert event cover image relative to view controller view
-                let convertCoverImageRect = self.view.convertRect(eventCell.eventCoverImage.frame, fromView: eventCell.contentView)
-                    
+
                 // set up destination view controller w/ cover image dimensions
                 let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
                 destination.initialImage = eventCell.eventCoverImage.image
                 destination.event = event
-                destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
-                destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-                destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
-                destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
-                    
-                self.navigationController?.pushViewController(destination, animated: false)
+
+                self.navigationController?.pushViewController(destination, animated: true)
             }
         })
     }
@@ -486,17 +480,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                         // the collection cell of the selected event
                         let eventCell =  self.eventListTableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
                         
-                        // convert event cover image relative to view controller view
-                        let convertCoverImageRect = self.view.convertRect(eventCell.eventImageView.frame, fromView: eventCell.eventImageView.superview)
-                        
                         let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
                         destination.initialImage = eventCell.eventImageView.image
                         destination.event = event
-                        destination.COVER_IMAGE_TOP_OFFSET = convertCoverImageRect.origin.y
-                        destination.COVER_IMAGE_HEIGHT = convertCoverImageRect.size.height
-                        destination.COVER_IMAGE_LEFT_OFFSET = convertCoverImageRect.origin.x
-                        destination.COVER_IMAGE_RIGHT_OFFSET = self.view.frame.size.width - convertCoverImageRect.origin.x - convertCoverImageRect.size.width
-                            
+                        
                         self.navigationController?.pushViewController(destination, animated: false)
                     }
                 }
