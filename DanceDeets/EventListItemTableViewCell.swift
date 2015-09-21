@@ -33,7 +33,7 @@ class EventListItemTableViewCell: UITableViewCell {
     
     func updateForEvent(event:Event){
         currentEvent = event
-        eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(",")+")"
+        eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(", ")+")"
         eventTitleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
         if let venueDisplay = event.venue{
