@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
     {
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
@@ -76,11 +76,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
     }
     
-    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> Int {
-        var returnValue:Int = Int(UIInterfaceOrientationMask.Portrait.rawValue)
+    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+        var returnValue:UIInterfaceOrientationMask = UIInterfaceOrientationMask.Portrait
         if let allowLandscape = allowLandscape {
             if(allowLandscape){
-                returnValue = Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+                returnValue = UIInterfaceOrientationMask.AllButUpsideDown
             }
         }
         return returnValue

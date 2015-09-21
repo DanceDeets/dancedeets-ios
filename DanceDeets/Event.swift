@@ -28,9 +28,9 @@ public class Event: NSObject {
     var displayAddress:String = ""
     var geoloc:CLLocation?
     var admins:[EventAdmin] = []
-    var placemark:CLPlacemark?
     var attendingCount:Int?
-    public var detailsLoaded:Bool = false
+    var categories:[String] = []
+    
     var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
     
     init(dictionary:NSDictionary){
@@ -40,7 +40,7 @@ public class Event: NSObject {
         id = dictionary["id"] as? String
         shortDescription = dictionary["description"] as? String
         
-        if id != nil && count(id!) > 0 {
+        if id != nil && (id!).characters.count > 0 {
             facebookUrl = NSURL(string: "http://www.facebook.com/"+id!)
             danceDeetsUrl = NSURL(string: "http://www.dancedeets.com/events/"+id!)
         }
@@ -54,11 +54,11 @@ public class Event: NSObject {
         // admins
         if let admins = dictionary["admins"] as? NSArray{
             for admin in admins{
-                if let adminDict = admin as? NSDictionary{
+                if let _ = admin as? NSDictionary{
                     let name:String? = admin["name"] as? String
                     let identifier:String? = admin["id"] as? String
                     if name != nil && identifier != nil{
-                        var newAdmin = EventAdmin(name:name!, identifier:identifier!)
+                        let newAdmin = EventAdmin(name:name!, identifier:identifier!)
                         self.admins.append(newAdmin)
                     }
                 }
@@ -72,16 +72,37 @@ public class Event: NSObject {
                 let long:CLLocationDegrees = geocodeDict["longitude"] as! CLLocationDegrees
                 self.geoloc = CLLocation(latitude: lat, longitude: long)
             }
-            if let name = venue["name"] as? String{
+            if let name = venue["name"] as? String {
                 self.venue = name
                 displayAddress = name
+            }
+            if let address = venue["address"] {
+                if let street = address["street"] as? String {
+                    displayAddress += "\n" + street
+                }
+                var addressComponents = [String]()
+                if let city = address["city"] as? String {
+                    addressComponents.append(city)
+                }
+                if let state = address["state"] as? String {
+                    addressComponents.append(state)
+                }
+                if let country = address["country"] as? String {
+                    addressComponents.append(country)
+                }
+                if addressComponents.count > 0 {
+                    displayAddress += "\n" + addressComponents.joinWithSeparator(", ")
+                }
             }
         }
         
         // annotations
         if let annotations = dictionary["annotations"] as? NSDictionary{
-            if let danceKeywords = annotations["dance_keywords"] as? [String]{
+            if let danceKeywords = annotations["dance_keywords"] as? [String] {
                 self.keywords = danceKeywords
+            }
+            if let categories = annotations["categories"] as? [String] {
+                self.categories = categories
             }
         }
      
@@ -124,8 +145,8 @@ public class Event: NSObject {
         }
         
         // date formatting
-        var dateFormatterStart:NSDateFormatter  = NSDateFormatter()
-        var dateFormatterEnd:NSDateFormatter = NSDateFormatter()
+        let dateFormatterStart:NSDateFormatter  = NSDateFormatter()
+        let dateFormatterEnd:NSDateFormatter = NSDateFormatter()
         var dateDisplayString:String  =  String()
         dateFormatterStart.dateFormat = "EEE MMM d  |  ha"
         dateFormatterEnd.dateFormat = "ha"
@@ -145,7 +166,7 @@ public class Event: NSObject {
             if let startTimeString = dictionary["start_time"] as? String{
                 startTime = dateFormatter.dateFromString(startTimeString)
                 if(startTime != nil){
-                    var displayFormatter:NSDateFormatter = NSDateFormatter()
+                    let displayFormatter:NSDateFormatter = NSDateFormatter()
                     displayFormatter.dateFormat = "EEE MMM dd  |  'All Day'"
                     dateDisplayString = displayFormatter.stringFromDate(startTime!)
                 }
@@ -191,11 +212,11 @@ public class Event: NSObject {
     func downloadImage(url:NSURL,completion:((UIImage!,NSError!)->Void)) ->Void
     {
         let imageRequest:NSURLRequest = NSURLRequest(URL: url)
-        var downloadTask:NSURLSessionDownloadTask =
+        let downloadTask:NSURLSessionDownloadTask =
         NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
-            completionHandler: { (location:NSURL!, resp:NSURLResponse!, error:NSError!) -> Void in
+            completionHandler: { (location:NSURL?, resp:NSURLResponse?, error:NSError?) -> Void in
                 if(error == nil){
-                    let data:NSData? = NSData(contentsOfURL: location)
+                    let data:NSData? = NSData(contentsOfURL: location!)
                     if let newImage = UIImage(data: data!, scale: UIScreen.mainScreen().scale){
                         ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
                         dispatch_async(dispatch_get_main_queue(), {
@@ -227,51 +248,20 @@ public class Event: NSObject {
         loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrl(city, eventKeyword:keyword), completion:completion)
     }
     
-    public func getMoreDetails(completion: (()->Void)) -> Void
-    {
-        if(!detailsLoaded){
-            detailsLoaded = true
-            if(geoloc != nil){
-                // currently using Apple's geocoder to reverse geocode the lat/long
-                let geocoder:CLGeocoder = CLGeocoder()
-                geocoder.reverseGeocodeLocation(geoloc, completionHandler: { (placemarks:[AnyObject]!, error:NSError!) -> Void in
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        if placemarks.count > 0{
-                            self.placemark = placemarks.first as? CLPlacemark
-                            
-                            // set up a display address
-                            if let lines = self.placemark?.addressDictionary["FormattedAddressLines"] as? [String]{
-                                if lines.count >= 2{
-                                    self.displayAddress += "\n"
-                                    self.displayAddress += lines[0]
-                                    self.displayAddress += "\n"
-                                    self.displayAddress += lines[1]
-                                }
-                            }
-                        }
-                        completion()
-                    })
-                })
-            }else{
-                completion()
-            }
-        }else{
-            completion()
-        }
-    }
-    
     public class func loadEventsFromUrl(url:NSURL, completion: (([Event]!, NSError!)->Void)) -> Void
     {
-        var task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
+        let task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
             if(error != nil){
                 completion([], error)
             }else{
-                var jsonError:NSError?
-                let string = NSString(data: data, encoding: NSUTF8StringEncoding)
-                
-                var json:NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary
-                if (jsonError != nil) {
-                    completion([], jsonError)
+                var json:NSDictionary?
+                do {
+                    json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                } catch {
+                    json = nil
+                }
+                if (json == nil) {
+                    completion([], error)
                 }
                 else {
                     var eventList:[Event] = []

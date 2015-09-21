@@ -12,11 +12,11 @@ class Utilities{
     
     class func heightRequiredForText(text:String, lineHeight:CGFloat, font:UIFont, width:CGFloat)->CGFloat{
         let nsStr = NSString(string: text)
-        var paragraphStyle = NSMutableParagraphStyle()
+        let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = lineHeight
         paragraphStyle.maximumLineHeight = lineHeight
         
-        var attributesDictionary:[NSObject:AnyObject] =
+        let attributesDictionary:[String:AnyObject] =
         [NSParagraphStyleAttributeName: paragraphStyle,
             NSFontAttributeName:font]
         
@@ -29,11 +29,9 @@ class Utilities{
     {
         for name in UIFont.familyNames()
         {
-            if let nameString = name as? String{
-                let names = UIFont.fontNamesForFamilyName(nameString)
-                println(nameString)
-                println(names)
-            }
+                let names = UIFont.fontNamesForFamilyName(name)
+                print(name)
+                print(names)
         }
     }
 }

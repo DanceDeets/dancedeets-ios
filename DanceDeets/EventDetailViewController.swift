@@ -10,41 +10,25 @@ import UIKit
 import QuartzCore
 import MapKit
 
-class EventDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UIGestureRecognizerDelegate, UIAlertViewDelegate{
+class EventDetailViewController: UITableViewController, UIGestureRecognizerDelegate {
     
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
-    var COVER_IMAGE_TOP_OFFSET:CGFloat = 0.0
-    var COVER_IMAGE_HEIGHT:CGFloat = 0.0
-    var COVER_IMAGE_LEFT_OFFSET:CGFloat = 0.0
-    var COVER_IMAGE_RIGHT_OFFSET:CGFloat = 0.0
+
     var ASPECT_RATIO:CGFloat = 1.0
     
     var event:Event!
-    var backgroundOverlay:UIView!
-    var loaded:Bool = false
-    var directionAlert:UIAlertView?
     var initialImage:UIImage?
-    
-    var coverCell:UITableViewCell?{
-        return detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0))
-    }
-    var timeCell:UITableViewCell?{
-        return detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0))
-    }
-    var venueCell:UITableViewCell?{
-        return detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0))
-    }
-    var descriptionCell:UITableViewCell?{
-        return detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 4, inSection: 0))
-    }
-    var mapCell:UITableViewCell?{
-        return detailsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 5, inSection: 0))
-    }
     
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
-    @IBOutlet weak var backgroundView: UIView!
-    @IBOutlet weak var detailsTableView: UITableView!
+    @IBOutlet weak var eventTimeLabel: UILabel!
+    @IBOutlet weak var eventVenueLabel: UILabel!
+    @IBOutlet weak var eventCategoriesLabel: UILabel!
+    @IBOutlet weak var eventDescriptionLabel: UITextView!
+    @IBOutlet weak var eventMapView: MKMapView!
+    @IBOutlet weak var eventActionCell: EventDetailActionCell!
+
+    
     @IBOutlet weak var eventCoverImageViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewHeightConstraint: NSLayoutConstraint!
@@ -71,37 +55,62 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // styling
         title = event!.title!.uppercaseString
-        var shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
+        let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
         shareButton.tintColor = ColorFactory.white50()
         navigationItem.rightBarButtonItem = shareButton
         
-        var backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: UIBarButtonItemStyle.Plain, target: self, action: "backButtonTapped")
+        let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: UIBarButtonItemStyle.Plain, target: self, action: "backButtonTapped")
         backButton.imageInsets = UIEdgeInsetsMake(0, -5, 0, 0)
         backButton.tintColor = ColorFactory.white50()
         navigationItem.leftBarButtonItem = backButton
 
-        var titleOptions = [NSObject:AnyObject]()
+        var titleOptions = [String:AnyObject]()
         titleOptions[NSForegroundColorAttributeName] = UIColor.whiteColor()
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
         navigationController?.navigationBar.titleTextAttributes = titleOptions
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
-        // these constants are set up by the previous view controller that pushed the detail view controller
-        eventCoverImageViewTopConstraint.constant = COVER_IMAGE_TOP_OFFSET
-        eventCoverImageViewHeightConstraint.constant = COVER_IMAGE_HEIGHT
-        eventCoverImageViewLeftConstraint.constant = COVER_IMAGE_LEFT_OFFSET
-        eventCoverImageViewRightConstraint.constant = COVER_IMAGE_RIGHT_OFFSET
+        // Initialize display objects
+
+        eventTitleLabel.text = event.title!
+        eventTitleLabel.numberOfLines = 0
+        eventTitleLabel.lineBreakMode = .ByWordWrapping
+        eventTitleLabel.frame = CGRectMake(
+            eventTitleLabel.frame.origin.x, eventTitleLabel.frame.origin.y,
+            eventTitleLabel.frame.size.width, 200);
+        eventTimeLabel.text = event.displayTime
+        eventVenueLabel.text = event.displayAddress
+        eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(", ")+")"
+        let attributedDescription = NSMutableAttributedString(string: event.shortDescription!)
+        // TODO: why is setLineHeight and textContainerInset both required to make this fit correctly?
+        attributedDescription.setLineHeight(18)
+        attributedDescription.setFont(eventDescriptionLabel.font!)
+        attributedDescription.setColor(eventDescriptionLabel.textColor!)
+        eventDescriptionLabel.attributedText = attributedDescription
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: "mapTapped:")
+        eventMapView.addGestureRecognizer(tapGesture)
+
+        // setup map if possible
+        if (event.geoloc != nil) {
+            let annotation:MKPointAnnotation = MKPointAnnotation()
+            annotation.coordinate = event.geoloc!.coordinate
+            eventMapView.addAnnotation(annotation)
+            eventMapView.centerCoordinate = annotation.coordinate
+            let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 1000,1000)
+            eventMapView.setRegion(region, animated:false)
+        }
         
-        detailsTableView.delegate = self
-        detailsTableView.dataSource = self
-        navigationController?.interactivePopGestureRecognizer.delegate = self
-        navigationController?.interactivePopGestureRecognizer.enabled = true
+        eventActionCell.updateViewForEvent(event)
+
+        navigationController?.interactivePopGestureRecognizer!.delegate = self
+        navigationController?.interactivePopGestureRecognizer!.enabled = true
         
         // set to initial image first, this may be a smaller image if coming from list view
         eventCoverImageView.image = initialImage
@@ -119,6 +128,7 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
         
+
         // aspect ratio if available, capped at 1:1 to prevent super tall images
         if event.eventImageHeight != nil && event.eventImageWidth != nil{
             ASPECT_RATIO = min(1.0, event.eventImageHeight! / event.eventImageWidth!)
@@ -126,16 +136,11 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         eventCoverImageView.userInteractionEnabled = false
         
-        backgroundOverlay = backgroundView.addDarkBlurOverlay()
-        backgroundOverlay.alpha = 0
-        directionAlert = UIAlertView(title: "Get some directions to the venue?", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Walk", "Drive")
+        self.tableView.backgroundColor = UIColor(white: 0, alpha: 1)
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        // to support the fade in effect
-        if(!loaded && indexPath.row >= 1 && indexPath.row <= 5){
-            cell.alpha = 0
-        }
+    @IBAction func mapTapped(sender: AnyObject) {
+        MapManager.showOnMap(event!)
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -145,57 +150,6 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        // only do the fade in animation once
-        if(!loaded){
-            loaded = true
-            view.layoutIfNeeded()
-            backgroundOverlay?.fadeIn(0.6,completion:nil)
-            
-            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                self.eventCoverImageViewLeftConstraint.constant = -25
-                self.eventCoverImageViewRightConstraint.constant = -25
-                self.eventCoverImageViewTopConstraint.constant = 0
-                self.eventCoverImageViewHeightConstraint.constant =  self.eventImageHeight() + 50
-                self.view.layoutIfNeeded()
-                }) { (bool:Bool) -> Void in
-                    self.navigationController?.setNavigationBarHidden(false, animated: true)
-                    UIView.animateWithDuration(0.15, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                        self.eventCoverImageViewLeftConstraint.constant = 0
-                        self.eventCoverImageViewRightConstraint.constant = 0
-                        self.eventCoverImageViewTopConstraint.constant = self.getTopOffset()
-                        self.eventCoverImageViewHeightConstraint.constant = self.eventImageHeight()
-                        self.view.layoutIfNeeded()
-                        
-                        }) { (bool:Bool) -> Void in
-                            
-                            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                                self.coverCell?.alpha = 1
-                                return
-                                }, completion: nil)
-                            UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                                self.timeCell?.alpha = 1
-                                return
-                                }, completion: nil)
-                            UIView.animateWithDuration(0.5, delay: 0.2, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                                self.venueCell?.alpha = 1
-                                return
-                                }, completion: nil)
-                            UIView.animateWithDuration(0.5, delay: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                                self.descriptionCell?.alpha = 1
-                                return
-                                }, completion: nil)
-                            UIView.animateWithDuration(0.5, delay: 0.4, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                                self.mapCell?.alpha = 1
-                                return
-                                }, completion: nil)
-                    }
-            }
-        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -210,148 +164,72 @@ class EventDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             self.presentViewController(activityViewController, animated: true, completion: nil)
         }
     }
-    
-    // MARK: UITableViewDataSource
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if(indexPath.row == 0){
-            let cell = tableView.dequeueReusableCellWithIdentifier("gapCell", forIndexPath: indexPath) as! UITableViewCell
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
-            cell.backgroundColor = UIColor.clearColor()
-            return cell
-        }else if(indexPath.row == 1){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventCoverCell", forIndexPath: indexPath) as! EventDetailCoverCell
-            cell.updateViewForEvent(event!)
-            return cell
-        }else if(indexPath.row == 2){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventTimeCell", forIndexPath: indexPath) as! EventDetailTimeCell
-            cell.updateViewForEvent(event!)
-            return cell
-        }else if(indexPath.row == 3){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventLocationCell", forIndexPath: indexPath) as! EventDetailLocationCell
-            cell.updateViewForEvent(event!)
-            return cell
-        }else if(indexPath.row == 4){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventDescriptionCell", forIndexPath: indexPath) as! EventDetailDescriptionCell
-            cell.updateViewForEvent(event!)
-            return cell
-        }else if(indexPath.row == 5){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventMapCell", forIndexPath: indexPath) as! EventDetailMapCell
-            cell.updateViewForEvent(event!)
-            return cell
-        }else if(indexPath.row == 6){
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventActionCell", forIndexPath: indexPath) as! EventDetailActionCell
-            cell.updateViewForEvent(event!)
-            return cell
-        }else{
-            let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "default")
-            return cell
-        }
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
+
     func eventImageHeight() -> CGFloat{
         return view.frame.size.width * ASPECT_RATIO
     }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let width:CGFloat = detailsTableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
 
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let width:CGFloat = tableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
+
+        var height:CGFloat?
         if(indexPath.row == 0){
             // gap, cover image sits here but isn't part of the tableview
-            return getTopOffset() + eventImageHeight()
+            height = getTopOffset() + eventImageHeight()
         }else if(indexPath.row == 1){
             // title
-            let height = Utilities.heightRequiredForText(event!.title!,
+            let textHeight = Utilities.heightRequiredForText(eventTitleLabel.text!,
                 lineHeight: FontFactory.eventHeadlineLineHeight(),
-                font: FontFactory.eventHeadlineFont(),
+                font: eventTitleLabel.font,
                 width:width)
-            return height + 20
+            height = textHeight + 25
         }else if(indexPath.row == 2){
-            // time
-            return 24
+            // categories
+            let textHeight = Utilities.heightRequiredForText(eventCategoriesLabel.text!,
+                lineHeight: FontFactory.eventDescriptionLineHeight(),
+                font: eventCategoriesLabel.font!,
+                width:width)
+            height = textHeight
         }else if(indexPath.row == 3){
+            // time
+            height = 24
+        }else if(indexPath.row == 4){
             // display address
             var displayAddressHeight:CGFloat = 0.0
-            displayAddressHeight += Utilities.heightRequiredForText(event!.displayAddress, lineHeight: FontFactory.eventVenueLineHeight(), font: FontFactory.eventVenueFont(), width: width)
-            return displayAddressHeight
-        }else if(indexPath.row == 4){
-            //description
-            let height = Utilities.heightRequiredForText(event!.shortDescription!,
-                lineHeight: FontFactory.eventDescriptionLineHeight(),
-                font: FontFactory.eventDescriptionFont(),
-                width:width)
-            return height + 30
+            displayAddressHeight += Utilities.heightRequiredForText(eventVenueLabel.text!,
+                lineHeight: FontFactory.eventVenueLineHeight(),
+                font: eventVenueLabel.font,
+                width: width)
+            height = displayAddressHeight
         }else if(indexPath.row == 5){
-            // map
-            return 300;
+            //description
+            let textHeight = Utilities.heightRequiredForText(eventDescriptionLabel.text,
+                lineHeight: FontFactory.eventDescriptionLineHeight(),
+                font: eventDescriptionLabel.font!,
+                width:width)
+            height = textHeight + 30
         }else if(indexPath.row == 6){
+            // map
+            height = 300;
+        }else if(indexPath.row == 7){
             // CTAs
-            return 55;
+            height = 55;
         }else{
-            return CGFloat.min
+            height = CGFloat.min
         }
+        // print("Row \(indexPath.row) has height \(height)")
+        return height!
     }
-    
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat.min
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.min
-    }
-    
+
     // MARK: UITableViewDelegate
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.row == 0){
             AppDelegate.sharedInstance().allowLandscape = true
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
             })
-        }else if(indexPath.row == 3 || indexPath.row == 5){
-            if ( event.placemark != nil){
-                directionAlert?.show()
-            }
-        }
-    }
-    
-    // MARK: UIScrollViewDelegate
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        let yOff = scrollView.contentOffset.y
-        
-        if(yOff < 0){
-            eventCoverImageViewHeightConstraint.constant = self.eventImageHeight() - yOff
-            eventCoverImageViewTopConstraint.constant = getTopOffset()
-        }else{
-            eventCoverImageViewHeightConstraint.constant = self.eventImageHeight()
-            eventCoverImageViewTopConstraint.constant = getTopOffset() - yOff
-        }
-    }
-    
-    
-    // MARK: UIAlertViewDelegate
-    func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
-        if(alertView == directionAlert){
-            if(buttonIndex == 1){
-                let placemark = MKPlacemark(placemark: event.placemark!)
-                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                
-                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking]
-                mapItem.openInMapsWithLaunchOptions(launchOptions)
-            }else if(buttonIndex == 2){
-                let placemark = MKPlacemark(placemark: event.placemark!)
-                let mapItem:MKMapItem = MKMapItem(placemark: placemark)
-                
-                let launchOptions:[NSObject : AnyObject] = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
-                mapItem.openInMapsWithLaunchOptions(launchOptions)
-            }
-            
+        }else if(indexPath.row == 3){
+            MapManager.showOnMap(event!)
         }
     }
     

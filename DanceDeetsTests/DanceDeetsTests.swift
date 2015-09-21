@@ -37,14 +37,7 @@ class DanceDeetsTests: XCTestCase {
         Event.loadEventsForCity("New York City", keyword:nil, completion: {(events:[Event]!, error) in
             XCTAssert(events.count > 0)
             XCTAssert(error == nil)
-            
-            let firstEvent:Event? = events.first
-            XCTAssert(firstEvent?.detailsLoaded == false)
-            firstEvent?.getMoreDetails({ () -> Void in
-                XCTAssert(error == nil)
-                XCTAssert(firstEvent?.detailsLoaded == true)
-                expectation.fulfill()
-            })
+            expectation.fulfill()
         })
         waitForExpectationsWithTimeout(10, handler:{ error in
         })
@@ -68,7 +61,7 @@ class DanceDeetsTests: XCTestCase {
     }
     
     func testSimpleAsync(){
-        let URL = "http://google.com.com/"
+        let URL = "http://dancedeets.com/"
         let expectation = expectationWithDescription("GET \(URL)")
         
         let session = NSURLSession.sharedSession()
@@ -85,7 +78,7 @@ class DanceDeetsTests: XCTestCase {
             }
         })
         task.resume()
-        waitForExpectationsWithTimeout(task.originalRequest.timeoutInterval, handler:{ error in
+        waitForExpectationsWithTimeout(task.originalRequest!.timeoutInterval, handler:{ error in
             task.cancel()
         })
     }

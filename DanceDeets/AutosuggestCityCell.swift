@@ -8,21 +8,6 @@
 
 import UIKit
 
-class AutosuggestCityCell: UITableViewCell {
-
+class AutosuggestCityCell: SettingsCell {
     @IBOutlet weak var addLogoButton: UIButton!
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var pinLogo: UIImageView!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        backgroundColor = UIColor.clearColor()
-        
-        self.selectionStyle = UITableViewCellSelectionStyle.None
-        
-        cityLabel.font = FontFactory.standardTableLabelFont()
-        cityLabel.textColor = UIColor.whiteColor()
-        
-        pinLogo.tintColor = ColorFactory.white50()
-    }
-    
 }
