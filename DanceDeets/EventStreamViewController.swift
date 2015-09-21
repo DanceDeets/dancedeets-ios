@@ -36,7 +36,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var filteredEvents:[Event] = []
     var displaySearchString:String = String()
     var searchMode:SearchMode = .CurrentLocation
-    var viewMode:ViewMode = .CollectionView
+    var viewMode:ViewMode = .ListView
     var searchKeyword:String = "All"
     var requiresRefresh = true
     var blurOverlay:UIView!
@@ -105,7 +105,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         view.layoutIfNeeded()
         
-        toggleMode(.CollectionView)
+        toggleMode(viewMode)
         
         loadViewController()
         
