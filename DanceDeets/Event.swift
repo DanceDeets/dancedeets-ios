@@ -31,8 +31,6 @@ public class Event: NSObject {
     var attendingCount:Int?
     var categories:[String] = []
     
-    var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
-    
     init(dictionary:NSDictionary){
         super.init()
         
