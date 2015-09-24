@@ -19,6 +19,8 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     var event:Event!
     var initialImage:UIImage?
     
+    var addToCalendar:AddToCalendar?
+    
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
@@ -26,8 +28,9 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     @IBOutlet weak var eventCategoriesLabel: UILabel!
     @IBOutlet weak var eventDescriptionLabel: UITextView!
     @IBOutlet weak var eventMapView: MKMapView!
-    @IBOutlet weak var eventActionCell: EventDetailActionCell!
 
+    
+    @IBOutlet var bottomToolbarItems: UIToolbar!
     
     @IBOutlet weak var eventCoverImageViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewRightConstraint: NSLayoutConstraint!
@@ -59,11 +62,15 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Use the toolbars from the toolbar we set up in Interface Builder
+        self.toolbarItems = bottomToolbarItems.items
+
         // styling
         title = event!.title!.uppercaseString
         let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
         shareButton.tintColor = ColorFactory.white50()
         navigationItem.rightBarButtonItem = shareButton
+        // TODO: what do we want to stick in the upper right?
         
         let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: UIBarButtonItemStyle.Plain, target: self, action: "backButtonTapped")
         backButton.imageInsets = UIEdgeInsetsMake(0, -5, 0, 0)
@@ -107,8 +114,6 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
             eventMapView.setRegion(region, animated:false)
         }
         
-        eventActionCell.updateViewForEvent(event)
-
         navigationController?.interactivePopGestureRecognizer!.delegate = self
         navigationController?.interactivePopGestureRecognizer!.enabled = true
         
@@ -138,10 +143,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
         
         self.tableView.backgroundColor = UIColor(white: 0, alpha: 1)
     }
-    
-    @IBAction func mapTapped(sender: AnyObject) {
-        MapManager.showOnMap(event!)
-    }
+
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
@@ -150,21 +152,50 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.setToolbarHidden(false, animated: false)
+
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setToolbarHidden(true, animated: false)
     }
-
-    // MARK: Action
+    
+    // MARK: Buttons
     @IBAction func shareButtonTapped(sender: AnyObject) {
-        if (event != nil){
+        if (event != nil) {
             let activityViewController = UIActivityViewController(activityItems: event!.createSharingItems(), applicationActivities: nil)
             self.presentViewController(activityViewController, animated: true, completion: nil)
         }
     }
-
+    
+    @IBAction func mapTapped(sender: AnyObject?) {
+        MapManager.showOnMap(event!)
+    }
+    
+    @IBAction func facebookTapped(sender: AnyObject) {
+        if (event != nil) {
+            let urlString:String?
+            if UIApplication.sharedApplication().canOpenURL(NSURL(string: "fb://")!) {
+                urlString = String(format: "fb://profile/%@", event.id!);
+            } else {
+                urlString = String(format: "https://www.facebook.com/events/%@", event.id!);
+            }
+            let url = NSURL(string: urlString!)
+            UIApplication.sharedApplication().openURL(url!)
+        }
+    }
+    
+    @IBAction func calendarTapped(sender: AnyObject) {
+        addToCalendar = AddToCalendar(event: event)
+        addToCalendar!.addToCalendar()
+    }
+    
+    @IBAction func rsvpTapped(sender: AnyObject) {
+        FacebookRsvpManager.rsvpFacebook( event, withRsvp: FacebookRsvpManager.RSVP.Attending)
+    }
+    
     func eventImageHeight() -> CGFloat{
         return view.frame.size.width * ASPECT_RATIO
     }
@@ -228,8 +259,8 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
             })
-        }else if(indexPath.row == 3){
-            MapManager.showOnMap(event!)
+        }else if(indexPath.row == 4){
+            mapTapped(nil)
         }
     }
     

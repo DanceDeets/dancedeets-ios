@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIRequiresFullScreen</key>
-	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -51,6 +49,7 @@
 	<string>DanceDeets</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>fb</string>
 		<string>comgooglemaps</string>
 		<string>fbapi</string>
 		<string>fb-messenger-api</string>
@@ -64,19 +63,19 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>crashlytics.com</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<string>YES</string>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<string>NO</string>
-			</dict>
 			<key>akamaihd.net</key>
 			<dict>
 				<key>NSExceptionRequiresForwardSecrecy</key>
 				<false/>
 				<key>NSIncludesSubdomains</key>
 				<true/>
+			</dict>
+			<key>crashlytics.com</key>
+			<dict>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<string>NO</string>
+				<key>NSIncludesSubdomains</key>
+				<string>YES</string>
 			</dict>
 			<key>dancedeets.com</key>
 			<dict>
@@ -127,6 +126,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
