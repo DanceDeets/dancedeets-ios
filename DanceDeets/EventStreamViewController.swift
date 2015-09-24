@@ -659,6 +659,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 ServerInterface.sharedInstance.updateFacebookToken()
             });
         } else {
+            AnalyticsUtil.login()
             FBSDKAccessToken.refreshCurrentAccessToken({ (connect:FBSDKGraphRequestConnection!, obj:AnyObject!, error:NSError!) -> Void in
                 ServerInterface.sharedInstance.updateFacebookToken()
             })
