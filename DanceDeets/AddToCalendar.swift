@@ -36,15 +36,11 @@ public class AddToCalendar: NSObject, UIAlertViewDelegate {
     
     // MARK: UIAlertViewDelegate
     @objc public func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
-        print(alertView)
-        if(alertView == self.addCalendarAlert)
+        if (alertView == self.addCalendarAlert)
         {
-            print(buttonIndex)
             if (buttonIndex == 1) {
                 let store = EKEventStore()
-                print(store)
                 store.requestAccessToEntityType(EKEntityType.Event) { (granted: Bool, error: NSError?) -> Void in
-                    print(granted, error)
                     if (!granted && error != nil) {
                         return
                     }
@@ -70,10 +66,10 @@ public class AddToCalendar: NSObject, UIAlertViewDelegate {
                     self.event.savedEventId = newEvent.eventIdentifier
                 }
             }
-        } else if(alertView == permissionAlert) {
+        } else if (alertView == permissionAlert) {
             if (buttonIndex == 1) {
                 let url = NSURL(string:UIApplicationOpenSettingsURLString)
-                UIApplication.sharedApplication().openURL(url!);
+                UIApplication.sharedApplication().openURL(url!)
             }
         }
     }
