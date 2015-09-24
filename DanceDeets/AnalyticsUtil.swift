@@ -10,10 +10,16 @@ import Foundation
 import Mixpanel
 
 public class AnalyticsUtil {
+
+    #if DEBUG
+    static let MIXPANEL_TOKEN = "668941ad91e251d2ae9408b1ea80f67b"
+    #else
     static let MIXPANEL_TOKEN = "f5d9d18ed1bbe3b190f9c7c7388df243"
+    #endif
 
     public class func createInstance() {
         Mixpanel.sharedInstanceWithToken(MIXPANEL_TOKEN)
+        track("$app_open")
     }
     
 /*    public func login(user: User) {

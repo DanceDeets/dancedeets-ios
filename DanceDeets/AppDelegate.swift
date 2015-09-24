@@ -51,7 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics()])
         
-        Mixpanel.sharedInstanceWithToken("");
+        AnalyticsUtil.createInstance()
+
         return true
     }
     
