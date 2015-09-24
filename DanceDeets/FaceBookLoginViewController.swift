@@ -56,15 +56,14 @@ class FaceBookLoginViewController: UIViewController, FBSDKLoginButtonDelegate, U
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)
     {
-        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-        
         if (result.token != nil) {
             AnalyticsUtil.track("Login - Completed")
+            presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            // update token on back
+            ServerInterface.sharedInstance.updateFacebookToken()
         } else {
             AnalyticsUtil.track("Login - Not Logged In")
         }
-        // update token on back
-        ServerInterface.sharedInstance.updateFacebookToken()
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!)
