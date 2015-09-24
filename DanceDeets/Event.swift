@@ -11,11 +11,12 @@ import UIKit
 import CoreLocation
 
 public class Event: NSObject {
+    var event: NSDictionary?
     var eventImageUrl:NSURL?
     var eventImageWidth:CGFloat?
     var eventImageHeight:CGFloat?
     var eventSmallImageUrl:NSURL?
-    var venue:String?
+    var venue:Venue?
     var shortDescription:String?
     var startTime:NSDate?
     var endTime:NSDate?
@@ -30,8 +31,6 @@ public class Event: NSObject {
     var admins:[EventAdmin] = []
     var attendingCount:Int?
     var categories:[String] = []
-    
-    var savedEventId:NSString? // if user saved this event on iOS, this is that identifier
     
     init(dictionary:NSDictionary){
         super.init()
@@ -66,35 +65,15 @@ public class Event: NSObject {
         }
         
         // venue
-        if let venue = dictionary["venue"] as? NSDictionary{
-            if let geocodeDict = venue["geocode"] as? NSDictionary{
-                let lat:CLLocationDegrees = geocodeDict["latitude"] as! CLLocationDegrees
-                let long:CLLocationDegrees = geocodeDict["longitude"] as! CLLocationDegrees
-                self.geoloc = CLLocation(latitude: lat, longitude: long)
-            }
-            if let name = venue["name"] as? String {
-                self.venue = name
-                displayAddress = name
-            }
-            if let address = venue["address"] {
-                if let street = address["street"] as? String {
-                    displayAddress += "\n" + street
-                }
-                var addressComponents = [String]()
-                if let city = address["city"] as? String {
-                    addressComponents.append(city)
-                }
-                if let state = address["state"] as? String {
-                    addressComponents.append(state)
-                }
-                if let country = address["country"] as? String {
-                    addressComponents.append(country)
-                }
-                if addressComponents.count > 0 {
-                    displayAddress += "\n" + addressComponents.joinWithSeparator(", ")
-                }
-            }
+        self.venue = Venue(dictionary["venue"] as! NSDictionary)
+        if self.venue?.latLong != nil {
+            self.geoloc = CLLocation(
+                latitude: self.venue!.latLong!.0,
+                longitude: self.venue!.latLong!.1
+            )
         }
+        let displayAddressComponents:[String?] = [self.venue?.name, self.venue?.street, self.venue?.cityStateZip()]
+        displayAddress = displayAddressComponents.filter({$0 != nil}).map({$0!}).joinWithSeparator("\n")
         
         // annotations
         if let annotations = dictionary["annotations"] as? NSDictionary{
@@ -180,7 +159,7 @@ public class Event: NSObject {
         var sharingItems:[AnyObject] = []
         
         if(title != nil){
-            sharingItems.append("Check out this event: " + title!)
+            sharingItems.append(title!)
         }
         
         if(danceDeetsUrl != nil){
@@ -240,11 +219,19 @@ public class Event: NSObject {
     
     public class func loadEventsForLocation(location:CLLocation, keyword:String?, completion: (([Event]!, NSError!)->Void)) -> Void
     {
+        AnalyticsUtil.track("Search Events", [
+            "Location": location.description,
+            "Keywords": keyword ?? "",
+            ])
         loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrlByLocation(location, eventKeyword:keyword), completion:completion)
     }
     
     public class func loadEventsForCity(city:String, keyword:String?, completion: (([Event]!, NSError!)->Void)) -> Void
     {
+        AnalyticsUtil.track("Search Events", [
+            "Location": city,
+            "Keywords": keyword ?? "",
+            ])
         loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrl(city, eventKeyword:keyword), completion:completion)
     }
     

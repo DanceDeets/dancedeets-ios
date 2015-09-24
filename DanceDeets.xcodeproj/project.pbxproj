@@ -26,7 +26,6 @@
 		1D1131191B458503001CBEDE /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1131151B458503001CBEDE /* FBSDKShareKit.framework */; };
 		1D12DE901B0A1C0A00BEE249 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D12DE8F1B0A1C0A00BEE249 /* Crashlytics.framework */; };
 		1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15802A1A05695400658A1D /* EventAdmin.swift */; };
-		1D22A4591A2EC5D200C4BC03 /* EventDetailActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22A4581A2EC5D200C4BC03 /* EventDetailActionCell.swift */; };
 		1D4343471A1DB06D00E0B0A3 /* SearchAutoSuggestTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4343461A1DB06D00E0B0A3 /* SearchAutoSuggestTableCell.swift */; };
 		1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */; };
 		1D6C3EA71A4B4BC90081A43C /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA61A4B4BC90081A43C /* AddCityViewController.swift */; };
@@ -38,7 +37,11 @@
 		1D8856D319CDE511005FFDB2 /* DanceDeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */; };
 		1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */; };
 		1D8A064019CDE605004607B6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A063F19CDE605004607B6 /* Event.swift */; };
-		1D98D81D1AEC759C00E48E8F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D98D81B1AEC759C00E48E8F /* Fabric.framework */; };
+		1D95547A1BB3C7A800241F38 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D9554791BB3C7A800241F38 /* Fabric.framework */; settings = {ASSET_TAGS = (); }; };
+		1D95547F1BB3C84400241F38 /* FacebookRsvpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D95547E1BB3C84400241F38 /* FacebookRsvpManager.swift */; settings = {ASSET_TAGS = (); }; };
+		1D9554811BB3CA0300241F38 /* AddToCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554801BB3CA0300241F38 /* AddToCalendar.swift */; settings = {ASSET_TAGS = (); }; };
+		1D9554831BB3E0F700241F38 /* AnalyticsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554821BB3E0F700241F38 /* AnalyticsUtil.swift */; settings = {ASSET_TAGS = (); }; };
+		1D9554851BB3EEBA00241F38 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554841BB3EEBA00241F38 /* Venue.swift */; settings = {ASSET_TAGS = (); }; };
 		1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA4566A1AD226B900368186 /* UIViewExtensions.swift */; };
 		1DA57ACC1BAE241B00370519 /* AutosuggestCityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA57ACB1BAE241B00370519 /* AutosuggestCityCell.swift */; settings = {ASSET_TAGS = (); }; };
 		1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA57ACD1BAE3D4500370519 /* MapManager.swift */; settings = {ASSET_TAGS = (); }; };
@@ -53,6 +56,7 @@
 		1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */; };
 		1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B5119FF575C00CF4A72 /* EventKit.framework */; };
 		1DFB3B5419FF575C00CF4A72 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */; };
+		9DD9DCD5AB61CA917BF518E9 /* Pods_DanceDeets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72F5ED4DA61BC9F2C1804D7F /* Pods_DanceDeets.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +83,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		065049302038A7B70940FB71 /* Pods-DanceDeets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DanceDeets.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DanceDeets/Pods-DanceDeets.debug.xcconfig"; sourceTree = "<group>"; };
+		12DB1469CA15507A68495EA1 /* Pods-DanceDeets.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DanceDeets.release.xcconfig"; path = "Pods/Target Support Files/Pods-DanceDeets/Pods-DanceDeets.release.xcconfig"; sourceTree = "<group>"; };
 		1D015B481AD21E0500DBC905 /* EventListItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListItemTableViewCell.swift; sourceTree = "<group>"; };
 		1D08923B1A266D7A00A9EAC4 /* EventStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventStreamViewController.swift; sourceTree = "<group>"; };
 		1D08923E1A26726500A9EAC4 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -98,7 +104,6 @@
 		1D1131151B458503001CBEDE /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../FBSDKShareKit.framework; sourceTree = "<group>"; };
 		1D12DE8F1B0A1C0A00BEE249 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = ../Crashlytics.framework; sourceTree = "<group>"; };
 		1D15802A1A05695400658A1D /* EventAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAdmin.swift; sourceTree = "<group>"; };
-		1D22A4581A2EC5D200C4BC03 /* EventDetailActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailActionCell.swift; sourceTree = "<group>"; };
 		1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DanceDeets-Bridging-Header.h"; sourceTree = "<group>"; };
 		1D4343461A1DB06D00E0B0A3 /* SearchAutoSuggestTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAutoSuggestTableCell.swift; sourceTree = "<group>"; };
 		1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
@@ -115,7 +120,11 @@
 		1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanceDeetsTests.swift; sourceTree = "<group>"; };
 		1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		1D8A063F19CDE605004607B6 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		1D98D81B1AEC759C00E48E8F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		1D9554791BB3C7A800241F38 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
+		1D95547E1BB3C84400241F38 /* FacebookRsvpManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookRsvpManager.swift; sourceTree = "<group>"; };
+		1D9554801BB3CA0300241F38 /* AddToCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToCalendar.swift; sourceTree = "<group>"; };
+		1D9554821BB3E0F700241F38 /* AnalyticsUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsUtil.swift; sourceTree = "<group>"; };
+		1D9554841BB3EEBA00241F38 /* Venue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Venue.swift; path = ../Venue.swift; sourceTree = "<group>"; };
 		1DA4566A1AD226B900368186 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		1DA57ACB1BAE241B00370519 /* AutosuggestCityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutosuggestCityCell.swift; sourceTree = "<group>"; };
 		1DA57ACD1BAE3D4500370519 /* MapManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
@@ -130,6 +139,7 @@
 		1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		1DFB3B5119FF575C00CF4A72 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		72F5ED4DA61BC9F2C1804D7F /* Pods_DanceDeets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DanceDeets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +150,6 @@
 				1DAB49FA1A182AC90002BBDD /* QuartzCore.framework in Frameworks */,
 				1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */,
 				1D1131171B458503001CBEDE /* FBSDKLoginKit.framework in Frameworks */,
-				1D98D81D1AEC759C00E48E8F /* Fabric.framework in Frameworks */,
 				1DFB3B5419FF575C00CF4A72 /* EventKitUI.framework in Frameworks */,
 				1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */,
 				1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */,
@@ -149,6 +158,8 @@
 				1D1131161B458503001CBEDE /* FBSDKCoreKit.framework in Frameworks */,
 				1D12DE901B0A1C0A00BEE249 /* Crashlytics.framework in Frameworks */,
 				1D1131181B458503001CBEDE /* FBSDKMessengerShareKit.framework in Frameworks */,
+				1D95547A1BB3C7A800241F38 /* Fabric.framework in Frameworks */,
+				9DD9DCD5AB61CA917BF518E9 /* Pods_DanceDeets.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +173,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0975F92EB8D1F89D2AF14B98 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				065049302038A7B70940FB71 /* Pods-DanceDeets.debug.xcconfig */,
+				12DB1469CA15507A68495EA1 /* Pods-DanceDeets.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		1D08923D1A26724400A9EAC4 /* Collection View Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,11 +202,11 @@
 		1D11311B1B4587FB001CBEDE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1D9554791BB3C7A800241F38 /* Fabric.framework */,
 				1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */,
 				1D12DE8F1B0A1C0A00BEE249 /* Crashlytics.framework */,
 				1DFB3B5119FF575C00CF4A72 /* EventKit.framework */,
 				1DFB3B5219FF575C00CF4A72 /* EventKitUI.framework */,
-				1D98D81B1AEC759C00E48E8F /* Fabric.framework */,
 				1D1131121B458503001CBEDE /* FBSDKCoreKit.framework */,
 				1D1131131B458503001CBEDE /* FBSDKLoginKit.framework */,
 				1D1131141B458503001CBEDE /* FBSDKMessengerShareKit.framework */,
@@ -228,20 +248,14 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		1D6C3EAD1A4B79F30081A43C /* Event Detail */ = {
-			isa = PBXGroup;
-			children = (
-				1D22A4581A2EC5D200C4BC03 /* EventDetailActionCell.swift */,
-			);
-			name = "Event Detail";
-			sourceTree = "<group>";
-		};
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
 				1D8856B919CDE510005FFDB2 /* DanceDeets */,
 				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
 				1D8856B819CDE510005FFDB2 /* Products */,
+				0975F92EB8D1F89D2AF14B98 /* Pods */,
+				90EA1D330F2FCC1A877FE1CD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -259,7 +273,7 @@
 			children = (
 				1D11311A1B4587A7001CBEDE /* Interface */,
 				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
-				1DA57ACD1BAE3D4500370519 /* MapManager.swift */,
+				1D95547B1BB3C7E500241F38 /* EventManager */,
 				1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */,
 				1D0892501A27C97700A9EAC4 /* UserSettings.swift */,
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,
@@ -303,6 +317,7 @@
 		1D8A063D19CDE5D4004607B6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1D9554841BB3EEBA00241F38 /* Venue.swift */,
 				1D8A063F19CDE605004607B6 /* Event.swift */,
 				1D15802A1A05695400658A1D /* EventAdmin.swift */,
 			);
@@ -327,10 +342,19 @@
 			children = (
 				1DA4566D1AD23B3100368186 /* Search */,
 				1DA4566C1AD23B2600368186 /* Event List View */,
-				1D6C3EAD1A4B79F30081A43C /* Event Detail */,
 				1D6C3EAC1A4B79DA0081A43C /* Settings */,
 			);
 			name = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		1D95547B1BB3C7E500241F38 /* EventManager */ = {
+			isa = PBXGroup;
+			children = (
+				1DA57ACD1BAE3D4500370519 /* MapManager.swift */,
+				1D95547E1BB3C84400241F38 /* FacebookRsvpManager.swift */,
+				1D9554801BB3CA0300241F38 /* AddToCalendar.swift */,
+			);
+			name = EventManager;
 			sourceTree = "<group>";
 		};
 		1DA4566C1AD23B2600368186 /* Event List View */ = {
@@ -359,8 +383,17 @@
 				1D0892481A278DCB00A9EAC4 /* GooglePlaceAPI.swift */,
 				1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */,
 				1DAB49EF1A17E4D70002BBDD /* Utilities.swift */,
+				1D9554821BB3E0F700241F38 /* AnalyticsUtil.swift */,
 			);
 			name = "Extensions and Utilities";
+			sourceTree = "<group>";
+		};
+		90EA1D330F2FCC1A877FE1CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				72F5ED4DA61BC9F2C1804D7F /* Pods_DanceDeets.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -370,11 +403,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D8856D619CDE511005FFDB2 /* Build configuration list for PBXNativeTarget "DanceDeets" */;
 			buildPhases = (
+				5255E86D7F231E711891B767 /* Check Pods Manifest.lock */,
 				1D8856B319CDE510005FFDB2 /* Sources */,
 				1D8856B419CDE510005FFDB2 /* Frameworks */,
 				1D8856B519CDE510005FFDB2 /* Resources */,
 				1DAD402D1A639102008CD7A1 /* Embed Frameworks */,
 				1DCCD7561AEC71DB00A653E6 /* ShellScript */,
+				064EBD50B282811373434E9D /* Copy Pods Resources */,
+				F5233EFE39220A65A333C5DA /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -473,6 +509,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		064EBD50B282811373434E9D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DanceDeets/Pods-DanceDeets-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1DCCD7561AEC71DB00A653E6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -485,6 +536,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run f827a34a7ab66071f1fc473cdfa00f94403b241b 5ca03b8142243c84d2a6de3bd37dfebc06f7b5b986ece6a61d6474b3b7d6602b";
+		};
+		5255E86D7F231E711891B767 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F5233EFE39220A65A333C5DA /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DanceDeets/Pods-DanceDeets-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -500,6 +581,7 @@
 				1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */,
+				1D95547F1BB3C84400241F38 /* FacebookRsvpManager.swift in Sources */,
 				1D0892491A278DCB00A9EAC4 /* GooglePlaceAPI.swift in Sources */,
 				1D08924B1A279DFF00A9EAC4 /* SettingsViewController.swift in Sources */,
 				1D4343471A1DB06D00E0B0A3 /* SearchAutoSuggestTableCell.swift in Sources */,
@@ -509,6 +591,7 @@
 				1DBA3F691A4BAA7600842486 /* SettingsCell.swift in Sources */,
 				1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */,
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
+				1D9554851BB3EEBA00241F38 /* Venue.swift in Sources */,
 				1D015B491AD21E0500DBC905 /* EventListItemTableViewCell.swift in Sources */,
 				1D6C3EA71A4B4BC90081A43C /* AddCityViewController.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,
@@ -516,9 +599,10 @@
 				1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */,
 				1D08924D1A27BF8700A9EAC4 /* CitySearchCell.swift in Sources */,
 				1D0892511A27C97700A9EAC4 /* UserSettings.swift in Sources */,
+				1D9554831BB3E0F700241F38 /* AnalyticsUtil.swift in Sources */,
+				1D9554811BB3CA0300241F38 /* AddToCalendar.swift in Sources */,
 				1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */,
 				1DA57ACC1BAE241B00370519 /* AutosuggestCityCell.swift in Sources */,
-				1D22A4591A2EC5D200C4BC03 /* EventDetailActionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +736,7 @@
 		};
 		1D8856D719CDE511005FFDB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 065049302038A7B70940FB71 /* Pods-DanceDeets.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -673,6 +758,7 @@
 					"$(HOME)",
 					"$(HOME)/Documents",
 				);
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.$(PRODUCT_NAME:rfc1034identifier).ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -680,12 +766,12 @@
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "DanceDeets/DanceDeets-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
 		1D8856D819CDE511005FFDB2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 12DB1469CA15507A68495EA1 /* Pods-DanceDeets.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -707,6 +793,7 @@
 					"$(HOME)",
 					"$(HOME)/Documents",
 				);
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.$(PRODUCT_NAME:rfc1034identifier).ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -714,7 +801,6 @@
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "DanceDeets/DanceDeets-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -732,7 +818,8 @@
 				);
 				INFOPLIST_FILE = DanceDeetsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "david.xiang.$(PRODUCT_NAME:rfc1034identifier)";
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dancedeets.ios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DanceDeets.app/DanceDeets";
 			};
@@ -748,7 +835,8 @@
 				);
 				INFOPLIST_FILE = DanceDeetsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "david.xiang.$(PRODUCT_NAME:rfc1034identifier)";
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-DRELEASE";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dancedeets.ios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DanceDeets.app/DanceDeets";
 			};

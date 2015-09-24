@@ -10,8 +10,8 @@ public class MapManager
         if let coordinate = event.geoloc?.coordinate {
             if UIApplication.sharedApplication().canOpenURL(NSURL(string: "comgooglemaps://")!) {
                 var encodedVenue:String
-                if event.venue != nil {
-                    encodedVenue = event.venue!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+                if event.venue?.name != nil {
+                    encodedVenue = event.venue!.name!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
                 } else {
                     encodedVenue = "\(coordinate.latitude),\(coordinate.longitude)"
                 }

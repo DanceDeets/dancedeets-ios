@@ -50,7 +50,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         eventTitleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
         eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(", ")+")"
-        if let venueDisplay = event.venue{
+        if let venueDisplay = event.venue?.name {
             if(event.attendingCount != nil){
                 eventVenueLabel.text = venueDisplay + "  |  \(event.attendingCount!) attending"
             }else{

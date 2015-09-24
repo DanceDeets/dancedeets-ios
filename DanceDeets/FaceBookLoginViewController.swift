@@ -19,9 +19,12 @@ class FaceBookLoginViewController: UIViewController, FBSDKLoginButtonDelegate, U
         self.fbLoginView.delegate = self
         self.fbLoginView.readPermissions = FaceBookLoginViewController.getDefaultFacebookPermissions
         view.backgroundColor = UIColor.blackColor()
-        
+
+        AnalyticsUtil.track("Login - Not Logged In")
+
         // set up disclaimer text
         let terms = NSMutableAttributedString(string: "here")
+        //TODO: track clicks on this with AnalyticsUtil.track("Login - Use Website")
         terms.addAttribute(NSLinkAttributeName, value: NSURL(string: "http://www.dancedeets.com")!, range: NSMakeRange(0, terms.length))
         terms.setColor(ColorFactory.lightBlue())
         
@@ -53,10 +56,14 @@ class FaceBookLoginViewController: UIViewController, FBSDKLoginButtonDelegate, U
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)
     {
-        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-        
-        // update token on back
-        ServerInterface.sharedInstance.updateFacebookToken()
+        if (result.token != nil) {
+            AnalyticsUtil.track("Login - Completed")
+            presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            // update token on back
+            ServerInterface.sharedInstance.updateFacebookToken()
+        } else {
+            AnalyticsUtil.track("Login - Not Logged In")
+        }
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!)

@@ -219,11 +219,13 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 composer.setToRecipients(recipients)
                 presentViewController(composer, animated: true, completion: nil)
             } else if(indexPath.row == 1) {
+                AnalyticsUtil.track("Add Event")
                 let token = FBSDKAccessToken.currentAccessToken()
                 let stringUrl = "http://www.dancedeets.com/events_add?uid="+token.userID+"&access_token="+token.tokenString;
                 print(stringUrl)
                 UIApplication.sharedApplication().openURL(NSURL(string:stringUrl)!);
             }else if(indexPath.row == 2){
+                AnalyticsUtil.logout()
                 FBSDKAccessToken.setCurrentAccessToken(nil)
                 FBSDKProfile.setCurrentProfile(nil)
                 

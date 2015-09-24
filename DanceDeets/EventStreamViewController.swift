@@ -300,7 +300,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchTextField.textAlignment = .Left
         
         // event list view styling
-        eventListTableView.separatorColor = ColorFactory.white50()
+        eventListTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         eventListTableView.separatorInset = UIEdgeInsetsMake(0, 12, 0, 12)
         eventListTableView.layoutMargins = UIEdgeInsetsZero
         eventListTableView.registerClass(EventListItemTableViewCell.classForCoder(), forCellReuseIdentifier:"eventListTableViewCell")

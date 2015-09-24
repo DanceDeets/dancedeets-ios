@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ORO-6S-cFm">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -87,8 +86,8 @@
                                                         <constraint firstAttribute="height" constant="14" id="Zte-cx-9Uf"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Event Categories" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZA-Xv-e5b" userLabel="Dance Categories Label">
-                                                    <rect key="frame" x="20" y="487" width="131" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Categories" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZA-Xv-e5b" userLabel="Dance Categories Label">
+                                                    <rect key="frame" x="38" y="487" width="552" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -470,7 +469,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDd-M8-QVB" userLabel="Event Categories Label">
-                                                    <rect key="frame" x="15" y="0.0" width="584" height="44"/>
+                                                    <rect key="frame" x="38" y="15" width="569" height="14.5"/>
                                                     <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -511,8 +510,8 @@
                                                         <constraint firstAttribute="height" constant="14" id="ZsY-EU-2nc"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKS-WK-qB4">
-                                                    <rect key="frame" x="38" y="12" width="547" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKS-WK-qB4">
+                                                    <rect key="frame" x="38" y="14" width="547" height="17"/>
                                                     <color key="tintColor" red="0.0" green="0.92549019607843142" blue="0.8901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="Interstate-BoldCondensed" family="Interstate-BoldCondensed" pointSize="15"/>
                                                     <color key="textColor" red="0.2334256868" green="0.86782304919999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -614,55 +613,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventActionCell" rowHeight="60" id="vxJ-Y9-D4f" customClass="EventDetailActionCell" customModule="DanceDeets" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="720" width="600" height="60"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vxJ-Y9-D4f" id="UwV-8x-1vZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JFP-4V-X30">
-                                                    <rect key="frame" x="15" y="13" width="138" height="35"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="35" id="5AT-g7-g77"/>
-                                                        <constraint firstAttribute="width" constant="138" id="NXq-Y4-UNx"/>
-                                                    </constraints>
-                                                    <state key="normal">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="addToCalendarButtonTapped:" destination="vxJ-Y9-D4f" eventType="touchUpInside" id="OAH-8T-EcC"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f9d-2T-D4r">
-                                                    <rect key="frame" x="447" y="13" width="138" height="35"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="138" id="PpQ-Go-PjV"/>
-                                                        <constraint firstAttribute="height" constant="35" id="aRJ-MQ-Yxp"/>
-                                                    </constraints>
-                                                    <state key="normal">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="facebookRSVPButtonTapped:" destination="vxJ-Y9-D4f" eventType="touchUpInside" id="qLN-wa-VXM"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="JFP-4V-X30" secondAttribute="centerY" id="3db-YR-nOz"/>
-                                                <constraint firstItem="JFP-4V-X30" firstAttribute="leading" secondItem="UwV-8x-1vZ" secondAttribute="leading" constant="15" id="AvK-qK-5Xq"/>
-                                                <constraint firstAttribute="trailing" secondItem="f9d-2T-D4r" secondAttribute="trailing" constant="15" id="qEU-EB-6au"/>
-                                                <constraint firstAttribute="centerY" secondItem="f9d-2T-D4r" secondAttribute="centerY" id="zcG-a9-Ear"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="addToCalendarButton" destination="JFP-4V-X30" id="R4g-lF-bXV"/>
-                                            <outlet property="facebookButton" destination="f9d-2T-D4r" id="1nj-w6-37p"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="gapCell" id="aNI-Nd-ZPN">
-                                        <rect key="frame" x="0.0" y="780" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="720" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aNI-Nd-ZPN" id="ZLZ-VU-hdL">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -680,7 +632,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="RjL-M3-gWH"/>
                     <connections>
-                        <outlet property="eventActionCell" destination="vxJ-Y9-D4f" id="0gq-jN-BYW"/>
+                        <outlet property="bottomToolbarItems" destination="qk8-iZ-08l" id="vql-kD-nsp"/>
                         <outlet property="eventCategoriesLabel" destination="DDd-M8-QVB" id="3rc-cg-JfF"/>
                         <outlet property="eventCoverImageView" destination="aIu-5i-zz6" id="VWO-WU-s6h"/>
                         <outlet property="eventCoverImageViewHeightConstraint" destination="hEA-r2-jHg" id="IMr-Ek-el7"/>
@@ -696,6 +648,41 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cnl-Fk-NVe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="qk8-iZ-08l">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <items>
+                        <barButtonItem image="facebookIcon" id="u2o-xn-fa9" userLabel="Facebook">
+                            <connections>
+                                <action selector="facebookTapped:" destination="2zh-F8-7u4" id="prb-cX-uhd"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="i8Y-2E-sSF"/>
+                        <barButtonItem image="bottomPinIcon" id="bjL-dO-BmW" userLabel="Map">
+                            <connections>
+                                <action selector="mapTapped:" destination="2zh-F8-7u4" id="nlq-uj-rR7"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="GBk-EJ-D8k"/>
+                        <barButtonItem image="calendarIcon" id="Igb-O3-G6E" userLabel="Add to Calendar">
+                            <connections>
+                                <action selector="calendarTapped:" destination="2zh-F8-7u4" id="i0z-r7-WTW"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="nyI-l9-xuf"/>
+                        <barButtonItem title="RSVP" id="Mbf-UG-DzL">
+                            <connections>
+                                <action selector="rsvpTapped:" destination="2zh-F8-7u4" id="awl-Yp-fwj"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="PmU-8x-x8C"/>
+                        <barButtonItem systemItem="action" id="7Hz-PN-8lB">
+                            <connections>
+                                <action selector="shareButtonTapped:" destination="2zh-F8-7u4" id="OkV-la-RYR"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
             </objects>
             <point key="canvasLocation" x="863" y="-1990"/>
         </scene>
@@ -1238,11 +1225,14 @@
     <resources>
         <image name="LandingPage" width="375" height="667"/>
         <image name="addIcon" width="15" height="15"/>
+        <image name="bottomPinIcon" width="32" height="32"/>
+        <image name="calendarIcon" width="32" height="32"/>
         <image name="cardViewIcon" width="36" height="36"/>
         <image name="cityVector" width="30" height="23"/>
         <image name="clockIcon" width="14" height="14"/>
         <image name="currentLocationVector" width="15" height="15"/>
         <image name="danceIcon" width="65" height="65"/>
+        <image name="facebookIcon" width="32" height="32"/>
         <image name="feedbackIcon" width="16" height="16"/>
         <image name="listViewIcon" width="37" height="28"/>
         <image name="logoutIcon" width="16" height="16"/>

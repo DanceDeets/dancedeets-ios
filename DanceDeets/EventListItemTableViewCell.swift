@@ -36,7 +36,7 @@ class EventListItemTableViewCell: UITableViewCell {
         eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(", ")+")"
         eventTitleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
-        if let venueDisplay = event.venue{
+        if let venueDisplay = event.venue?.name{
             if(event.attendingCount != nil){
                 eventVenueLabel.text = venueDisplay + "  |  \(event.attendingCount!) attending"
             }else{
