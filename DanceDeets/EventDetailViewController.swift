@@ -56,11 +56,14 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
             if let image = eventCoverImageView.image{
                 destinationController.image = image
             }
+            destinationController.event = event
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        AnalyticsUtil.track("View Event", withEvent: event)
 
         // Use the toolbars from the toolbar we set up in Interface Builder
         self.toolbarItems = bottomToolbarItems.items
@@ -165,17 +168,20 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     // MARK: Buttons
     @IBAction func shareButtonTapped(sender: AnyObject) {
         if (event != nil) {
+            AnalyticsUtil.track("Share Event", withEvent: event)
             let activityViewController = UIActivityViewController(activityItems: event!.createSharingItems(), applicationActivities: nil)
             self.presentViewController(activityViewController, animated: true, completion: nil)
         }
     }
     
     @IBAction func mapTapped(sender: AnyObject?) {
+        AnalyticsUtil.track("View on Map", withEvent: event)
         MapManager.showOnMap(event!)
     }
     
     @IBAction func facebookTapped(sender: AnyObject) {
         if (event != nil) {
+            AnalyticsUtil.track("Open in Facebook", withEvent: event)
             let urlString:String?
             if UIApplication.sharedApplication().canOpenURL(NSURL(string: "fb://")!) {
                 urlString = String(format: "fb://profile/%@", event.id!);
@@ -188,12 +194,15 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func calendarTapped(sender: AnyObject) {
+        AnalyticsUtil.track("Add to Calendar", withEvent: event)
         addToCalendar = AddToCalendar(event: event)
         addToCalendar!.addToCalendar()
     }
     
     @IBAction func rsvpTapped(sender: AnyObject) {
-        FacebookRsvpManager.rsvpFacebook( event, withRsvp: FacebookRsvpManager.RSVP.Attending)
+        let rsvp = FacebookRsvpManager.RSVP.Attending
+        AnalyticsUtil.track("RSVP", withEvent: event, ["RSVP Value": rsvp.rawValue])
+        FacebookRsvpManager.rsvpFacebook( event, withRsvp: rsvp)
     }
     
     func eventImageHeight() -> CGFloat{

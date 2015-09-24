@@ -11,6 +11,7 @@ import Fabric
 import Crashlytics
 import FBSDKCoreKit
 import FBSDKLoginKit
+import Mixpanel
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -50,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics()])
         
+        Mixpanel.sharedInstanceWithToken("");
         return true
     }
     

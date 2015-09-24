@@ -13,6 +13,7 @@ class FullScreenImageViewController : UIViewController, UIScrollViewDelegate{
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
+    var event:Event?
     var image:UIImage?
     var tapGesture:UITapGestureRecognizer?
     
@@ -21,6 +22,9 @@ class FullScreenImageViewController : UIViewController, UIScrollViewDelegate{
         
         scrollView.delegate = self
         imageView.image = image
+        if event != nil {
+            AnalyticsUtil.track("View Flyer", withEvent: event!)
+        }
         
         tapGesture = UITapGestureRecognizer(target: self, action: "tapped")
         scrollView.addGestureRecognizer(tapGesture!)
