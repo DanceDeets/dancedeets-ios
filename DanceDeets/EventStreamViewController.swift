@@ -332,13 +332,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             let event:Event = sectionEvents[indexPath.row]
             cell.updateForEvent(event)
             
-            if let imageUrl = event.eventImageUrl {
+            if let imageUrl = event.eventSmallImageUrl {
                 let imageRequest:NSURLRequest = NSURLRequest(URL: imageUrl)
                 if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
                     cell.eventImageView?.image = image
                 }else{
                     cell.eventImageView?.image = nil
-                    event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
+                    event.downloadSmallImage({ (image:UIImage!, error:NSError!) -> Void in
                         // guard against cell reuse + async download
                         if(event == cell.currentEvent){
                             if(image != nil) {
