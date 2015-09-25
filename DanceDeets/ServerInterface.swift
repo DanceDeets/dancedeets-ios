@@ -10,9 +10,33 @@ import Foundation
 import CoreLocation
 
 public class ServerInterface : NSObject, CLLocationManagerDelegate {
+
+    // MARK: Static URL Construction Methods
+    static let urlArgCharacterSet = ServerInterface.getUrlArgCharacterSet()
+    static let baseUrl:String = "http://www.dancedeets.com/api/v1.1"
     
+    class func getUrlArgCharacterSet() -> NSCharacterSet {
+        let characterSet:NSMutableCharacterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
+        characterSet.addCharactersInString("&=")
+        let realCharacterSet:NSCharacterSet = characterSet.copy() as! NSCharacterSet
+        return realCharacterSet
+    }
+
+    class func getApiUrl(path: String, withArgs args: [String: String]=[:]) -> NSURL {
+        let stringArgs = args.map(
+            {(key: String, value: String) -> String in
+                return key.stringByAddingPercentEncodingWithAllowedCharacters(ServerInterface.urlArgCharacterSet)!
+                    + "="
+                    + value.stringByAddingPercentEncodingWithAllowedCharacters(ServerInterface.urlArgCharacterSet)!
+            }
+        )
+        let url = baseUrl + path + "?" + stringArgs.joinWithSeparator("&")
+        return NSURL(string: url)!
+    }
+
+    // MARK: Shared Instance Setup
     public class var sharedInstance : ServerInterface{
-        struct Static{
+        struct Static {
             static var onceToken : dispatch_once_t = 0
             static var instance : ServerInterface? = nil
         }
@@ -24,47 +48,51 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         })
         return Static.instance!
     }
-    
-    let baseUrl:String = "http://www.dancedeets.com/api/v1.0"
+
+    // MARK: Regular Methods
     let locationManager:CLLocationManager  = CLLocationManager()
     let geocoder:CLGeocoder = CLGeocoder()
     
     func getAuthUrl() -> NSURL {
-        return NSURL(string: baseUrl + "/auth")!
+        return ServerInterface.getApiUrl("auth")
     }
     
     func getEventSearchUrl(city:String, eventKeyword:String?) -> NSURL{
-        let cityString:String = city.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        if let keyword = eventKeyword{
-            let keywordString:String = keyword.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-            return NSURL(string: baseUrl + "/search?location=\(cityString)&keywords=\(keywordString)")!
-        }else{
-            return NSURL(string: baseUrl + "/search?location=\(cityString)")!
+        var args = [
+            "location": city,
+            "time_period": "UPCOMING",
+            "client": "ios",
+        ]
+        if eventKeyword != nil {
+            args["keywords"] = eventKeyword
         }
+        return ServerInterface.getApiUrl("/search", withArgs: args)
     }
     
-    func getEventSearchUrlByLocation(location:CLLocation, eventKeyword:String?)->NSURL{
-        let coordinate = location.coordinate
-        if let keyword = eventKeyword{
-            let keywordString:String = keyword.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-            return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)&keywords=\(keywordString)")!
-        }else{
-            return NSURL(string: baseUrl + "/search?location=\(coordinate.latitude),\(coordinate.longitude)")!
+    func getEventSearchUrlByLocation(location: CLLocation, eventKeyword: String?) -> NSURL {
+        var args = [
+            "location": "\(location.coordinate.latitude),\(location.coordinate.longitude)",
+            "time_period": "UPCOMING",
+            "client": "ios",
+        ]
+        if eventKeyword != nil {
+            args["keywords"] = eventKeyword
         }
+        return ServerInterface.getApiUrl("/search", withArgs: args)
     }
     
-    func updateFacebookToken(){
+    func updateFacebookToken() {
         locationManager.startUpdatingLocation()
     }
     
-    func completionHandler(placemarks:[CLPlacemark]?, error:NSError?) {
-        if( placemarks != nil && placemarks!.count > 0){
+    func completionHandler(placemarks: [CLPlacemark]?, error: NSError?) {
+        if (placemarks != nil && placemarks!.count > 0) {
             let placemark:CLPlacemark = placemarks!.first!
             var geocodeString:String = ""
             
             // set up a display address
-            if let lines = placemark.addressDictionary?["FormattedAddressLines"] as? [String]{
-                for line in lines{
+            if let lines = placemark.addressDictionary?["FormattedAddressLines"] as? [String] {
+                for line in lines {
                     geocodeString += line
                     geocodeString += " "
                 }
@@ -72,11 +100,11 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
             
             // construct payload
             FBSDKAccessToken.currentAccessToken()
-            if let tokenData =   FBSDKAccessToken.currentAccessToken(){
+            if let tokenData = FBSDKAccessToken.currentAccessToken() {
                 let expiration = tokenData.expirationDate
                 let accessToken = tokenData.tokenString
                 
-                let dateFormatter:NSDateFormatter  = NSDateFormatter()
+                let dateFormatter:NSDateFormatter = NSDateFormatter()
                 dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
                 dateFormatter.timeZone = NSTimeZone.systemTimeZone()
                 
@@ -93,7 +121,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
                 urlRequest.HTTPBody = postData
                 
                 // post it up
-                let task = NSURLSession.sharedSession().dataTaskWithRequest(urlRequest, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+                let task = NSURLSession.sharedSession().dataTaskWithRequest(urlRequest, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
                     print("Posted up token with error: \(error)")
                 })
                 task.resume()
