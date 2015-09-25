@@ -45,19 +45,6 @@ class EventListItemTableViewCell: UITableViewCell {
         //eventImageView.backgroundColor = UIColor.blackColor()
         eventImageView.clipsToBounds = true
         
-        // title label
-        eventTitleLabel = UILabel(frame:CGRectZero)
-        eventTitleLabel.numberOfLines = 2
-        eventTitleLabel.textColor = UIColor.whiteColor()
-        eventTitleLabel.font = UIFont(name:"Interstate-ExtraLight",size:18)!
-        
-        contentView.addSubview(eventTitleLabel)
-        eventTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addConstraint(NSLayoutConstraint(item: eventTitleLabel, attribute: .Left, relatedBy: .Equal, toItem: eventImageView, attribute: .Right, multiplier: 1.0, constant: 10))
-        contentView.addConstraint(NSLayoutConstraint(item: eventTitleLabel, attribute: .Right, relatedBy: .Equal, toItem: contentView, attribute: .Right, multiplier: 1.0, constant: -12))
-        contentView.addConstraint(NSLayoutConstraint(item: eventTitleLabel, attribute: .Top, relatedBy: .Equal, toItem: eventImageView, attribute: .Top, multiplier: 1.0, constant: 5))
-        
-        
         // dance
         
         danceIconImageView = UIImageView(image: UIImage(named: "danceIcon"))

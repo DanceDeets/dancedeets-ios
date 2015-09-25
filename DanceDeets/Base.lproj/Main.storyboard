@@ -12,6 +12,7 @@
         </mutableArray>
         <mutableArray key="Interstate-ExtraLight.ttf">
             <string>Interstate-ExtraLight</string>
+            <string>Interstate-ExtraLight</string>
         </mutableArray>
         <mutableArray key="Interstate-Light.ttf">
             <string>Interstate-Light</string>
@@ -158,16 +159,27 @@
                                                         <constraint firstAttribute="width" constant="112" id="Ewe-Pg-4D5"/>
                                                     </constraints>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5R9-2K-AhZ" userLabel="Event Title View">
+                                                    <rect key="frame" x="161" y="15" width="234" height="21"/>
+                                                    <fontDescription key="fontDescription" name="Interstate-ExtraLight" family="Interstate-ExtraLight" pointSize="18"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstItem="5R9-2K-AhZ" firstAttribute="top" secondItem="3Ru-Ei-3pI" secondAttribute="top" id="9aw-j5-hXV"/>
+                                                <constraint firstItem="5R9-2K-AhZ" firstAttribute="leading" secondItem="3Ru-Ei-3pI" secondAttribute="trailing" constant="10" id="JIh-CL-HDh"/>
                                                 <constraint firstItem="3Ru-Ei-3pI" firstAttribute="top" secondItem="rrA-Jj-kmz" secondAttribute="top" constant="15" id="PAC-rf-PoB"/>
                                                 <constraint firstAttribute="bottom" secondItem="3Ru-Ei-3pI" secondAttribute="bottom" constant="15" id="ack-ag-933"/>
                                                 <constraint firstItem="3Ru-Ei-3pI" firstAttribute="leading" secondItem="rrA-Jj-kmz" secondAttribute="leading" constant="12" id="fBe-0L-vNB"/>
+                                                <constraint firstAttribute="trailing" secondItem="5R9-2K-AhZ" secondAttribute="trailing" constant="12" id="gPB-UY-2bK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="eventImageView" destination="3Ru-Ei-3pI" id="OoP-mz-q7f"/>
+                                            <outlet property="eventTitleLabel" destination="5R9-2K-AhZ" id="JBc-ve-sWr"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
