@@ -11,60 +11,39 @@ import UIKit
 class EventListItemTableViewCell: UITableViewCell {
     
     let SEPARATOR_HORIZONTAL_INSETS:CGFloat = 12.0
-    var eventImageView:UIImageView!
-    var eventTitleLabel:UILabel!
-    var currentEvent:Event?
-    var danceIconImageView:UIImageView!
-    var clockIconImageView:UIImageView!
-    var pinIconImageView:UIImageView!
-    var eventCategoriesLabel:UILabel!
-    var eventTimeLabel:UILabel!
-    var eventVenueLabel:UILabel!
+    @IBOutlet var eventImageView:UIImageView!
+    @IBOutlet var eventTitleLabel:UILabel!
+    @IBOutlet var currentEvent:Event?
+    @IBOutlet var danceIconImageView:UIImageView!
+    @IBOutlet var clockIconImageView:UIImageView!
+    @IBOutlet var pinIconImageView:UIImageView!
+    @IBOutlet var eventCategoriesLabel:UILabel!
+    @IBOutlet var eventTimeLabel:UILabel!
+    @IBOutlet var eventVenueLabel:UILabel!
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    func updateForEvent(event:Event){
+    func updateForEvent(event: Event) {
         currentEvent = event
-        eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(", ")+")"
+        eventCategoriesLabel.text = "(" + event.categories.joinWithSeparator(", ") + ")"
         eventTitleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
         if let venueDisplay = event.venue?.name{
-            if(event.attendingCount != nil){
+            if (event.attendingCount != nil) {
                 eventVenueLabel.text = venueDisplay + "  |  \(event.attendingCount!) attending"
-            }else{
+            } else {
                 eventVenueLabel.text = venueDisplay
             }
         }
         contentView.layoutIfNeeded()
     }
     
-    func commonInit(){
+    override func awakeFromNib() {
+        super.awakeFromNib()
         // all layout for this cell in code.
         
         // cover image
-        eventImageView = UIImageView(frame: CGRectZero)
-        eventImageView.backgroundColor = UIColor.blackColor()
-        eventImageView.contentMode = .ScaleAspectFill
+        //eventImageView = UIImageView(frame: CGRectZero)
+        //eventImageView.backgroundColor = UIColor.blackColor()
         eventImageView.clipsToBounds = true
-        contentView.addSubview(eventImageView)
-        let heightConstraint = NSLayoutConstraint(item: eventImageView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 112)
-        heightConstraint.priority = 999
-        let widthConstraint = NSLayoutConstraint(item: eventImageView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: 112)
-        widthConstraint.priority = 999
-        eventImageView.addConstraint(heightConstraint)
-        eventImageView.addConstraint(widthConstraint)
-        
-        eventImageView.constrainLeftToSuperView(12)
-        eventImageView.constrainTopToSuperView(15)
-        eventImageView.constrainBottomToSuperView(15)
         
         // title label
         eventTitleLabel = UILabel(frame:CGRectZero)
