@@ -47,20 +47,13 @@ class EventListItemTableViewCell: UITableViewCell {
     }
     
     func commonInit(){
-        // init
-        backgroundColor = UIColor.clearColor()
-        layoutMargins = UIEdgeInsetsZero
-        separatorInset = UIEdgeInsetsMake(0, SEPARATOR_HORIZONTAL_INSETS, 0, SEPARATOR_HORIZONTAL_INSETS)
-        userInteractionEnabled = true
-        selectionStyle = .None
-        
         // all layout for this cell in code.
         
         // cover image
         eventImageView = UIImageView(frame: CGRectZero)
         eventImageView.backgroundColor = UIColor.blackColor()
-        eventImageView.clipsToBounds = true
         eventImageView.contentMode = .ScaleAspectFill
+        eventImageView.clipsToBounds = true
         contentView.addSubview(eventImageView)
         let heightConstraint = NSLayoutConstraint(item: eventImageView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 112)
         heightConstraint.priority = 999

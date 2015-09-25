@@ -12,16 +12,11 @@ import MessageUI
 import QuartzCore
 import FBSDKCoreKit
 
-class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate {
+class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     enum SearchMode{
         case CurrentLocation
         case CustomCity
-    }
-    
-    enum ViewMode{
-        case CollectionView
-        case ListView
     }
     
     // MARK: Constants
@@ -36,7 +31,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var filteredEvents:[Event] = []
     var displaySearchString:String = String()
     var searchMode:SearchMode = .CurrentLocation
-    var viewMode:ViewMode = .ListView
     var searchKeyword:String = "All"
     var requiresRefresh = true
     var blurOverlay:UIView!
@@ -51,15 +45,11 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var eventListTableView: UITableView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var navigationTitle: UILabel!
-    @IBOutlet weak var eventCollectionView: UICollectionView!
     @IBOutlet weak var eventCountLabel: UILabel!
     @IBOutlet weak var customNavigationView: UIView!
     @IBOutlet weak var customNavigationViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var settingsIcon: UIImageView!
-    @IBOutlet weak var collectionModeImageView: UIImageView!
-    @IBOutlet weak var listModeImageView: UIImageView!
-    @IBOutlet weak var scrollUpButton: UIButton!
     @IBOutlet weak var searchTextCancelButton: UIButton!
     @IBOutlet weak var searchTextTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchAutoSuggestTableView: UITableView!
@@ -69,30 +59,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         refreshEvents()
     }
     
-    @IBAction func scrollUpButtonTapped(sender: AnyObject) {
-        if(viewMode == .ListView){
-            if(eventListTableView.numberOfSections > 0 && eventListTableView.numberOfRowsInSection(0) > 0){
-                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
-            }
-        }else if(viewMode == .CollectionView){
-            if(eventCollectionView.numberOfItemsInSection(0) > 0){
-                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                eventCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
-            }
-        }
-    }
-    
     @IBAction func searchTextCancelButtonTapped(sender: AnyObject) {
         hideAutoSuggestTable()
-    }
-    
-    @IBAction func viewModeButtonTapped(sender: AnyObject) {
-        if(viewMode == .CollectionView){
-            toggleMode(.ListView)
-        }else if(viewMode == .ListView){
-            toggleMode(.CollectionView)
-        }
     }
     
     @IBAction func settingsButtonTapped(sender: AnyObject) {
@@ -105,8 +73,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         view.layoutIfNeeded()
         
-        toggleMode(viewMode)
-        
+        eventListTableView.reloadData()
+
         loadViewController()
         
         myLocationManager.requestWhenInUseAuthorization()
@@ -155,68 +123,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         return UIStatusBarStyle.LightContent
     }
     
-    // MARK: UICollectionViewDelegate
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let event = events[indexPath.row]
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            // the collection cell of the selected event
-            if let eventCell = self.eventCollectionView.cellForItemAtIndexPath(indexPath) as? EventCollectionViewCell{
-
-                // set up destination view controller w/ cover image dimensions
-                let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
-                destination.initialImage = eventCell.eventCoverImage.image
-                destination.event = event
-
-                self.navigationController?.pushViewController(destination, animated: true)
-            }
-        })
-    }
-    
-    // MARK: UICollectionViewDataSource
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
-        return events.count
-    }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-        let cell:EventCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCollectionViewCell", forIndexPath: indexPath) as! EventCollectionViewCell
-        let event = events[indexPath.row] as Event
-        cell.updateForEvent(event)
-        
-        if let imageUrl = event.eventImageUrl{
-            let imageRequest:NSURLRequest = NSURLRequest(URL: imageUrl)
-            if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
-                cell.eventCoverImage?.image = image
-            }else{
-                cell.eventCoverImage?.image = nil
-                event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
-                    // guard against cell reuse + async download
-                    if(event == cell.currentEvent){
-                        if(image != nil){
-                            cell.eventCoverImage?.image = image
-                        }
-                    }
-                })
-            }
-        }else{
-            cell.eventCoverImage?.image = nil
-        }
-        
-        // prefetch next image if possible
-        if(indexPath.row < events.count - 1){
-            let prefetchEvent:Event = events[indexPath.row + 1]
-            if let imageUrl = prefetchEvent.eventImageUrl{
-                let imageRequest:NSURLRequest = NSURLRequest(URL: imageUrl)
-                if ImageCache.sharedInstance.cachedImageForRequest(imageRequest) ==  nil{
-                    prefetchEvent.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
-                    })
-                }
-            }
-        }
-        
-        return cell
-    }
-    
     // MARK: Private
     
     func registerNotifications(){
@@ -237,8 +143,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func loadViewController(){
         
         myLocationManager.delegate = self
-        eventCollectionView.delegate = self
-        eventCollectionView.dataSource = self
         
         // auto suggest terms when search text field is tapped
         searchAutoSuggestTableView.alpha = 0
@@ -247,13 +151,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         searchAutoSuggestTableView.dataSource = self
         searchAutoSuggestTableView.registerClass(SearchAutoSuggestTableCell.classForCoder(), forCellReuseIdentifier: "autoSuggestCell")
         searchAutoSuggestTableView.contentInset = UIEdgeInsetsMake(CUSTOM_NAVIGATION_BAR_HEIGHT, 0, 300, 0)
-        
-        // collection view
-        let flowLayout:UICollectionViewFlowLayout? = eventCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        flowLayout?.sectionInset = UIEdgeInsetsZero
-        flowLayout?.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height)
-        flowLayout?.minimumInteritemSpacing = 0.0
-        
+
         // tapping on the title does a refresh
         titleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "refreshButtonTapped:")
         titleTapGestureRecognizer?.delegate = self
@@ -261,10 +159,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         navigationTitle.addGestureRecognizer(titleTapGestureRecognizer!)
         
         // labels / icons
-        scrollUpButton.tintColor = UIColor.whiteColor()
         settingsIcon.tintColor = ColorFactory.white50()
-        collectionModeImageView.tintColor = ColorFactory.white50()
-        listModeImageView.tintColor = ColorFactory.white50()
         eventCountLabel.textColor = ColorFactory.white50()
         eventCountLabel.font = FontFactory.eventDescriptionFont()
         eventCountLabel.text = ""
@@ -303,7 +198,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventListTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         eventListTableView.separatorInset = UIEdgeInsetsMake(0, 12, 0, 12)
         eventListTableView.layoutMargins = UIEdgeInsetsZero
-        eventListTableView.registerClass(EventListItemTableViewCell.classForCoder(), forCellReuseIdentifier:"eventListTableViewCell")
         eventListTableView.delegate = self
         eventListTableView.dataSource = self
         eventListTableView.rowHeight = UITableViewAutomaticDimension
@@ -438,16 +332,16 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             let event:Event = sectionEvents[indexPath.row]
             cell.updateForEvent(event)
             
-            if event.eventSmallImageUrl != nil{
-                let imageRequest:NSURLRequest = NSURLRequest(URL: event.eventSmallImageUrl!)
+            if let imageUrl = event.eventImageUrl {
+                let imageRequest:NSURLRequest = NSURLRequest(URL: imageUrl)
                 if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
                     cell.eventImageView?.image = image
                 }else{
                     cell.eventImageView?.image = nil
-                    event.downloadSmallImage({ (image:UIImage!, error:NSError!) -> Void in
+                    event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
                         // guard against cell reuse + async download
                         if(event == cell.currentEvent){
-                            if(image != nil){
+                            if(image != nil) {
                                 cell.eventImageView?.image = image
                             }
                         }
@@ -469,10 +363,15 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print(1)
         if(tableView == eventListTableView){
+            print(2)
             if let sectionName = self.sectionNames[indexPath.section] as? String{
+                print(3)
                 if let sectionEvents = self.eventsBySection[sectionName] as? [Event]{
+                    print(4)
                     if(sectionEvents.count > indexPath.row){
+                        print(5)
                         let event = sectionEvents[indexPath.row]
 
                         // the collection cell of the selected event
@@ -535,25 +434,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         view.endEditing(true)
     }
     
-    // MARK: Private
-    func toggleMode(mode:ViewMode){
-        if(mode == .CollectionView){
-            viewMode = .CollectionView
-            collectionModeImageView.hidden = true
-            listModeImageView.hidden = false
-            eventListTableView.hidden = true
-            eventCollectionView.hidden = false
-            eventCollectionView.reloadData()
-        }else if(mode == .ListView){
-            viewMode = .ListView
-            collectionModeImageView.hidden = false
-            listModeImageView.hidden = true
-            eventListTableView.hidden = false
-            eventCollectionView.hidden = true
-            eventListTableView.reloadData()
-        }
-    }
-    
     func refreshEvents(){
         let searchCity = UserSettings.getUserCitySearch()
         if(searchCity.characters.count > 0){
@@ -587,14 +467,12 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 self.navigationTitle.text = "ERROR"
                 let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
                 errorAlert.show()
-                self.eventCollectionView.reloadData()
                 self.eventListTableView.reloadData()
                 self.eventCountLabel.text = "Try again"
             }else if(events.count == 0){
                 self.navigationTitle.text = self.displaySearchString.uppercaseString
                 let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
-                self.eventCollectionView.reloadData()
                 self.eventListTableView.reloadData()
                 self.eventCountLabel.text = "No Events"
             }else{
@@ -603,7 +481,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 
                 // data source for collection view
                 self.events = events
-                self.eventCollectionView.reloadData()
                 
                 // data source for list view -> group events into sections by month (or day?)
                 for event in events {
@@ -627,7 +504,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     }
                 }
                 self.eventListTableView.reloadData()
-                self.scrollUpButtonTapped(self)
+                if (self.eventListTableView.numberOfSections > 0 && self.eventListTableView.numberOfRowsInSection(0) > 0){
+                    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                    self.eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+                }
             }
         })
     }
