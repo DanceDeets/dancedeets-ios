@@ -363,15 +363,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(1)
         if(tableView == eventListTableView){
-            print(2)
             if let sectionName = self.sectionNames[indexPath.section] as? String{
-                print(3)
                 if let sectionEvents = self.eventsBySection[sectionName] as? [Event]{
-                    print(4)
                     if(sectionEvents.count > indexPath.row){
-                        print(5)
                         let event = sectionEvents[indexPath.row]
 
                         // the collection cell of the selected event
