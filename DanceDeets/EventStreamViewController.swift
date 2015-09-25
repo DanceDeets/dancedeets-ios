@@ -376,7 +376,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                         destination.initialImage = eventCell.eventImageView.image
                         destination.event = event
                         
-                        self.navigationController?.pushViewController(destination, animated: false)
+                        self.navigationController?.pushViewController(destination, animated: true)
                     }
                 }
             }
