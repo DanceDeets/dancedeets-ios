@@ -23,7 +23,10 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     }
 
     class func getApiUrl(path: String, withArgs args: [String: String]=[:]) -> NSURL {
-        let stringArgs = args.map(
+        var fullArgs = args
+        // Parameters passed on every request
+        fullArgs["client"] = "ios"
+        let stringArgs = fullArgs.map(
             {(key: String, value: String) -> String in
                 return key.stringByAddingPercentEncodingWithAllowedCharacters(ServerInterface.urlArgCharacterSet)!
                     + "="
@@ -61,7 +64,6 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         var args = [
             "location": city,
             "time_period": "UPCOMING",
-            "client": "ios",
         ]
         if eventKeyword != nil {
             args["keywords"] = eventKeyword
@@ -73,7 +75,6 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         var args = [
             "location": "\(location.coordinate.latitude),\(location.coordinate.longitude)",
             "time_period": "UPCOMING",
-            "client": "ios",
         ]
         if eventKeyword != nil {
             args["keywords"] = eventKeyword
