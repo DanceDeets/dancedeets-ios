@@ -20,7 +20,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     // MARK: Constants
-    let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 120.0
+    let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 90.0
     let SEARCH_AUTOSUGGEST_TERMS:[String] = ["All","Bboy","Breaking","Hip-Hop", "House","Popping","Locking","Waacking","Dancehall","Vogue","Krumping","Turfing","Litefeet","Flexing","Bebop","All-Styles"]
     
     // MARK: Variables
@@ -294,11 +294,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if(tableView == eventListTableView){
-            return 41
-        /*
-        }else if(tableView == searchAutoSuggestTableView){
-            return CGFloat.min
-        */
+            return 30
         }else{
             return CGFloat.min
         }
