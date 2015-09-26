@@ -96,7 +96,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if(requiresRefresh){
+        if (requiresRefresh) {
             requiresRefresh = false
             searchKeyword = "All"
             refreshEvents()
@@ -109,7 +109,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "settingsSegue"{
+        if segue.identifier == "settingsSegue" {
             let destination:SettingsViewController? = segue.destinationViewController as? SettingsViewController
             
             // take snap shot of our current view, add a blur, this is the background effect for the settings
@@ -148,7 +148,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         field.textAlignment = .Left
     }
 
-    func loadViewController(){
+    func loadViewController() {
     
         myLocationManager.delegate = self
         
@@ -222,15 +222,15 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func completionHandler(placemarks: [CLPlacemark]?, error: NSError?) {
-        if( placemarks != nil && placemarks!.count > 0){
+        if (placemarks != nil && placemarks!.count > 0) {
             let placemark:CLPlacemark = placemarks!.first!
             self.displaySearchString = "\(placemark.locality!), \(placemark.administrativeArea!)"
-            if(self.searchKeyword == "All"){
+            if (self.searchKeyword == "All") {
                 Event.loadEventsForLocation(self.locationObject!, keyword:nil, completion:self.refreshCityCompletionHandler)
-            }else{
+            } else {
                 Event.loadEventsForLocation(self.locationObject!, keyword:self.searchKeyword, completion:self.refreshCityCompletionHandler)
             }
-        }else{
+        } else {
             self.showLocationFailure()
         }
     }
@@ -240,9 +240,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         myLocationManager.stopUpdatingLocation()
         
-        if(locations.count == 0){
+        if (locations.count == 0) {
             showLocationFailure()
-        }else{
+        } else {
             if let locationObject:CLLocation = locations.first! as CLLocation {
                 self.locationObject = locationObject
                 geocoder.reverseGeocodeLocation(locationObject, completionHandler: completionHandler)
@@ -263,19 +263,19 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     // MARK: UITableViewDataSource / UITableViewDelegate
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if(tableView == eventListTableView){
+        if (tableView == eventListTableView) {
             return sectionNames.count
         /*
         }else if(tableView == searchAutoSuggestTableView){
             return 1
         */
-        }else{
+        } else {
             return 0
         }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(tableView == eventListTableView){
+        if (tableView == eventListTableView) {
             let sectionName = sectionNames[section] as! String
             let events = eventsBySection[sectionName] as! NSArray
             return events.count
@@ -283,7 +283,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         }else if(tableView == searchAutoSuggestTableView){
             return SEARCH_AUTOSUGGEST_TERMS.count
         */
-        }else{
+        } else {
             return 0
         }
     }
@@ -293,15 +293,15 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if(tableView == eventListTableView){
+        if (tableView == eventListTableView) {
             return 30
-        }else{
+        } else {
             return CGFloat.min
         }
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if(tableView == eventListTableView){
+        if (tableView == eventListTableView) {
             // headers are the mo/yr for a section of events
             let headerView = UIView(frame: CGRectZero)
             headerView.backgroundColor = UIColor.clearColor()
@@ -316,13 +316,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             headerLabel.textColor = UIColor.whiteColor()
             headerLabel.text = sectionName
             return headerView
-        }else{
+        } else {
             return nil
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if(tableView == eventListTableView){
+        if (tableView == eventListTableView) {
             let sectionName = self.sectionNames[indexPath.section] as! String
             let sectionEvents = self.eventsBySection[sectionName] as! [Event]
             
@@ -332,20 +332,20 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             
             if let imageUrl = event.eventSmallImageUrl {
                 let imageRequest:NSURLRequest = NSURLRequest(URL: imageUrl)
-                if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
+                if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest) {
                     cell.eventImageView?.image = image
-                }else{
+                } else {
                     cell.eventImageView?.image = nil
-                    event.downloadSmallImage({ (image:UIImage!, error:NSError!) -> Void in
+                    event.downloadSmallImage({ (image: UIImage!, error: NSError!) -> Void in
                         // guard against cell reuse + async download
-                        if(event == cell.currentEvent){
-                            if(image != nil) {
+                        if (event == cell.currentEvent) {
+                            if (image != nil) {
                                 cell.eventImageView?.image = image
                             }
                         }
                     })
                 }
-            }else{
+            } else {
                 cell.eventImageView?.image = nil
             }
             return cell
@@ -363,10 +363,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(tableView == eventListTableView){
-            if let sectionName = self.sectionNames[indexPath.section] as? String{
-                if let sectionEvents = self.eventsBySection[sectionName] as? [Event]{
-                    if(sectionEvents.count > indexPath.row){
+        if (tableView == eventListTableView) {
+            if let sectionName = self.sectionNames[indexPath.section] as? String {
+                if let sectionEvents = self.eventsBySection[sectionName] as? [Event] {
+                    if (sectionEvents.count > indexPath.row) {
                         let event = sectionEvents[indexPath.row]
 
                         // the collection cell of the selected event
@@ -432,19 +432,19 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     */
     
-    func refreshEvents(){
+    func refreshEvents() {
         let searchCity = UserSettings.getUserCitySearch()
-        if(searchCity.characters.count > 0){
+        if (searchCity.characters.count > 0) {
             searchMode = SearchMode.CustomCity
             displaySearchString = searchCity
             navigationTitle.text = displaySearchString.uppercaseString
             eventCountLabel.text = "Loading..."
             if(searchKeyword == "All"){
                 Event.loadEventsForCity(displaySearchString, keyword:nil, completion: refreshCityCompletionHandler)
-            }else{
+            } else {
                 Event.loadEventsForCity(displaySearchString, keyword:searchKeyword, completion: refreshCityCompletionHandler)
             }
-        }else{
+        } else {
             searchMode = SearchMode.CurrentLocation
             myLocationManager.startUpdatingLocation()
             navigationTitle.text = "UPDATING LOCATION"
@@ -452,7 +452,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         }
     }
     
-    func refreshCityCompletionHandler(events:[Event]!, error:NSError!){
+    func refreshCityCompletionHandler(events: [Event]!, error: NSError!) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             // reset event models
             self.events = []
@@ -461,19 +461,19 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             self.sectionNames.removeAllObjects()
             
             // check response
-            if(error != nil){
+            if (error != nil) {
                 self.navigationTitle.text = "ERROR"
                 let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
                 errorAlert.show()
                 self.eventListTableView.reloadData()
                 self.eventCountLabel.text = "Try again"
-            }else if(events.count == 0){
+            } else if(events.count == 0) {
                 self.navigationTitle.text = self.displaySearchString.uppercaseString
                 let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
                 self.eventListTableView.reloadData()
                 self.eventCountLabel.text = "No Events"
-            }else{
+            } else {
                 self.navigationTitle.text = self.displaySearchString.uppercaseString
                 self.eventCountLabel.text = "\(self.searchKeyword) | \(events.count) Events"
                 
@@ -502,7 +502,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     }
                 }
                 self.eventListTableView.reloadData()
-                if (self.eventListTableView.numberOfSections > 0 && self.eventListTableView.numberOfRowsInSection(0) > 0){
+                if (self.eventListTableView.numberOfSections > 0 && self.eventListTableView.numberOfRowsInSection(0) > 0) {
                     let indexPath = NSIndexPath(forRow: 0, inSection: 0)
                     self.eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
                 }
@@ -527,18 +527,18 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     func checkFaceBookToken(){
         let token = FBSDKAccessToken.currentAccessToken()
-        if(token == nil){
+        if (token == nil) {
             self.navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
         } else if (!token.hasGranted("user_events")) {
             // This user_events check is because for awhile we allowed iOS access without requesting this permission,
             // and now we wish these users to re-authorize with the additional permissions, even if they have a token.
             let login = FBSDKLoginManager()
-            login.logInWithReadPermissions(["user_events"], fromViewController:self, handler: {  (result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
+            login.logInWithReadPermissions(["user_events"], fromViewController:self, handler: {  (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
                 ServerInterface.sharedInstance.updateFacebookToken()
             });
         } else {
             AnalyticsUtil.login()
-            FBSDKAccessToken.refreshCurrentAccessToken({ (connect:FBSDKGraphRequestConnection!, obj:AnyObject!, error:NSError!) -> Void in
+            FBSDKAccessToken.refreshCurrentAccessToken({ (connect:FBSDKGraphRequestConnection!, obj: AnyObject!, error: NSError!) -> Void in
                 ServerInterface.sharedInstance.updateFacebookToken()
             })
         }
