@@ -41,7 +41,9 @@ class EventListItemTableViewCell: UITableViewCell {
         
         // No idea why these are necessary, since they are set in the NIB
         danceIconImageView.tintColor = UIColor.whiteColor()
-        clockIconImageView.tintColor = ColorFactory.lightBlue()
+        // No idea why we have to set this color directly, instead of copying another color
+        // Seems there's some of magic going on with tintColor in multiple ways
+        clockIconImageView.tintColor = UIColor(red: 0, green: 236, blue: 227, alpha: 1.0)
         pinIconImageView.tintColor = UIColor.whiteColor()
     }
 }
