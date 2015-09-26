@@ -24,10 +24,63 @@
         </mutableArray>
     </customFonts>
     <scenes>
-        <!-- -->
+        <!--View Controller-->
+        <scene sceneID="qXv-83-mCF">
+            <objects>
+                <viewController id="Wcl-oQ-ZMU" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4FV-Cd-Ca4"/>
+                        <viewControllerLayoutGuide type="bottom" id="qga-wu-byX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jh2-8T-nep">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sNC-hk-IIQ">
+                                <rect key="frame" x="12" y="285" width="576" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="dTf-T8-BHc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2pn-nZ-0uk">
+                                <rect key="frame" x="270" y="285" width="59" height="30"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="CANCEL">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="searchTextCancelButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="mqq-46-r4k"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="loT-0i-Cp8">
+                                <rect key="frame" x="-1" y="1" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="qod-AV-8e7" id="gyq-0y-0xE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TDp-6e-adL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="qod-AV-8e7">
+                    <connections>
+                        <outlet property="delegate" destination="Wcl-oQ-ZMU" id="5Ic-vb-12T"/>
+                        <outlet property="searchContentsController" destination="Wcl-oQ-ZMU" id="d0d-kP-tRF"/>
+                        <outlet property="searchResultsDataSource" destination="Wcl-oQ-ZMU" id="xfJ-ZK-VsM"/>
+                        <outlet property="searchResultsDelegate" destination="Wcl-oQ-ZMU" id="NRh-oj-vJ7"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="141" y="-2666"/>
+        </scene>
+        <!--Event List View-->
         <scene sceneID="8H4-gb-7Ka">
             <objects>
-                <viewController id="EoL-DY-p6g" customClass="EventStreamViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="EoL-DY-p6g" userLabel="Event List View" customClass="EventStreamViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CIT-1y-Jqu"/>
                         <viewControllerLayoutGuide type="bottom" id="Su9-au-Hmc"/>
@@ -164,10 +217,6 @@
                                     <outlet property="delegate" destination="EoL-DY-p6g" id="5Yb-oz-FeS"/>
                                 </connections>
                             </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="loT-0i-Cp8">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ep2-FI-Z09">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="120"/>
                                 <subviews>
@@ -216,37 +265,14 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sNC-hk-IIQ">
-                                        <rect key="frame" x="12" y="81.5" width="576" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="dTf-T8-BHc"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2pn-nZ-0uk">
-                                        <rect key="frame" x="529" y="81.5" width="59" height="30"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" title="CANCEL">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="searchTextCancelButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="mqq-46-r4k"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="9Nl-18-tGz"/>
-                                    <constraint firstItem="2pn-nZ-0uk" firstAttribute="centerY" secondItem="sNC-hk-IIQ" secondAttribute="centerY" id="C3i-F0-9mA"/>
-                                    <constraint firstAttribute="trailing" secondItem="sNC-hk-IIQ" secondAttribute="trailing" constant="12" id="Dvh-VZ-ySy"/>
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="centerX" secondItem="dCA-Tc-CJh" secondAttribute="centerX" id="FHi-VN-MMp"/>
-                                    <constraint firstItem="sNC-hk-IIQ" firstAttribute="top" secondItem="1oV-ms-x6i" secondAttribute="bottom" constant="8" id="GqO-Dh-rqQ"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" constant="33" id="LvJ-CR-je1"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" constant="50" id="MNS-yp-lRk"/>
-                                    <constraint firstItem="sNC-hk-IIQ" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" constant="12" id="Q2v-dH-vpg"/>
                                     <constraint firstItem="ooa-De-P4m" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" constant="31" id="QOj-03-Ay5"/>
-                                    <constraint firstAttribute="trailing" secondItem="2pn-nZ-0uk" secondAttribute="trailing" constant="12" id="TCR-27-DCS"/>
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="top" secondItem="dCA-Tc-CJh" secondAttribute="bottom" id="YXj-zv-B2o"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" id="eUx-6q-Cam"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" id="p5t-PV-c7y"/>
@@ -258,29 +284,21 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="top" id="3jb-Xt-E9m"/>
-                            <constraint firstItem="loT-0i-Cp8" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="bottom" id="5Qc-Sk-nf4"/>
                             <constraint firstItem="x7r-fS-X6k" firstAttribute="width" secondItem="h61-S6-mbM" secondAttribute="width" id="Aj7-JB-OHl"/>
                             <constraint firstItem="ep2-FI-Z09" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="Dbv-hy-lmb"/>
-                            <constraint firstAttribute="trailing" secondItem="loT-0i-Cp8" secondAttribute="trailing" id="EbQ-Va-khv"/>
                             <constraint firstItem="x7r-fS-X6k" firstAttribute="top" secondItem="CIT-1y-Jqu" secondAttribute="bottom" constant="-20" id="ErC-tl-gFq"/>
                             <constraint firstItem="x7r-fS-X6k" firstAttribute="width" secondItem="h61-S6-mbM" secondAttribute="width" id="L7t-YU-KBf"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="bottom" secondItem="h61-S6-mbM" secondAttribute="bottom" id="Pi8-1U-Qdb"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="loT-0i-Cp8" secondAttribute="bottom" id="UrA-4R-5QP"/>
                             <constraint firstAttribute="trailing" secondItem="ep2-FI-Z09" secondAttribute="trailing" id="Vgy-1e-D1o"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="Wqz-Fa-g7r"/>
                             <constraint firstItem="x7r-fS-X6k" firstAttribute="height" secondItem="h61-S6-mbM" secondAttribute="height" id="ZH9-P3-KFq"/>
-                            <constraint firstItem="Su9-au-Hmc" firstAttribute="top" secondItem="loT-0i-Cp8" secondAttribute="bottom" id="awR-RW-jh1"/>
                             <constraint firstAttribute="trailing" secondItem="6uV-7g-Wtg" secondAttribute="trailing" id="eoa-nY-2dI"/>
-                            <constraint firstItem="loT-0i-Cp8" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="topMargin" id="hzp-mJ-lKC"/>
                             <constraint firstItem="ep2-FI-Z09" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="top" id="i16-Mh-YMP"/>
                             <constraint firstItem="x7r-fS-X6k" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="v5q-9T-uet"/>
-                            <constraint firstItem="loT-0i-Cp8" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="zEw-of-H81"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="5Qc-Sk-nf4"/>
                                 <exclude reference="Aj7-JB-OHl"/>
-                                <exclude reference="awR-RW-jh1"/>
                             </mask>
                         </variation>
                     </view>
@@ -298,7 +316,6 @@
                         <outlet property="searchAutoSuggestTableView" destination="loT-0i-Cp8" id="BpC-SY-zs5"/>
                         <outlet property="searchTextCancelButton" destination="2pn-nZ-0uk" id="hY3-gw-tRU"/>
                         <outlet property="searchTextField" destination="sNC-hk-IIQ" id="6Bs-GH-PNR"/>
-                        <outlet property="searchTextTrailingConstraint" destination="Dvh-VZ-ySy" id="xiE-Bs-1Wd"/>
                         <outlet property="settingsIcon" destination="ooa-De-P4m" id="GEQ-37-Jwx"/>
                         <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="vjg-jf-Ol8"/>
                         <segue destination="Gdp-6o-WzI" kind="presentation" identifier="settingsSegue" modalTransitionStyle="crossDissolve" id="jGw-rt-6UH"/>

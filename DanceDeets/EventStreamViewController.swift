@@ -12,7 +12,7 @@ import MessageUI
 import QuartzCore
 import FBSDKCoreKit
 
-class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate {
+class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate/*, UITextFieldDelegate*/ {
     
     enum SearchMode{
         case CurrentLocation
@@ -48,20 +48,24 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var eventCountLabel: UILabel!
     @IBOutlet weak var customNavigationView: UIView!
     @IBOutlet weak var customNavigationViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var settingsIcon: UIImageView!
+    /*
+    @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchTextCancelButton: UIButton!
     @IBOutlet weak var searchTextTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchAutoSuggestTableView: UITableView!
+    */
     
     // MARK: Action functions
     @IBAction func refreshButtonTapped(sender: AnyObject) {
         refreshEvents()
     }
     
+    /*
     @IBAction func searchTextCancelButtonTapped(sender: AnyObject) {
         hideAutoSuggestTable()
     }
+    */
     
     @IBAction func settingsButtonTapped(sender: AnyObject) {
         performSegueWithIdentifier("settingsSegue", sender: sender)
@@ -82,7 +86,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        /*
         searchTextField.endEditing(true)
+        */
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -145,13 +151,15 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         myLocationManager.delegate = self
         
         // auto suggest terms when search text field is tapped
+        /*
         searchAutoSuggestTableView.alpha = 0
         searchAutoSuggestTableView.backgroundColor = UIColor.clearColor()
         searchAutoSuggestTableView.delegate = self
         searchAutoSuggestTableView.dataSource = self
         searchAutoSuggestTableView.registerClass(SearchAutoSuggestTableCell.classForCoder(), forCellReuseIdentifier: "autoSuggestCell")
         searchAutoSuggestTableView.contentInset = UIEdgeInsetsMake(CUSTOM_NAVIGATION_BAR_HEIGHT, 0, 300, 0)
-
+        */
+        
         // tapping on the title does a refresh
         titleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "refreshButtonTapped:")
         titleTapGestureRecognizer?.delegate = self
@@ -163,8 +171,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventCountLabel.textColor = ColorFactory.white50()
         eventCountLabel.font = FontFactory.eventDescriptionFont()
         eventCountLabel.text = ""
+        /*
         searchTextCancelButton.alpha = 0.0
         searchTextCancelButton.tintColor = ColorFactory.white50()
+        */
  
         // custom navigation styling
         let customNavBlur = customNavigationView.addDarkBlurOverlay()
@@ -179,20 +189,24 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         let placeholder = NSMutableAttributedString(string: "Search")
         placeholder.setColor(ColorFactory.white50())
         placeholder.setFont(UIFont(name: "HelveticaNeue-Medium", size: 14.0)!)
+        /*
         searchTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
         searchTextField.attributedPlaceholder = placeholder
         searchTextField.tintColor = ColorFactory.white50()
         searchTextField.textColor = ColorFactory.white50()
         searchTextField.delegate = self
         searchTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
+        */
         
         let imageView:UIImageView = UIImageView(image: UIImage(named: "searchIconSmall")!)
         imageView.tintColor = ColorFactory.white50()
         imageView.contentMode = UIViewContentMode.Right
         imageView.frame = CGRectMake(0, 0, imageView.image!.size.width + 10, imageView.image!.size.height)
+        /*
         searchTextField.leftView = imageView
         searchTextField.leftViewMode = UITextFieldViewMode.UnlessEditing
         searchTextField.textAlignment = .Left
+        */
         
         // event list view styling
         eventListTableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -204,13 +218,16 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventListTableView.estimatedRowHeight = 142
         eventListTableView.backgroundColor = UIColor.clearColor()
         eventListTableView.contentInset = UIEdgeInsetsMake(CUSTOM_NAVIGATION_BAR_HEIGHT, 0, 0, 0)
-        
+
+        /*
         // blur overlay is used for background of auto suggest table
         blurOverlay = view.addDarkBlurOverlay()
         view.insertSubview(blurOverlay!, belowSubview: searchAutoSuggestTableView)
         blurOverlay?.alpha = 0
+        */
     }
     
+    /*
     // MARK: UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // tapped 'search' on the keyboard
@@ -220,10 +237,11 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         refreshEvents()
         return true
     }
-    
+
     func textFieldDidBeginEditing(textField: UITextField) {
         showAutoSuggestTable()
     }
+    */
     
     func completionHandler(placemarks:[CLPlacemark]?, error:NSError?) {
         if( placemarks != nil && placemarks!.count > 0){
@@ -269,8 +287,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if(tableView == eventListTableView){
             return sectionNames.count
+        /*
         }else if(tableView == searchAutoSuggestTableView){
             return 1
+        */
         }else{
             return 0
         }
@@ -281,8 +301,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             let sectionName = sectionNames[section] as! String
             let events = eventsBySection[sectionName] as! NSArray
             return events.count
+        /*
         }else if(tableView == searchAutoSuggestTableView){
             return SEARCH_AUTOSUGGEST_TERMS.count
+        */
         }else{
             return 0
         }
@@ -295,8 +317,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if(tableView == eventListTableView){
             return 41
+        /*
         }else if(tableView == searchAutoSuggestTableView){
             return CGFloat.min
+        */
         }else{
             return CGFloat.min
         }
@@ -351,11 +375,13 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                 cell.eventImageView?.image = nil
             }
             return cell
+        /*
         }else if(tableView == searchAutoSuggestTableView){
             let cell = tableView.dequeueReusableCellWithIdentifier("autoSuggestCell", forIndexPath: indexPath) as! SearchAutoSuggestTableCell
             let term = SEARCH_AUTOSUGGEST_TERMS[indexPath.row]
             cell.titleLabel!.text = term
             return cell
+        */
         }else{
             // shouldn't happen
             return tableView.dequeueReusableCellWithIdentifier("autoSuggestCell", forIndexPath: indexPath) as! SearchAutoSuggestTableCell
@@ -380,15 +406,17 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     }
                 }
             }
+        /*
         }else if(tableView == searchAutoSuggestTableView){
             let term = SEARCH_AUTOSUGGEST_TERMS[indexPath.row] as String
             searchKeyword = term
             hideAutoSuggestTable()
             
             refreshEvents()
+        */
         }
     }
-    
+    /*
     func showAutoSuggestTable(){
         blurOverlay?.fadeIn(0.5, completion: nil)
         
@@ -428,6 +456,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         }
         view.endEditing(true)
     }
+    */
     
     func refreshEvents(){
         let searchCity = UserSettings.getUserCitySearch()
