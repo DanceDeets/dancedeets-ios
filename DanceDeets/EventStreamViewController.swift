@@ -48,6 +48,9 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var eventCountLabel: UILabel!
     @IBOutlet weak var customNavigationView: UIView!
     @IBOutlet weak var customNavigationViewHeightConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var locationSearchField: UITextField!
+    @IBOutlet weak var keywordSearchField: UITextField!
     /*
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchTextCancelButton: UIButton!
@@ -70,6 +73,12 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         performSegueWithIdentifier("settingsSegue", sender: sender)
     }
     
+    @IBAction func searchButtonTapped(sender: AnyObject) {
+        //let controller = nil
+        //presentModalViewController(controller, animated: true, completion:nil)
+        performSegueWithIdentifier("searchSegue", sender: sender)
+    }
+
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -184,9 +193,17 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         navigationItem.title = ""
        
         // search text field styling
-        let placeholder = NSMutableAttributedString(string: "Search")
-        placeholder.setColor(ColorFactory.white50())
-        placeholder.setFont(UIFont(name: "HelveticaNeue-Medium", size: 14.0)!)
+        let locationPlaceholder = NSMutableAttributedString(string: "Location")
+        locationPlaceholder.setColor(ColorFactory.white50())
+        locationPlaceholder.setFont(UIFont(name: "Interstate-Light", size: 12.0)!)
+        locationSearchField.attributedPlaceholder = locationPlaceholder
+        
+        let keywordPlaceholder = NSMutableAttributedString(string: "Keywords")
+        keywordPlaceholder.setColor(ColorFactory.white50())
+        keywordPlaceholder.setFont(UIFont(name: "Interstate-Light", size: 12.0)!)
+        keywordSearchField.attributedPlaceholder = keywordPlaceholder
+        
+        
         /*
         searchTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
         searchTextField.attributedPlaceholder = placeholder

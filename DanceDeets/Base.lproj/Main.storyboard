@@ -21,62 +21,10 @@
             <string>Interstate-Light</string>
             <string>Interstate-Light</string>
             <string>Interstate-Light</string>
+            <string>Interstate-Light</string>
         </mutableArray>
     </customFonts>
     <scenes>
-        <!--Search Dialog-->
-        <scene sceneID="qXv-83-mCF">
-            <objects>
-                <viewController id="Wcl-oQ-ZMU" userLabel="Search Dialog" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="4FV-Cd-Ca4"/>
-                        <viewControllerLayoutGuide type="bottom" id="qga-wu-byX"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="jh2-8T-nep">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="loT-0i-Cp8">
-                                <rect key="frame" x="-1" y="1" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sNC-hk-IIQ">
-                                <rect key="frame" x="12" y="285" width="509" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="dTf-T8-BHc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2pn-nZ-0uk">
-                                <rect key="frame" x="529" y="286" width="59" height="30"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="CANCEL">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="searchTextCancelButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="mqq-46-r4k"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <outlet property="searchDisplayController" destination="qod-AV-8e7" id="gyq-0y-0xE"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TDp-6e-adL" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="qod-AV-8e7">
-                    <connections>
-                        <outlet property="delegate" destination="Wcl-oQ-ZMU" id="5Ic-vb-12T"/>
-                        <outlet property="searchContentsController" destination="Wcl-oQ-ZMU" id="d0d-kP-tRF"/>
-                        <outlet property="searchResultsDataSource" destination="Wcl-oQ-ZMU" id="xfJ-ZK-VsM"/>
-                        <outlet property="searchResultsDelegate" destination="Wcl-oQ-ZMU" id="NRh-oj-vJ7"/>
-                    </connections>
-                </searchDisplayController>
-            </objects>
-            <point key="canvasLocation" x="141" y="-2666"/>
-        </scene>
         <!--Event List View-->
         <scene sceneID="8H4-gb-7Ka">
             <objects>
@@ -220,8 +168,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ep2-FI-Z09">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="120"/>
                                 <subviews>
-                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="985-JS-nOW" userLabel="Settings Button">
-                                        <rect key="frame" x="16" y="15" width="39" height="39"/>
+                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="985-JS-nOW" userLabel="Settings Button">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="70"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="SDL-kz-8Vg"/>
@@ -236,8 +184,8 @@
                                             <action selector="settingsButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="ywh-wY-Yll"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1H1-yX-i7C" userLabel="Search Button">
-                                        <rect key="frame" x="555" y="24" width="20" height="22"/>
+                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1H1-yX-i7C" userLabel="Search Button">
+                                        <rect key="frame" x="550" y="0.0" width="50" height="70"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="I1z-gs-zTe"/>
@@ -248,6 +196,9 @@
                                         <state key="normal" image="searchIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="searchButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="iRq-5b-9xq"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Navigation Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCA-Tc-CJh">
                                         <rect key="frame" x="50" y="33" width="500" height="20.5"/>
@@ -271,17 +222,39 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e4R-8c-l3a" userLabel="Location Search Field">
+                                        <rect key="frame" x="0.0" y="88.5" width="297.5" height="30"/>
+                                        <color key="backgroundColor" red="0.9960784912109375" green="0.99215692281723022" blue="0.99215692281723022" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Keywords" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uav-SE-Lwi" userLabel="Keyword Search Field">
+                                        <rect key="frame" x="302.5" y="88.5" width="297" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="9Nl-18-tGz"/>
                                     <constraint firstItem="1H1-yX-i7C" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" id="Db9-x7-ahj"/>
+                                    <constraint firstItem="Uav-SE-Lwi" firstAttribute="leading" secondItem="e4R-8c-l3a" secondAttribute="trailing" constant="5" id="Eqg-Pm-ZLF"/>
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="centerX" secondItem="dCA-Tc-CJh" secondAttribute="centerX" id="FHi-VN-MMp"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" constant="33" id="LvJ-CR-je1"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" constant="50" id="MNS-yp-lRk"/>
+                                    <constraint firstItem="e4R-8c-l3a" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" id="Q4H-LU-0TS"/>
+                                    <constraint firstItem="e4R-8c-l3a" firstAttribute="width" secondItem="Uav-SE-Lwi" secondAttribute="width" id="WvE-mq-Mq1"/>
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="top" secondItem="dCA-Tc-CJh" secondAttribute="bottom" id="YXj-zv-B2o"/>
+                                    <constraint firstItem="e4R-8c-l3a" firstAttribute="top" secondItem="1oV-ms-x6i" secondAttribute="bottom" constant="15" id="aLa-qo-6Wa"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" id="eUx-6q-Cam"/>
                                     <constraint firstAttribute="trailing" secondItem="1H1-yX-i7C" secondAttribute="trailing" id="hE7-9E-51D"/>
+                                    <constraint firstItem="e4R-8c-l3a" firstAttribute="centerY" secondItem="Uav-SE-Lwi" secondAttribute="centerY" id="hZe-Zn-zUx"/>
+                                    <constraint firstAttribute="trailing" secondItem="Uav-SE-Lwi" secondAttribute="trailing" id="ntZ-PH-yc5"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" id="p5t-PV-c7y"/>
                                     <constraint firstAttribute="trailing" secondItem="dCA-Tc-CJh" secondAttribute="trailing" constant="50" id="poC-lU-vag"/>
                                 </constraints>
@@ -318,18 +291,16 @@
                         <outlet property="customNavigationViewHeightConstraint" destination="9Nl-18-tGz" id="y4g-i7-Ipx"/>
                         <outlet property="eventCountLabel" destination="1oV-ms-x6i" id="yd5-Nu-9RE"/>
                         <outlet property="eventListTableView" destination="x7r-fS-X6k" id="efA-OD-zfS"/>
+                        <outlet property="keywordSearchField" destination="Uav-SE-Lwi" id="LY9-vQ-iVh"/>
+                        <outlet property="locationSearchField" destination="e4R-8c-l3a" id="bdh-5v-6Mo"/>
                         <outlet property="navigationTitle" destination="dCA-Tc-CJh" id="Rh3-hf-Zjx"/>
-                        <outlet property="searchAutoSuggestTableView" destination="loT-0i-Cp8" id="BpC-SY-zs5"/>
-                        <outlet property="searchTextCancelButton" destination="2pn-nZ-0uk" id="hY3-gw-tRU"/>
-                        <outlet property="searchTextField" destination="sNC-hk-IIQ" id="6Bs-GH-PNR"/>
                         <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="vjg-jf-Ol8"/>
                         <segue destination="Gdp-6o-WzI" kind="presentation" identifier="settingsSegue" modalTransitionStyle="crossDissolve" id="jGw-rt-6UH"/>
-                        <segue destination="Wcl-oQ-ZMU" kind="presentation" id="uR7-Ps-hOc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5E-47-ysN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136" y="-1953"/>
+            <point key="canvasLocation" x="136" y="-1990"/>
         </scene>
         <!--Event Detail View Controller-->
         <scene sceneID="lcM-bZ-PCu">
