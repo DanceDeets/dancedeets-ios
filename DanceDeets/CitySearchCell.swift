@@ -12,6 +12,5 @@ class CitySearchCell: SettingsCell {
     @IBOutlet weak var deleteButton: UIButton!
     
     @IBAction func deleteButtonTapped(sender: AnyObject) {
-        settingsVC?.deleteCityRow(label.text!)
     }
 }
