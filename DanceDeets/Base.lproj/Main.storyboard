@@ -184,22 +184,6 @@
                                             <action selector="settingsButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="ywh-wY-Yll"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1H1-yX-i7C" userLabel="Search Button">
-                                        <rect key="frame" x="550" y="0.0" width="50" height="70"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="70" id="I1z-gs-zTe"/>
-                                            <constraint firstAttribute="width" constant="50" id="Z5c-7O-UYB"/>
-                                        </constraints>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="imageEdgeInsets" minX="15" minY="35" maxX="15" maxY="15"/>
-                                        <state key="normal" image="searchIcon">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="searchButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="iRq-5b-9xq"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Navigation Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCA-Tc-CJh">
                                         <rect key="frame" x="50" y="33" width="500" height="20.5"/>
                                         <constraints>
@@ -242,7 +226,6 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="9Nl-18-tGz"/>
-                                    <constraint firstItem="1H1-yX-i7C" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" id="Db9-x7-ahj"/>
                                     <constraint firstItem="Uav-SE-Lwi" firstAttribute="leading" secondItem="e4R-8c-l3a" secondAttribute="trailing" constant="5" id="Eqg-Pm-ZLF"/>
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="centerX" secondItem="dCA-Tc-CJh" secondAttribute="centerX" id="FHi-VN-MMp"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" constant="33" id="LvJ-CR-je1"/>
@@ -252,7 +235,6 @@
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="top" secondItem="dCA-Tc-CJh" secondAttribute="bottom" id="YXj-zv-B2o"/>
                                     <constraint firstItem="e4R-8c-l3a" firstAttribute="top" secondItem="1oV-ms-x6i" secondAttribute="bottom" constant="15" id="aLa-qo-6Wa"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" id="eUx-6q-Cam"/>
-                                    <constraint firstAttribute="trailing" secondItem="1H1-yX-i7C" secondAttribute="trailing" id="hE7-9E-51D"/>
                                     <constraint firstItem="e4R-8c-l3a" firstAttribute="centerY" secondItem="Uav-SE-Lwi" secondAttribute="centerY" id="hZe-Zn-zUx"/>
                                     <constraint firstAttribute="trailing" secondItem="Uav-SE-Lwi" secondAttribute="trailing" constant="5" id="ntZ-PH-yc5"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" id="p5t-PV-c7y"/>

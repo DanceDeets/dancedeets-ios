@@ -12,7 +12,7 @@ import MessageUI
 import QuartzCore
 import FBSDKCoreKit
 
-class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate/*, UITextFieldDelegate*/ {
+class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     enum SearchMode{
         case CurrentLocation
@@ -51,12 +51,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
 
     @IBOutlet weak var locationSearchField: UITextField!
     @IBOutlet weak var keywordSearchField: UITextField!
-    /*
-    @IBOutlet weak var searchTextField: UITextField!
-    @IBOutlet weak var searchTextCancelButton: UIButton!
-    @IBOutlet weak var searchTextTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var searchAutoSuggestTableView: UITableView!
-    */
     
     // MARK: Action functions
     @IBAction func refreshButtonTapped(sender: AnyObject) {
@@ -73,7 +67,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         performSegueWithIdentifier("settingsSegue", sender: sender)
     }
     
-    @IBAction func searchButtonTapped(sender: AnyObject) {
+    @IBAction func locationSearchTapped(sender: AnyObject) {
         //let controller = nil
         //presentModalViewController(controller, animated: true, completion:nil)
         performSegueWithIdentifier("searchSegue", sender: sender)
@@ -147,7 +141,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         imageView.tintColor = ColorFactory.white50()
         imageView.contentMode = UIViewContentMode.Right
         imageView.frame = CGRectMake(0, 0, imageView.image!.size.width + 10, imageView.image!.size.height)
-        //locationSearchField.delegate = self
+        field.delegate = self
         field.clearButtonMode = UITextFieldViewMode.WhileEditing
         field.leftView = imageView
         field.leftViewMode = UITextFieldViewMode.Always
@@ -207,31 +201,27 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventListTableView.backgroundColor = UIColor.clearColor()
         eventListTableView.contentInset = UIEdgeInsetsMake(CUSTOM_NAVIGATION_BAR_HEIGHT, 0, 0, 0)
 
-        /*
         // blur overlay is used for background of auto suggest table
         blurOverlay = view.addDarkBlurOverlay()
-        view.insertSubview(blurOverlay!, belowSubview: searchAutoSuggestTableView)
+        view.insertSubview(blurOverlay!, belowSubview: customNavigationView)
         blurOverlay?.alpha = 0
-        */
     }
-    
-    /*
+
     // MARK: UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        // tapped 'search' on the keyboard
         textField.resignFirstResponder()
-        searchKeyword = textField.text!
-        hideAutoSuggestTable()
+        searchKeyword = keywordSearchField.text!
+        UserSettings.setUserCitySearch(locationSearchField.text!)
+        blurOverlay?.fadeOut(0.5, completion: nil)
         refreshEvents()
         return true
     }
 
     func textFieldDidBeginEditing(textField: UITextField) {
-        showAutoSuggestTable()
+        blurOverlay?.fadeIn(0.5, completion: nil)
     }
-    */
     
-    func completionHandler(placemarks:[CLPlacemark]?, error:NSError?) {
+    func completionHandler(placemarks: [CLPlacemark]?, error: NSError?) {
         if( placemarks != nil && placemarks!.count > 0){
             let placemark:CLPlacemark = placemarks!.first!
             self.displaySearchString = "\(placemark.locality!), \(placemark.administrativeArea!)"
