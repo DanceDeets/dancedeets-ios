@@ -14,11 +14,6 @@ import FBSDKCoreKit
 
 class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
-    enum SearchMode{
-        case CurrentLocation
-        case CustomCity
-    }
-    
     // MARK: Constants
     let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 90.0
     let SEARCH_AUTOSUGGEST_TERMS:[String] = ["All","Bboy","Breaking","Hip-Hop", "House","Popping","Locking","Waacking","Dancehall","Vogue","Krumping","Turfing","Litefeet","Flexing","Bebop","All-Styles"]
@@ -30,7 +25,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var events:[Event] = []
     var filteredEvents:[Event] = []
     var displaySearchString:String = String()
-    var searchMode:SearchMode = .CurrentLocation
     var searchKeyword:String = ""
     var requiresRefresh = true
     var blurOverlay:UIView!
@@ -67,12 +61,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         performSegueWithIdentifier("settingsSegue", sender: sender)
     }
     
-    @IBAction func locationSearchTapped(sender: AnyObject) {
-        //let controller = nil
-        //presentModalViewController(controller, animated: true, completion:nil)
-        performSegueWithIdentifier("searchSegue", sender: sender)
-    }
-
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,8 +86,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         if (requiresRefresh) {
             requiresRefresh = false
+            myLocationManager.startUpdatingLocation()
             searchKeyword = ""
-            refreshEvents()
         }
     }
     
@@ -225,6 +213,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         if (placemarks != nil && placemarks!.count > 0) {
             let placemark:CLPlacemark = placemarks!.first!
             self.displaySearchString = "\(placemark.locality!), \(placemark.administrativeArea!)"
+            self.locationSearchField.text = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
             Event.loadEventsForLocation(self.locationObject!, keyword:self.searchKeyword, completion:self.refreshCityCompletionHandler)
         } else {
             self.showLocationFailure()
@@ -429,19 +418,10 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     */
     
     func refreshEvents() {
-        let searchCity = UserSettings.getUserCitySearch()
-        if (searchCity.characters.count > 0) {
-            searchMode = SearchMode.CustomCity
-            displaySearchString = searchCity
-            navigationTitle.text = displaySearchString.uppercaseString
-            eventCountLabel.text = "Loading..."
-            Event.loadEventsForCity(displaySearchString, keyword:searchKeyword, completion: refreshCityCompletionHandler)
-        } else {
-            searchMode = SearchMode.CurrentLocation
-            myLocationManager.startUpdatingLocation()
-            navigationTitle.text = "UPDATING LOCATION"
-            eventCountLabel.text = "Updating Location..."
-        }
+        displaySearchString = locationSearchField.text!
+        navigationTitle.text = displaySearchString.uppercaseString
+        eventCountLabel.text = "Loading..."
+        Event.loadEventsForCity(displaySearchString, keyword:searchKeyword, completion: refreshCityCompletionHandler)
     }
     
     func refreshCityCompletionHandler(events: [Event]!, error: NSError!) {
@@ -499,21 +479,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
                     self.eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
                 }
             }
-        })
-    }
-    
-    func filterContentForSearchText(searchText: String) {
-        filteredEvents = events.filter({( event: Event) -> Bool in
-            // simple filter, check is search text is in title or tags
-            if (event.title?.lowercaseString.rangeOfString(searchText.lowercaseString) != nil){
-                return true;
-            }
-            for keyword in event.keywords {
-                if(keyword.lowercaseString.rangeOfString(searchText.lowercaseString) != nil){
-                    return true
-                }
-            }
-            return false;
         })
     }
     
