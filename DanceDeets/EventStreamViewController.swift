@@ -31,7 +31,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var filteredEvents:[Event] = []
     var displaySearchString:String = String()
     var searchMode:SearchMode = .CurrentLocation
-    var searchKeyword:String = "All"
+    var searchKeyword:String = ""
     var requiresRefresh = true
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
@@ -98,7 +98,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         if (requiresRefresh) {
             requiresRefresh = false
-            searchKeyword = "All"
+            searchKeyword = ""
             refreshEvents()
         }
     }
@@ -225,11 +225,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         if (placemarks != nil && placemarks!.count > 0) {
             let placemark:CLPlacemark = placemarks!.first!
             self.displaySearchString = "\(placemark.locality!), \(placemark.administrativeArea!)"
-            if (self.searchKeyword == "All") {
-                Event.loadEventsForLocation(self.locationObject!, keyword:nil, completion:self.refreshCityCompletionHandler)
-            } else {
-                Event.loadEventsForLocation(self.locationObject!, keyword:self.searchKeyword, completion:self.refreshCityCompletionHandler)
-            }
+            Event.loadEventsForLocation(self.locationObject!, keyword:self.searchKeyword, completion:self.refreshCityCompletionHandler)
         } else {
             self.showLocationFailure()
         }
@@ -439,11 +435,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             displaySearchString = searchCity
             navigationTitle.text = displaySearchString.uppercaseString
             eventCountLabel.text = "Loading..."
-            if(searchKeyword == "All"){
-                Event.loadEventsForCity(displaySearchString, keyword:nil, completion: refreshCityCompletionHandler)
-            } else {
-                Event.loadEventsForCity(displaySearchString, keyword:searchKeyword, completion: refreshCityCompletionHandler)
-            }
+            Event.loadEventsForCity(displaySearchString, keyword:searchKeyword, completion: refreshCityCompletionHandler)
         } else {
             searchMode = SearchMode.CurrentLocation
             myLocationManager.startUpdatingLocation()
