@@ -24,10 +24,10 @@
         </mutableArray>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Search Dialog-->
         <scene sceneID="qXv-83-mCF">
             <objects>
-                <viewController id="Wcl-oQ-ZMU" sceneMemberID="viewController">
+                <viewController id="Wcl-oQ-ZMU" userLabel="Search Dialog" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4FV-Cd-Ca4"/>
                         <viewControllerLayoutGuide type="bottom" id="qga-wu-byX"/>
@@ -36,8 +36,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="loT-0i-Cp8">
+                                <rect key="frame" x="-1" y="1" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sNC-hk-IIQ">
-                                <rect key="frame" x="12" y="285" width="576" height="30"/>
+                                <rect key="frame" x="12" y="285" width="509" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="dTf-T8-BHc"/>
                                 </constraints>
@@ -45,7 +49,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2pn-nZ-0uk">
-                                <rect key="frame" x="270" y="285" width="59" height="30"/>
+                                <rect key="frame" x="529" y="286" width="59" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="CANCEL">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -54,10 +58,6 @@
                                     <action selector="searchTextCancelButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="mqq-46-r4k"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="loT-0i-Cp8">
-                                <rect key="frame" x="-1" y="1" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -220,28 +220,34 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ep2-FI-Z09">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="120"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settingsIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ooa-De-P4m">
-                                        <rect key="frame" x="12" y="31" width="20" height="20"/>
+                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="985-JS-nOW" userLabel="Settings Button">
+                                        <rect key="frame" x="16" y="15" width="39" height="39"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="J1S-Dy-yBt"/>
-                                            <constraint firstAttribute="width" constant="20" id="h5z-Ij-uhp"/>
-                                        </constraints>
-                                    </imageView>
-                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="985-JS-nOW">
-                                        <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="70" id="SDL-kz-8Vg"/>
+                                            <constraint firstAttribute="width" constant="50" id="SDL-kz-8Vg"/>
                                             <constraint firstAttribute="height" constant="70" id="zIh-R4-RcH"/>
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal">
+                                        <inset key="imageEdgeInsets" minX="15" minY="35" maxX="15" maxY="15"/>
+                                        <state key="normal" image="settingsIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="settingsButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="ywh-wY-Yll"/>
                                         </connections>
+                                    </button>
+                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1H1-yX-i7C" userLabel="Search Button">
+                                        <rect key="frame" x="555" y="24" width="20" height="22"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="I1z-gs-zTe"/>
+                                            <constraint firstAttribute="width" constant="50" id="Z5c-7O-UYB"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="imageEdgeInsets" minX="15" minY="35" maxX="15" maxY="15"/>
+                                        <state key="normal" image="searchIcon">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Navigation Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCA-Tc-CJh">
                                         <rect key="frame" x="50" y="33" width="500" height="20.5"/>
@@ -269,15 +275,15 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="9Nl-18-tGz"/>
+                                    <constraint firstItem="1H1-yX-i7C" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" id="Db9-x7-ahj"/>
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="centerX" secondItem="dCA-Tc-CJh" secondAttribute="centerX" id="FHi-VN-MMp"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" constant="33" id="LvJ-CR-je1"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" constant="50" id="MNS-yp-lRk"/>
-                                    <constraint firstItem="ooa-De-P4m" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" constant="31" id="QOj-03-Ay5"/>
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="top" secondItem="dCA-Tc-CJh" secondAttribute="bottom" id="YXj-zv-B2o"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" id="eUx-6q-Cam"/>
+                                    <constraint firstAttribute="trailing" secondItem="1H1-yX-i7C" secondAttribute="trailing" id="hE7-9E-51D"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" id="p5t-PV-c7y"/>
                                     <constraint firstAttribute="trailing" secondItem="dCA-Tc-CJh" secondAttribute="trailing" constant="50" id="poC-lU-vag"/>
-                                    <constraint firstItem="ooa-De-P4m" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" constant="12" id="sUC-3w-FfS"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -316,9 +322,9 @@
                         <outlet property="searchAutoSuggestTableView" destination="loT-0i-Cp8" id="BpC-SY-zs5"/>
                         <outlet property="searchTextCancelButton" destination="2pn-nZ-0uk" id="hY3-gw-tRU"/>
                         <outlet property="searchTextField" destination="sNC-hk-IIQ" id="6Bs-GH-PNR"/>
-                        <outlet property="settingsIcon" destination="ooa-De-P4m" id="GEQ-37-Jwx"/>
                         <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="vjg-jf-Ol8"/>
                         <segue destination="Gdp-6o-WzI" kind="presentation" identifier="settingsSegue" modalTransitionStyle="crossDissolve" id="jGw-rt-6UH"/>
+                        <segue destination="Wcl-oQ-ZMU" kind="presentation" id="uR7-Ps-hOc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5E-47-ysN" userLabel="First Responder" sceneMemberID="firstResponder"/>

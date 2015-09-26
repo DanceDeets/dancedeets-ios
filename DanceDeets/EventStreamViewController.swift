@@ -48,7 +48,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var eventCountLabel: UILabel!
     @IBOutlet weak var customNavigationView: UIView!
     @IBOutlet weak var customNavigationViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var settingsIcon: UIImageView!
     /*
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchTextCancelButton: UIButton!
@@ -167,7 +166,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         navigationTitle.addGestureRecognizer(titleTapGestureRecognizer!)
         
         // labels / icons
-        settingsIcon.tintColor = ColorFactory.white50()
         eventCountLabel.textColor = ColorFactory.white50()
         eventCountLabel.font = FontFactory.eventDescriptionFont()
         eventCountLabel.text = ""
