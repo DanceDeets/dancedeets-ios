@@ -136,9 +136,26 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
-    
-    func loadViewController(){
+
+    func configureField(field: UITextField, defaultText: String, iconName: String) {
+        let placeholder = NSMutableAttributedString(string: defaultText)
+        placeholder.setColor(ColorFactory.white50())
+        placeholder.setFont(UIFont(name: "Interstate-Light", size: 12.0)!)
+        field.attributedPlaceholder = placeholder
         
+        let imageView:UIImageView = UIImageView(image: UIImage(named: iconName)!)
+        imageView.tintColor = ColorFactory.white50()
+        imageView.contentMode = UIViewContentMode.Right
+        imageView.frame = CGRectMake(0, 0, imageView.image!.size.width + 10, imageView.image!.size.height)
+        //locationSearchField.delegate = self
+        field.clearButtonMode = UITextFieldViewMode.WhileEditing
+        field.leftView = imageView
+        field.leftViewMode = UITextFieldViewMode.Always
+        field.textAlignment = .Left
+    }
+
+    func loadViewController(){
+    
         myLocationManager.delegate = self
         
         // auto suggest terms when search text field is tapped
@@ -176,35 +193,8 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         navigationItem.title = ""
        
         // search text field styling
-        let locationPlaceholder = NSMutableAttributedString(string: "Location")
-        locationPlaceholder.setColor(ColorFactory.white50())
-        locationPlaceholder.setFont(UIFont(name: "Interstate-Light", size: 12.0)!)
-        locationSearchField.attributedPlaceholder = locationPlaceholder
-        
-        let keywordPlaceholder = NSMutableAttributedString(string: "Keywords")
-        keywordPlaceholder.setColor(ColorFactory.white50())
-        keywordPlaceholder.setFont(UIFont(name: "Interstate-Light", size: 12.0)!)
-        keywordSearchField.attributedPlaceholder = keywordPlaceholder
-        
-        
-        let locationImageView:UIImageView = UIImageView(image: UIImage(named: "pinIcon")!)
-        locationImageView.tintColor = ColorFactory.white50()
-        locationImageView.contentMode = UIViewContentMode.Right
-        locationImageView.frame = CGRectMake(0, 0, locationImageView.image!.size.width + 10, locationImageView.image!.size.height)
-        //locationSearchField.delegate = self
-        locationSearchField.clearButtonMode = UITextFieldViewMode.WhileEditing
-        locationSearchField.leftView = locationImageView
-        locationSearchField.leftViewMode = UITextFieldViewMode.Always
-        locationSearchField.textAlignment = .Left
-        
-        let keywordImageView:UIImageView = UIImageView(image: UIImage(named: "searchIconSmall")!)
-        keywordImageView.tintColor = ColorFactory.white50()
-        keywordImageView.contentMode = UIViewContentMode.Right
-        keywordImageView.frame = CGRectMake(0, 0, keywordImageView.image!.size.width + 10, keywordImageView.image!.size.height)
-        keywordSearchField.clearButtonMode = UITextFieldViewMode.WhileEditing
-        keywordSearchField.leftView = keywordImageView
-        keywordSearchField.leftViewMode = UITextFieldViewMode.Always
-        keywordSearchField.textAlignment = .Left
+        configureField(locationSearchField, defaultText: "Location", iconName: "pinIcon")
+        configureField(keywordSearchField, defaultText: "Keywords", iconName: "searchIconSmall")
         
         // event list view styling
         eventListTableView.separatorStyle = UITableViewCellSeparatorStyle.None
