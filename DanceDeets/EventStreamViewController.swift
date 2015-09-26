@@ -137,23 +137,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         return UIStatusBarStyle.LightContent
     }
     
-    // MARK: Private
-    
-    func registerNotifications(){
-        // notifications for keyboard
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: "handleKeyboardShown:",
-            name: UIKeyboardDidShowNotification,
-            object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: "handleKeyboardHidden:",
-            name: UIKeyboardDidHideNotification,
-            object: nil)
-    }
-    
     func loadViewController(){
         
         myLocationManager.delegate = self
@@ -204,24 +187,24 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         keywordSearchField.attributedPlaceholder = keywordPlaceholder
         
         
-        /*
-        searchTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
-        searchTextField.attributedPlaceholder = placeholder
-        searchTextField.tintColor = ColorFactory.white50()
-        searchTextField.textColor = ColorFactory.white50()
-        searchTextField.delegate = self
-        searchTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
-        */
+        let locationImageView:UIImageView = UIImageView(image: UIImage(named: "pinIcon")!)
+        locationImageView.tintColor = ColorFactory.white50()
+        locationImageView.contentMode = UIViewContentMode.Right
+        locationImageView.frame = CGRectMake(0, 0, locationImageView.image!.size.width + 10, locationImageView.image!.size.height)
+        //locationSearchField.delegate = self
+        locationSearchField.clearButtonMode = UITextFieldViewMode.WhileEditing
+        locationSearchField.leftView = locationImageView
+        locationSearchField.leftViewMode = UITextFieldViewMode.Always
+        locationSearchField.textAlignment = .Left
         
-        let imageView:UIImageView = UIImageView(image: UIImage(named: "searchIconSmall")!)
-        imageView.tintColor = ColorFactory.white50()
-        imageView.contentMode = UIViewContentMode.Right
-        imageView.frame = CGRectMake(0, 0, imageView.image!.size.width + 10, imageView.image!.size.height)
-        /*
-        searchTextField.leftView = imageView
-        searchTextField.leftViewMode = UITextFieldViewMode.UnlessEditing
-        searchTextField.textAlignment = .Left
-        */
+        let keywordImageView:UIImageView = UIImageView(image: UIImage(named: "searchIconSmall")!)
+        keywordImageView.tintColor = ColorFactory.white50()
+        keywordImageView.contentMode = UIViewContentMode.Right
+        keywordImageView.frame = CGRectMake(0, 0, keywordImageView.image!.size.width + 10, keywordImageView.image!.size.height)
+        keywordSearchField.clearButtonMode = UITextFieldViewMode.WhileEditing
+        keywordSearchField.leftView = keywordImageView
+        keywordSearchField.leftViewMode = UITextFieldViewMode.Always
+        keywordSearchField.textAlignment = .Left
         
         // event list view styling
         eventListTableView.separatorStyle = UITableViewCellSeparatorStyle.None

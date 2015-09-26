@@ -223,7 +223,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e4R-8c-l3a" userLabel="Location Search Field">
-                                        <rect key="frame" x="0.0" y="88.5" width="297.5" height="30"/>
+                                        <rect key="frame" x="5" y="88.5" width="293" height="30"/>
                                         <color key="backgroundColor" red="0.9960784912109375" green="0.99215692281723022" blue="0.99215692281723022" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -231,7 +231,7 @@
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Keywords" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uav-SE-Lwi" userLabel="Keyword Search Field">
-                                        <rect key="frame" x="302.5" y="88.5" width="297" height="30"/>
+                                        <rect key="frame" x="303" y="88.5" width="292" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -247,14 +247,14 @@
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="centerX" secondItem="dCA-Tc-CJh" secondAttribute="centerX" id="FHi-VN-MMp"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" constant="33" id="LvJ-CR-je1"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" constant="50" id="MNS-yp-lRk"/>
-                                    <constraint firstItem="e4R-8c-l3a" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" id="Q4H-LU-0TS"/>
+                                    <constraint firstItem="e4R-8c-l3a" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" constant="5" id="Q4H-LU-0TS"/>
                                     <constraint firstItem="e4R-8c-l3a" firstAttribute="width" secondItem="Uav-SE-Lwi" secondAttribute="width" id="WvE-mq-Mq1"/>
                                     <constraint firstItem="1oV-ms-x6i" firstAttribute="top" secondItem="dCA-Tc-CJh" secondAttribute="bottom" id="YXj-zv-B2o"/>
                                     <constraint firstItem="e4R-8c-l3a" firstAttribute="top" secondItem="1oV-ms-x6i" secondAttribute="bottom" constant="15" id="aLa-qo-6Wa"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" id="eUx-6q-Cam"/>
                                     <constraint firstAttribute="trailing" secondItem="1H1-yX-i7C" secondAttribute="trailing" id="hE7-9E-51D"/>
                                     <constraint firstItem="e4R-8c-l3a" firstAttribute="centerY" secondItem="Uav-SE-Lwi" secondAttribute="centerY" id="hZe-Zn-zUx"/>
-                                    <constraint firstAttribute="trailing" secondItem="Uav-SE-Lwi" secondAttribute="trailing" id="ntZ-PH-yc5"/>
+                                    <constraint firstAttribute="trailing" secondItem="Uav-SE-Lwi" secondAttribute="trailing" constant="5" id="ntZ-PH-yc5"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" id="p5t-PV-c7y"/>
                                     <constraint firstAttribute="trailing" secondItem="dCA-Tc-CJh" secondAttribute="trailing" constant="50" id="poC-lU-vag"/>
                                 </constraints>
