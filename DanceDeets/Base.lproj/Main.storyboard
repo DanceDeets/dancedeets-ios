@@ -173,10 +173,10 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="SDL-kz-8Vg"/>
-                                            <constraint firstAttribute="height" constant="60" id="zIh-R4-RcH"/>
+                                            <constraint firstAttribute="height" constant="50" id="zIh-R4-RcH"/>
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="imageEdgeInsets" minX="10" minY="30" maxX="10" maxY="10"/>
+                                        <inset key="imageEdgeInsets" minX="10" minY="25" maxX="10" maxY="5"/>
                                         <state key="normal" image="settingsIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
