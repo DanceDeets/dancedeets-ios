@@ -11,10 +11,12 @@ import CoreLocation
 
 public class ServerInterface : NSObject, CLLocationManagerDelegate {
 
+    var currentGeocoder:CurrentGeocode?
+
     // MARK: Static URL Construction Methods
     static let urlArgCharacterSet = ServerInterface.getUrlArgCharacterSet()
     static let baseUrl:String = "http://www.dancedeets.com/api/v1.1"
-    
+
     class func getUrlArgCharacterSet() -> NSCharacterSet {
         let characterSet:NSMutableCharacterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
         characterSet.addCharactersInString("&=")
@@ -46,16 +48,10 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         
         dispatch_once(&Static.onceToken, { () -> Void in
             Static.instance = ServerInterface()
-            Static.instance?.locationManager.requestWhenInUseAuthorization()
-            Static.instance?.locationManager.delegate = Static.instance
         })
         return Static.instance!
     }
 
-    // MARK: Regular Methods
-    let locationManager:CLLocationManager  = CLLocationManager()
-    let geocoder:CLGeocoder = CLGeocoder()
-    
     func getAuthUrl() -> NSURL {
         return ServerInterface.getApiUrl("auth")
     }
@@ -83,14 +79,12 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     }
     
     func updateFacebookToken() {
-        locationManager.startUpdatingLocation()
+        currentGeocoder = CurrentGeocode(completionHandler: completionHandler)
     }
     
-    func completionHandler(placemarks: [CLPlacemark]?, error: NSError?) {
-        if (placemarks != nil && placemarks!.count > 0) {
-            let placemark:CLPlacemark = placemarks!.first!
-            var geocodeString:String = ""
-            
+    func completionHandler(optionalPlacemark: CLPlacemark?) {
+        var geocodeString:String = ""
+        if let placemark = optionalPlacemark {
             // set up a display address
             if let lines = placemark.addressDictionary?["FormattedAddressLines"] as? [String] {
                 for line in lines {
@@ -98,47 +92,35 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
                     geocodeString += " "
                 }
             }
-            
-            // construct payload
-            FBSDKAccessToken.currentAccessToken()
-            if let tokenData = FBSDKAccessToken.currentAccessToken() {
-                let expiration = tokenData.expirationDate
-                let accessToken = tokenData.tokenString
-                
-                let dateFormatter:NSDateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
-                dateFormatter.timeZone = NSTimeZone.systemTimeZone()
-                
-                let urlRequest = NSMutableURLRequest(URL: self.getAuthUrl())
-                urlRequest.HTTPMethod = "POST"
-                urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                
-                let params = NSMutableDictionary()
-                params["client"] = "ios"
-                params["location"] = geocodeString
-                params["access_token"] = accessToken
-                params["access_token_expires"] = dateFormatter.stringFromDate(expiration)
-                let postData = try? NSJSONSerialization.dataWithJSONObject(params, options: [])
-                urlRequest.HTTPBody = postData
-                
-                // post it up
-                let task = NSURLSession.sharedSession().dataTaskWithRequest(urlRequest, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-                    print("Posted up token with error: \(error)")
-                })
-                task.resume()
-            }
         }
-    }
-    
-    // MARK: - CLLocationManagerDelegate
-    public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        locationManager.stopUpdatingLocation()
-        
-        let locationObject:CLLocation = locations.first as CLLocation!
-        geocoder.reverseGeocodeLocation(locationObject, completionHandler: completionHandler)
-    }
-    
-    public func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        locationManager.stopUpdatingLocation()
+
+        // construct payload
+        FBSDKAccessToken.currentAccessToken()
+        if let tokenData = FBSDKAccessToken.currentAccessToken() {
+            let expiration = tokenData.expirationDate
+            let accessToken = tokenData.tokenString
+            
+            let dateFormatter:NSDateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
+            dateFormatter.timeZone = NSTimeZone.systemTimeZone()
+            
+            let urlRequest = NSMutableURLRequest(URL: self.getAuthUrl())
+            urlRequest.HTTPMethod = "POST"
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let params = NSMutableDictionary()
+            params["client"] = "ios"
+            params["location"] = geocodeString
+            params["access_token"] = accessToken
+            params["access_token_expires"] = dateFormatter.stringFromDate(expiration)
+            let postData = try? NSJSONSerialization.dataWithJSONObject(params, options: [])
+            urlRequest.HTTPBody = postData
+            
+            // post it up
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(urlRequest, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+                print("Posted up token with error: \(error)")
+            })
+            task.resume()
+        }
     }
 }

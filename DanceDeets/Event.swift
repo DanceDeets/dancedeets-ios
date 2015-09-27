@@ -217,15 +217,6 @@ public class Event: NSObject {
         
     }
     
-    public class func loadEventsForLocation(location:CLLocation, keyword:String?, completion: (([Event]!, NSError!)->Void)) -> Void
-    {
-        AnalyticsUtil.track("Search Events", [
-            "Location": location.description,
-            "Keywords": keyword ?? "",
-            ])
-        loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrlByLocation(location, eventKeyword:keyword), completion:completion)
-    }
-    
     public class func loadEventsForCity(city:String, keyword:String?, completion: (([Event]!, NSError!)->Void)) -> Void
     {
         AnalyticsUtil.track("Search Events", [

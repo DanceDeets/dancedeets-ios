@@ -24,7 +24,6 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
         self.eventSelectedHandler = handler
 
         super.init()
-        print(self)
 
         // event list view styling
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None

@@ -12,15 +12,13 @@ import MessageUI
 import QuartzCore
 import FBSDKCoreKit
 
-class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate {
+class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     // MARK: Constants
     let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 90.0
     let SEARCH_AUTOSUGGEST_TERMS:[String] = ["All","Bboy","Breaking","Hip-Hop", "House","Popping","Locking","Waacking","Dancehall","Vogue","Krumping","Turfing","Litefeet","Flexing","Bebop","All-Styles"]
     
     // MARK: Variables
-    var myLocationManager:CLLocationManager = CLLocationManager()
-    var geocoder:CLGeocoder = CLGeocoder()
     var locationFailureAlert:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
     var displaySearchString:String = String()
     var searchKeyword:String = ""
@@ -28,7 +26,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
-    var locationObject:CLLocation? = nil
+    var currentGeooder:CurrentGeocode?
 
     var eventDisplay:EventDisplay?
 
@@ -79,7 +77,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         loadViewController()
         
-        myLocationManager.requestWhenInUseAuthorization()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -94,7 +91,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         
         if (requiresRefresh) {
             requiresRefresh = false
-            myLocationManager.startUpdatingLocation()
+            currentGeooder = CurrentGeocode(completionHandler: completionHandler)
             searchKeyword = ""
         }
     }
@@ -145,9 +142,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
 
     func loadViewController() {
-    
-        myLocationManager.delegate = self
-        
         // auto suggest terms when search text field is tapped
         /*
         searchAutoSuggestTableView.alpha = 0
@@ -196,7 +190,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         searchKeyword = keywordSearchField.text!
-        UserSettings.setUserCitySearch(locationSearchField.text!)
         blurOverlay?.fadeOut(0.5, completion: nil)
         refreshEvents()
         return true
@@ -206,41 +199,17 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         blurOverlay?.fadeIn(0.5, completion: nil)
     }
     
-    func completionHandler(placemarks: [CLPlacemark]?, error: NSError?) {
-        if (placemarks != nil && placemarks!.count > 0) {
-            let placemark:CLPlacemark = placemarks!.first!
+    func completionHandler(optionalPlacemark: CLPlacemark?) {
+        if let placemark = optionalPlacemark {
             self.displaySearchString = "\(placemark.locality!), \(placemark.administrativeArea!)"
-            self.locationSearchField.text = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
-            Event.loadEventsForLocation(self.locationObject!, keyword:self.searchKeyword, completion:self.setupEventsDisplay)
+            let fullText = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
+            self.locationSearchField.text = fullText
+            Event.loadEventsForCity(fullText, keyword:self.searchKeyword, completion:self.setupEventsDisplay)
         } else {
-            self.showLocationFailure()
+            navigationTitle.text = "RETRY"
+            eventCountLabel.text = "Couldn't get your location"
+            locationFailureAlert.show()
         }
-    }
-
-    
-    // MARK: CLLocationManagerDelegate
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        myLocationManager.stopUpdatingLocation()
-        
-        if (locations.count == 0) {
-            showLocationFailure()
-        } else {
-            if let locationObject:CLLocation = locations.first! as CLLocation {
-                self.locationObject = locationObject
-                geocoder.reverseGeocodeLocation(locationObject, completionHandler: completionHandler)
-            }
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        myLocationManager.stopUpdatingLocation()
-        showLocationFailure()
-    }
-    
-    func showLocationFailure(){
-        navigationTitle.text = "RETRY"
-        eventCountLabel.text = "Couldn't get your location"
-        locationFailureAlert.show()
     }
 
     /*
