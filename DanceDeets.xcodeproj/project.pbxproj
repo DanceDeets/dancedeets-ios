@@ -55,6 +55,7 @@
 		1DAE2C1F1A3D063300F03AD1 /* ServerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */; };
 		1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C719E0999E0018B434 /* FontFactory.swift */; };
 		1DBA3F691A4BAA7600842486 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBA3F681A4BAA7600842486 /* SettingsCell.swift */; };
+		1DEE8EA31BB78C5B00D1DA15 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */; settings = {ASSET_TAGS = (); }; };
 		1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */; };
 		1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */; };
 		1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B5119FF575C00CF4A72 /* EventKit.framework */; };
@@ -141,6 +142,7 @@
 		1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerInterface.swift; sourceTree = "<group>"; };
 		1DB901C719E0999E0018B434 /* FontFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontFactory.swift; sourceTree = "<group>"; };
 		1DBA3F681A4BAA7600842486 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		1DFB3B5119FF575C00CF4A72 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
@@ -249,6 +251,7 @@
 			children = (
 				1D5888F91BB75B2900E70626 /* EventDisplay.swift */,
 				1D5888FC1BB7765C00E70626 /* CurrentGeocode.swift */,
+				1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */,
 			);
 			name = "ListView Components";
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
 				1D62C2F31BB525D30023F199 /* Test.swift in Sources */,
 				1D9554851BB3EEBA00241F38 /* Venue.swift in Sources */,
+				1DEE8EA31BB78C5B00D1DA15 /* SearchBar.swift in Sources */,
 				1D015B491AD21E0500DBC905 /* EventListItemTableViewCell.swift in Sources */,
 				1D6C3EA71A4B4BC90081A43C /* AddCityViewController.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,
