@@ -66,6 +66,8 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         blurOverlay?.fadeOut(0.5, completion: nil)
         controller.autosuggestTable?.fadeOut(0.5, completion: nil)
         searchHandler(controller.locationSearchField.text!, controller.keywordSearchField.text!)
+        self.autosuggestedLocations = []
+        self.controller.autosuggestTable.reloadData()
         return true
     }
 
@@ -120,6 +122,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         controller.locationSearchField.text = autosuggestedLocations[indexPath.row]
         controller.requiresRefresh = true
+        textFieldShouldReturn(controller.locationSearchField)
     }
 
     /*
