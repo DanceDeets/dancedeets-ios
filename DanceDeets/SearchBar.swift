@@ -64,12 +64,14 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         blurOverlay?.fadeOut(0.5, completion: nil)
+        controller.autosuggestTable?.fadeOut(0.5, completion: nil)
         searchHandler(controller.locationSearchField.text!, controller.keywordSearchField.text!)
         return true
     }
 
     func textFieldDidBeginEditing(textField: UITextField) {
         blurOverlay?.fadeIn(0.5, completion: nil)
+        controller.autosuggestTable?.fadeIn(0.5, completion: nil)
     }
 
     func locationFieldUpdated() {
