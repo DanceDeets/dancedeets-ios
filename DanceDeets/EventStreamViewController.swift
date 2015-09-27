@@ -159,8 +159,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         navigationTitle.addGestureRecognizer(titleTapGestureRecognizer!)
         
         // labels / icons
-        eventCountLabel.textColor = ColorFactory.white50()
-        eventCountLabel.font = FontFactory.eventDescriptionFont()
         eventCountLabel.text = ""
         /*
         searchTextCancelButton.alpha = 0.0
@@ -171,8 +169,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         let customNavBlur = customNavigationView.addDarkBlurOverlay()
         customNavigationView.insertSubview(customNavBlur, atIndex: 0)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationTitle.textColor = UIColor.whiteColor()
-        navigationTitle.font = FontFactory.navigationTitleFont()
         navigationTitle.text = ""
         navigationItem.title = ""
        
