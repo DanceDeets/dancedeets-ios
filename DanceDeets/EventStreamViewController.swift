@@ -12,7 +12,7 @@ import MessageUI
 import QuartzCore
 import FBSDKCoreKit
 
-class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate {
+class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     // MARK: Constants
     let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 90.0
@@ -22,18 +22,15 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     var myLocationManager:CLLocationManager = CLLocationManager()
     var geocoder:CLGeocoder = CLGeocoder()
     var locationFailureAlert:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
-    var events:[Event] = []
-    var filteredEvents:[Event] = []
     var displaySearchString:String = String()
     var searchKeyword:String = ""
     var requiresRefresh = true
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
-    var eventsBySection:NSMutableDictionary = NSMutableDictionary()
-    var sectionNames:NSMutableArray = NSMutableArray()
-    var activeYears:[Int] = []
     var locationObject:CLLocation? = nil
+
+    var eventDisplay:EventDisplay?
 
     // MARK: Outlets
     @IBOutlet weak var eventListTableView: UITableView!
@@ -61,14 +58,25 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         performSegueWithIdentifier("settingsSegue", sender: sender)
     }
     
+    func eventSelected(event: Event, eventImage: UIImage?) {
+        // the collection cell of the selected event
+        let destination = storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
+        destination.initialImage = eventImage
+        destination.event = event
+
+        navigationController?.pushViewController(destination, animated: true)
+    }
+
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        eventDisplay = EventDisplay(
+            tableView: eventListTableView,
+            heightOffset: CUSTOM_NAVIGATION_BAR_HEIGHT,
+            andHandler: eventSelected)
+
         view.layoutIfNeeded()
         
-        eventListTableView.reloadData()
-
         loadViewController()
         
         myLocationManager.requestWhenInUseAuthorization()
@@ -178,17 +186,6 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         configureField(locationSearchField, defaultText: "Location", iconName: "pinIcon")
         configureField(keywordSearchField, defaultText: "Keywords", iconName: "searchIconSmall")
         
-        // event list view styling
-        eventListTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        eventListTableView.separatorInset = UIEdgeInsetsMake(0, 12, 0, 12)
-        eventListTableView.layoutMargins = UIEdgeInsetsZero
-        eventListTableView.delegate = self
-        eventListTableView.dataSource = self
-        eventListTableView.rowHeight = UITableViewAutomaticDimension
-        eventListTableView.estimatedRowHeight = 142
-        eventListTableView.backgroundColor = UIColor.clearColor()
-        eventListTableView.contentInset = UIEdgeInsetsMake(CUSTOM_NAVIGATION_BAR_HEIGHT, 0, 0, 0)
-
         // blur overlay is used for background of auto suggest table
         blurOverlay = view.addDarkBlurOverlay()
         view.insertSubview(blurOverlay!, belowSubview: customNavigationView)
@@ -214,7 +211,7 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
             let placemark:CLPlacemark = placemarks!.first!
             self.displaySearchString = "\(placemark.locality!), \(placemark.administrativeArea!)"
             self.locationSearchField.text = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
-            Event.loadEventsForLocation(self.locationObject!, keyword:self.searchKeyword, completion:self.refreshCityCompletionHandler)
+            Event.loadEventsForLocation(self.locationObject!, keyword:self.searchKeyword, completion:self.setupEventsDisplay)
         } else {
             self.showLocationFailure()
         }
@@ -245,29 +242,20 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
         eventCountLabel.text = "Couldn't get your location"
         locationFailureAlert.show()
     }
-    
+
+    /*
     // MARK: UITableViewDataSource / UITableViewDelegate
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if (tableView == eventListTableView) {
-            return sectionNames.count
-        /*
         }else if(tableView == searchAutoSuggestTableView){
             return 1
-        */
         } else {
             return 0
         }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (tableView == eventListTableView) {
-            let sectionName = sectionNames[section] as! String
-            let events = eventsBySection[sectionName] as! NSArray
-            return events.count
-        /*
         }else if(tableView == searchAutoSuggestTableView){
             return SEARCH_AUTOSUGGEST_TERMS.count
-        */
         } else {
             return 0
         }
@@ -278,69 +266,19 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if (tableView == eventListTableView) {
-            return 30
-        } else {
-            return CGFloat.min
-        }
+        return CGFloat.min
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if (tableView == eventListTableView) {
-            // headers are the mo/yr for a section of events
-            let headerView = UIView(frame: CGRectZero)
-            headerView.backgroundColor = UIColor.clearColor()
-            headerView.addDarkBlurOverlay()
-            let headerLabel = UILabel(frame: CGRectZero)
-            let sectionName = sectionNames[section] as! String
-            headerLabel.translatesAutoresizingMaskIntoConstraints = false
-            headerView.addSubview(headerLabel)
-            headerLabel.constrainLeftToSuperView(13)
-            headerLabel.verticallyCenterToSuperView(0)
-            headerLabel.font = UIFont(name:"Interstate-BoldCondensed",size:15)!
-            headerLabel.textColor = UIColor.whiteColor()
-            headerLabel.text = sectionName
-            return headerView
-        } else {
-            return nil
-        }
+        return nil
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if (tableView == eventListTableView) {
-            let sectionName = self.sectionNames[indexPath.section] as! String
-            let sectionEvents = self.eventsBySection[sectionName] as! [Event]
-            
-            let cell = tableView.dequeueReusableCellWithIdentifier("eventListTableViewCell", forIndexPath: indexPath) as! EventListItemTableViewCell
-            let event:Event = sectionEvents[indexPath.row]
-            cell.updateForEvent(event)
-            
-            if let imageUrl = event.eventSmallImageUrl {
-                let imageRequest:NSURLRequest = NSURLRequest(URL: imageUrl)
-                if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest) {
-                    cell.eventImageView?.image = image
-                } else {
-                    cell.eventImageView?.image = nil
-                    event.downloadSmallImage({ (image: UIImage!, error: NSError!) -> Void in
-                        // guard against cell reuse + async download
-                        if (event == cell.currentEvent) {
-                            if (image != nil) {
-                                cell.eventImageView?.image = image
-                            }
-                        }
-                    })
-                }
-            } else {
-                cell.eventImageView?.image = nil
-            }
-            return cell
-        /*
         }else if(tableView == searchAutoSuggestTableView){
             let cell = tableView.dequeueReusableCellWithIdentifier("autoSuggestCell", forIndexPath: indexPath) as! SearchAutoSuggestTableCell
             let term = SEARCH_AUTOSUGGEST_TERMS[indexPath.row]
             cell.titleLabel!.text = term
             return cell
-        */
         }else{
             // shouldn't happen
             return tableView.dequeueReusableCellWithIdentifier("autoSuggestCell", forIndexPath: indexPath) as! SearchAutoSuggestTableCell
@@ -348,34 +286,15 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if (tableView == eventListTableView) {
-            if let sectionName = self.sectionNames[indexPath.section] as? String {
-                if let sectionEvents = self.eventsBySection[sectionName] as? [Event] {
-                    if (sectionEvents.count > indexPath.row) {
-                        let event = sectionEvents[indexPath.row]
-
-                        // the collection cell of the selected event
-                        let eventCell =  self.eventListTableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
-                        
-                        let destination = self.storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
-                        destination.initialImage = eventCell.eventImageView.image
-                        destination.event = event
-                        
-                        self.navigationController?.pushViewController(destination, animated: true)
-                    }
-                }
-            }
-        /*
         }else if(tableView == searchAutoSuggestTableView){
             let term = SEARCH_AUTOSUGGEST_TERMS[indexPath.row] as String
             searchKeyword = term
             hideAutoSuggestTable()
             
             refreshEvents()
-        */
         }
     }
-    /*
+
     func showAutoSuggestTable(){
         blurOverlay?.fadeIn(0.5, completion: nil)
         
@@ -417,69 +336,31 @@ class EventStreamViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     */
     
-    func refreshEvents() {
-        displaySearchString = locationSearchField.text!
-        navigationTitle.text = displaySearchString.uppercaseString
-        eventCountLabel.text = "Loading..."
-        Event.loadEventsForCity(displaySearchString, keyword:searchKeyword, completion: refreshCityCompletionHandler)
-    }
-    
-    func refreshCityCompletionHandler(events: [Event]!, error: NSError!) {
+    func setupEventsDisplay(events: [Event]!, error: NSError!) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            // reset event models
-            self.events = []
-            self.eventsBySection.removeAllObjects()
-            self.activeYears.removeAll(keepCapacity: false)
-            self.sectionNames.removeAllObjects()
-            
-            // check response
             if (error != nil) {
                 self.navigationTitle.text = "ERROR"
                 let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
                 errorAlert.show()
-                self.eventListTableView.reloadData()
                 self.eventCountLabel.text = "Try again"
             } else if(events.count == 0) {
                 self.navigationTitle.text = self.displaySearchString.uppercaseString
                 let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
-                self.eventListTableView.reloadData()
                 self.eventCountLabel.text = "No Events"
             } else {
                 self.navigationTitle.text = self.displaySearchString.uppercaseString
                 self.eventCountLabel.text = "\(self.searchKeyword) | \(events.count) Events"
-                
-                // data source for collection view
-                self.events = events
-                
-                // data source for list view -> group events into sections by month (or day?)
-                for event in events {
-                    if event.startTime != nil {
-                        // month from event's start time as a string
-                        let dateFormatter = NSDateFormatter()
-                        dateFormatter.dateFormat = "EEE MMM d"
-                        let sectionName = dateFormatter.stringFromDate(event.startTime!)
-                        // each section has an array of events
-                        var eventList:NSMutableArray? = self.eventsBySection[sectionName] as? NSMutableArray
-                        if (eventList == nil) {
-                            eventList = NSMutableArray()
-                            self.eventsBySection[sectionName] = eventList
-                        }
-                        eventList?.addObject(event)
-                        
-                        // keep track of active sections for section headers
-                        if (!self.sectionNames.containsObject(sectionName)) {
-                            self.sectionNames.addObject(sectionName)
-                        }
-                    }
-                }
-                self.eventListTableView.reloadData()
-                if (self.eventListTableView.numberOfSections > 0 && self.eventListTableView.numberOfRowsInSection(0) > 0) {
-                    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                    self.eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
-                }
             }
+            self.eventDisplay!.setup(events, error: error)
         })
+    }
+
+    func refreshEvents() {
+        displaySearchString = locationSearchField.text!
+        navigationTitle.text = displaySearchString.uppercaseString
+        eventCountLabel.text = "Loading..."
+        Event.loadEventsForCity(displaySearchString, keyword:searchKeyword, completion: setupEventsDisplay)
     }
     
     func checkFaceBookToken(){

@@ -27,6 +27,7 @@
 		1D12DE901B0A1C0A00BEE249 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D12DE8F1B0A1C0A00BEE249 /* Crashlytics.framework */; };
 		1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15802A1A05695400658A1D /* EventAdmin.swift */; };
 		1D4343471A1DB06D00E0B0A3 /* SearchAutoSuggestTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4343461A1DB06D00E0B0A3 /* SearchAutoSuggestTableCell.swift */; };
+		1D5888FA1BB75B2900E70626 /* EventDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888F91BB75B2900E70626 /* EventDisplay.swift */; settings = {ASSET_TAGS = (); }; };
 		1D62C2F31BB525D30023F199 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D62C2F21BB525D30023F199 /* Test.swift */; settings = {ASSET_TAGS = (); }; };
 		1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */; };
 		1D6C3EA71A4B4BC90081A43C /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA61A4B4BC90081A43C /* AddCityViewController.swift */; };
@@ -107,6 +108,7 @@
 		1D15802A1A05695400658A1D /* EventAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAdmin.swift; sourceTree = "<group>"; };
 		1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DanceDeets-Bridging-Header.h"; sourceTree = "<group>"; };
 		1D4343461A1DB06D00E0B0A3 /* SearchAutoSuggestTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAutoSuggestTableCell.swift; sourceTree = "<group>"; };
+		1D5888F91BB75B2900E70626 /* EventDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDisplay.swift; sourceTree = "<group>"; };
 		1D62C2F21BB525D30023F199 /* Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
 		1D6C3EA61A4B4BC90081A43C /* AddCityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
@@ -240,6 +242,14 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		1D5888FB1BB7669C00E70626 /* ListView Components */ = {
+			isa = PBXGroup;
+			children = (
+				1D5888F91BB75B2900E70626 /* EventDisplay.swift */,
+			);
+			name = "ListView Components";
+			sourceTree = "<group>";
+		};
 		1D6C3EAC1A4B79DA0081A43C /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +289,7 @@
 				1D95547B1BB3C7E500241F38 /* EventManager */,
 				1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */,
 				1D0892501A27C97700A9EAC4 /* UserSettings.swift */,
+				1D5888FB1BB7669C00E70626 /* ListView Components */,
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,
 				1DB901C619E099810018B434 /* Extensions and Utilities */,
 				1D19871D1A2A950A004156B2 /* Custom Views */,
@@ -599,6 +610,7 @@
 				1D015B491AD21E0500DBC905 /* EventListItemTableViewCell.swift in Sources */,
 				1D6C3EA71A4B4BC90081A43C /* AddCityViewController.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,
+				1D5888FA1BB75B2900E70626 /* EventDisplay.swift in Sources */,
 				1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */,
 				1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */,
 				1D08924D1A27BF8700A9EAC4 /* CitySearchCell.swift in Sources */,

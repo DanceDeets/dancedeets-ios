@@ -160,10 +160,6 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="EoL-DY-p6g" id="Dih-bI-8pX"/>
-                                    <outlet property="delegate" destination="EoL-DY-p6g" id="5Yb-oz-FeS"/>
-                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ep2-FI-Z09">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
