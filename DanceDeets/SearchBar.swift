@@ -58,13 +58,16 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         field.textAlignment = .Left
     }
 
+    func textFieldDidEndEditing(textField: UITextField) {
+        self.autosuggestedLocations = []
+        self.controller.autosuggestTable.reloadData()
+    }
+
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         blurOverlay?.fadeOut(0.5, completion: nil)
         controller.autosuggestTable?.fadeOut(0.5, completion: nil)
         searchHandler(controller.locationSearchField.text!, controller.keywordSearchField.text!)
-        self.autosuggestedLocations = []
-        self.controller.autosuggestTable.reloadData()
         return true
     }
 
