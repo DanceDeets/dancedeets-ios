@@ -185,7 +185,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Navigation Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCA-Tc-CJh">
-                                        <rect key="frame" x="5" y="20" width="119" height="40"/>
+                                        <rect key="frame" x="5" y="20" width="94.5" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Hk1-kH-DOs"/>
                                         </constraints>
@@ -194,21 +194,21 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Event Count" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1oV-ms-x6i">
-                                        <rect key="frame" x="134" y="30" width="396" height="20.5"/>
+                                        <rect key="frame" x="109.5" y="33" width="420.5" height="14.5"/>
                                         <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e4R-8c-l3a" userLabel="Location Search Field">
-                                        <rect key="frame" x="5" y="55.5" width="292.5" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e4R-8c-l3a" userLabel="Location Search Field">
+                                        <rect key="frame" x="5" y="52.5" width="292.5" height="30"/>
                                         <color key="backgroundColor" red="0.9960784912109375" green="0.99215692281723022" blue="0.99215692281723022" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="12"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Keywords" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uav-SE-Lwi" userLabel="Keyword Search Field">
-                                        <rect key="frame" x="302" y="55.5" width="292.5" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Keywords" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uav-SE-Lwi" userLabel="Keyword Search Field">
+                                        <rect key="frame" x="302" y="52.5" width="292.5" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -234,8 +234,8 @@
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="centerY" secondItem="1oV-ms-x6i" secondAttribute="centerY" id="yXE-Sf-Cq6"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EIE-kU-6ur" userLabel="Autosuggest Table View">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EIE-kU-6ur" userLabel="Autosuggest Table View">
+                                <rect key="frame" x="0.0" y="90" width="600" height="466"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="autosuggestCityCell" id="hpn-rB-yB4" userLabel="autosuggestLocation" customClass="AutosuggestCityCell" customModule="DanceDeets" customModuleProvider="target">
@@ -249,7 +249,7 @@
                                                     <rect key="frame" x="15" y="16" width="10" height="12"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autosuggested City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxA-ig-8F2">
-                                                    <rect key="frame" x="40" y="12.5" width="151" height="20.5"/>
+                                                    <rect key="frame" x="40" y="12" width="151" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -281,9 +281,13 @@
                             <constraint firstAttribute="trailing" secondItem="ep2-FI-Z09" secondAttribute="trailing" id="Vgy-1e-D1o"/>
                             <constraint firstItem="6uV-7g-Wtg" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="Wqz-Fa-g7r"/>
                             <constraint firstItem="x7r-fS-X6k" firstAttribute="height" secondItem="h61-S6-mbM" secondAttribute="height" id="ZH9-P3-KFq"/>
+                            <constraint firstAttribute="trailing" secondItem="EIE-kU-6ur" secondAttribute="trailing" id="bHj-S2-kiq"/>
                             <constraint firstAttribute="trailing" secondItem="6uV-7g-Wtg" secondAttribute="trailing" id="eoa-nY-2dI"/>
                             <constraint firstItem="ep2-FI-Z09" firstAttribute="top" secondItem="h61-S6-mbM" secondAttribute="top" id="i16-Mh-YMP"/>
+                            <constraint firstItem="Su9-au-Hmc" firstAttribute="top" secondItem="EIE-kU-6ur" secondAttribute="bottom" id="qNh-L7-1Y2"/>
+                            <constraint firstItem="EIE-kU-6ur" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="bottom" id="uXU-kG-syc"/>
                             <constraint firstItem="x7r-fS-X6k" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="v5q-9T-uet"/>
+                            <constraint firstItem="EIE-kU-6ur" firstAttribute="leading" secondItem="h61-S6-mbM" secondAttribute="leading" id="wA9-cb-8Ke"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">

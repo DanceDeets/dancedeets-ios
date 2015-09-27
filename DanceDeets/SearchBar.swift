@@ -23,13 +23,10 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         super.init()
 
         // auto suggest terms when search text field is tapped
-
         controller.autosuggestTable.alpha = 0
         controller.autosuggestTable.backgroundColor = UIColor.clearColor()
         controller.autosuggestTable.delegate = self
         controller.autosuggestTable.dataSource = self
-        //controller.autosuggestTable.registerClass(SettingsCell.classForCoder(), forCellReuseIdentifier: "autosuggestCityCell")
-        controller.autosuggestTable.contentInset = UIEdgeInsetsMake(self.controller.customNavigationView.frame.height, 0, 300, 0)
         controller.autosuggestTable.tintColor = ColorFactory.white50()
 
         controller.locationSearchField.addTarget(self, action: "locationFieldUpdated", forControlEvents: UIControlEvents.EditingChanged)
