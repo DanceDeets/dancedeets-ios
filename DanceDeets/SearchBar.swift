@@ -8,13 +8,14 @@
 
 import Foundation
 
-class SearchBar : NSObject, UITextFieldDelegate {
+class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
 
     typealias SearchHandler = (String, String) -> Void
 
     var controller: EventStreamViewController
     var searchHandler: SearchHandler
     var blurOverlay: UIView?
+    var autosuggestedLocations:[String] = []
 
     init(controller: EventStreamViewController, searchHandler: SearchHandler) {
         self.controller = controller
@@ -22,17 +23,16 @@ class SearchBar : NSObject, UITextFieldDelegate {
         super.init()
 
         // auto suggest terms when search text field is tapped
-        /*
-        searchAutoSuggestTableView.alpha = 0
-        searchAutoSuggestTableView.backgroundColor = UIColor.clearColor()
-        searchAutoSuggestTableView.delegate = self
-        searchAutoSuggestTableView.dataSource = self
-        searchAutoSuggestTableView.registerClass(SearchAutoSuggestTableCell.classForCoder(), forCellReuseIdentifier: "autoSuggestCell")
-        searchAutoSuggestTableView.contentInset = UIEdgeInsetsMake(CUSTOM_NAVIGATION_BAR_HEIGHT, 0, 300, 0)
 
-        searchTextCancelButton.alpha = 0.0
-        searchTextCancelButton.tintColor = ColorFactory.white50()
-        */
+        controller.autosuggestTable.alpha = 0
+        controller.autosuggestTable.backgroundColor = UIColor.clearColor()
+        controller.autosuggestTable.delegate = self
+        controller.autosuggestTable.dataSource = self
+        //controller.autosuggestTable.registerClass(SettingsCell.classForCoder(), forCellReuseIdentifier: "autosuggestCityCell")
+        controller.autosuggestTable.contentInset = UIEdgeInsetsMake(self.controller.customNavigationView.frame.height, 0, 300, 0)
+        controller.autosuggestTable.tintColor = ColorFactory.white50()
+
+        controller.locationSearchField.addTarget(self, action: "locationFieldUpdated", forControlEvents: UIControlEvents.EditingChanged)
 
         // search text field styling
         configureField(controller.locationSearchField, defaultText: "Location", iconName: "pinIcon")
@@ -43,7 +43,7 @@ class SearchBar : NSObject, UITextFieldDelegate {
         controller.view.insertSubview(blurOverlay!, belowSubview: controller.customNavigationView)
         blurOverlay?.alpha = 0
     }
-    
+
     func configureField(field: UITextField, defaultText: String, iconName: String) {
         let placeholder = NSMutableAttributedString(string: defaultText)
         placeholder.setColor(ColorFactory.white50())
@@ -72,26 +72,55 @@ class SearchBar : NSObject, UITextFieldDelegate {
         blurOverlay?.fadeIn(0.5, completion: nil)
     }
 
-    /*
-    func textFieldUpdated(){
-        let currentText = locationSearchField.text
+    func locationFieldUpdated() {
+        let currentText = controller.locationSearchField.text
         if (currentText?.characters.count > 0) {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             GooglePlaceAPI.autoSuggestCity(currentText!, completion: { (autosuggests: [String]!, error: NSError!) -> Void in
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 if (error == nil) {
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.autosuggestedCities = autosuggests
-                        self.tableView.reloadData()
+                        self.autosuggestedLocations = autosuggests
+                        self.controller.autosuggestTable.reloadData()
                     })
                 }
             })
         } else {
-            autosuggestedCities = []
-            tableView.reloadData()
+            autosuggestedLocations = []
+            controller.autosuggestTable.reloadData()
         }
     }
 
+    // MARK: UITableViewDataSource
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return autosuggestedLocations.count
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
+        cell.label.text = autosuggestedLocations[indexPath.row]
+        return cell
+    }
+
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.min
+    }
+
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.min
+    }
+
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 44
+    }
+
+    // MARK: UITableViewDelegate
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        controller.locationSearchField.text = autosuggestedLocations[indexPath.row]
+        controller.requiresRefresh = true
+    }
+
+    /*
     // MARK: UITableViewDataSource / UITableViewDelegate
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if(tableView == searchAutoSuggestTableView){

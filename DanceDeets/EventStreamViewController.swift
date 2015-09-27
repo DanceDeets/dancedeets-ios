@@ -41,18 +41,13 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     @IBOutlet weak var locationSearchField: UITextField!
     @IBOutlet weak var keywordSearchField: UITextField!
-    
+    @IBOutlet weak var autosuggestTable: UITableView!
+
     // MARK: Action functions
     @IBAction func refreshButtonTapped(sender: AnyObject) {
         refreshEvents()
     }
-    
-    /*
-    @IBAction func searchTextCancelButtonTapped(sender: AnyObject) {
-        hideAutoSuggestTable()
-    }
-    */
-    
+
     @IBAction func settingsButtonTapped(sender: AnyObject) {
         performSegueWithIdentifier("settingsSegue", sender: sender)
     }
@@ -80,14 +75,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         loadViewController()
         
     }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        /*
-        searchTextField.endEditing(true)
-        */
-    }
-    
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
