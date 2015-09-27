@@ -27,6 +27,7 @@
 		1D12DE901B0A1C0A00BEE249 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D12DE8F1B0A1C0A00BEE249 /* Crashlytics.framework */; };
 		1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15802A1A05695400658A1D /* EventAdmin.swift */; };
 		1D4343471A1DB06D00E0B0A3 /* SearchAutoSuggestTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4343461A1DB06D00E0B0A3 /* SearchAutoSuggestTableCell.swift */; };
+		1D4A22311BB8692400CAD7E3 /* UrlUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A22301BB8692400CAD7E3 /* UrlUtil.swift */; settings = {ASSET_TAGS = (); }; };
 		1D5888FA1BB75B2900E70626 /* EventDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888F91BB75B2900E70626 /* EventDisplay.swift */; settings = {ASSET_TAGS = (); }; };
 		1D5888FD1BB7765C00E70626 /* CurrentGeocode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888FC1BB7765C00E70626 /* CurrentGeocode.swift */; settings = {ASSET_TAGS = (); }; };
 		1D62C2F31BB525D30023F199 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D62C2F21BB525D30023F199 /* Test.swift */; settings = {ASSET_TAGS = (); }; };
@@ -110,6 +111,7 @@
 		1D15802A1A05695400658A1D /* EventAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAdmin.swift; sourceTree = "<group>"; };
 		1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DanceDeets-Bridging-Header.h"; sourceTree = "<group>"; };
 		1D4343461A1DB06D00E0B0A3 /* SearchAutoSuggestTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAutoSuggestTableCell.swift; sourceTree = "<group>"; };
+		1D4A22301BB8692400CAD7E3 /* UrlUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UrlUtil.swift; path = "../../dancedeets-ios/DanceDeets/UrlUtil.swift"; sourceTree = "<group>"; };
 		1D5888F91BB75B2900E70626 /* EventDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDisplay.swift; sourceTree = "<group>"; };
 		1D5888FC1BB7765C00E70626 /* CurrentGeocode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentGeocode.swift; sourceTree = "<group>"; };
 		1D62C2F21BB525D30023F199 /* Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
 				1D95547B1BB3C7E500241F38 /* EventManager */,
 				1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */,
+				1D4A22301BB8692400CAD7E3 /* UrlUtil.swift */,
 				1D0892501A27C97700A9EAC4 /* UserSettings.swift */,
 				1D5888FB1BB7669C00E70626 /* ListView Components */,
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,
@@ -599,6 +602,7 @@
 				1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */,
 				1D08923F1A26726500A9EAC4 /* EventCollectionViewCell.swift in Sources */,
 				1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */,
+				1D4A22311BB8692400CAD7E3 /* UrlUtil.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */,
 				1D95547F1BB3C84400241F38 /* FacebookRsvpManager.swift in Sources */,

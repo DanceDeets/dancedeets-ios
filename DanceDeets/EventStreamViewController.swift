@@ -137,7 +137,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             self.displaySearchString = "\(placemark.locality!), \(placemark.administrativeArea!)"
             let fullText = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
             self.locationSearchField.text = fullText
-            Event.loadEventsForCity(fullText, keyword:self.searchKeyword, completion:self.setupEventsDisplay)
+            Event.loadEventsForLocation(fullText, withKeywords:self.searchKeyword, completion:self.setupEventsDisplay)
         } else {
             navigationTitle.text = "RETRY"
             eventCountLabel.text = "Couldn't get your location"
@@ -170,7 +170,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         navigationTitle.text = location.uppercaseString
         displaySearchString = location
         eventCountLabel.text = "Loading..."
-        Event.loadEventsForCity(displaySearchString, keyword:keywords, completion: setupEventsDisplay)
+        Event.loadEventsForLocation(displaySearchString, withKeywords:keywords, completion: setupEventsDisplay)
     }
 
     func refreshEvents() {

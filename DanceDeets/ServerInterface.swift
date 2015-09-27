@@ -14,29 +14,13 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     var currentGeocoder:CurrentGeocode?
 
     // MARK: Static URL Construction Methods
-    static let urlArgCharacterSet = ServerInterface.getUrlArgCharacterSet()
     static let baseUrl:String = "http://www.dancedeets.com/api/v1.1"
-
-    class func getUrlArgCharacterSet() -> NSCharacterSet {
-        let characterSet:NSMutableCharacterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
-        characterSet.addCharactersInString("&=")
-        let realCharacterSet:NSCharacterSet = characterSet.copy() as! NSCharacterSet
-        return realCharacterSet
-    }
 
     class func getApiUrl(path: String, withArgs args: [String: String]=[:]) -> NSURL {
         var fullArgs = args
         // Parameters passed on every request
         fullArgs["client"] = "ios"
-        let stringArgs = fullArgs.map(
-            {(key: String, value: String) -> String in
-                return key.stringByAddingPercentEncodingWithAllowedCharacters(ServerInterface.urlArgCharacterSet)!
-                    + "="
-                    + value.stringByAddingPercentEncodingWithAllowedCharacters(ServerInterface.urlArgCharacterSet)!
-            }
-        )
-        let url = baseUrl + path + "?" + stringArgs.joinWithSeparator("&")
-        return NSURL(string: url)!
+        return UrlUtil.getUrl(baseUrl + path, withArgs: fullArgs)
     }
 
     // MARK: Shared Instance Setup
