@@ -143,15 +143,33 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         }
     }
 
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return autosuggestedLocations.count
+        if section == 0 {
+            return 1
+        } else {
+            return autosuggestedLocations.count
+        }
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
-        cell.label.text = autosuggestedLocations[indexPath.row]
-        return cell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
+            cell.label.text = "Current Location"
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
+            cell.label.text = autosuggestedLocations[indexPath.row]
+            return cell
+        }
+    }
+
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return nil
     }
 
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -168,52 +186,24 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
 
     // MARK: UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        controller.locationSearchField.text = autosuggestedLocations[indexPath.row]
-        controller.requiresRefresh = true
-        textFieldShouldReturn(controller.locationSearchField)
+        if indexPath.section == 0 {
+            controller.locationSearchField.text = "" //TODO: look up location!!
+            controller.requiresRefresh = true
+            textFieldShouldReturn(controller.locationSearchField)
+        } else {
+            controller.locationSearchField.text = autosuggestedLocations[indexPath.row]
+            controller.requiresRefresh = true
+            textFieldShouldReturn(controller.locationSearchField)
+        }
     }
 
     /*
     // MARK: UITableViewDataSource / UITableViewDelegate
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if(tableView == searchAutoSuggestTableView){
-            return 1
-        } else {
-            return 0
-        }
-    }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(tableView == searchAutoSuggestTableView){
-            return SEARCH_AUTOSUGGEST_TERMS.count
-        } else {
-            return 0
-        }
+        return SEARCH_AUTOSUGGEST_TERMS.count
     }
 
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat.min
-    }
-
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.min
-    }
-
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return nil
-    }
-
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if(tableView == searchAutoSuggestTableView){
-            let cell = tableView.dequeueReusableCellWithIdentifier("autoSuggestCell", forIndexPath: indexPath) as! SearchAutoSuggestTableCell
-            let term = SEARCH_AUTOSUGGEST_TERMS[indexPath.row]
-            cell.titleLabel!.text = term
-            return cell
-        }else{
-            // shouldn't happen
-            return tableView.dequeueReusableCellWithIdentifier("autoSuggestCell", forIndexPath: indexPath) as! SearchAutoSuggestTableCell
-        }
-    }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(tableView == searchAutoSuggestTableView){
@@ -223,46 +213,6 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
 
             refreshEvents()
         }
-    }
-
-    func showAutoSuggestTable(){
-        blurOverlay?.fadeIn(0.5, completion: nil)
-
-        view.layoutIfNeeded()
-        UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
-            self.searchTextTrailingConstraint.constant = 80
-            self.view.layoutIfNeeded()
-            }) { (bool:Bool) -> Void in
-                return
-        }
-        UIView.animateWithDuration(0.25, delay: 0.25, options: .CurveEaseInOut, animations: { () -> Void in
-            self.searchTextCancelButton.alpha = 1.0
-            self.searchAutoSuggestTableView.alpha = 1.0
-            }) { (bool:Bool) -> Void in
-                return
-        }
-
-        searchTextField.text = ""
-        searchTextField.becomeFirstResponder()
-    }
-
-    func hideAutoSuggestTable(){
-        blurOverlay?.fadeOut(0.5, completion: nil)
-
-        view.layoutIfNeeded()
-        UIView.animateWithDuration(0.25, delay: 0.25, options: .CurveEaseInOut, animations: { () -> Void in
-            self.searchTextTrailingConstraint.constant = 12
-            self.view.layoutIfNeeded()
-            }) { (bool:Bool) -> Void in
-                return
-        }
-        UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
-            self.searchTextCancelButton.alpha = 0
-            self.searchAutoSuggestTableView.alpha = 0
-            }) { (bool:Bool) -> Void in
-                return
-        }
-        view.endEditing(true)
     }
     */
 
