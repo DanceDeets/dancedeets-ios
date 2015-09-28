@@ -196,6 +196,9 @@
                                         <rect key="frame" x="5" y="60" width="292.5" height="30"/>
                                         <color key="backgroundColor" red="0.9960784912109375" green="0.99215692281723022" blue="0.99215692281723022" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="iMC-uc-47Z"/>
+                                        </constraints>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="12"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
@@ -204,6 +207,9 @@
                                         <rect key="frame" x="302" y="60" width="292.5" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="amG-Za-gz5"/>
+                                        </constraints>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
@@ -218,14 +224,16 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="Uav-SE-Lwi" firstAttribute="width" secondItem="ep2-FI-Z09" secondAttribute="width" priority="500" id="3c1-EB-1v0"/>
                                     <constraint firstAttribute="height" constant="95" id="9Nl-18-tGz"/>
                                     <constraint firstItem="FAC-4W-puc" firstAttribute="top" secondItem="dCA-Tc-CJh" secondAttribute="top" constant="5" id="A4O-Oa-1Jb"/>
                                     <constraint firstItem="Uav-SE-Lwi" firstAttribute="leading" secondItem="e4R-8c-l3a" secondAttribute="trailing" constant="5" id="Eqg-Pm-ZLF"/>
+                                    <constraint firstItem="e4R-8c-l3a" firstAttribute="width" secondItem="ep2-FI-Z09" secondAttribute="width" priority="500" id="G8Y-ll-mJS"/>
                                     <constraint firstAttribute="trailing" secondItem="985-JS-nOW" secondAttribute="trailing" id="KvS-DY-Joc"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" constant="20" id="LvJ-CR-je1"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" constant="5" id="MNS-yp-lRk"/>
                                     <constraint firstItem="e4R-8c-l3a" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" constant="5" id="Q4H-LU-0TS"/>
-                                    <constraint firstItem="e4R-8c-l3a" firstAttribute="width" secondItem="Uav-SE-Lwi" secondAttribute="width" id="WvE-mq-Mq1"/>
+                                    <constraint firstItem="e4R-8c-l3a" firstAttribute="width" secondItem="Uav-SE-Lwi" secondAttribute="width" priority="900" id="WvE-mq-Mq1"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" id="eUx-6q-Cam"/>
                                     <constraint firstItem="FAC-4W-puc" firstAttribute="leading" secondItem="dCA-Tc-CJh" secondAttribute="leading" id="fbV-Uc-aI2"/>
                                     <constraint firstItem="e4R-8c-l3a" firstAttribute="centerY" secondItem="Uav-SE-Lwi" secondAttribute="centerY" id="hZe-Zn-zUx"/>
@@ -305,10 +313,14 @@
                         <outlet property="customNavigationView" destination="ep2-FI-Z09" id="bmR-Le-Sb1"/>
                         <outlet property="customNavigationViewHeightConstraint" destination="9Nl-18-tGz" id="y4g-i7-Ipx"/>
                         <outlet property="eventListTableView" destination="x7r-fS-X6k" id="efA-OD-zfS"/>
+                        <outlet property="keywordMaxWidthConstraint" destination="3c1-EB-1v0" id="4dU-Jn-NJp"/>
                         <outlet property="keywordSearchField" destination="Uav-SE-Lwi" id="LY9-vQ-iVh"/>
+                        <outlet property="locationMaxWidthConstraint" destination="G8Y-ll-mJS" id="pCw-yP-CX1"/>
                         <outlet property="locationSearchField" destination="e4R-8c-l3a" id="bdh-5v-6Mo"/>
                         <outlet property="navigationTitle" destination="dCA-Tc-CJh" id="Rh3-hf-Zjx"/>
                         <outlet property="searchTextCancelButton" destination="FAC-4W-puc" id="f41-Mc-f9P"/>
+                        <outlet property="settingsButton" destination="985-JS-nOW" id="cRX-zs-TGh"/>
+                        <outlet property="textFieldsEqualWidthConstraint" destination="WvE-mq-Mq1" id="aL8-Ah-CzG"/>
                         <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="vjg-jf-Ol8"/>
                         <segue destination="Gdp-6o-WzI" kind="presentation" identifier="settingsSegue" modalTransitionStyle="crossDissolve" id="jGw-rt-6UH"/>
                     </connections>

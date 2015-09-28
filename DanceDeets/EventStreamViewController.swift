@@ -42,7 +42,11 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     @IBOutlet weak var keywordSearchField: UITextField!
     @IBOutlet weak var autosuggestTable: UITableView!
     @IBOutlet weak var searchTextCancelButton: UIButton!
+    @IBOutlet weak var settingsButton: UIButton!
 
+    @IBOutlet weak var textFieldsEqualWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var locationMaxWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var keywordMaxWidthConstraint: NSLayoutConstraint!
     // MARK: Action functions
     @IBAction func refreshButtonTapped(sender: AnyObject) {
         refreshEvents()

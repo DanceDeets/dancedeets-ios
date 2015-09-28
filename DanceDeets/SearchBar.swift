@@ -70,11 +70,21 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     }
 
     func endEditing() {
-        controller.view.endEditing(true)
-        blurOverlay?.fadeOut(0.5, completion: nil)
-        controller.autosuggestTable?.fadeOut(0.5, completion: nil)
-        controller.searchTextCancelButton.fadeOut(0.5, completion: nil)
-        controller.navigationTitle.fadeIn(0.5, completion: nil)
+        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
+            self.blurOverlay?.alpha = 0.0
+            self.controller.autosuggestTable?.alpha = 0.0
+            self.controller.searchTextCancelButton.alpha = 0.0
+            self.controller.settingsButton.alpha = 1.0
+            self.controller.textFieldsEqualWidthConstraint.priority = 900
+            self.controller.locationMaxWidthConstraint.priority = 500
+            self.controller.keywordMaxWidthConstraint.priority = 500
+
+            self.controller.navigationTitle.alpha = 1
+
+            self.controller.view.layoutIfNeeded()
+            }) {(Bool)->Void in
+                controller.view.endEditing(true)
+        }
     }
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -92,15 +102,24 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
             self.blurOverlay?.alpha = 1.0
             self.controller.autosuggestTable?.alpha = 1.0
-            //self.controller.searchTextCancelButton.alpha = 1.0
-            self.controller.navigationTitle.alpha = 0
-
-            //self.view.layoutIfNeeded()
+            self.controller.textFieldsEqualWidthConstraint.priority = 500
+            self.controller.settingsButton.alpha = 0.0
+            if (textField == self.controller.locationSearchField) {
+                self.controller.locationMaxWidthConstraint.priority = 900
+                self.controller.keywordMaxWidthConstraint.priority = 500
+            } else {
+                self.controller.keywordMaxWidthConstraint.priority = 900
+                self.controller.locationMaxWidthConstraint.priority = 500
+            }
+            self.controller.view.layoutIfNeeded()
             }) {(Bool)->Void in
-                UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
+        }
+        //animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?)
+        UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
+                self.controller.navigationTitle.alpha = 0
+            }) {(Bool)->Void in
+                UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
                     self.controller.searchTextCancelButton.alpha = 1.0
-
-                    //self.view.layoutIfNeeded()
                     }) {(Bool)->Void in }
         }
     }
