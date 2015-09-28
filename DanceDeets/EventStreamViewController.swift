@@ -15,7 +15,7 @@ import FBSDKCoreKit
 class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     // MARK: Constants
-    let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 90.0
+    let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 95.0
     let SEARCH_AUTOSUGGEST_TERMS:[String] = ["All","Bboy","Breaking","Hip-Hop", "House","Popping","Locking","Waacking","Dancehall","Vogue","Krumping","Turfing","Litefeet","Flexing","Bebop","All-Styles"]
     
     // MARK: Variables
