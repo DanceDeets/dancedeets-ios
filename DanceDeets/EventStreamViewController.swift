@@ -42,6 +42,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     @IBOutlet weak var locationSearchField: UITextField!
     @IBOutlet weak var keywordSearchField: UITextField!
     @IBOutlet weak var autosuggestTable: UITableView!
+    @IBOutlet weak var searchTextCancelButton: UIButton!
 
     // MARK: Action functions
     @IBAction func refreshButtonTapped(sender: AnyObject) {
@@ -121,15 +122,14 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         navigationTitle.userInteractionEnabled = true
         navigationTitle.addGestureRecognizer(titleTapGestureRecognizer!)
         
-        // labels / icons
-        eventCountLabel.text = ""
-
         // custom navigation styling
         let customNavBlur = customNavigationView.addDarkBlurOverlay()
         customNavigationView.insertSubview(customNavBlur, atIndex: 0)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationTitle.text = ""
+        setTitle("", "")
         navigationItem.title = ""
+
+        searchTextCancelButton.alpha = 0
     }
 
     func geocodeCompletionHandler(optionalPlacemark: CLPlacemark?) {
@@ -139,27 +139,28 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             self.locationSearchField.text = fullText
             Event.loadEventsForLocation(fullText, withKeywords:self.searchKeyword, completion:self.setupEventsDisplay)
         } else {
-            navigationTitle.text = "RETRY"
-            eventCountLabel.text = "Couldn't get your location"
+            setTitle("RETRY", "Couldn't get your location")
             locationFailureAlert.show()
         }
+    }
+
+    func setTitle(mainTitle: String, _ secondaryTitle: String) {
+        navigationTitle.text = "RETRY"
+        eventCountLabel.text = "Couldn't get your location"
     }
 
     func setupEventsDisplay(events: [Event]!, error: NSError!) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             if (error != nil) {
-                self.navigationTitle.text = "ERROR"
                 let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
                 errorAlert.show()
-                self.eventCountLabel.text = "Try again"
+                self.setTitle("ERROR", "Try again")
             } else if(events.count == 0) {
-                self.navigationTitle.text = self.displaySearchString.uppercaseString
                 let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
-                self.eventCountLabel.text = "No Events"
+                self.setTitle(self.displaySearchString.uppercaseString, "No Events")
             } else {
-                self.navigationTitle.text = self.displaySearchString.uppercaseString
-                self.eventCountLabel.text = "\(self.searchKeyword) | \(events.count) Events"
+                self.setTitle(self.displaySearchString.uppercaseString, "\(self.searchKeyword) | \(events.count) Events")
             }
             self.eventDisplay!.setup(events, error: error)
         })
@@ -167,9 +168,8 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     func refreshEvents(location: String, withKeywords keywords: String) {
         searchKeyword = keywords
-        navigationTitle.text = location.uppercaseString
         displaySearchString = location
-        eventCountLabel.text = "Loading..."
+        self.setTitle(location.uppercaseString, "Loading...")
         Event.loadEventsForLocation(displaySearchString, withKeywords:keywords, completion: setupEventsDisplay)
     }
 

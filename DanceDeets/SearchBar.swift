@@ -29,6 +29,8 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         controller.autosuggestTable.dataSource = self
         controller.autosuggestTable.tintColor = ColorFactory.white50()
 
+        controller.searchTextCancelButton.alpha = 0
+        controller.searchTextCancelButton.addTarget(self, action: "cancelButtonPressed", forControlEvents: .TouchUpInside)
         controller.locationSearchField.addTarget(self, action: "locationFieldUpdated", forControlEvents: UIControlEvents.EditingChanged)
 
         // search text field styling
@@ -63,17 +65,40 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         self.controller.autosuggestTable.reloadData()
     }
 
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+    func beginEditing() {
+
+    }
+
+    func endEditing() {
+        controller.view.endEditing(true)
         blurOverlay?.fadeOut(0.5, completion: nil)
         controller.autosuggestTable?.fadeOut(0.5, completion: nil)
+        controller.searchTextCancelButton.fadeOut(0.5, completion: nil)
+        controller.navigationTitle.fadeIn(0.5, completion: nil)
+        controller.eventCountLabel.fadeIn(0.5, completion: nil)
+    }
+
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        endEditing()
         searchHandler(controller.locationSearchField.text!, controller.keywordSearchField.text!)
         return true
     }
 
+    func cancelButtonPressed() {
+        endEditing()
+    }
+
+
     func textFieldDidBeginEditing(textField: UITextField) {
-        blurOverlay?.fadeIn(0.5, completion: nil)
-        controller.autosuggestTable?.fadeIn(0.5, completion: nil)
+        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
+            self.blurOverlay?.alpha = 1.0
+            self.controller.autosuggestTable?.alpha = 1.0
+            self.controller.searchTextCancelButton.alpha = 1.0
+            self.controller.eventCountLabel.alpha = 0
+            self.controller.navigationTitle.alpha = 0
+
+            //self.view.layoutIfNeeded()
+            }) {(Bool)->Void in }
     }
 
     func locationFieldUpdated() {
