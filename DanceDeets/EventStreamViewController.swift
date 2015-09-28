@@ -35,7 +35,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     @IBOutlet weak var eventListTableView: UITableView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var navigationTitle: UILabel!
-    @IBOutlet weak var eventCountLabel: UILabel!
     @IBOutlet weak var customNavigationView: UIView!
     @IBOutlet weak var customNavigationViewHeightConstraint: NSLayoutConstraint!
 
@@ -145,8 +144,19 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     }
 
     func setTitle(mainTitle: String, _ secondaryTitle: String) {
-        navigationTitle.text = mainTitle
-        eventCountLabel.text = secondaryTitle
+        let separator = " "
+        let attributedMainTitle = NSAttributedString(string: mainTitle + separator, attributes: [
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSFontAttributeName: FontFactory.navigationTitleFont()
+        ])
+        let attributedSecondaryTitle = NSAttributedString(string: secondaryTitle, attributes: [
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSFontAttributeName: FontFactory.eventDescriptionFont()
+        ])
+        let finalTitle = NSMutableAttributedString()
+        finalTitle.appendAttributedString(attributedMainTitle)
+        finalTitle.appendAttributedString(attributedSecondaryTitle)
+        navigationTitle.attributedText = finalTitle
     }
 
     func setupEventsDisplay(events: [Event]!, error: NSError!) {

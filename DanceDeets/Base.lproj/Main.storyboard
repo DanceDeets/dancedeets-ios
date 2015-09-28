@@ -22,7 +22,6 @@
             <string>Interstate-Light</string>
             <string>Interstate-Light</string>
             <string>Interstate-Light</string>
-            <string>Interstate-Light</string>
         </mutableArray>
         <mutableArray key="UniversLTStd-UltraCn.otf">
             <string>UniversLTStd-UltraCn</string>
@@ -184,8 +183,8 @@
                                             <action selector="settingsButtonTapped:" destination="EoL-DY-p6g" eventType="touchUpInside" id="ywh-wY-Yll"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Navigation Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCA-Tc-CJh">
-                                        <rect key="frame" x="5" y="20" width="444" height="40"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Navigation Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCA-Tc-CJh">
+                                        <rect key="frame" x="5" y="20" width="550" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Hk1-kH-DOs"/>
                                         </constraints>
@@ -193,14 +192,8 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Event Count" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1oV-ms-x6i">
-                                        <rect key="frame" x="459" y="33" width="71" height="14.5"/>
-                                        <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e4R-8c-l3a" userLabel="Location Search Field">
-                                        <rect key="frame" x="5" y="52" width="292.5" height="30"/>
+                                        <rect key="frame" x="5" y="60" width="292.5" height="30"/>
                                         <color key="backgroundColor" red="0.9960784912109375" green="0.99215692281723022" blue="0.99215692281723022" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -208,7 +201,7 @@
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Keywords" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uav-SE-Lwi" userLabel="Keyword Search Field">
-                                        <rect key="frame" x="302" y="52" width="292.5" height="30"/>
+                                        <rect key="frame" x="302" y="60" width="292.5" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -216,7 +209,7 @@
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FAC-4W-puc" userLabel="Search Cancel Button">
-                                        <rect key="frame" x="5" y="20" width="59" height="30"/>
+                                        <rect key="frame" x="5" y="25" width="59" height="30"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="CANCEL">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -225,31 +218,21 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="1oV-ms-x6i" secondAttribute="trailing" constant="70" id="8nb-FQ-WIa"/>
                                     <constraint firstAttribute="height" constant="90" id="9Nl-18-tGz"/>
-                                    <constraint firstItem="FAC-4W-puc" firstAttribute="top" secondItem="dCA-Tc-CJh" secondAttribute="top" id="A4O-Oa-1Jb"/>
+                                    <constraint firstItem="FAC-4W-puc" firstAttribute="top" secondItem="dCA-Tc-CJh" secondAttribute="top" constant="5" id="A4O-Oa-1Jb"/>
                                     <constraint firstItem="Uav-SE-Lwi" firstAttribute="leading" secondItem="e4R-8c-l3a" secondAttribute="trailing" constant="5" id="Eqg-Pm-ZLF"/>
                                     <constraint firstAttribute="trailing" secondItem="985-JS-nOW" secondAttribute="trailing" id="KvS-DY-Joc"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" constant="20" id="LvJ-CR-je1"/>
                                     <constraint firstItem="dCA-Tc-CJh" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" constant="5" id="MNS-yp-lRk"/>
-                                    <constraint firstItem="FAC-4W-puc" firstAttribute="leading" secondItem="985-JS-nOW" secondAttribute="leading" id="Oye-E0-7rl"/>
                                     <constraint firstItem="e4R-8c-l3a" firstAttribute="leading" secondItem="ep2-FI-Z09" secondAttribute="leading" constant="5" id="Q4H-LU-0TS"/>
                                     <constraint firstItem="e4R-8c-l3a" firstAttribute="width" secondItem="Uav-SE-Lwi" secondAttribute="width" id="WvE-mq-Mq1"/>
-                                    <constraint firstItem="1oV-ms-x6i" firstAttribute="leading" secondItem="dCA-Tc-CJh" secondAttribute="trailing" constant="10" id="XKU-vW-DNt"/>
-                                    <constraint firstItem="FAC-4W-puc" firstAttribute="top" secondItem="985-JS-nOW" secondAttribute="top" id="YWi-1E-4cU"/>
-                                    <constraint firstItem="e4R-8c-l3a" firstAttribute="top" secondItem="1oV-ms-x6i" secondAttribute="bottom" constant="5" id="aLa-qo-6Wa"/>
                                     <constraint firstItem="985-JS-nOW" firstAttribute="top" secondItem="ep2-FI-Z09" secondAttribute="top" id="eUx-6q-Cam"/>
                                     <constraint firstItem="FAC-4W-puc" firstAttribute="leading" secondItem="dCA-Tc-CJh" secondAttribute="leading" id="fbV-Uc-aI2"/>
                                     <constraint firstItem="e4R-8c-l3a" firstAttribute="centerY" secondItem="Uav-SE-Lwi" secondAttribute="centerY" id="hZe-Zn-zUx"/>
+                                    <constraint firstItem="985-JS-nOW" firstAttribute="leading" secondItem="dCA-Tc-CJh" secondAttribute="trailing" constant="5" id="nQL-HG-gnu"/>
                                     <constraint firstAttribute="trailing" secondItem="Uav-SE-Lwi" secondAttribute="trailing" constant="5" id="ntZ-PH-yc5"/>
-                                    <constraint firstItem="dCA-Tc-CJh" firstAttribute="centerY" secondItem="1oV-ms-x6i" secondAttribute="centerY" id="yXE-Sf-Cq6"/>
+                                    <constraint firstItem="e4R-8c-l3a" firstAttribute="top" secondItem="dCA-Tc-CJh" secondAttribute="bottom" id="r6g-kK-Jr6"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Oye-E0-7rl"/>
-                                        <exclude reference="YWi-1E-4cU"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EIE-kU-6ur" userLabel="Autosuggest Table View">
                                 <rect key="frame" x="0.0" y="90" width="600" height="466"/>
@@ -321,7 +304,6 @@
                         <outlet property="backgroundImageView" destination="Pf1-0N-YSd" id="low-69-cUp"/>
                         <outlet property="customNavigationView" destination="ep2-FI-Z09" id="bmR-Le-Sb1"/>
                         <outlet property="customNavigationViewHeightConstraint" destination="9Nl-18-tGz" id="y4g-i7-Ipx"/>
-                        <outlet property="eventCountLabel" destination="1oV-ms-x6i" id="yd5-Nu-9RE"/>
                         <outlet property="eventListTableView" destination="x7r-fS-X6k" id="efA-OD-zfS"/>
                         <outlet property="keywordSearchField" destination="Uav-SE-Lwi" id="LY9-vQ-iVh"/>
                         <outlet property="locationSearchField" destination="e4R-8c-l3a" id="bdh-5v-6Mo"/>

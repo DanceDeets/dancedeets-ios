@@ -75,7 +75,6 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         controller.autosuggestTable?.fadeOut(0.5, completion: nil)
         controller.searchTextCancelButton.fadeOut(0.5, completion: nil)
         controller.navigationTitle.fadeIn(0.5, completion: nil)
-        controller.eventCountLabel.fadeIn(0.5, completion: nil)
     }
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -93,12 +92,17 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
             self.blurOverlay?.alpha = 1.0
             self.controller.autosuggestTable?.alpha = 1.0
-            self.controller.searchTextCancelButton.alpha = 1.0
-            self.controller.eventCountLabel.alpha = 0
+            //self.controller.searchTextCancelButton.alpha = 1.0
             self.controller.navigationTitle.alpha = 0
 
             //self.view.layoutIfNeeded()
-            }) {(Bool)->Void in }
+            }) {(Bool)->Void in
+                UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
+                    self.controller.searchTextCancelButton.alpha = 1.0
+
+                    //self.view.layoutIfNeeded()
+                    }) {(Bool)->Void in }
+        }
     }
 
     func locationFieldUpdated() {
