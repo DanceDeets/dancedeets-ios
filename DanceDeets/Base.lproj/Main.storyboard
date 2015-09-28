@@ -99,7 +99,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cba-0q-1a5" userLabel="pin Icon">
-                                                    <rect key="frame" x="134" y="93" width="10" height="12"/>
+                                                    <rect key="frame" x="136" y="93" width="10" height="12"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="12" id="0oT-uN-6S3"/>
@@ -138,9 +138,11 @@
                                                 <constraint firstItem="31y-Oc-dOn" firstAttribute="centerY" secondItem="KFG-w4-rc3" secondAttribute="centerY" id="IKY-eF-aBs"/>
                                                 <constraint firstItem="5R9-2K-AhZ" firstAttribute="leading" secondItem="3Ru-Ei-3pI" secondAttribute="trailing" constant="10" id="JIh-CL-HDh"/>
                                                 <constraint firstItem="3Ru-Ei-3pI" firstAttribute="top" secondItem="rrA-Jj-kmz" secondAttribute="top" constant="15" id="PAC-rf-PoB"/>
+                                                <constraint firstItem="fsk-AB-l6j" firstAttribute="centerX" secondItem="KFG-w4-rc3" secondAttribute="centerX" id="QQ8-jT-4w1"/>
                                                 <constraint firstItem="Kzc-j3-51H" firstAttribute="centerY" secondItem="fsk-AB-l6j" secondAttribute="centerY" id="VKq-Rb-gQj"/>
                                                 <constraint firstItem="Qyj-U8-4EI" firstAttribute="centerY" secondItem="Cba-0q-1a5" secondAttribute="centerY" id="aVY-0t-Sca"/>
                                                 <constraint firstAttribute="bottom" secondItem="3Ru-Ei-3pI" secondAttribute="bottom" priority="900" constant="15" id="ack-ag-933"/>
+                                                <constraint firstItem="Cba-0q-1a5" firstAttribute="centerX" secondItem="KFG-w4-rc3" secondAttribute="centerX" id="e5A-yK-ueT"/>
                                                 <constraint firstItem="3Ru-Ei-3pI" firstAttribute="leading" secondItem="rrA-Jj-kmz" secondAttribute="leading" constant="12" id="fBe-0L-vNB"/>
                                                 <constraint firstAttribute="trailing" secondItem="5R9-2K-AhZ" secondAttribute="trailing" constant="12" id="gPB-UY-2bK"/>
                                                 <constraint firstItem="Qyj-U8-4EI" firstAttribute="trailing" secondItem="5R9-2K-AhZ" secondAttribute="trailing" id="hvV-3H-FUw"/>
@@ -149,6 +151,12 @@
                                                 <constraint firstItem="fsk-AB-l6j" firstAttribute="leading" secondItem="KFG-w4-rc3" secondAttribute="leading" id="u0c-dK-fef"/>
                                                 <constraint firstItem="31y-Oc-dOn" firstAttribute="trailing" secondItem="5R9-2K-AhZ" secondAttribute="trailing" id="yXV-HV-ly1"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="u0c-dK-fef"/>
+                                                    <exclude reference="obX-ZP-zR2"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
