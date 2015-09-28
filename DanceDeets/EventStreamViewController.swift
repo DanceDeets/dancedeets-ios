@@ -145,8 +145,8 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     }
 
     func setTitle(mainTitle: String, _ secondaryTitle: String) {
-        navigationTitle.text = "RETRY"
-        eventCountLabel.text = "Couldn't get your location"
+        navigationTitle.text = mainTitle
+        eventCountLabel.text = secondaryTitle
     }
 
     func setupEventsDisplay(events: [Event]!, error: NSError!) {
