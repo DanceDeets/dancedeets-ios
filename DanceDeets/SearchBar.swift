@@ -36,7 +36,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         "All-Styles"
     ]
 
-    var currentGeooder:CurrentGeocode?
+    var currentGeocoder:CurrentGeocode?
 
     weak var activeTextField: UITextField?
 
@@ -85,13 +85,10 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         field.textAlignment = .Left
     }
 
-    func textFieldDidEndEditing(textField: UITextField) {
-        self.autosuggestedLocations = []
-        activeTextField = nil
-        self.controller.autosuggestTable.reloadData()
-    }
-
     func endEditing() {
+        activeTextField = nil
+        self.autosuggestedLocations = []
+        self.controller.autosuggestTable.reloadData()
         UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
             self.blurOverlay?.alpha = 0.0
             self.controller.autosuggestTable?.alpha = 0.0
@@ -222,12 +219,21 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         return 44
     }
 
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if (currentGeocoder != nil) {
+            return false
+        } else {
+            return true
+        }
+    }
+
     // MARK: UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (activeTextField == controller.locationSearchField) {
             if indexPath.section == 0 {
+                controller.locationSearchField.endEditing(true)
                 controller.locationSearchField.text = "Finding location..." //TODO: look up location!!!
-                currentGeooder = CurrentGeocode(completionHandler: geocodeCompletionHandler)
+                currentGeocoder = CurrentGeocode(completionHandler: geocodeCompletionHandler)
             } else {
                 controller.locationSearchField.text = autosuggestedLocations[indexPath.row]
                 textFieldShouldReturn(controller.locationSearchField)
@@ -243,6 +249,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     }
 
     func geocodeCompletionHandler(optionalPlacemark: CLPlacemark?) {
+        currentGeocoder = nil
         if let placemark = optionalPlacemark {
             let fullText = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
             self.controller.locationSearchField.text = fullText
