@@ -170,7 +170,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
                 errorAlert.show()
                 self.setTitle("ERROR", "Try again")
             } else if(events.count == 0) {
-                let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Check back soon!", delegate: nil, cancelButtonTitle: "OK")
+                let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Try expanding your search criteria?", delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
                 self.setTitle(self.displaySearchString.uppercaseString, "No Events")
             } else {

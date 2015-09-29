@@ -185,18 +185,18 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (activeTextField == controller.locationSearchField) {
             if indexPath.section == 0 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCell", forIndexPath: indexPath) as! SettingsCell
                 cell.icon.image = UIImage(named: "gpsIcon")
                 cell.label.text = "Current Location"
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCell", forIndexPath: indexPath) as! SettingsCell
                 cell.icon.image = UIImage(named: "pinIcon")
                 cell.label.text = autosuggestedLocations[indexPath.row]
                 return cell
             }
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCell", forIndexPath: indexPath) as! SettingsCell
             cell.icon.image = UIImage(named: "danceIcon")
             cell.label.text = autosuggestedKeywords[indexPath.row]
             return cell
@@ -245,23 +245,4 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
             controller.locationFailureAlert.show()
         }
     }
-    /*
-    // MARK: UITableViewDataSource / UITableViewDelegate
-
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SEARCH_AUTOSUGGEST_TERMS.count
-    }
-
-
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(tableView == searchAutoSuggestTableView){
-            let term = SEARCH_AUTOSUGGEST_TERMS[indexPath.row] as String
-            searchKeyword = term
-            hideAutoSuggestTable()
-
-            refreshEvents()
-        }
-    }
-    */
-
 }
