@@ -17,7 +17,27 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     var searchHandler: SearchHandler
     var blurOverlay: UIView?
     var autosuggestedLocations:[String] = []
+    var autosuggestedKeywords:[String] = [
+        "Bboy",
+        "Breaking",
+        "Hip-Hop",
+        "House",
+        "Popping",
+        "Locking",
+        "Waacking",
+        "Dancehall",
+        "Vogue",
+        "Krumping",
+        "Turfing",
+        "Litefeet",
+        "Flexing",
+        "Bebop",
+        "All-Styles"
+    ]
+
     var currentGeooder:CurrentGeocode?
+
+    weak var activeTextField: UITextField?
 
     init(controller: EventStreamViewController, searchHandler: SearchHandler) {
         self.controller = controller
@@ -32,7 +52,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         controller.autosuggestTable.tintColor = ColorFactory.white50()
 
         controller.searchTextCancelButton.alpha = 0
-        controller.searchTextCancelButton.addTarget(self, action: "cancelButtonPressed", forControlEvents: .TouchUpInside)
+        controller.searchTextCancelButton.addTarget(self, action: "endEditing", forControlEvents: .TouchUpInside)
         controller.locationSearchField.addTarget(self, action: "locationFieldUpdated", forControlEvents: UIControlEvents.EditingChanged)
 
         // search text field styling
@@ -64,11 +84,8 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
 
     func textFieldDidEndEditing(textField: UITextField) {
         self.autosuggestedLocations = []
+        activeTextField = nil
         self.controller.autosuggestTable.reloadData()
-    }
-
-    func beginEditing() {
-
     }
 
     func endEditing() {
@@ -95,12 +112,11 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         return true
     }
 
-    func cancelButtonPressed() {
-        endEditing()
-    }
-
-
     func textFieldDidBeginEditing(textField: UITextField) {
+        activeTextField = textField
+        controller.autosuggestTable.reloadData()
+
+        // Fade in the overlay, table, and new textfield constraints
         UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
             self.blurOverlay?.alpha = 1.0
             self.controller.autosuggestTable?.alpha = 1.0
@@ -116,7 +132,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
             self.controller.view.layoutIfNeeded()
             }) {(Bool)->Void in
         }
-        //animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?)
+        // Fade in/out the title with the cancel button (at the same overall speed as the above fade)
         UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
                 self.controller.navigationTitle.alpha = 0
             }) {(Bool)->Void in
@@ -146,26 +162,40 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        if (activeTextField == controller.locationSearchField) {
+            return 2
+        } else {
+            return 1
+        }
     }
 
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
+        if (activeTextField == controller.locationSearchField) {
+            if section == 0 {
+                return 1
+            } else {
+                return autosuggestedLocations.count
+            }
         } else {
-            return autosuggestedLocations.count
+            return autosuggestedKeywords.count
         }
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
-            cell.label.text = "Current Location"
-            return cell
+        if (activeTextField == controller.locationSearchField) {
+            if indexPath.section == 0 {
+                let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
+                cell.label.text = "Current Location"
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
+                cell.label.text = autosuggestedLocations[indexPath.row]
+                return cell
+            }
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
-            cell.label.text = autosuggestedLocations[indexPath.row]
+            cell.label.text = autosuggestedKeywords[indexPath.row]
             return cell
         }
     }
@@ -188,12 +218,17 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
 
     // MARK: UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0 {
-            controller.locationSearchField.text = "Finding location..." //TODO: look up location!!!
-            currentGeooder = CurrentGeocode(completionHandler: geocodeCompletionHandler)
+        if (activeTextField == controller.locationSearchField) {
+            if indexPath.section == 0 {
+                controller.locationSearchField.text = "Finding location..." //TODO: look up location!!!
+                currentGeooder = CurrentGeocode(completionHandler: geocodeCompletionHandler)
+            } else {
+                controller.locationSearchField.text = autosuggestedLocations[indexPath.row]
+                textFieldShouldReturn(controller.locationSearchField)
+            }
         } else {
-            controller.locationSearchField.text = autosuggestedLocations[indexPath.row]
-            textFieldShouldReturn(controller.locationSearchField)
+            controller.keywordSearchField.text = autosuggestedKeywords[indexPath.row]
+            textFieldShouldReturn(controller.keywordSearchField)
         }
     }
 
