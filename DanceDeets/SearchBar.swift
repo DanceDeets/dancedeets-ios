@@ -186,15 +186,18 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         if (activeTextField == controller.locationSearchField) {
             if indexPath.section == 0 {
                 let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
+                cell.icon.image = UIImage(named: "gpsIcon")
                 cell.label.text = "Current Location"
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
+                cell.icon.image = UIImage(named: "pinIcon")
                 cell.label.text = autosuggestedLocations[indexPath.row]
                 return cell
             }
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCityCell", forIndexPath: indexPath) as! SettingsCell
+            cell.icon.image = UIImage(named: "danceIcon")
             cell.label.text = autosuggestedKeywords[indexPath.row]
             return cell
         }
