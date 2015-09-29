@@ -141,7 +141,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             if let location = NSUserDefaults.standardUserDefaults().stringForKey(USER_SEARCH_LOCATION_KEY) {
                 self.locationSearchField.text = location
             } else {
-                setTitle("RETRY", "Couldn't get yo  ur location")
+                setTitle("RETRY", "Couldn't get your location")
                 locationFailureAlert.show()
             }
         }
