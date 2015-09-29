@@ -16,12 +16,9 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     
     // MARK: Constants
     let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 95.0
-    let SEARCH_AUTOSUGGEST_TERMS:[String] = ["All","Bboy","Breaking","Hip-Hop", "House","Popping","Locking","Waacking","Dancehall","Vogue","Krumping","Turfing","Litefeet","Flexing","Bebop","All-Styles"]
-    
+
     // MARK: Variables
     var locationFailureAlert:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
-    var displaySearchString:String = String()
-    var searchKeyword:String = ""
     var requiresRefresh = true
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
@@ -86,7 +83,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         if (requiresRefresh) {
             requiresRefresh = false
             currentGeooder = CurrentGeocode(completionHandler: geocodeCompletionHandler)
-            searchKeyword = ""
         }
     }
     
@@ -137,10 +133,9 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     func geocodeCompletionHandler(optionalPlacemark: CLPlacemark?) {
         if let placemark = optionalPlacemark {
-            self.displaySearchString = "\(placemark.locality!), \(placemark.administrativeArea!)"
             let fullText = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
             self.locationSearchField.text = fullText
-            Event.loadEventsForLocation(fullText, withKeywords:self.searchKeyword, completion:self.setupEventsDisplay)
+            Event.loadEventsForLocation(self.locationSearchField.text!, withKeywords:self.keywordSearchField.text!, completion:self.setupEventsDisplay)
         } else {
             setTitle("RETRY", "Couldn't get your location")
             locationFailureAlert.show()
@@ -172,19 +167,17 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             } else if(events.count == 0) {
                 let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Try expanding your search criteria?", delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
-                self.setTitle(self.displaySearchString.uppercaseString, "No Events")
+                self.setTitle(self.locationSearchField.text!, "No Events")
             } else {
-                self.setTitle(self.displaySearchString.uppercaseString, "\(self.searchKeyword) | \(events.count) Events")
+                self.setTitle(self.locationSearchField.text!, "\(self.keywordSearchField.text!) | \(events.count) Events")
             }
             self.eventDisplay!.setup(events, error: error)
         })
     }
 
     func refreshEvents(location: String, withKeywords keywords: String) {
-        searchKeyword = keywords
-        displaySearchString = location
-        self.setTitle(location.uppercaseString, "Loading...")
-        Event.loadEventsForLocation(displaySearchString, withKeywords:keywords, completion: setupEventsDisplay)
+        self.setTitle(location, "Loading...")
+        Event.loadEventsForLocation(location, withKeywords:keywords, completion: setupEventsDisplay)
     }
 
     func refreshEvents() {

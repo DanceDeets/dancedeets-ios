@@ -18,6 +18,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     var blurOverlay: UIView?
     var autosuggestedLocations:[String] = []
     var autosuggestedKeywords:[String] = [
+        "All Events",
         "Bboy",
         "Breaking",
         "Hip-Hop",
@@ -63,6 +64,8 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         blurOverlay = controller.view.addDarkBlurOverlay()
         controller.view.insertSubview(blurOverlay!, belowSubview: controller.customNavigationView)
         blurOverlay?.alpha = 0
+
+        registerForKeyboardNotifications()
     }
 
     func configureField(field: UITextField, defaultText: String, iconName: String) {
@@ -230,7 +233,11 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
                 textFieldShouldReturn(controller.locationSearchField)
             }
         } else {
-            controller.keywordSearchField.text = autosuggestedKeywords[indexPath.row]
+            if (indexPath.row == 0) {
+                controller.keywordSearchField.text = ""
+            } else {
+                controller.keywordSearchField.text = autosuggestedKeywords[indexPath.row]
+            }
             textFieldShouldReturn(controller.keywordSearchField)
         }
     }
@@ -244,5 +251,32 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
             self.controller.locationSearchField.text = ""
             controller.locationFailureAlert.show()
         }
+    }
+
+    func registerForKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWasShown:", name:UIKeyboardWillShowNotification, object:nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillBeHidden:", name:UIKeyboardWillHideNotification, object:nil)
+    }
+
+    // Called when the UIKeyboardDidShowNotification is sent.
+    func keyboardWasShown(aNotification: NSNotification) {
+        let info = aNotification.userInfo
+        let kbSize = info![UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size;
+
+        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+        self.controller.autosuggestTable.contentInset = contentInsets;
+        self.controller.autosuggestTable.scrollIndicatorInsets = contentInsets;
+
+        // If active text field is hidden by keyboard, scroll it so it's visible
+        // Your app might not need or want this behavior.
+        var aRect = self.controller.view.frame;
+        aRect.size.height -= kbSize.height;
+    }
+
+    // Called when the UIKeyboardWillHideNotification is sent
+    func keyboardWillBeHidden(aNotification: NSNotification) {
+        let contentInsets = UIEdgeInsetsZero
+        self.controller.autosuggestTable.contentInset = contentInsets
+        self.controller.autosuggestTable.scrollIndicatorInsets = contentInsets
     }
 }

@@ -40,14 +40,12 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         return ServerInterface.getApiUrl("auth")
     }
     
-    func getEventSearchUrl(city:String, eventKeyword:String?) -> NSURL{
-        var args = [
+    func getEventSearchUrl(city:String, eventKeyword:String) -> NSURL{
+        let args = [
             "location": city,
+            "keywords": eventKeyword,
             "time_period": "UPCOMING",
         ]
-        if eventKeyword != nil {
-            args["keywords"] = eventKeyword
-        }
         return ServerInterface.getApiUrl("/search", withArgs: args)
     }
     

@@ -77,50 +77,50 @@
                                                         <constraint firstAttribute="width" constant="112" id="Ewe-Pg-4D5"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5R9-2K-AhZ" userLabel="Event Title View">
-                                                    <rect key="frame" x="134" y="15" width="454" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5R9-2K-AhZ" userLabel="Event Title View">
+                                                    <rect key="frame" x="134" y="15" width="454" height="20"/>
                                                     <fontDescription key="fontDescription" name="Interstate-ExtraLight" family="Interstate-ExtraLight" pointSize="18"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="danceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="KFG-w4-rc3" userLabel="dance Icon">
-                                                    <rect key="frame" x="134" y="46.5" width="14" height="14"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="danceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="KFG-w4-rc3" userLabel="dance Icon">
+                                                    <rect key="frame" x="134" y="45" width="14" height="14"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="14" id="Onn-SD-EJL"/>
                                                         <constraint firstAttribute="height" constant="14" id="bY5-jk-ccR"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="clockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="fsk-AB-l6j" userLabel="clock Icon">
-                                                    <rect key="frame" x="134" y="70.5" width="14" height="14"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="fsk-AB-l6j" userLabel="clock Icon">
+                                                    <rect key="frame" x="134" y="68.5" width="14" height="14"/>
                                                     <color key="tintColor" red="0.0" green="0.92549019610000005" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="14" id="Sjq-KV-idX"/>
                                                         <constraint firstAttribute="height" constant="14" id="tP3-Ye-xUo"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cba-0q-1a5" userLabel="pin Icon">
-                                                    <rect key="frame" x="136" y="96" width="10" height="12"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cba-0q-1a5" userLabel="pin Icon">
+                                                    <rect key="frame" x="136" y="93" width="10" height="12"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="12" id="0oT-uN-6S3"/>
                                                         <constraint firstAttribute="width" constant="10" id="SI9-eA-kEc"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="(Categories)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31y-Oc-dOn" userLabel="Categories Label">
-                                                    <rect key="frame" x="158" y="46" width="430" height="15.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Categories)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31y-Oc-dOn" userLabel="Categories Label">
+                                                    <rect key="frame" x="158" y="45" width="430" height="14.5"/>
                                                     <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Date | Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kzc-j3-51H" userLabel="Time Label">
-                                                    <rect key="frame" x="158" y="69" width="430" height="17.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date | Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kzc-j3-51H" userLabel="Time Label">
+                                                    <rect key="frame" x="158" y="67" width="430" height="17"/>
                                                     <fontDescription key="fontDescription" name="Interstate-BoldCondensed" family="Interstate-BoldCondensed" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.92549019610000005" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Venue Location" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qyj-U8-4EI" userLabel="Venue Label">
-                                                    <rect key="frame" x="158" y="94.5" width="430" height="15.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venue Location" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qyj-U8-4EI" userLabel="Venue Label">
+                                                    <rect key="frame" x="158" y="92" width="430" height="14.5"/>
                                                     <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -255,22 +255,22 @@
                                 <rect key="frame" x="0.0" y="95" width="600" height="461"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="autosuggestCityCell" id="hpn-rB-yB4" userLabel="autosuggestLocation" customClass="SettingsCell" customModule="DanceDeets" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="autosuggestCell" id="hpn-rB-yB4" userLabel="autosuggestLocation" customClass="SettingsCell" customModule="DanceDeets" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hpn-rB-yB4" id="mXG-Vs-i4U">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="zzY-Ri-8Ng">
-                                                    <rect key="frame" x="15" y="16" width="10" height="12"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="zzY-Ri-8Ng">
+                                                    <rect key="frame" x="15" y="14" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="zzY-Ri-8Ng" secondAttribute="height" multiplier="1:1" id="JkD-t1-eiU"/>
                                                         <constraint firstAttribute="height" constant="16" id="lme-IX-c5g"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Autosuggested City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxA-ig-8F2">
-                                                    <rect key="frame" x="40" y="12" width="151" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autosuggested City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxA-ig-8F2">
+                                                    <rect key="frame" x="46" y="12" width="546" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
