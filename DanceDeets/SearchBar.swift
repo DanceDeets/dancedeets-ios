@@ -6,6 +6,7 @@
 //  Copyright © 2015年 david.xiang. All rights reserved.
 //
 
+import CoreLocation
 import Foundation
 
 class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
@@ -16,6 +17,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     var searchHandler: SearchHandler
     var blurOverlay: UIView?
     var autosuggestedLocations:[String] = []
+    var currentGeooder:CurrentGeocode?
 
     init(controller: EventStreamViewController, searchHandler: SearchHandler) {
         self.controller = controller
@@ -187,16 +189,24 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     // MARK: UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
-            controller.locationSearchField.text = "" //TODO: look up location!!
-            controller.requiresRefresh = true
-            textFieldShouldReturn(controller.locationSearchField)
+            controller.locationSearchField.text = "Finding location..." //TODO: look up location!!!
+            currentGeooder = CurrentGeocode(completionHandler: geocodeCompletionHandler)
         } else {
             controller.locationSearchField.text = autosuggestedLocations[indexPath.row]
-            controller.requiresRefresh = true
             textFieldShouldReturn(controller.locationSearchField)
         }
     }
 
+    func geocodeCompletionHandler(optionalPlacemark: CLPlacemark?) {
+        if let placemark = optionalPlacemark {
+            let fullText = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
+            self.controller.locationSearchField.text = fullText
+            textFieldShouldReturn(controller.locationSearchField)
+        } else {
+            self.controller.locationSearchField.text = ""
+            controller.locationFailureAlert.show()
+        }
+    }
     /*
     // MARK: UITableViewDataSource / UITableViewDelegate
 
