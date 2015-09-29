@@ -16,6 +16,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     
     // MARK: Constants
     let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 95.0
+    let USER_SEARCH_LOCATION_KEY = "searchCity" // Magic key for storing a location in NSUserDefaults
 
     // MARK: Variables
     var locationFailureAlert:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
@@ -137,8 +138,12 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             self.locationSearchField.text = fullText
             Event.loadEventsForLocation(self.locationSearchField.text!, withKeywords:self.keywordSearchField.text!, completion:self.setupEventsDisplay)
         } else {
-            setTitle("RETRY", "Couldn't get your location")
-            locationFailureAlert.show()
+            if let location = NSUserDefaults.standardUserDefaults().stringForKey(USER_SEARCH_LOCATION_KEY) {
+                self.locationSearchField.text = location
+            } else {
+                setTitle("RETRY", "Couldn't get yo  ur location")
+                locationFailureAlert.show()
+            }
         }
     }
 
@@ -176,6 +181,10 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     }
 
     func refreshEvents(location: String, withKeywords keywords: String) {
+        // If we do a search, store the location, in case we can't access GPS next time, we'll have a good cached value
+        NSUserDefaults.standardUserDefaults().setObject(location, forKey: USER_SEARCH_LOCATION_KEY)
+        NSUserDefaults.standardUserDefaults().synchronize()
+
         self.setTitle(location, "Loading...")
         Event.loadEventsForLocation(location, withKeywords:keywords, completion: setupEventsDisplay)
     }
