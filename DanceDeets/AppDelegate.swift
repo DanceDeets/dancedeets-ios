@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let sharedURLCache = NSURLCache(memoryCapacity: urlCacheMemoryCapacityMB*1024*1024,
             diskCapacity: urlCacheDiskCapacityMB*1024*1024, diskPath: nil)
         NSURLCache.setSharedURLCache(sharedURLCache)
-        
+
         Fabric.with([Crashlytics()])
         
         AnalyticsUtil.createInstance()

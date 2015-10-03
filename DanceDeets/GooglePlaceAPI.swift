@@ -16,40 +16,42 @@ public class GooglePlaceAPI{
     
     public class func autoSuggestCity(query:String,completion:((autosuggests:[String]!,error:NSError!)->Void)) ->Void
     {
-        let requestUrlString:String = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="+query+"&types=(regions)&key=" + apiKey()
-        if let url:NSURL = NSURL(string: requestUrlString){
-            let session = NSURLSession.sharedSession()
-            let task:NSURLSessionTask = session.dataTaskWithURL(url, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-                if(error != nil){
+        let baseUrl:String = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
+        let url = UrlUtil.getUrl(baseUrl, withArgs:[
+            "input": query,
+            "types": "(regions)",
+            "key": apiKey(),
+        ])
+        let session = NSURLSession.sharedSession()
+        let task:NSURLSessionTask = session.dataTaskWithURL(url, completionHandler: { (data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            if (error != nil) {
+                completion(autosuggests: [], error: error)
+            } else {
+                let json:NSDictionary?
+                do {
+                    json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                } catch {
+                    json = nil
+                }
+                if (json == nil) {
                     completion(autosuggests: [], error: error)
-                }else{
-                    let json:NSDictionary?
-                    do {
-                        json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
-                    } catch {
-                        json = nil
-                    }
-                    if (json == nil) {
-                        completion(autosuggests: [], error: error)
-                    }
-                    else {
-                        var autoSuggestions:[String] = []
-                        if let predictions = json!["predictions"] as? NSArray{
-                            for prediction in predictions{
-                                if let predictionDict = prediction as? NSDictionary{
-                                    if let terms = predictionDict["description"] as? String{
-                                        if (terms.characters.count > 0){
-                                            autoSuggestions.append(terms)
-                                        }
+                } else {
+                    var autoSuggestions:[String] = []
+                    if let predictions = json!["predictions"] as? NSArray {
+                        for prediction in predictions {
+                            if let predictionDict = prediction as? NSDictionary {
+                                if let terms = predictionDict["description"] as? String {
+                                    if (terms.characters.count > 0) {
+                                        autoSuggestions.append(terms)
                                     }
                                 }
                             }
                         }
-                        completion(autosuggests: autoSuggestions, error: nil)
                     }
+                    completion(autosuggests: autoSuggestions, error: nil)
                 }
-            })
-            task.resume()
-        }
+            }
+        })
+        task.resume()
     }
 }

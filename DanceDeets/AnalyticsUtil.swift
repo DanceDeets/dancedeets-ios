@@ -22,11 +22,34 @@ public class AnalyticsUtil {
         track("$app_open")
     }
     
-/*    public func login(user: User) {
-        Mixpanel.sharedInstance().identify(user.getId)
-        //        parameters.putString("fields", "id,name,first_name,last_name,gender,locale,timezone,email,link");
+    public class func login() {
+        if FBSDKAccessToken.currentAccessToken() != nil {
+            let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id,name,first_name,last_name,gender,locale,timezone,email,link"])
+            request.startWithCompletionHandler({ (connection: FBSDKGraphRequestConnection!, user: AnyObject!, error: NSError!) -> Void in
+                if (error != nil) {
+                    print("Error fetching \(request), received \(error)")
+                } else {
+                    Mixpanel.sharedInstance().identify(user["id"] as! String)
+                    Mixpanel.sharedInstance().people.set([
+                        "$first_name": user["first_name"] as! String,
+                        "$last_name": user["last_name"] as! String,
+                        "FB Gender": user["gender"] as! String,
+                        "FB Locale": user["locale"] as! String,
+                        "FB Timezone": user["timezone"] as! Int,
+                        "$email": user["email"] as! String
+                    ])
+
+                    let dateFormatter:NSDateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
+                    dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC")
+                    let today = dateFormatter.stringFromDate(NSDate())
+                    Mixpanel.sharedInstance().people.set("Last Login", to: today);
+                    Mixpanel.sharedInstance().people.setOnce(["$created": today]);
+                }
+            })
+        }
     }
-*/
+
     
     public class func logout() {
         Mixpanel.sharedInstance().reset()

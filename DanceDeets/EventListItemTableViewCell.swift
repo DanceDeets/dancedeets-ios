@@ -11,138 +11,46 @@ import UIKit
 class EventListItemTableViewCell: UITableViewCell {
     
     let SEPARATOR_HORIZONTAL_INSETS:CGFloat = 12.0
-    var eventImageView:UIImageView!
-    var eventTitleLabel:UILabel!
-    var currentEvent:Event?
-    var danceIconImageView:UIImageView!
-    var clockIconImageView:UIImageView!
-    var pinIconImageView:UIImageView!
-    var eventCategoriesLabel:UILabel!
-    var eventTimeLabel:UILabel!
-    var eventVenueLabel:UILabel!
+    @IBOutlet var eventImageView:UIImageView!
+    @IBOutlet var eventTitleLabel:UILabel!
+    @IBOutlet var currentEvent:Event?
+    @IBOutlet var danceIconImageView:UIImageView!
+    @IBOutlet var clockIconImageView:UIImageView!
+    @IBOutlet var pinIconImageView:UIImageView!
+    @IBOutlet var eventCategoriesLabel:UILabel!
+    @IBOutlet var eventTimeLabel:UILabel!
+    @IBOutlet var eventVenueLabel:UILabel!
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    func updateForEvent(event:Event){
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    func updateForEvent(event: Event) {
         currentEvent = event
-        eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(", ")+")"
+        eventCategoriesLabel.text = "(" + event.categories.joinWithSeparator(", ") + ")"
         eventTitleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
         if let venueDisplay = event.venue?.name{
-            if(event.attendingCount != nil){
+            if (event.attendingCount != nil) {
                 eventVenueLabel.text = venueDisplay + "  |  \(event.attendingCount!) attending"
-            }else{
+            } else {
                 eventVenueLabel.text = venueDisplay
             }
         }
+        if imageHeightConstraint == nil {
+            imageHeightConstraint = NSLayoutConstraint(item: eventImageView!, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 0)
+            imageHeightConstraint.priority = 999
+            eventImageView!.addConstraints([imageHeightConstraint])
+        }
+        imageHeightConstraint.constant = event.eventImageHeight! / event.eventImageWidth! * eventImageView!.bounds.width
         contentView.layoutIfNeeded()
     }
-    
-    func commonInit(){
-        // init
-        backgroundColor = UIColor.clearColor()
-        layoutMargins = UIEdgeInsetsZero
-        separatorInset = UIEdgeInsetsMake(0, SEPARATOR_HORIZONTAL_INSETS, 0, SEPARATOR_HORIZONTAL_INSETS)
-        userInteractionEnabled = true
-        selectionStyle = .None
-        
-        // all layout for this cell in code.
-        
-        // cover image
-        eventImageView = UIImageView(frame: CGRectZero)
-        eventImageView.backgroundColor = UIColor.blackColor()
-        eventImageView.clipsToBounds = true
-        eventImageView.contentMode = .ScaleAspectFill
-        contentView.addSubview(eventImageView)
-        let heightConstraint = NSLayoutConstraint(item: eventImageView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 112)
-        heightConstraint.priority = 999
-        let widthConstraint = NSLayoutConstraint(item: eventImageView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: 112)
-        widthConstraint.priority = 999
-        eventImageView.addConstraint(heightConstraint)
-        eventImageView.addConstraint(widthConstraint)
-        
-        eventImageView.constrainLeftToSuperView(12)
-        eventImageView.constrainTopToSuperView(15)
-        eventImageView.constrainBottomToSuperView(15)
-        
-        // title label
-        eventTitleLabel = UILabel(frame:CGRectZero)
-        eventTitleLabel.numberOfLines = 2
-        eventTitleLabel.textColor = UIColor.whiteColor()
-        eventTitleLabel.font = UIFont(name:"Interstate-ExtraLight",size:18)!
-        
-        contentView.addSubview(eventTitleLabel)
-        eventTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addConstraint(NSLayoutConstraint(item: eventTitleLabel, attribute: .Left, relatedBy: .Equal, toItem: eventImageView, attribute: .Right, multiplier: 1.0, constant: 10))
-        contentView.addConstraint(NSLayoutConstraint(item: eventTitleLabel, attribute: .Right, relatedBy: .Equal, toItem: contentView, attribute: .Right, multiplier: 1.0, constant: -12))
-        contentView.addConstraint(NSLayoutConstraint(item: eventTitleLabel, attribute: .Top, relatedBy: .Equal, toItem: eventImageView, attribute: .Top, multiplier: 1.0, constant: 5))
-        
-        
-        // dance
-        
-        danceIconImageView = UIImageView(image: UIImage(named: "danceIcon"))
-        danceIconImageView.tintColor = UIColor(white: 1, alpha: 1)
-        contentView.addSubview(danceIconImageView)
-        danceIconImageView.constrainWidth(14, height: 14)
-        danceIconImageView.alignLeftToView(eventTitleLabel)
-        contentView.addConstraint(NSLayoutConstraint(item: danceIconImageView, attribute: .Top, relatedBy: .Equal, toItem: eventTitleLabel, attribute: .Bottom, multiplier: 1.0, constant: 10))
-        
-        // clock
-        clockIconImageView = UIImageView(image: UIImage(named: "clockIcon"))
-        clockIconImageView.tintColor = ColorFactory.lightBlue()
-        contentView.addSubview(clockIconImageView)
-        clockIconImageView.constrainWidth(14, height: 14)
-        clockIconImageView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addConstraint(NSLayoutConstraint(item: clockIconImageView, attribute: .CenterX, relatedBy: .Equal, toItem: danceIconImageView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-        contentView.addConstraint(NSLayoutConstraint(item: clockIconImageView, attribute: .Top, relatedBy: .Equal, toItem: danceIconImageView, attribute: .Bottom, multiplier: 1.0, constant: 8))
-        
-        // pin
-        pinIconImageView = UIImageView(image: UIImage(named: "pinIcon"))
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        // No idea why these are necessary, since they are set in the NIB
+        danceIconImageView.tintColor = UIColor.whiteColor()
+        // No idea why we have to set this color directly, instead of copying another color
+        // Seems there's some of magic going on with tintColor in multiple ways
+        clockIconImageView.tintColor = UIColor(red: 0, green: 236, blue: 227, alpha: 1.0)
         pinIconImageView.tintColor = UIColor.whiteColor()
-        contentView.addSubview(pinIconImageView)
-        pinIconImageView.constrainWidth(10, height: 12)
-        pinIconImageView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addConstraint(NSLayoutConstraint(item: pinIconImageView, attribute: .CenterX, relatedBy: .Equal, toItem: clockIconImageView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-        contentView.addConstraint(NSLayoutConstraint(item: pinIconImageView, attribute: .Top, relatedBy: .Equal, toItem: clockIconImageView, attribute: .Bottom, multiplier: 1.0, constant: 8))
-
-        // dance label
-        eventCategoriesLabel = UILabel(frame: CGRectZero)
-        eventCategoriesLabel.font = FontFactory.eventVenueFont()
-        eventCategoriesLabel.textColor =  UIColor(white: 1, alpha: 1)
-        contentView.addSubview(eventCategoriesLabel)
-        eventCategoriesLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addConstraint(NSLayoutConstraint(item: eventCategoriesLabel, attribute: .CenterY, relatedBy: .Equal, toItem: danceIconImageView, attribute: .CenterY, multiplier: 1.0, constant: 0))
-        contentView.addConstraint(NSLayoutConstraint(item: eventCategoriesLabel, attribute: .Left, relatedBy: .Equal, toItem: danceIconImageView, attribute: .Right, multiplier: 1.0, constant: 9))
-        contentView.addConstraint(NSLayoutConstraint(item: eventCategoriesLabel, attribute: .Right, relatedBy: .Equal, toItem: contentView, attribute: .Right, multiplier: 1.0, constant: -12))
-
-        // time label
-        eventTimeLabel = UILabel(frame: CGRectZero)
-        eventTimeLabel.font = FontFactory.eventDateFont()
-        eventTimeLabel.textColor =  ColorFactory.lightBlue()
-        contentView.addSubview(eventTimeLabel)
-        eventTimeLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addConstraint(NSLayoutConstraint(item: eventTimeLabel, attribute: .CenterY, relatedBy: .Equal, toItem: clockIconImageView, attribute: .CenterY, multiplier: 1.0, constant: 0))
-        contentView.addConstraint(NSLayoutConstraint(item: eventTimeLabel, attribute: .Left, relatedBy: .Equal, toItem: clockIconImageView, attribute: .Right, multiplier: 1.0, constant: 9))
-        contentView.addConstraint(NSLayoutConstraint(item: eventTimeLabel, attribute: .Right, relatedBy: .Equal, toItem: contentView, attribute: .Right, multiplier: 1.0, constant: -12))
-        
-        // venue label
-        eventVenueLabel = UILabel(frame: CGRectZero)
-        eventVenueLabel.font = FontFactory.eventVenueFont()
-        eventVenueLabel.textColor =  UIColor.whiteColor()
-        eventVenueLabel.numberOfLines = 2
-        contentView.addSubview(eventVenueLabel)
-        eventVenueLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addConstraint(NSLayoutConstraint(item: eventVenueLabel, attribute: .Top, relatedBy: .Equal, toItem: pinIconImageView, attribute: .Top, multiplier: 1.0, constant: -2))
-        contentView.addConstraint(NSLayoutConstraint(item: eventVenueLabel, attribute: .Left, relatedBy: .Equal, toItem: pinIconImageView, attribute: .Right, multiplier: 1.0, constant: 11))
-        contentView.addConstraint(NSLayoutConstraint(item: eventVenueLabel, attribute: .Right, relatedBy: .Equal, toItem: contentView, attribute: .Right, multiplier: 1.0, constant: -12))
-        
     }
 }
