@@ -129,7 +129,7 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
                 cell.eventImageView?.image = image
             } else {
                 cell.eventImageView?.image = nil
-                event.downloadSmallImage({ (image: UIImage!, error: NSError!) -> Void in
+                event.downloadCoverImage({ (image: UIImage!, error: NSError!) -> Void in
                     // guard against cell reuse + async download
                     if (event == cell.currentEvent) {
                         if (image != nil) {

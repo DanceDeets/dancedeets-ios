@@ -21,6 +21,7 @@ class EventListItemTableViewCell: UITableViewCell {
     @IBOutlet var eventTimeLabel:UILabel!
     @IBOutlet var eventVenueLabel:UILabel!
 
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     func updateForEvent(event: Event) {
         currentEvent = event
         eventCategoriesLabel.text = "(" + event.categories.joinWithSeparator(", ") + ")"
@@ -33,12 +34,18 @@ class EventListItemTableViewCell: UITableViewCell {
                 eventVenueLabel.text = venueDisplay
             }
         }
+        if imageHeightConstraint == nil {
+            imageHeightConstraint = NSLayoutConstraint(item: eventImageView!, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 0)
+            imageHeightConstraint.priority = 999
+            eventImageView!.addConstraints([imageHeightConstraint])
+        }
+        imageHeightConstraint.constant = event.eventImageHeight! / event.eventImageWidth! * eventImageView!.bounds.width
         contentView.layoutIfNeeded()
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         // No idea why these are necessary, since they are set in the NIB
         danceIconImageView.tintColor = UIColor.whiteColor()
         // No idea why we have to set this color directly, instead of copying another color
