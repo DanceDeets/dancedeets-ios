@@ -70,13 +70,6 @@
 				<key>NSIncludesSubdomains</key>
 				<true/>
 			</dict>
-			<key>crashlytics.com</key>
-			<dict>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<string>NO</string>
-				<key>NSIncludesSubdomains</key>
-				<string>YES</string>
-			</dict>
 			<key>dancedeets.com</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
