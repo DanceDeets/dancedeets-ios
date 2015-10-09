@@ -13,7 +13,7 @@ import QuartzCore
 import FBSDKCoreKit
 import GoogleMobileAds
 
-class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
+class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate, GADBannerViewDelegate {
     
     // MARK: Constants
     let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 95.0
@@ -30,6 +30,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     var eventDisplay:EventDisplay?
     var searchBar:SearchBar?
+    var adBar:AdBar?
 
     // MARK: Outlets
     @IBOutlet weak var eventListTableView: UITableView!
@@ -50,6 +51,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var bannerView: DFPBannerView!
+    @IBOutlet weak var bannerViewHeight: NSLayoutConstraint!
 
     // MARK: Action functions
     @IBAction func refreshButtonTapped(sender: AnyObject) {
@@ -78,6 +80,8 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             andHandler: eventSelected)
         searchBar = SearchBar(controller: self, searchHandler: refreshEvents)
 
+        adBar = AdBar(controller: self)
+
         view.layoutIfNeeded()
         
         loadViewController()
@@ -91,32 +95,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             requiresRefresh = false
             fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
         }
-        fetchLocation = FetchLocation(completionHandler: locationFoundHandler)
-    }
-
-    func locationFoundHandler(optionalLocation: CLLocation?) {
-
-        bannerView.adUnitID = "/26589588/mobile-bottom-banner"
-        bannerView.rootViewController = self
-        bannerView.adSize = kGADAdSizeSmartBannerPortrait
-        let request = DFPRequest()
-        request.testDevices = [
-            kGADSimulatorID,
-//            "301ebb9f19659a3ebbc88d348b8810b5", // Mike's iPhone
-        ]
-        if let location = optionalLocation {
-            request.setLocationWithLatitude(
-                CGFloat(location.coordinate.latitude),
-                longitude: CGFloat(location.coordinate.longitude),
-                accuracy: CGFloat(max(location.horizontalAccuracy, location.verticalAccuracy))
-            )
-        }
-
-        // Needs to be 30 characters or more, and needs to be meaningless to Google.
-        // But needs to be unique to the user, for frequency capping purposes.
-        request.publisherProvidedID = FBSDKAccessToken.currentAccessToken().userID.MD5()
-        bannerView.loadRequest(request)
-
     }
     
     override func viewDidAppear(animated: Bool) {

@@ -333,6 +333,7 @@
                         <outlet property="autosuggestTable" destination="EIE-kU-6ur" id="YFF-Eo-v6o"/>
                         <outlet property="backgroundImageView" destination="Pf1-0N-YSd" id="low-69-cUp"/>
                         <outlet property="bannerView" destination="UQN-VA-7Nd" id="gxw-29-NtI"/>
+                        <outlet property="bannerViewHeight" destination="tWS-uU-xII" id="29r-6Q-0KY"/>
                         <outlet property="customNavigationView" destination="ep2-FI-Z09" id="bmR-Le-Sb1"/>
                         <outlet property="customNavigationViewHeightConstraint" destination="9Nl-18-tGz" id="y4g-i7-Ipx"/>
                         <outlet property="eventListTableView" destination="x7r-fS-X6k" id="efA-OD-zfS"/>
