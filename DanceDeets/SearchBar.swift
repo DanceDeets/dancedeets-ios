@@ -61,8 +61,8 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         configureField(controller.keywordSearchField, defaultText: "Keywords", iconName: "searchIconSmall")
 
         // blur overlay is used for background of auto suggest table
-        blurOverlay = controller.view.addDarkBlurOverlay()
-        controller.view.insertSubview(blurOverlay!, belowSubview: controller.customNavigationView)
+        blurOverlay = controller.mainView.addDarkBlurOverlay()
+        controller.mainView.insertSubview(blurOverlay!, belowSubview: controller.customNavigationView)
         blurOverlay?.alpha = 0
 
         registerForKeyboardNotifications()

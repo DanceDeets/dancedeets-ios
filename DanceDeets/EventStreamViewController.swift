@@ -11,6 +11,7 @@ import CoreLocation
 import MessageUI
 import QuartzCore
 import FBSDKCoreKit
+import GoogleMobileAds
 
 class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
@@ -45,6 +46,10 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     @IBOutlet weak var textFieldsEqualWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationMaxWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var keywordMaxWidthConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var bannerView: DFPBannerView!
+
     // MARK: Action functions
     @IBAction func refreshButtonTapped(sender: AnyObject) {
         refreshEvents()
@@ -71,6 +76,21 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             heightOffset: CUSTOM_NAVIGATION_BAR_HEIGHT,
             andHandler: eventSelected)
         searchBar = SearchBar(controller: self, searchHandler: refreshEvents)
+
+        bannerView.adUnitID = "/26589588/mobile-bottom-banner"
+        bannerView.rootViewController = self
+        bannerView.adSize = kGADAdSizeSmartBannerPortrait
+        let request = DFPRequest()
+        request.testDevices = [
+            kGADSimulatorID,
+            "301ebb9f19659a3ebbc88d348b8810b5", // Mike's iPhone
+        ]
+        //TODO: request.setLocationWithLatitude(<#T##latitude: CGFloat##CGFloat#>, longitude: <#T##CGFloat#>, accuracy: <#T##CGFloat#>)
+
+        // Needs to be 30 characters or more, and needs to be meaningless to Google.
+        // But needs to be unique to the user, for frequency capping purposes.
+        request.publisherProvidedID = FBSDKAccessToken.currentAccessToken().userID.MD5()
+        bannerView.loadRequest(request)
 
         view.layoutIfNeeded()
         
