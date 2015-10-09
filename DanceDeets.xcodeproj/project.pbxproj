@@ -24,9 +24,10 @@
 		1D1131191B458503001CBEDE /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1131151B458503001CBEDE /* FBSDKShareKit.framework */; };
 		1D12DE901B0A1C0A00BEE249 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D12DE8F1B0A1C0A00BEE249 /* Crashlytics.framework */; };
 		1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15802A1A05695400658A1D /* EventAdmin.swift */; };
+		1D20FFC31BC7B3EA00CB21D3 /* FetchLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FFC21BC7B3EA00CB21D3 /* FetchLocation.swift */; settings = {ASSET_TAGS = (); }; };
 		1D4A22311BB8692400CAD7E3 /* UrlUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A22301BB8692400CAD7E3 /* UrlUtil.swift */; settings = {ASSET_TAGS = (); }; };
 		1D5888FA1BB75B2900E70626 /* EventDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888F91BB75B2900E70626 /* EventDisplay.swift */; settings = {ASSET_TAGS = (); }; };
-		1D5888FD1BB7765C00E70626 /* CurrentGeocode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888FC1BB7765C00E70626 /* CurrentGeocode.swift */; settings = {ASSET_TAGS = (); }; };
+		1D5888FD1BB7765C00E70626 /* FetchAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888FC1BB7765C00E70626 /* FetchAddress.swift */; settings = {ASSET_TAGS = (); }; };
 		1D62C2F31BB525D30023F199 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D62C2F21BB525D30023F199 /* Test.swift */; settings = {ASSET_TAGS = (); }; };
 		1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */; };
 		1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */; };
@@ -102,10 +103,11 @@
 		1D1131151B458503001CBEDE /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../FBSDKShareKit.framework; sourceTree = "<group>"; };
 		1D12DE8F1B0A1C0A00BEE249 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = ../Crashlytics.framework; sourceTree = "<group>"; };
 		1D15802A1A05695400658A1D /* EventAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAdmin.swift; sourceTree = "<group>"; };
+		1D20FFC21BC7B3EA00CB21D3 /* FetchLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchLocation.swift; sourceTree = "<group>"; };
 		1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DanceDeets-Bridging-Header.h"; sourceTree = "<group>"; };
 		1D4A22301BB8692400CAD7E3 /* UrlUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlUtil.swift; sourceTree = "<group>"; };
 		1D5888F91BB75B2900E70626 /* EventDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDisplay.swift; sourceTree = "<group>"; };
-		1D5888FC1BB7765C00E70626 /* CurrentGeocode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentGeocode.swift; sourceTree = "<group>"; };
+		1D5888FC1BB7765C00E70626 /* FetchAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAddress.swift; sourceTree = "<group>"; };
 		1D62C2F21BB525D30023F199 /* Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
 		1D8856B719CDE510005FFDB2 /* DanceDeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceDeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,8 +237,9 @@
 			isa = PBXGroup;
 			children = (
 				1D5888F91BB75B2900E70626 /* EventDisplay.swift */,
-				1D5888FC1BB7765C00E70626 /* CurrentGeocode.swift */,
+				1D5888FC1BB7765C00E70626 /* FetchAddress.swift */,
 				1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */,
+				1D20FFC21BC7B3EA00CB21D3 /* FetchLocation.swift */,
 			);
 			name = "ListView Components";
 			sourceTree = "<group>";
@@ -551,7 +554,8 @@
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */,
 				1D95547F1BB3C84400241F38 /* FacebookRsvpManager.swift in Sources */,
-				1D5888FD1BB7765C00E70626 /* CurrentGeocode.swift in Sources */,
+				1D20FFC31BC7B3EA00CB21D3 /* FetchLocation.swift in Sources */,
+				1D5888FD1BB7765C00E70626 /* FetchAddress.swift in Sources */,
 				1D0892491A278DCB00A9EAC4 /* GooglePlaceAPI.swift in Sources */,
 				1D08924B1A279DFF00A9EAC4 /* SettingsViewController.swift in Sources */,
 				1DAE2C1F1A3D063300F03AD1 /* ServerInterface.swift in Sources */,

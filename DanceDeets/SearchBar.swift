@@ -36,7 +36,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         "All-Styles"
     ]
 
-    var currentGeocoder:CurrentGeocode?
+    var fetchAddress:FetchAddress?
 
     weak var activeTextField: UITextField?
 
@@ -220,7 +220,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     }
 
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        if (currentGeocoder != nil) {
+        if (fetchAddress != nil) {
             return false
         } else {
             return true
@@ -233,7 +233,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
             if indexPath.section == 0 {
                 controller.locationSearchField.endEditing(true)
                 controller.locationSearchField.text = "Finding location..." //TODO: look up location!!!
-                currentGeocoder = CurrentGeocode(completionHandler: geocodeCompletionHandler)
+                fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
             } else {
                 controller.locationSearchField.text = autosuggestedLocations[indexPath.row]
                 textFieldShouldReturn(controller.locationSearchField)
@@ -248,8 +248,8 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         }
     }
 
-    func geocodeCompletionHandler(optionalPlacemark: CLPlacemark?) {
-        currentGeocoder = nil
+    func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
+        fetchAddress = nil
         if let placemark = optionalPlacemark {
             let fullText = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
             self.controller.locationSearchField.text = fullText

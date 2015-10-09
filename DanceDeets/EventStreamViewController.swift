@@ -25,7 +25,8 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
-    var currentGeooder:CurrentGeocode?
+    var fetchAddress:FetchAddress?
+    var fetchLocation:FetchLocation?
 
     var eventDisplay:EventDisplay?
     var searchBar:SearchBar?
@@ -77,21 +78,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             andHandler: eventSelected)
         searchBar = SearchBar(controller: self, searchHandler: refreshEvents)
 
-        bannerView.adUnitID = "/26589588/mobile-bottom-banner"
-        bannerView.rootViewController = self
-        bannerView.adSize = kGADAdSizeSmartBannerPortrait
-        let request = DFPRequest()
-        request.testDevices = [
-            kGADSimulatorID,
-            "301ebb9f19659a3ebbc88d348b8810b5", // Mike's iPhone
-        ]
-        //TODO: request.setLocationWithLatitude(<#T##latitude: CGFloat##CGFloat#>, longitude: <#T##CGFloat#>, accuracy: <#T##CGFloat#>)
-
-        // Needs to be 30 characters or more, and needs to be meaningless to Google.
-        // But needs to be unique to the user, for frequency capping purposes.
-        request.publisherProvidedID = FBSDKAccessToken.currentAccessToken().userID.MD5()
-        bannerView.loadRequest(request)
-
         view.layoutIfNeeded()
         
         loadViewController()
@@ -103,8 +89,34 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         
         if (requiresRefresh) {
             requiresRefresh = false
-            currentGeooder = CurrentGeocode(completionHandler: geocodeCompletionHandler)
+            fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
         }
+        fetchLocation = FetchLocation(completionHandler: locationFoundHandler)
+    }
+
+    func locationFoundHandler(optionalLocation: CLLocation?) {
+
+        bannerView.adUnitID = "/26589588/mobile-bottom-banner"
+        bannerView.rootViewController = self
+        bannerView.adSize = kGADAdSizeSmartBannerPortrait
+        let request = DFPRequest()
+        request.testDevices = [
+            kGADSimulatorID,
+//            "301ebb9f19659a3ebbc88d348b8810b5", // Mike's iPhone
+        ]
+        if let location = optionalLocation {
+            request.setLocationWithLatitude(
+                CGFloat(location.coordinate.latitude),
+                longitude: CGFloat(location.coordinate.longitude),
+                accuracy: CGFloat(max(location.horizontalAccuracy, location.verticalAccuracy))
+            )
+        }
+
+        // Needs to be 30 characters or more, and needs to be meaningless to Google.
+        // But needs to be unique to the user, for frequency capping purposes.
+        request.publisherProvidedID = FBSDKAccessToken.currentAccessToken().userID.MD5()
+        bannerView.loadRequest(request)
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -152,7 +164,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         searchTextCancelButton.alpha = 0
     }
 
-    func geocodeCompletionHandler(optionalPlacemark: CLPlacemark?) {
+    func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
         if let placemark = optionalPlacemark {
             let fullText = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
             self.locationSearchField.text = fullText
