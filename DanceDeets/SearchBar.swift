@@ -36,7 +36,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         "All-Styles"
     ]
 
-    var currentGeocoder:CurrentGeocode?
+    var fetchAddress:FetchAddress?
 
     weak var activeTextField: UITextField?
 
@@ -61,8 +61,8 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         configureField(controller.keywordSearchField, defaultText: "Keywords", iconName: "searchIconSmall")
 
         // blur overlay is used for background of auto suggest table
-        blurOverlay = controller.view.addDarkBlurOverlay()
-        controller.view.insertSubview(blurOverlay!, belowSubview: controller.customNavigationView)
+        blurOverlay = controller.mainView.addDarkBlurOverlay()
+        controller.mainView.insertSubview(blurOverlay!, belowSubview: controller.customNavigationView)
         blurOverlay?.alpha = 0
 
         registerForKeyboardNotifications()
@@ -220,7 +220,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     }
 
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        if (currentGeocoder != nil) {
+        if (fetchAddress != nil) {
             return false
         } else {
             return true
@@ -233,7 +233,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
             if indexPath.section == 0 {
                 controller.locationSearchField.endEditing(true)
                 controller.locationSearchField.text = "Finding location..." //TODO: look up location!!!
-                currentGeocoder = CurrentGeocode(completionHandler: geocodeCompletionHandler)
+                fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
             } else {
                 controller.locationSearchField.text = autosuggestedLocations[indexPath.row]
                 textFieldShouldReturn(controller.locationSearchField)
@@ -248,8 +248,8 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         }
     }
 
-    func geocodeCompletionHandler(optionalPlacemark: CLPlacemark?) {
-        currentGeocoder = nil
+    func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
+        fetchAddress = nil
         if let placemark = optionalPlacemark {
             let fullText = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
             self.controller.locationSearchField.text = fullText

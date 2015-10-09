@@ -11,8 +11,9 @@ import CoreLocation
 import MessageUI
 import QuartzCore
 import FBSDKCoreKit
+import GoogleMobileAds
 
-class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
+class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate, GADBannerViewDelegate {
     
     // MARK: Constants
     let CUSTOM_NAVIGATION_BAR_HEIGHT:CGFloat = 95.0
@@ -24,10 +25,12 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
-    var currentGeooder:CurrentGeocode?
+    var fetchAddress:FetchAddress?
+    var fetchLocation:FetchLocation?
 
     var eventDisplay:EventDisplay?
     var searchBar:SearchBar?
+    var adBar:AdBar?
 
     // MARK: Outlets
     @IBOutlet weak var eventListTableView: UITableView!
@@ -45,6 +48,11 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     @IBOutlet weak var textFieldsEqualWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationMaxWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var keywordMaxWidthConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var bannerView: DFPBannerView!
+    @IBOutlet weak var bannerViewHeight: NSLayoutConstraint!
+
     // MARK: Action functions
     @IBAction func refreshButtonTapped(sender: AnyObject) {
         refreshEvents()
@@ -72,6 +80,8 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             andHandler: eventSelected)
         searchBar = SearchBar(controller: self, searchHandler: refreshEvents)
 
+        adBar = AdBar(controller: self)
+
         view.layoutIfNeeded()
         
         loadViewController()
@@ -83,7 +93,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         
         if (requiresRefresh) {
             requiresRefresh = false
-            currentGeooder = CurrentGeocode(completionHandler: geocodeCompletionHandler)
+            fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
         }
     }
     
@@ -132,7 +142,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         searchTextCancelButton.alpha = 0
     }
 
-    func geocodeCompletionHandler(optionalPlacemark: CLPlacemark?) {
+    func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
         if let placemark = optionalPlacemark {
             let fullText = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
             self.locationSearchField.text = fullText

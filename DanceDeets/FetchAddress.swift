@@ -1,21 +1,20 @@
 //
-//  CurrentGeocode.swift
+//  FetchAddress.swift
 //  DanceDeets
 //
 //  Created by LambertMike on 2015/09/26.
-//  Copyright © 2015年 david.xiang. All rights reserved.
 //
 
 import Foundation
 import CoreLocation
 
-class CurrentGeocode: NSObject, CLLocationManagerDelegate {
+class FetchAddress: NSObject, CLLocationManagerDelegate {
     var geocoder:CLGeocoder = CLGeocoder()
     var myLocationManager:CLLocationManager = CLLocationManager()
-    typealias GeocodeCompletionHandler = (CLPlacemark?) -> Void
-    var completionHandler:GeocodeCompletionHandler
+    typealias AddressCompletionHandler = (CLPlacemark?) -> Void
+    var completionHandler:AddressCompletionHandler
 
-    init(completionHandler: GeocodeCompletionHandler) {
+    init(completionHandler: AddressCompletionHandler) {
         self.completionHandler = completionHandler
         super.init()
         myLocationManager.delegate = self
@@ -38,7 +37,7 @@ class CurrentGeocode: NSObject, CLLocationManagerDelegate {
         if (locations.count == 0) {
             completionHandler(nil)
         } else {
-            if let locationObject:CLLocation = locations.first! as CLLocation {
+            if let locationObject = locations.first {
                 geocoder.reverseGeocodeLocation(locationObject, completionHandler: internalGeocodeCompletionHandler)
             }
         }

@@ -112,12 +112,17 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.section == TOOLS_SECTION) {
             if(indexPath.row == 0){
-                let composer = MFMailComposeViewController()
-                let recipients:[String] = ["feedback@dancedeets.com"]
-                composer.mailComposeDelegate = self
-                composer.setSubject("DanceDeets Feedback")
-                composer.setToRecipients(recipients)
-                presentViewController(composer, animated: true, completion: nil)
+                if (MFMailComposeViewController.canSendMail()) {
+                    let composer = MFMailComposeViewController()
+                    let recipients:[String] = ["feedback@dancedeets.com"]
+                    composer.mailComposeDelegate = self
+                    composer.setSubject("DanceDeets Feedback")
+                    composer.setToRecipients(recipients)
+                    presentViewController(composer, animated: true, completion: nil)
+                } else {
+                    let alertView = UIAlertView(title: "Cannot send feedback", message: "You cannot send feedback through email, because you have no email accounts set up on this iPhone/iPad.", delegate: nil, cancelButtonTitle: "OK")
+                    alertView.show()
+                }
             } else if(indexPath.row == 1) {
                 AnalyticsUtil.track("Add Event")
                 let token = FBSDKAccessToken.currentAccessToken()

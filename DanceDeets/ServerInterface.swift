@@ -11,7 +11,7 @@ import CoreLocation
 
 public class ServerInterface : NSObject, CLLocationManagerDelegate {
 
-    var currentGeocoder:CurrentGeocode?
+    var fetchAddress:FetchAddress?
 
     // MARK: Static URL Construction Methods
     static let baseUrl:String = "http://www.dancedeets.com/api/v1.1"
@@ -61,10 +61,10 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     }
     
     func updateFacebookToken() {
-        currentGeocoder = CurrentGeocode(completionHandler: completionHandler)
+        fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
     }
     
-    func completionHandler(optionalPlacemark: CLPlacemark?) {
+    func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
         var geocodeString:String = ""
         if let placemark = optionalPlacemark {
             // set up a display address
