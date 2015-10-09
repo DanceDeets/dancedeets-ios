@@ -9,7 +9,10 @@ import Foundation
 import CoreLocation
 
 class FetchLocation: NSObject, CLLocationManagerDelegate {
+    var sentLocation:Bool = false
+
     var myLocationManager:CLLocationManager = CLLocationManager()
+
     typealias LocationCompletionHandler = (CLLocation?) -> Void
     var completionHandler:LocationCompletionHandler
 
@@ -24,10 +27,13 @@ class FetchLocation: NSObject, CLLocationManagerDelegate {
     // MARK: CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         myLocationManager.stopUpdatingLocation()
-        if (locations.count == 0) {
-            completionHandler(nil)
-        } else {
-            completionHandler(locations.first!)
+        if !sentLocation {
+            sentLocation = true
+            if (locations.count == 0) {
+                completionHandler(nil)
+            } else {
+                completionHandler(locations.first!)
+            }
         }
     }
 
