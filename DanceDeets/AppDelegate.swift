@@ -12,6 +12,7 @@ import Crashlytics
 import FBSDKCoreKit
 import FBSDKLoginKit
 import Mixpanel
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,7 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         FBSDKLoginButton.self
         FBSDKProfilePictureView.self
-        
+        DFPRequest.sdkVersion()
+
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         FBSDKProfile.enableUpdatesOnAccessTokenChange(true)
         
