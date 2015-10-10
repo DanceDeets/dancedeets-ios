@@ -57,8 +57,8 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         controller.locationSearchField.addTarget(self, action: "locationFieldUpdated", forControlEvents: UIControlEvents.EditingChanged)
 
         // search text field styling
-        configureField(controller.locationSearchField, defaultText: "Location", iconName: "pinIcon")
-        configureField(controller.keywordSearchField, defaultText: "Keywords", iconName: "searchIconSmall")
+        configureField(controller.locationSearchField, defaultText: NSLocalizedString("Location", comment: "Text Field"), iconName: "pinIcon")
+        configureField(controller.keywordSearchField, defaultText: NSLocalizedString("Keywords", comment: "Text Field"), iconName: "searchIconSmall")
 
         // blur overlay is used for background of auto suggest table
         blurOverlay = controller.mainView.addDarkBlurOverlay()
