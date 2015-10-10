@@ -39,7 +39,7 @@ class EventListItemTableViewCell: UITableViewCell {
             imageHeightConstraint.priority = 999
             eventImageView!.addConstraints([imageHeightConstraint])
         }
-        if (event.eventImageWidth && event.eventImageHeight) {
+        if (event.eventImageWidth != nil && event.eventImageHeight != nil) {
             imageHeightConstraint.constant = event.eventImageHeight! / event.eventImageWidth! * eventImageView!.bounds.width
         } else {
             imageHeightConstraint.constant = 0
