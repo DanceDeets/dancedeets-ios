@@ -187,7 +187,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
             if indexPath.section == 0 {
                 let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCell", forIndexPath: indexPath) as! SettingsCell
                 cell.icon.image = UIImage(named: "gpsIcon")
-                cell.label.text = "Current Location"
+                cell.label.text = NSLocalizedString("Current Location", comment: "Auto-complete Label")
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("autosuggestCell", forIndexPath: indexPath) as! SettingsCell
@@ -232,7 +232,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         if (activeTextField == controller.locationSearchField) {
             if indexPath.section == 0 {
                 controller.locationSearchField.endEditing(true)
-                controller.locationSearchField.text = "Finding location..." //TODO: look up location!!!
+                controller.locationSearchField.text = NSLocalizedString("Finding location...", comment: "Location field in-progress message")
                 fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
             } else {
                 controller.locationSearchField.text = autosuggestedLocations[indexPath.row]

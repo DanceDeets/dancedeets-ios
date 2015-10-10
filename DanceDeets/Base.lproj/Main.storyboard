@@ -326,7 +326,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title=" " id="abR-ru-BqT"/>
+                    <navigationItem key="navigationItem" id="abR-ru-BqT"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>

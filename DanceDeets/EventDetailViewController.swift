@@ -51,7 +51,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     
     // MARK: UIViewController
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "fullScreenImageSegue"){
+        if(segue.identifier == "fullScreenImageSegue") {
             let destinationController = segue.destinationViewController as! FullScreenImageViewController
             if let image = eventCoverImageView.image{
                 destinationController.image = image
@@ -213,27 +213,27 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
         let width:CGFloat = tableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
 
         var height:CGFloat?
-        if(indexPath.row == 0){
+        if (indexPath.row == 0) {
             // gap, cover image sits here but isn't part of the tableview
             height = getTopOffset() + eventImageHeight()
-        }else if(indexPath.row == 1){
+        } else if(indexPath.row == 1) {
             // title
             let textHeight = Utilities.heightRequiredForText(eventTitleLabel.text!,
                 lineHeight: FontFactory.eventHeadlineLineHeight(),
                 font: eventTitleLabel.font,
                 width:width)
             height = textHeight + 25
-        }else if(indexPath.row == 2){
+        } else if(indexPath.row == 2) {
             // categories
             let textHeight = Utilities.heightRequiredForText(eventCategoriesLabel.text!,
                 lineHeight: FontFactory.eventDescriptionLineHeight(),
                 font: eventCategoriesLabel.font!,
                 width:width)
             height = textHeight
-        }else if(indexPath.row == 3){
+        } else if(indexPath.row == 3) {
             // time
             height = 24
-        }else if(indexPath.row == 4){
+        } else if(indexPath.row == 4) {
             // display address
             var displayAddressHeight:CGFloat = 0.0
             displayAddressHeight += Utilities.heightRequiredForText(eventVenueLabel.text!,
@@ -241,20 +241,20 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
                 font: eventVenueLabel.font,
                 width: width)
             height = displayAddressHeight
-        }else if(indexPath.row == 5){
+        } else if(indexPath.row == 5) {
             //description
             let textHeight = Utilities.heightRequiredForText(eventDescriptionLabel.text,
                 lineHeight: FontFactory.eventDescriptionLineHeight(),
                 font: eventDescriptionLabel.font!,
                 width:width)
             height = textHeight + 30
-        }else if(indexPath.row == 6){
+        } else if(indexPath.row == 6) {
             // map
             height = 300;
-        }else if(indexPath.row == 7){
+        } else if(indexPath.row == 7) {
             // CTAs
             height = 55;
-        }else{
+        } else {
             height = CGFloat.min
         }
         // print("Row \(indexPath.row) has height \(height)")

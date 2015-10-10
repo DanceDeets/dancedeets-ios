@@ -1,0 +1,27 @@
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "5IE-B2-vbr"; */
+"5IE-B2-vbr.normalTitle" = "Done";
+
+/* Class = "UILabel"; text = "Send Feedback"; ObjectID = "A7q-Ic-8dA"; */
+"A7q-Ic-8dA.text" = "Send Feedback";
+
+/* Class = "UILabel"; text = "Logout"; ObjectID = "Eun-8Q-8OI"; */
+"Eun-8Q-8OI.text" = "Logout";
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "FAC-4W-puc"; */
+"FAC-4W-puc.normalTitle" = "CANCEL";
+
+/* Class = "UIBarButtonItem"; title = "RSVP"; ObjectID = "Mbf-UG-DzL"; */
+"Mbf-UG-DzL.title" = "RSVP";
+
+/* Class = "UILabel"; text = "SETTINGS"; ObjectID = "Pfq-kp-eKO"; */
+"Pfq-kp-eKO.text" = "SETTINGS";
+
+/* Class = "UITextField"; placeholder = "Keywords"; ObjectID = "Uav-SE-Lwi"; */
+"Uav-SE-Lwi.placeholder" = "Keywords";
+
+/* Class = "UITextField"; placeholder = "Location"; ObjectID = "e4R-8c-l3a"; */
+"e4R-8c-l3a.placeholder" = "Location";
+
+/* Class = "UILabel"; text = "Add Event"; ObjectID = "taQ-Un-eSQ"; */
+"taQ-Un-eSQ.text" = "Add Event";

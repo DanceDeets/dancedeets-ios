@@ -20,7 +20,11 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     let USER_SEARCH_LOCATION_KEY = "searchCity" // Magic key for storing a location in NSUserDefaults
 
     // MARK: Variables
-    var locationFailureAlert:UIAlertView = UIAlertView(title: "Sorry", message: "Having some trouble figuring out where you are right now!", delegate: nil, cancelButtonTitle: "OK")
+    var locationFailureAlert:UIAlertView = UIAlertView(
+        title: NSLocalizedString("GPS Problem", comment: "Alert Title"),
+        message: NSLocalizedString("Couldn't detect your location", comment: "GPS Failure"),
+        delegate: nil,
+        cancelButtonTitle: "OK")
     var requiresRefresh = true
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
@@ -152,7 +156,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
                 self.locationSearchField.text = location
                 refreshEvents()
             } else {
-                setTitle("RETRY", "Couldn't get your location")
+                setTitle(NSLocalizedString("RETRY", comment: "Title"), NSLocalizedString("Couldn't detect your location", comment: "GPS Failure"))
                 locationFailureAlert.show()
             }
         }
@@ -177,11 +181,11 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     func setupEventsDisplay(events: [Event]!, error: NSError!) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             if (error != nil) {
-                let errorAlert = UIAlertView(title: "Sorry", message: "There might have been a network problem. Check your connection", delegate: nil, cancelButtonTitle: "OK")
+                let errorAlert = UIAlertView(title: NSLocalizedString("No Connection", comment: "Error Title"), message: NSLocalizedString("There might have been a network problem. Check your connection", comment: "Error Description"), delegate: nil, cancelButtonTitle: "OK")
                 errorAlert.show()
                 self.setTitle("ERROR", "Try again")
             } else if(events.count == 0) {
-                let noEventAlert = UIAlertView(title: "Sorry", message: "There doesn't seem to be any events in that area right now. Try expanding your search criteria?", delegate: nil, cancelButtonTitle: "OK")
+                let noEventAlert = UIAlertView(title: NSLocalizedString("No Results", comment: "Error Title"), message: NSLocalizedString("There doesn't seem to be any events in that area right now. Try expanding your search criteria?", comment: "Error Description"), delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
                 self.setTitle(self.locationSearchField.text!, "No Events")
             } else {
@@ -196,7 +200,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         NSUserDefaults.standardUserDefaults().setObject(location, forKey: USER_SEARCH_LOCATION_KEY)
         NSUserDefaults.standardUserDefaults().synchronize()
 
-        self.setTitle(location, "Loading...")
+        self.setTitle(location, NSLocalizedString("Loading...", comment: "Progress Title"))
         Event.loadEventsForLocation(location, withKeywords:keywords, completion: setupEventsDisplay)
     }
 

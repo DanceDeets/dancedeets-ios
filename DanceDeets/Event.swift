@@ -125,44 +125,44 @@ public class Event: NSObject {
         
         // date formatting
         let dateFormatterStart:NSDateFormatter  = NSDateFormatter()
-        let dateFormatterEnd:NSDateFormatter = NSDateFormatter()
-        var dateDisplayString:String  =  String()
-        dateFormatterStart.dateFormat = "EEE MMM d  |  ha"
-        dateFormatterEnd.dateFormat = "ha"
-        if (startTime != nil && endTime != nil){
+        var dateDisplayString:String = String()
+        dateFormatterStart.dateFormat = "EEE MMM dd  |  h:mma"
+        if (startTime != nil && endTime != nil) {
+            let dateFormatterEnd:NSDateFormatter = NSDateFormatter()
+            dateFormatterEnd.dateFormat = "h:mma"
+
             // there's a start and end time
             dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
             dateDisplayString += " - "
             dateDisplayString += dateFormatterEnd.stringFromDate(endTime!)
-        }else if(startTime != nil){
+        } else if (startTime != nil) {
             // start time
             dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
-        }else{
+        } else {
             // check for full day event
-            let dateFormatter:NSDateFormatter  = NSDateFormatter()
+            let dateFormatter:NSDateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy'-'MM'-'dd"
-            
             if let startTimeString = dictionary["start_time"] as? String{
                 startTime = dateFormatter.dateFromString(startTimeString)
-                if(startTime != nil){
+                if (startTime != nil) {
                     let displayFormatter:NSDateFormatter = NSDateFormatter()
-                    displayFormatter.dateFormat = "EEE MMM dd  |  'All Day'"
+                    displayFormatter.dateFormat = "EEE MMM dd"
                     dateDisplayString = displayFormatter.stringFromDate(startTime!)
                 }
             }
         }
-        displayTime = dateDisplayString.uppercaseString
+        displayTime = dateDisplayString
     }
     
     // Create sharing items for the activity sheet
-    public func createSharingItems()->[AnyObject]{
+    public func createSharingItems()->[AnyObject] {
         var sharingItems:[AnyObject] = []
         
-        if(title != nil){
+        if (title != nil) {
             sharingItems.append(title!)
         }
         
-        if(danceDeetsUrl != nil){
+        if (danceDeetsUrl != nil) {
             sharingItems.append(danceDeetsUrl!)
         }
         
@@ -170,16 +170,15 @@ public class Event: NSObject {
     }
     
     // Attempts to download the cover image for this event, callbacks on mainthread
-    public func downloadCoverImage(completion:((UIImage!,NSError!)->Void)) ->Void
-    {
-        if(eventImageUrl != nil){
+    public func downloadCoverImage(completion:((UIImage!,NSError!)->Void)) {
+        if (eventImageUrl != nil) {
             downloadImage(eventImageUrl!, completion: completion)
-        }else{
+        } else {
             completion(nil,nil)
         }
     }
     
-    public func downloadSmallImage(completion:((UIImage!,NSError!)->Void)) ->Void
+    public func downloadSmallImage(completion:((UIImage!,NSError!)->Void))
     {
         if(eventSmallImageUrl != nil){
             downloadImage(eventSmallImageUrl!, completion: completion)
@@ -188,26 +187,26 @@ public class Event: NSObject {
         }
     }
     
-    func downloadImage(url:NSURL,completion:((UIImage!,NSError!)->Void)) ->Void
+    func downloadImage(url:NSURL, completion:((UIImage!,NSError!)->Void))
     {
         let imageRequest:NSURLRequest = NSURLRequest(URL: url)
         let downloadTask:NSURLSessionDownloadTask =
         NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
             completionHandler: { (location:NSURL?, resp:NSURLResponse?, error:NSError?) -> Void in
-                if(error == nil){
+                if (error == nil) {
                     let data:NSData? = NSData(contentsOfURL: location!)
                     if let newImage = UIImage(data: data!, scale: UIScreen.mainScreen().scale){
                         ImageCache.sharedInstance.cacheImageForRequest(newImage, request: imageRequest)
                         dispatch_async(dispatch_get_main_queue(), {
                             completion(newImage,nil)
                         })
-                    }else{
+                    } else {
                         let error = NSError(domain: "Couldn't create image from data", code: 0, userInfo: nil)
                         dispatch_async(dispatch_get_main_queue(), {
                             completion(nil, error)
                         })
                     }
-                }else{
+                } else {
                     dispatch_async(dispatch_get_main_queue(), {
                         completion(nil, error)
                     })
@@ -229,9 +228,9 @@ public class Event: NSObject {
     public class func loadEventsFromUrl(url:NSURL, completion: (([Event]!, NSError!)->Void)) -> Void
     {
         let task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-            if(error != nil){
+            if (error != nil) {
                 completion([], error)
-            }else{
+            } else {
                 var json:NSDictionary?
                 do {
                     json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
@@ -243,12 +242,12 @@ public class Event: NSObject {
                 }
                 else {
                     var eventList:[Event] = []
-                    if(json != nil){
-                        if let results = json!["results"] as? NSArray{
+                    if (json != nil) {
+                        if let results = json!["results"] as? NSArray {
                             for item in results{
-                                if let eventDictionary = item as? NSDictionary{
+                                if let eventDictionary = item as? NSDictionary {
                                     let newEvent:Event? = Event(dictionary: eventDictionary)
-                                    if newEvent != nil{
+                                    if newEvent != nil {
                                         eventList.append(newEvent!)
                                     }
                                 }

@@ -1,0 +1,22 @@
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "5IE-B2-vbr"; */
+"5IE-B2-vbr.normalTitle" = "完了";
+
+/* Class = "UILabel"; text = "Add Event"; ObjectID = "taQ-Un-eSQ"; */
+"taQ-Un-eSQ.text" = "イベントを追加";
+
+/* Class = "UILabel"; text = "Send Feedback"; ObjectID = "A7q-Ic-8dA"; */
+"A7q-Ic-8dA.text" = "フィードバックを送信";
+
+/* Class = "UILabel"; text = "Logout"; ObjectID = "Eun-8Q-8OI"; */
+"Eun-8Q-8OI.text" = "ログアウト";
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "FAC-4W-puc"; */
+"FAC-4W-puc.normalTitle" = "キャンセル";
+
+/* Class = "UIBarButtonItem"; title = "RSVP"; ObjectID = "Mbf-UG-DzL"; */
+"Mbf-UG-DzL.title" = "参加";
+
+/* Class = "UILabel"; text = "SETTINGS"; ObjectID = "Pfq-kp-eKO"; */
+"Pfq-kp-eKO.text" = "設定";
+
