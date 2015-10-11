@@ -18,6 +18,7 @@ class FaceBookLoginViewController: UIViewController, FBSDKLoginButtonDelegate, U
     override func viewDidLoad() {
         self.fbLoginView.delegate = self
         self.fbLoginView.readPermissions = FaceBookLoginViewController.getDefaultFacebookPermissions
+        self.fbLoginView.addTarget(self, action: "loginButtonClicked", forControlEvents: .TouchUpInside)
         view.backgroundColor = UIColor.blackColor()
 
         AnalyticsUtil.track("Login - Not Logged In")
@@ -48,6 +49,10 @@ class FaceBookLoginViewController: UIViewController, FBSDKLoginButtonDelegate, U
         disclaimerTextView.textContainerInset = UIEdgeInsetsZero
         disclaimerTextView.delegate = self
         
+    }
+
+    func loginButtonClicked() {
+        AnalyticsUtil.track("Login - FBLogin Button Pressed")
     }
     
     class var getDefaultFacebookPermissions : [String]{
