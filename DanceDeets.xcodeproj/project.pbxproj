@@ -197,6 +197,7 @@
 		1D11311A1B4587A7001CBEDE /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				1DC07C2D1BC903E5004AB48C /* Localizable.strings */,
 				1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */,
 				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
 			);
@@ -257,7 +258,6 @@
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
-				1DC07C2D1BC903E5004AB48C /* Localizable.strings */,
 				1D62C2F21BB525D30023F199 /* Test.swift */,
 				1D8856B919CDE510005FFDB2 /* DanceDeets */,
 				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
@@ -642,6 +642,7 @@
 				1DC07C311BC903F7004AB48C /* fr */,
 			);
 			name = Localizable.strings;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
