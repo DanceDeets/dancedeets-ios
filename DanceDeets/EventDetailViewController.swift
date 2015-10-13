@@ -177,7 +177,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
         if (event != nil) {
             AnalyticsUtil.track("Share Event", withEvent: event)
             let activityViewController = UIActivityViewController(activityItems: event!.createSharingItems(), applicationActivities: nil)
-            activityViewController.popoverPresentationController?.barButtonItem = sender as! UIBarButtonItem
+            activityViewController.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
             self.presentViewController(activityViewController, animated: true, completion: nil)
         }
     }
