@@ -48,8 +48,8 @@ class AdBar : NSObject, GADBannerViewDelegate {
     func setupAccessToken() {
         // Needs to be 30 characters or more, and needs to be meaningless to Google.
         // But needs to be unique to the user, for frequency capping purposes.
-        if let token = FBSDKAccessToken.currentAccessToken() {
-            request.publisherProvidedID = token.userID.MD5()
+        if let userID = FBSDKAccessToken.currentAccessToken()?.userID {
+            request.publisherProvidedID = userID.MD5()
         }
         loadIfTokenComplete()
     }
