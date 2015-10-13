@@ -225,6 +225,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
                 ServerInterface.sharedInstance.updateFacebookToken()
             })
         }
+        adBar?.setupAccessToken()
     }
     
 }
