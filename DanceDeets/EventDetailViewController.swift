@@ -36,7 +36,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     @IBOutlet weak var eventCoverImageViewRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewLeftConstraint: NSLayoutConstraint!
-    
+
     func getTopOffset()->CGFloat{
         if(navigationController != nil){
             return navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.size.height
@@ -58,6 +58,13 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
             }
             destinationController.event = event
         }
+    }
+
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAtIndexPath:indexPath)
+        // We set backgroundColor = clearColor in Interface Builder, but iPads seem to require we set this in code
+        cell.backgroundColor = UIColor.clearColor()
+        return cell
     }
 
     override func viewDidLoad() {
@@ -170,6 +177,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
         if (event != nil) {
             AnalyticsUtil.track("Share Event", withEvent: event)
             let activityViewController = UIActivityViewController(activityItems: event!.createSharingItems(), applicationActivities: nil)
+            activityViewController.popoverPresentationController?.barButtonItem = sender as! UIBarButtonItem
             self.presentViewController(activityViewController, animated: true, completion: nil)
         }
     }

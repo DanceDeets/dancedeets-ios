@@ -49,6 +49,10 @@ class EventListItemTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        // This must be set in code (not Interface Builder), according to:
+        // http://stackoverflow.com/questions/18878258/uitableviewcell-show-white-background-and-cannot-be-modified-on-ios7
+        // The IB setting works fine on iPhone, but on iPad the following line proves necessary.
+        backgroundColor = UIColor.clearColor()
 
         // No idea why these are necessary, since they are set in the NIB
         danceIconImageView.tintColor = UIColor.whiteColor()
