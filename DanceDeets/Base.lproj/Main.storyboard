@@ -64,6 +64,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <inset key="separatorInset" minX="12" minY="0.0" maxX="12" maxY="0.0"/>
+                                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="eventListTableViewCell" id="4oK-Tr-kgZ" customClass="EventListItemTableViewCell" customModule="DanceDeets" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="22" width="600" height="142"/>
@@ -73,7 +74,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Ru-Ei-3pI">
-                                                            <rect key="frame" x="12" y="15" width="568" height="12"/>
+                                                            <rect key="frame" x="12" y="15" width="568" height="7"/>
                                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5R9-2K-AhZ" userLabel="Event Title View">
@@ -133,7 +134,7 @@
                                                         <constraint firstItem="31y-Oc-dOn" firstAttribute="top" secondItem="5R9-2K-AhZ" secondAttribute="bottom" constant="10" id="6ds-1I-hyc"/>
                                                         <constraint firstItem="Kzc-j3-51H" firstAttribute="trailing" secondItem="5R9-2K-AhZ" secondAttribute="trailing" id="77i-47-MOz"/>
                                                         <constraint firstItem="KFG-w4-rc3" firstAttribute="trailing" secondItem="31y-Oc-dOn" secondAttribute="leading" constant="-10" id="7aW-Vu-QAx"/>
-                                                        <constraint firstItem="5R9-2K-AhZ" firstAttribute="top" secondItem="3Ru-Ei-3pI" secondAttribute="bottom" id="9aw-j5-hXV"/>
+                                                        <constraint firstItem="5R9-2K-AhZ" firstAttribute="top" secondItem="3Ru-Ei-3pI" secondAttribute="bottom" constant="5" id="9aw-j5-hXV"/>
                                                         <constraint firstItem="Kzc-j3-51H" firstAttribute="bottom" secondItem="Qyj-U8-4EI" secondAttribute="top" constant="-8" id="A7d-5R-wfZ"/>
                                                         <constraint firstItem="31y-Oc-dOn" firstAttribute="centerY" secondItem="KFG-w4-rc3" secondAttribute="centerY" id="IKY-eF-aBs"/>
                                                         <constraint firstItem="3Ru-Ei-3pI" firstAttribute="top" secondItem="rrA-Jj-kmz" secondAttribute="top" constant="15" id="PAC-rf-PoB"/>
