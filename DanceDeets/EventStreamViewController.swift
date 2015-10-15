@@ -148,7 +148,13 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
         if let placemark = optionalPlacemark {
-            let fullText = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
+            let fields = [placemark.locality, placemark.administrativeArea, placemark.country]
+            let setFields = fields.filter({ (elem: String?) -> Bool in
+                return elem != nil
+            }).map({ (elem: String?) -> String in
+                return elem!
+            })
+            let fullText = setFields.joinWithSeparator(", ")
             self.locationSearchField.text = fullText
             Event.loadEventsForLocation(self.locationSearchField.text!, withKeywords:self.keywordSearchField.text!, completion:self.setupEventsDisplay)
         } else {
