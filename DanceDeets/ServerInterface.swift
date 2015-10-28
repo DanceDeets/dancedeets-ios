@@ -71,12 +71,10 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
             let expiration = tokenData.expirationDate
             let accessToken = tokenData.tokenString
             
-            let dateFormatter:NSDateFormatter = NSDateFormatter()
+            let dateFormatter = Utilities.dateFormatter()
             dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
             dateFormatter.timeZone = NSTimeZone.systemTimeZone()
-            // Because otherwise the user's AM/PM vs 24-hour times will *override* our dateFormat above
-            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-            
+
             let urlRequest = NSMutableURLRequest(URL: self.getAuthUrl())
             urlRequest.HTTPMethod = "POST"
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")

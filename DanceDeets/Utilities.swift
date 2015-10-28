@@ -34,4 +34,12 @@ class Utilities{
                 print(names)
         }
     }
+
+    class func dateFormatter() -> NSDateFormatter {
+        let dateFormatter = NSDateFormatter()
+        // Because otherwise the user's AM/PM vs 24-hour times will *override* our dateFormat above
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        return dateFormatter
+    }
+
 }

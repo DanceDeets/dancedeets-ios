@@ -52,7 +52,7 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
             for event in events {
                 if event.startTime != nil {
                     // month from event's start time as a string
-                    let dateFormatter = NSDateFormatter()
+                    let dateFormatter = Utilities.dateFormatter()
                     dateFormatter.dateFormat = "EEE MMM dd"
                     let sectionName = dateFormatter.stringFromDate(event.startTime!)
                     // each section has an array of events

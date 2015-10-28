@@ -114,24 +114,21 @@ public class Event: NSObject {
         }
         
         // times
-        let dateFormatter:NSDateFormatter  = NSDateFormatter()
+        let dateFormatter = Utilities.dateFormatter()
         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
-        print("Parsing")
         if let startTimeString = dictionary["start_time"] as? String{
             startTime = dateFormatter.dateFromString(startTimeString)
-            print(startTimeString)
-            print(startTime)
         }
         if let endTimeString = dictionary["end_time"] as? String{
             endTime = dateFormatter.dateFromString(endTimeString)
         }
         
         // date formatting
-        let dateFormatterStart:NSDateFormatter  = NSDateFormatter()
+        let dateFormatterStart = Utilities.dateFormatter()
         var dateDisplayString:String = String()
         dateFormatterStart.dateFormat = "EEE MMM dd  |  h:mma"
         if (startTime != nil && endTime != nil) {
-            let dateFormatterEnd:NSDateFormatter = NSDateFormatter()
+            let dateFormatterEnd = Utilities.dateFormatter()
             dateFormatterEnd.dateFormat = "h:mma"
 
             // there's a start and end time
@@ -143,12 +140,12 @@ public class Event: NSObject {
             dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
         } else {
             // check for full day event
-            let dateFormatter:NSDateFormatter = NSDateFormatter()
+            let dateFormatter = Utilities.dateFormatter()
             dateFormatter.dateFormat = "yyyy'-'MM'-'dd"
             if let startTimeString = dictionary["start_time"] as? String{
                 startTime = dateFormatter.dateFromString(startTimeString)
                 if (startTime != nil) {
-                    let displayFormatter:NSDateFormatter = NSDateFormatter()
+                    let displayFormatter = Utilities.dateFormatter()
                     displayFormatter.dateFormat = "EEE MMM dd"
                     dateDisplayString = displayFormatter.stringFromDate(startTime!)
                 }
