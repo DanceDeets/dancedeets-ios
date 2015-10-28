@@ -116,8 +116,11 @@ public class Event: NSObject {
         // times
         let dateFormatter:NSDateFormatter  = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
+        print("Parsing")
         if let startTimeString = dictionary["start_time"] as? String{
             startTime = dateFormatter.dateFromString(startTimeString)
+            print(startTimeString)
+            print(startTime)
         }
         if let endTimeString = dictionary["end_time"] as? String{
             endTime = dateFormatter.dateFromString(endTimeString)

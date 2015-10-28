@@ -23,12 +23,12 @@
 		1D1131191B458503001CBEDE /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1131151B458503001CBEDE /* FBSDKShareKit.framework */; };
 		1D12DE901B0A1C0A00BEE249 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D12DE8F1B0A1C0A00BEE249 /* Crashlytics.framework */; };
 		1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15802A1A05695400658A1D /* EventAdmin.swift */; };
-		1D20FFC31BC7B3EA00CB21D3 /* FetchLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FFC21BC7B3EA00CB21D3 /* FetchLocation.swift */; settings = {ASSET_TAGS = (); }; };
-		1D20FFC51BC7BC4E00CB21D3 /* AdBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FFC41BC7BC4E00CB21D3 /* AdBar.swift */; settings = {ASSET_TAGS = (); }; };
-		1D4A22311BB8692400CAD7E3 /* UrlUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A22301BB8692400CAD7E3 /* UrlUtil.swift */; settings = {ASSET_TAGS = (); }; };
-		1D5888FA1BB75B2900E70626 /* EventDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888F91BB75B2900E70626 /* EventDisplay.swift */; settings = {ASSET_TAGS = (); }; };
-		1D5888FD1BB7765C00E70626 /* FetchAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888FC1BB7765C00E70626 /* FetchAddress.swift */; settings = {ASSET_TAGS = (); }; };
-		1D62C2F31BB525D30023F199 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D62C2F21BB525D30023F199 /* Test.swift */; settings = {ASSET_TAGS = (); }; };
+		1D20FFC31BC7B3EA00CB21D3 /* FetchLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FFC21BC7B3EA00CB21D3 /* FetchLocation.swift */; };
+		1D20FFC51BC7BC4E00CB21D3 /* AdBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FFC41BC7BC4E00CB21D3 /* AdBar.swift */; };
+		1D4A22311BB8692400CAD7E3 /* UrlUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A22301BB8692400CAD7E3 /* UrlUtil.swift */; };
+		1D5888FA1BB75B2900E70626 /* EventDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888F91BB75B2900E70626 /* EventDisplay.swift */; };
+		1D5888FD1BB7765C00E70626 /* FetchAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888FC1BB7765C00E70626 /* FetchAddress.swift */; };
+		1D62C2F31BB525D30023F199 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D62C2F21BB525D30023F199 /* Test.swift */; };
 		1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */; };
 		1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */; };
 		1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */; };
@@ -38,13 +38,13 @@
 		1D8856D319CDE511005FFDB2 /* DanceDeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */; };
 		1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */; };
 		1D8A064019CDE605004607B6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8A063F19CDE605004607B6 /* Event.swift */; };
-		1D95547A1BB3C7A800241F38 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D9554791BB3C7A800241F38 /* Fabric.framework */; settings = {ASSET_TAGS = (); }; };
-		1D95547F1BB3C84400241F38 /* FacebookRsvpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D95547E1BB3C84400241F38 /* FacebookRsvpManager.swift */; settings = {ASSET_TAGS = (); }; };
-		1D9554811BB3CA0300241F38 /* AddToCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554801BB3CA0300241F38 /* AddToCalendar.swift */; settings = {ASSET_TAGS = (); }; };
-		1D9554831BB3E0F700241F38 /* AnalyticsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554821BB3E0F700241F38 /* AnalyticsUtil.swift */; settings = {ASSET_TAGS = (); }; };
-		1D9554851BB3EEBA00241F38 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554841BB3EEBA00241F38 /* Venue.swift */; settings = {ASSET_TAGS = (); }; };
+		1D95547A1BB3C7A800241F38 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D9554791BB3C7A800241F38 /* Fabric.framework */; };
+		1D95547F1BB3C84400241F38 /* FacebookRsvpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D95547E1BB3C84400241F38 /* FacebookRsvpManager.swift */; };
+		1D9554811BB3CA0300241F38 /* AddToCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554801BB3CA0300241F38 /* AddToCalendar.swift */; };
+		1D9554831BB3E0F700241F38 /* AnalyticsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554821BB3E0F700241F38 /* AnalyticsUtil.swift */; };
+		1D9554851BB3EEBA00241F38 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554841BB3EEBA00241F38 /* Venue.swift */; };
 		1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA4566A1AD226B900368186 /* UIViewExtensions.swift */; };
-		1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA57ACD1BAE3D4500370519 /* MapManager.swift */; settings = {ASSET_TAGS = (); }; };
+		1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA57ACD1BAE3D4500370519 /* MapManager.swift */; };
 		1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49EF1A17E4D70002BBDD /* Utilities.swift */; };
 		1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F11A17F0310002BBDD /* Extensions.swift */; };
 		1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */; };
@@ -52,8 +52,9 @@
 		1DAE2C1F1A3D063300F03AD1 /* ServerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */; };
 		1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C719E0999E0018B434 /* FontFactory.swift */; };
 		1DBA3F691A4BAA7600842486 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBA3F681A4BAA7600842486 /* SettingsCell.swift */; };
-		1DC07C2F1BC903E5004AB48C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07C2D1BC903E5004AB48C /* Localizable.strings */; settings = {ASSET_TAGS = (); }; };
-		1DEE8EA31BB78C5B00D1DA15 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */; settings = {ASSET_TAGS = (); }; };
+		1DC07C2F1BC903E5004AB48C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07C2D1BC903E5004AB48C /* Localizable.strings */; };
+		1DCBE24E1BE08B3C007A62B2 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCBE24D1BE08B3C007A62B2 /* GoogleMobileAds.framework */; };
+		1DEE8EA31BB78C5B00D1DA15 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */; };
 		1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */; };
 		1DFB3B5019FF500E00CF4A72 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */; };
 		1DFB3B5319FF575C00CF4A72 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B5119FF575C00CF4A72 /* EventKit.framework */; };
@@ -146,6 +147,7 @@
 		1DC07C2E1BC903E5004AB48C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = DanceDeets/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1DC07C301BC903EF004AB48C /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "DanceDeets/en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1DC07C311BC903F7004AB48C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = DanceDeets/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1DCBE24D1BE08B3C007A62B2 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1DFB3B4F19FF500E00CF4A72 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				1D12DE901B0A1C0A00BEE249 /* Crashlytics.framework in Frameworks */,
 				1D1131181B458503001CBEDE /* FBSDKMessengerShareKit.framework in Frameworks */,
 				1D95547A1BB3C7A800241F38 /* Fabric.framework in Frameworks */,
+				1DCBE24E1BE08B3C007A62B2 /* GoogleMobileAds.framework in Frameworks */,
 				9DD9DCD5AB61CA917BF518E9 /* Pods_DanceDeets.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,6 +376,7 @@
 		90EA1D330F2FCC1A877FE1CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1DCBE24D1BE08B3C007A62B2 /* GoogleMobileAds.framework */,
 				72F5ED4DA61BC9F2C1804D7F /* Pods_DanceDeets.framework */,
 			);
 			name = Frameworks;
@@ -652,6 +656,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -702,6 +707,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -746,6 +752,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -782,6 +789,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
