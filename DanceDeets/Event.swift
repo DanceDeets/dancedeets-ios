@@ -114,22 +114,22 @@ public class Event: NSObject {
         }
         
         // times
-        let dateFormatter = Utilities.dateFormatter()
-        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
+        let datetimeImporter = Utilities.dateFormatter()
+        datetimeImporter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
         if let startTimeString = dictionary["start_time"] as? String{
-            startTime = dateFormatter.dateFromString(startTimeString)
+            startTime = datetimeImporter.dateFromString(startTimeString)
         }
         if let endTimeString = dictionary["end_time"] as? String{
-            endTime = dateFormatter.dateFromString(endTimeString)
+            endTime = datetimeImporter.dateFromString(endTimeString)
         }
         
         // date formatting
-        let dateFormatterStart = Utilities.dateFormatter()
+        let dateFormatterStart = NSDateFormatter()
         var dateDisplayString:String = String()
-        dateFormatterStart.dateFormat = "EEE MMM dd  |  h:mma"
+        dateFormatterStart.dateFormat = "EEE MMM dd  |  H:mm"
         if (startTime != nil && endTime != nil) {
-            let dateFormatterEnd = Utilities.dateFormatter()
-            dateFormatterEnd.dateFormat = "h:mma"
+            let dateFormatterEnd = NSDateFormatter()
+            dateFormatterEnd.dateFormat = "H:mm"
 
             // there's a start and end time
             dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
@@ -140,12 +140,12 @@ public class Event: NSObject {
             dateDisplayString += dateFormatterStart.stringFromDate(startTime!)
         } else {
             // check for full day event
-            let dateFormatter = Utilities.dateFormatter()
-            dateFormatter.dateFormat = "yyyy'-'MM'-'dd"
+            let dateImporter = Utilities.dateFormatter()
+            dateImporter.dateFormat = "yyyy'-'MM'-'dd"
             if let startTimeString = dictionary["start_time"] as? String{
-                startTime = dateFormatter.dateFromString(startTimeString)
+                startTime = dateImporter.dateFromString(startTimeString)
                 if (startTime != nil) {
-                    let displayFormatter = Utilities.dateFormatter()
+                    let displayFormatter = NSDateFormatter()
                     displayFormatter.dateFormat = "EEE MMM dd"
                     dateDisplayString = displayFormatter.stringFromDate(startTime!)
                 }
