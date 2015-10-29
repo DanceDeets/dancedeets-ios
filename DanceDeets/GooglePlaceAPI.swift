@@ -21,6 +21,7 @@ public class GooglePlaceAPI{
             "input": query,
             "types": "(regions)",
             "key": apiKey(),
+            "language": NSBundle.mainBundle().preferredLocalizations.first!,
         ])
         let session = NSURLSession.sharedSession()
         let task:NSURLSessionTask = session.dataTaskWithURL(url, completionHandler: { (data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in

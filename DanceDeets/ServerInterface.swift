@@ -14,7 +14,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
     var fetchAddress:FetchAddress?
 
     // MARK: Static URL Construction Methods
-    static let baseUrl:String = "http://www.dancedeets.com/api/v1.1"
+    static let baseUrl:String = "http://www.dancedeets.com/api/v1.1/"
 
     class func getApiUrl(path: String, withArgs args: [String: String]=[:]) -> NSURL {
         var fullArgs = args
@@ -46,18 +46,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
             "keywords": eventKeyword,
             "time_period": "UPCOMING",
         ]
-        return ServerInterface.getApiUrl("/search", withArgs: args)
-    }
-    
-    func getEventSearchUrlByLocation(location: CLLocation, eventKeyword: String?) -> NSURL {
-        var args = [
-            "location": "\(location.coordinate.latitude),\(location.coordinate.longitude)",
-            "time_period": "UPCOMING",
-        ]
-        if eventKeyword != nil {
-            args["keywords"] = eventKeyword
-        }
-        return ServerInterface.getApiUrl("/search", withArgs: args)
+        return ServerInterface.getApiUrl("search", withArgs: args)
     }
     
     func updateFacebookToken() {
@@ -85,6 +74,8 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
             let dateFormatter:NSDateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
             dateFormatter.timeZone = NSTimeZone.systemTimeZone()
+            // Because otherwise the user's AM/PM vs 24-hour times will *override* our dateFormat above
+            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
             
             let urlRequest = NSMutableURLRequest(URL: self.getAuthUrl())
             urlRequest.HTTPMethod = "POST"

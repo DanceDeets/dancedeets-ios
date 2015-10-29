@@ -15,8 +15,16 @@ class AdBar : NSObject, GADBannerViewDelegate {
     var controller: EventStreamViewController
     var fetchLocation: FetchLocation?
 
+    var request: DFPRequest
+    var setLocation: Bool = false
+
     init(controller: EventStreamViewController) {
         self.controller = controller
+        self.request = DFPRequest()
+        request.testDevices = [
+            kGADSimulatorID,
+            "301ebb9f19659a3ebbc88d348b8810b5", // Mike's iPhone
+        ]
         super.init()
         fetchLocation = FetchLocation(completionHandler: locationFoundHandler)
     }
@@ -25,24 +33,32 @@ class AdBar : NSObject, GADBannerViewDelegate {
         controller.bannerView.adUnitID = "/26589588/mobile-bottom-banner"
         controller.bannerView.rootViewController = controller
         controller.bannerView.adSize = kGADAdSizeSmartBannerPortrait
-        let request = DFPRequest()
-        request.testDevices = [
-            kGADSimulatorID,
-            "301ebb9f19659a3ebbc88d348b8810b5", // Mike's iPhone
-        ]
+
         if let location = optionalLocation {
+            setLocation = true
             request.setLocationWithLatitude(
                 CGFloat(location.coordinate.latitude),
                 longitude: CGFloat(location.coordinate.longitude),
                 accuracy: CGFloat(max(location.horizontalAccuracy, location.verticalAccuracy))
             )
         }
+        loadIfTokenComplete()
+    }
 
+    func setupAccessToken() {
         // Needs to be 30 characters or more, and needs to be meaningless to Google.
         // But needs to be unique to the user, for frequency capping purposes.
-        request.publisherProvidedID = FBSDKAccessToken.currentAccessToken().userID.MD5()
-        controller.bannerView.delegate = self
-        controller.bannerView.loadRequest(request)
+        if let userID = FBSDKAccessToken.currentAccessToken()?.userID {
+            request.publisherProvidedID = userID.MD5()
+        }
+        loadIfTokenComplete()
+    }
+
+    func loadIfTokenComplete() {
+        if request.publisherProvidedID != nil && setLocation {
+            controller.bannerView.delegate = self
+            controller.bannerView.loadRequest(request)
+        }
     }
 
     func adViewDidReceiveAd(bannerView: GADBannerView!) {

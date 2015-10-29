@@ -68,7 +68,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if (section == TOOLS_SECTION) {
             let header = UILabel(frame: CGRectZero)
-            header.text = "TOOLS"
+            header.text = NSLocalizedString("TOOLS", comment: "Settings List Header")
             header.textAlignment = NSTextAlignment.Center
             header.font = FontFactory.settingsHeaderFont()
             header.textColor = ColorFactory.white50()
@@ -120,7 +120,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                     composer.setToRecipients(recipients)
                     presentViewController(composer, animated: true, completion: nil)
                 } else {
-                    let alertView = UIAlertView(title: "Cannot send feedback", message: "You cannot send feedback through email, because you have no email accounts set up on this iPhone/iPad.", delegate: nil, cancelButtonTitle: "OK")
+                    let alertView = UIAlertView(title: NSLocalizedString("Cannot send feedback", comment: "Error Title"), message: NSLocalizedString("You cannot send feedback through email, because you have no email accounts set up on this iPhone/iPad.", comment: "Error Description"), delegate: nil, cancelButtonTitle: "OK")
                     alertView.show()
                 }
             } else if(indexPath.row == 1) {
