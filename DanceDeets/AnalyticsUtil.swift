@@ -61,7 +61,7 @@ public class AnalyticsUtil {
                 Mixpanel.sharedInstance().people.set("$email", to: val)
             }
 
-            let dateFormatter:NSDateFormatter = NSDateFormatter()
+            let dateFormatter = Utilities.dateFormatter()
             dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
             dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC")
             let today = dateFormatter.stringFromDate(NSDate())

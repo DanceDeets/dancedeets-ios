@@ -102,7 +102,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
 
             self.controller.view.layoutIfNeeded()
             }) {(Bool)->Void in
-                controller.view.endEditing(true)
+                self.controller.view.endEditing(true)
         }
     }
 
