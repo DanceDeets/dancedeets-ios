@@ -148,7 +148,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
         if let placemark = optionalPlacemark {
-            CLSLogv("EventStreamViewController.addressFoundHandler placemark: %@", getVaList([placemark.description]))
+            CLSLogv("EventStreamViewController.addressFoundHandler placemark: \(placemark.description)", getVaList([]))
             let fields = [placemark.locality, placemark.administrativeArea, placemark.country]
             let setFields = fields.filter({ (elem: String?) -> Bool in
                 return elem != nil
@@ -157,12 +157,12 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             })
             let fullText = setFields.joinWithSeparator(", ")
             self.locationSearchField.text = fullText
-            CLSLogv("EventStreamViewController.addressFoundHandler locationSearchField: %@", getVaList([self.locationSearchField.text ?? "Unknown"]))
-            CLSLogv("EventStreamViewController.addressFoundHandler keywordSearchField: %@", getVaList([self.keywordSearchField.text ?? "Unknown"]))
+            CLSLogv("EventStreamViewController.addressFoundHandler locationSearchField: \(self.locationSearchField.text ?? "Unknown")", getVaList([]))
+            CLSLogv("EventStreamViewController.addressFoundHandler keywordSearchField: \(self.keywordSearchField.text ?? "Unknown")", getVaList([]))
             Event.loadEventsForLocation(self.locationSearchField.text!, withKeywords:self.keywordSearchField.text!, completion:self.setupEventsDisplay)
         } else {
             if let location = NSUserDefaults.standardUserDefaults().stringForKey(USER_SEARCH_LOCATION_KEY) {
-                CLSLogv("addressFoundHandler savedLocation: %@", getVaList([location]))
+                CLSLogv("addressFoundHandler savedLocation: \(location)", getVaList([]))
                 self.locationSearchField.text = location
                 refreshEvents()
             } else {

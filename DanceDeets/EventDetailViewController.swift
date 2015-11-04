@@ -70,7 +70,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        CLSLogv("EventDetailViewController.viewDidLoad event id: %@", getVaList([event.id ?? "Unknown"]))
+        CLSLogv("EventDetailViewController.viewDidLoad event id: \(event.id ?? "Unknown")", getVaList([]))
         AnalyticsUtil.track("View Event", withEvent: event)
 
         // Use the toolbars from the toolbar we set up in Interface Builder
