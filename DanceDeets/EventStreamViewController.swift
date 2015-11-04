@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 david.xiang. All rights reserved.
 //
 
-import UIKit
 import CoreLocation
-import MessageUI
-import QuartzCore
 import FBSDKCoreKit
 import GoogleMobileAds
+import UIKit
+import MessageUI
+import QuartzCore
 
 class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate, GADBannerViewDelegate {
     
@@ -148,6 +148,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
         if let placemark = optionalPlacemark {
+            CLSLogv("EventStreamViewController.addressFoundHandler placemark: %@", getVaList([placemark.description]))
             let fields = [placemark.locality, placemark.administrativeArea, placemark.country]
             let setFields = fields.filter({ (elem: String?) -> Bool in
                 return elem != nil
@@ -156,12 +157,16 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             })
             let fullText = setFields.joinWithSeparator(", ")
             self.locationSearchField.text = fullText
+            CLSLogv("EventStreamViewController.addressFoundHandler locationSearchField: %@", getVaList([self.locationSearchField.text ?? "Unknown"]))
+            CLSLogv("EventStreamViewController.addressFoundHandler keywordSearchField: %@", getVaList([self.keywordSearchField.text ?? "Unknown"]))
             Event.loadEventsForLocation(self.locationSearchField.text!, withKeywords:self.keywordSearchField.text!, completion:self.setupEventsDisplay)
         } else {
             if let location = NSUserDefaults.standardUserDefaults().stringForKey(USER_SEARCH_LOCATION_KEY) {
+                CLSLogv("addressFoundHandler savedLocation: %@", getVaList([location]))
                 self.locationSearchField.text = location
                 refreshEvents()
             } else {
+                CLSLogv("addressFoundHandler No Location", getVaList([]))
                 setTitle(NSLocalizedString("RETRY", comment: "Title"), NSLocalizedString("Couldn't detect your location", comment: "GPS Failure"))
                 locationFailureAlert.show()
             }

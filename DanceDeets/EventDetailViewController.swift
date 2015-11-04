@@ -53,7 +53,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "fullScreenImageSegue") {
             let destinationController = segue.destinationViewController as! FullScreenImageViewController
-            if let image = eventCoverImageView.image{
+            if let image = eventCoverImageView.image {
                 destinationController.image = image
             }
             destinationController.event = event
@@ -70,6 +70,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        CLSLogv("EventDetailViewController.viewDidLoad event id: %@", getVaList([event.id ?? "Unknown"]))
         AnalyticsUtil.track("View Event", withEvent: event)
 
         // Use the toolbars from the toolbar we set up in Interface Builder
