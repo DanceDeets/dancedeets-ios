@@ -137,6 +137,9 @@
 		1D9554841BB3EEBA00241F38 /* Venue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Venue.swift; path = ../Venue.swift; sourceTree = "<group>"; };
 		1DA4566A1AD226B900368186 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		1DA57ACD1BAE3D4500370519 /* MapManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
+		1DA6E11D1BF275E800518EAF /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "DanceDeets/zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		1DA6E11E1BF275E800518EAF /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		1DA6E11F1BF275E800518EAF /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		1DAB49EF1A17E4D70002BBDD /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		1DAB49F11A17F0310002BBDD /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFactory.swift; sourceTree = "<group>"; };
@@ -461,6 +464,7 @@
 				ja,
 				"en-US",
 				fr,
+				"zh-Hant",
 			);
 			mainGroup = 1D8856AE19CDE510005FFDB2;
 			productRefGroup = 1D8856B819CDE510005FFDB2 /* Products */;
@@ -623,6 +627,7 @@
 				1D1A9AD01BC8EB80007CC98B /* ja */,
 				1D1A9AD21BC8F026007CC98B /* en-US */,
 				1D1A9AD41BC8F1CF007CC98B /* fr */,
+				1DA6E11F1BF275E800518EAF /* zh-Hant */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -634,6 +639,7 @@
 				1D1A9ACF1BC8EB80007CC98B /* ja */,
 				1D1A9AD11BC8F026007CC98B /* en-US */,
 				1D1A9AD31BC8F1CF007CC98B /* fr */,
+				1DA6E11E1BF275E800518EAF /* zh-Hant */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -644,6 +650,7 @@
 				1DC07C2E1BC903E5004AB48C /* ja */,
 				1DC07C301BC903EF004AB48C /* en-US */,
 				1DC07C311BC903F7004AB48C /* fr */,
+				1DA6E11D1BF275E800518EAF /* zh-Hant */,
 			);
 			name = Localizable.strings;
 			path = ..;
