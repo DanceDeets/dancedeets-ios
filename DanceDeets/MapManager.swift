@@ -20,7 +20,7 @@ public class MapManager
                 UIApplication.sharedApplication().openURL(NSURL(string:url)!)
             }
 
-            let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+            let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: event.venue?.fullAddressDictionary)
             let mapItem:MKMapItem = MKMapItem(placemark: placemark)
             mapItem.openInMapsWithLaunchOptions(nil)
         }

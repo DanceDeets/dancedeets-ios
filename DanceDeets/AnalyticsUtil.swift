@@ -90,7 +90,7 @@ public class AnalyticsUtil {
     public class func track(eventName: String, withEvent event: Event, _ args: [String: String] = [:]) {
         var props = args
         props["Event ID"] = event.id!
-        props["Event City"] = event.venue?.cityStateZip()
+        props["Event City"] = event.venue?.formattedCity()
         props["Event Country"] = event.venue?.country
         Mixpanel.sharedInstance().track(eventName, properties: props)
     }

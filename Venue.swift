@@ -6,6 +6,7 @@
 //  Copyright © 2015年 david.xiang. All rights reserved.
 //
 
+import AddressBookUI
 import Foundation
 
 public class Venue {
@@ -19,8 +20,10 @@ public class Venue {
     var state:String?
     var zip:String?
     var country:String?
-    
-    
+
+    var cityStateAddressDictionary:[String:String]
+    var fullAddressDictionary:[String:String]
+
     init(_ venue: NSDictionary) {
 
         if let geocodeDict = venue["geocode"] as? NSDictionary{
@@ -32,13 +35,39 @@ public class Venue {
             street = address["street"] as? String
             city = address["city"] as? String
             state = address["state"] as? String
-            zip = address["zip"] as? String
             country = address["country"] as? String
         }
+
+        var addressDictionary = [String:String]()
+        if city != nil {
+            addressDictionary[kABPersonAddressCityKey as String] = city
+        }
+        if state != nil {
+            addressDictionary[kABPersonAddressStateKey as String] = state
+        }
+        if country != nil {
+            addressDictionary[kABPersonAddressCountryKey as String] = country
+        }
+        addressDictionary[kABPersonAddressCountryCodeKey as String] = NSLocale.currentLocale().objectForKey(NSLocaleCountryCode) as? String
+
+        cityStateAddressDictionary = addressDictionary
+        fullAddressDictionary = addressDictionary
+
+        if street != nil {
+            fullAddressDictionary[kABPersonAddressStreetKey as String] = street
+        }
     }
-    
-    public func cityStateZip() -> String {
-        let components = [city, state, country]
-        return components.filter({$0 != nil}).map({$0!}).joinWithSeparator(", ")
+
+    public func formattedCity() -> String {
+        return ABCreateStringWithAddressDictionary(cityStateAddressDictionary, false)
+    }
+
+    public func formattedFull() -> String {
+        let address = ABCreateStringWithAddressDictionary(fullAddressDictionary, true)
+        if let realName = name {
+            return "\(realName)\n\(address)"
+        } else {
+            return address
+        }
     }
 }

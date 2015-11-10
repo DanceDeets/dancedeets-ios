@@ -72,9 +72,8 @@ public class Event: NSObject {
                 longitude: self.venue!.latLong!.1
             )
         }
-        let displayAddressComponents:[String?] = [self.venue?.name, self.venue?.street, self.venue?.cityStateZip()]
-        displayAddress = displayAddressComponents.filter({$0 != nil}).map({$0!}).joinWithSeparator("\n")
-        
+        displayAddress = self.venue?.formattedFull() ?? ""
+
         // annotations
         if let annotations = dictionary["annotations"] as? NSDictionary{
             if let danceKeywords = annotations["dance_keywords"] as? [String] {
