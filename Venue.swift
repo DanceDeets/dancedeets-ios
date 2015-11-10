@@ -45,29 +45,40 @@ public class Venue {
         if state != nil {
             addressDictionary[kABPersonAddressStateKey as String] = state
         }
-        if country != nil {
-            addressDictionary[kABPersonAddressCountryKey as String] = country
-        }
         addressDictionary[kABPersonAddressCountryCodeKey as String] = NSLocale.currentLocale().objectForKey(NSLocaleCountryCode) as? String
 
         cityStateAddressDictionary = addressDictionary
         fullAddressDictionary = addressDictionary
 
+        if country != nil {
+            fullAddressDictionary[kABPersonAddressCountryKey as String] = country
+        }
         if street != nil {
             fullAddressDictionary[kABPersonAddressStreetKey as String] = street
         }
     }
 
+    private func prefixName(postfix: String) -> String {
+        if let realName = name {
+            return "\(realName)\n\(postfix)"
+        } else {
+            return postfix
+        }
+    }
+
+    public func formattedNameAndCity() -> String {
+        let city = formattedCity()
+        return prefixName(city)
+    }
+
+
     public func formattedCity() -> String {
-        return ABCreateStringWithAddressDictionary(cityStateAddressDictionary, false)
+        let city = ABCreateStringWithAddressDictionary(cityStateAddressDictionary, false)
+        return city
     }
 
     public func formattedFull() -> String {
         let address = ABCreateStringWithAddressDictionary(fullAddressDictionary, true)
-        if let realName = name {
-            return "\(realName)\n\(address)"
-        } else {
-            return address
-        }
+        return prefixName(address)
     }
 }

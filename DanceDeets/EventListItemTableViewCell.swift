@@ -27,9 +27,9 @@ class EventListItemTableViewCell: UITableViewCell {
         eventCategoriesLabel.text = "(" + event.categories.joinWithSeparator(", ") + ")"
         eventTitleLabel.text = event.title
         eventTimeLabel.text = event.displayTime
-        if let venueDisplay = event.venue?.name{
+        if let venueDisplay = event.venue?.formattedNameAndCity() {
             if (event.attendingCount != nil) {
-                eventVenueLabel.text = venueDisplay + "  |  " + String.localizedStringWithFormat(NSLocalizedString("%d attending", comment: "Event Listing"), event.attendingCount!)
+                eventVenueLabel.text = venueDisplay + "\n" + String.localizedStringWithFormat(NSLocalizedString("%d attending", comment: "Event Listing"), event.attendingCount!)
             } else {
                 eventVenueLabel.text = venueDisplay
             }
