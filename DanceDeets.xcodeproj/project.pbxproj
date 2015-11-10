@@ -45,6 +45,7 @@
 		1D9554851BB3EEBA00241F38 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554841BB3EEBA00241F38 /* Venue.swift */; };
 		1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA4566A1AD226B900368186 /* UIViewExtensions.swift */; };
 		1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA57ACD1BAE3D4500370519 /* MapManager.swift */; };
+		1DA6E1211BF2956A00518EAF /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA6E1201BF2956A00518EAF /* WebViewController.swift */; };
 		1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49EF1A17E4D70002BBDD /* Utilities.swift */; };
 		1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F11A17F0310002BBDD /* Extensions.swift */; };
 		1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */; };
@@ -140,6 +141,7 @@
 		1DA6E11D1BF275E800518EAF /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "DanceDeets/zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1DA6E11E1BF275E800518EAF /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1DA6E11F1BF275E800518EAF /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
+		1DA6E1201BF2956A00518EAF /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1DAB49EF1A17E4D70002BBDD /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		1DAB49F11A17F0310002BBDD /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFactory.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */,
 				1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */,
 				1D08924A1A279DFF00A9EAC4 /* SettingsViewController.swift */,
+				1DA6E1201BF2956A00518EAF /* WebViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -596,6 +599,7 @@
 				1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */,
 				1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */,
 				1D9554831BB3E0F700241F38 /* AnalyticsUtil.swift in Sources */,
+				1DA6E1211BF2956A00518EAF /* WebViewController.swift in Sources */,
 				1D9554811BB3CA0300241F38 /* AddToCalendar.swift in Sources */,
 				1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */,
 			);
