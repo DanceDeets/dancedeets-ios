@@ -22,8 +22,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: Action
     @IBAction func doneButtonTapped(sender: AnyObject) {
-        presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-        })
+        navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: UIViewController    
@@ -131,7 +130,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 let webViewController = WebViewController()
                 webViewController.setStartUrl(stringUrl)
                 // TODO: make a sideways transition?
-                self.presentViewController(webViewController, animated: true, completion: nil)
+                //self.presentViewController(webViewController, animated: true, completion: nil)
+                navigationController!.pushViewController(webViewController, animated: true)
             } else if (indexPath.row == 2) {
                 AnalyticsUtil.logout()
                 FBSDKAccessToken.setCurrentAccessToken(nil)

@@ -375,7 +375,7 @@
                         <outlet property="settingsButton" destination="985-JS-nOW" id="cRX-zs-TGh"/>
                         <outlet property="textFieldsEqualWidthConstraint" destination="WvE-mq-Mq1" id="aL8-Ah-CzG"/>
                         <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="vjg-jf-Ol8"/>
-                        <segue destination="Gdp-6o-WzI" kind="presentation" identifier="settingsSegue" modalTransitionStyle="crossDissolve" id="jGw-rt-6UH"/>
+                        <segue destination="Gdp-6o-WzI" kind="show" identifier="settingsSegue" id="jGw-rt-6UH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5E-47-ysN" userLabel="First Responder" sceneMemberID="firstResponder"/>
