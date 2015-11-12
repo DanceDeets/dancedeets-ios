@@ -5,6 +5,7 @@ use_frameworks!
 
 target 'DanceDeets' do
   pod 'Mixpanel'
+  pod "OAStackView"
 end
 
 target 'DanceDeetsTests' do

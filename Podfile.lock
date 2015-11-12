@@ -2,11 +2,14 @@ PODS:
   - Mixpanel (2.9.0):
     - Mixpanel/Mixpanel (= 2.9.0)
   - Mixpanel/Mixpanel (2.9.0)
+  - OAStackView (0.2.0)
 
 DEPENDENCIES:
   - Mixpanel
+  - OAStackView
 
 SPEC CHECKSUMS:
   Mixpanel: 42ae6168effc48481d957f7883dd8514a398738d
+  OAStackView: a05adfec3669a5187b968a8c0a2690ae517271b6
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0
