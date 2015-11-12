@@ -20,7 +20,6 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
     // MARK: UICollectionViewDelegate
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let event = events[indexPath.row]
-        collectionView.userInteractionEnabled = false
     }
 
     // MARK: UICollectionViewDataSource
@@ -61,7 +60,7 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         let flowLayout:UICollectionViewFlowLayout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.sectionInset = UIEdgeInsetsZero
         flowLayout.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height)
-        flowLayout.minimumInteritemSpacing = 0.0
+        flowLayout.minimumLineSpacing = 0.0
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
     }
 

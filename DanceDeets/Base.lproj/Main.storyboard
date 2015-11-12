@@ -413,7 +413,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="601" height="556"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BMm-lK-XN9" customClass="OAStackView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="601" height="46"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="601" height="43"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aIu-5i-zz6">
                                                             <rect key="frame" x="0.0" y="0.0" width="601" height="0.0"/>
@@ -436,7 +436,7 @@
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UkX-bk-rrs" userLabel="Categories View">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UkX-bk-rrs" userLabel="Categories View">
                                                             <rect key="frame" x="0.0" y="0.0" width="601" height="0.0"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="danceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="37S-By-X1e" userLabel="danceIcon">
@@ -463,7 +463,7 @@
                                                                 <constraint firstItem="DDd-M8-QVB" firstAttribute="top" secondItem="UkX-bk-rrs" secondAttribute="top" id="imk-uS-1y6"/>
                                                                 <constraint firstItem="DDd-M8-QVB" firstAttribute="leading" secondItem="37S-By-X1e" secondAttribute="trailing" constant="12" id="k9J-py-Vph"/>
                                                                 <constraint firstItem="37S-By-X1e" firstAttribute="leading" secondItem="UkX-bk-rrs" secondAttribute="leading" constant="12" id="xNT-EC-j57"/>
-                                                                <constraint firstItem="DDd-M8-QVB" firstAttribute="bottom" secondItem="UkX-bk-rrs" secondAttribute="bottom" constant="14" id="xNT-pR-6j3"/>
+                                                                <constraint firstItem="DDd-M8-QVB" firstAttribute="bottom" secondItem="UkX-bk-rrs" secondAttribute="bottom" id="xNT-pR-6j3"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2qZ-eX-hRF" userLabel="Time View">
@@ -563,7 +563,7 @@
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="spacing">
-                                                            <real key="value" value="20"/>
+                                                            <real key="value" value="5"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
