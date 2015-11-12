@@ -34,23 +34,29 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.separatorColor = ColorFactory.tableSeparatorColor()
         tableView.allowsSelectionDuringEditing = true
         tableView.allowsMultipleSelection = false
-        
-        titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.font = FontFactory.navigationTitleFont()
-        
-        doneButton.titleLabel?.textColor = ColorFactory.white50()
-        doneButton.titleLabel?.font = FontFactory.barButtonFont()
+
+        title = NSLocalizedString("SETTINGS", comment: "Page Title")
+
+        var titleOptions = [String:AnyObject]()
+        titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
+        navigationController?.navigationBar.titleTextAttributes = titleOptions
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
-    }
-    
+
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
-    
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == TOOLS_SECTION) {

@@ -55,6 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         AnalyticsUtil.createInstance()
 
+        window?.tintColor = UIColor.whiteColor()
+
         return true
     }
     

@@ -44,11 +44,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
             return CGFloat.min
         }
     }
-    
-    func backButtonTapped(){
-        navigationController?.popViewControllerAnimated(true)
-    }
-    
+
     // MARK: UIViewController
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "fullScreenImageSegue") {
@@ -79,21 +75,13 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
         // styling
         title = event!.title!.uppercaseString
         let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
-        shareButton.tintColor = ColorFactory.white50()
         navigationItem.rightBarButtonItem = shareButton
         // TODO: what do we want to stick in the upper right?
-        
-        let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: UIBarButtonItemStyle.Plain, target: self, action: "backButtonTapped")
-        backButton.imageInsets = UIEdgeInsetsMake(0, -5, 0, 0)
-        backButton.tintColor = ColorFactory.white50()
-        navigationItem.leftBarButtonItem = backButton
 
         var titleOptions = [String:AnyObject]()
-        titleOptions[NSForegroundColorAttributeName] = UIColor.whiteColor()
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
         navigationController?.navigationBar.titleTextAttributes = titleOptions
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        
+
         // Initialize display objects
 
         eventTitleLabel.text = event.title!

@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Interstate-BoldCondensed.ttf">
@@ -807,36 +806,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SETTINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfq-kp-eKO">
-                                <rect key="frame" x="120" y="32" width="360" height="21"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="z4g-OG-VAN"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="z4g-OG-VAN"/>
-                                    </mask>
-                                </variation>
-                            </label>
-                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5IE-B2-vbr">
-                                <rect key="frame" x="5" y="16" width="50" height="50"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="lrk-MP-5r5"/>
-                                    <constraint firstAttribute="width" constant="50" id="rbW-jA-GDh"/>
-                                </constraints>
-                                <state key="normal" title="Done">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="doneButtonTapped:" destination="Gdp-6o-WzI" eventType="touchUpInside" id="TrB-ME-tT7"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="nbK-7C-w60">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <animations/>
@@ -951,21 +920,14 @@
                         <color key="backgroundColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="5IE-B2-vbr" firstAttribute="top" secondItem="ntT-me-6lC" secondAttribute="topMargin" constant="16" id="Gp2-nz-iNp"/>
                             <constraint firstItem="nbK-7C-w60" firstAttribute="width" secondItem="ntT-me-6lC" secondAttribute="width" id="KpK-nh-f0C"/>
-                            <constraint firstItem="5IE-B2-vbr" firstAttribute="leading" secondItem="ntT-me-6lC" secondAttribute="leading" constant="5" id="MRC-4G-gck"/>
                             <constraint firstAttribute="bottomMargin" secondItem="nbK-7C-w60" secondAttribute="bottom" id="UZ1-XU-yx3"/>
                             <constraint firstItem="nbK-7C-w60" firstAttribute="top" secondItem="ntT-me-6lC" secondAttribute="topMargin" constant="64" id="hL9-PH-2JN"/>
                             <constraint firstAttribute="centerX" secondItem="nbK-7C-w60" secondAttribute="centerX" id="jbd-Mb-h1w"/>
-                            <constraint firstItem="Pfq-kp-eKO" firstAttribute="top" secondItem="ntT-me-6lC" secondAttribute="topMargin" constant="32" id="r9u-25-3oa"/>
-                            <constraint firstAttribute="centerX" secondItem="Pfq-kp-eKO" secondAttribute="centerX" id="sQe-vp-UPF"/>
-                            <constraint firstItem="Pfq-kp-eKO" firstAttribute="width" secondItem="ntT-me-6lC" secondAttribute="width" multiplier="0.6" id="tWX-v8-cly"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="doneButton" destination="5IE-B2-vbr" id="RKQ-zv-XsL"/>
                         <outlet property="tableView" destination="nbK-7C-w60" id="3FK-rS-uLL"/>
-                        <outlet property="titleLabel" destination="Pfq-kp-eKO" id="4sg-R7-UXt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PZ6-Yr-WYy" userLabel="First Responder" sceneMemberID="firstResponder"/>

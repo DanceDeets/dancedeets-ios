@@ -14,9 +14,6 @@
 /* Class = "UIBarButtonItem"; title = "RSVP"; ObjectID = "Mbf-UG-DzL"; */
 "Mbf-UG-DzL.title" = "RSVP";
 
-/* Class = "UILabel"; text = "SETTINGS"; ObjectID = "Pfq-kp-eKO"; */
-"Pfq-kp-eKO.text" = "SETTINGS";
-
 /* Class = "UITextField"; placeholder = "Keywords"; ObjectID = "Uav-SE-Lwi"; */
 "Uav-SE-Lwi.placeholder" = "Keywords";
 
