@@ -28,9 +28,10 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         return events.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCollectionViewCell", forIndexPath: indexPath)
-        let event = events[indexPath.row] as Event
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCollectionViewCell", forIndexPath: indexPath) as! EventDetailCell
+        cell.event = events[indexPath.row]
+        cell.viewDidLoad()
         return cell
     }
 
@@ -57,10 +58,11 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
 
 
         // collection view
-        let flowLayout:UICollectionViewFlowLayout? = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
-        flowLayout?.sectionInset = UIEdgeInsetsZero
-        flowLayout?.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height)
-        flowLayout?.minimumInteritemSpacing = 0.0
+        let flowLayout:UICollectionViewFlowLayout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
+        flowLayout.sectionInset = UIEdgeInsetsZero
+        flowLayout.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height)
+        flowLayout.minimumInteritemSpacing = 0.0
+        flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
     }
 
 

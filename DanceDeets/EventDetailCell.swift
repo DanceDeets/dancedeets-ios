@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 import MapKit
 
-class EventDetailCell: UICollectionViewCell, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
+class EventDetailCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
 
@@ -50,24 +50,11 @@ class EventDetailCell: UICollectionViewCell, UITableViewDataSource, UITableViewD
         }
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier",
-            forIndexPath: indexPath)
-        // We set backgroundColor = clearColor in Interface Builder, but iPads seem to require we set this in code
-        cell.backgroundColor = UIColor.clearColor()
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //TODO: FIXME
-        return 0
-    }
-
     func viewDidLoad() {
 
         CLSLogv("EventDetailCell.viewDidLoad event id: \(event.id ?? "Unknown")", getVaList([]))
         AnalyticsUtil.track("View Event", withEvent: event)
-
+/*
         // styling
         parentViewController()!.title = event!.title!.uppercaseString
         let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
@@ -77,10 +64,7 @@ class EventDetailCell: UICollectionViewCell, UITableViewDataSource, UITableViewD
         var titleOptions = [String:AnyObject]()
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
         parentViewController()!.navigationController?.navigationBar.titleTextAttributes = titleOptions
-
-        tableView!.rowHeight = UITableViewAutomaticDimension
-        tableView!.estimatedRowHeight = 10
-
+*/
         // Initialize display objects
 
         eventTitleLabel.text = event.title!
