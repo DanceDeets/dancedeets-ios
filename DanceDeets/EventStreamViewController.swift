@@ -71,6 +71,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         let destination = storyboard?.instantiateViewControllerWithIdentifier("eventInfoViewController") as! EventInfoViewController
         if let display = self.eventDisplay {
             destination.events = display.events
+            // TODO: Scroll CollectionView to selected Event
         }
 
         navigationController?.pushViewController(destination, animated: true)

@@ -75,6 +75,7 @@ class EventDetailCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             eventTitleLabel.frame.size.width, 200);
         eventTimeLabel.text = event.displayTime
         eventVenueLabel.text = event.displayAddress
+
         eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(", ")+")"
         let attributedDescription = NSMutableAttributedString(string: event.shortDescription!)
         // TODO: why is setLineHeight and textContainerInset both required to make this fit correctly?
@@ -83,8 +84,12 @@ class EventDetailCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         attributedDescription.setColor(eventDescriptionLabel.textColor!)
         eventDescriptionLabel.attributedText = attributedDescription
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: "mapTapped:")
-        eventMapView.addGestureRecognizer(tapGesture)
+        let mapGesture = UITapGestureRecognizer(target: self, action: "mapTapped:")
+        eventMapView.addGestureRecognizer(mapGesture)
+        eventVenueLabel.addGestureRecognizer(mapGesture)
+
+        let imageGesture = UITapGestureRecognizer(target: self, action: "imageTapped:")
+        eventCoverImageView.addGestureRecognizer(imageGesture)
 
         // setup map if possible
         if (event.geoloc != nil) {
@@ -135,7 +140,14 @@ class EventDetailCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             self.parentViewController()!.presentViewController(activityViewController, animated: true, completion: nil)
         }
     }
-    
+
+    @IBAction func imageTapped(sender: AnyObject?) {
+        AppDelegate.sharedInstance().allowLandscape = true
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.parentViewController()!.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
+        })
+    }
+
     @IBAction func mapTapped(sender: AnyObject?) {
         AnalyticsUtil.track("View on Map", withEvent: event)
         MapManager.showOnMap(event!)
@@ -166,43 +178,4 @@ class EventDetailCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         AnalyticsUtil.track("RSVP", withEvent: event, ["RSVP Value": rsvp.rawValue])
         FacebookRsvpManager.rsvpFacebook( event, withRsvp: rsvp)
     }
-    
-    func eventImageHeight() -> CGFloat{
-        return frame.size.width * ASPECT_RATIO
-    }
-
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let width:CGFloat = frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
-        var height = UITableViewAutomaticDimension
-        var sizingView: UIView?
-        if (indexPath.row == 1) {
-            sizingView = eventTitleLabel
-        } else if (indexPath.row == 2) {
-            sizingView = eventCategoriesLabel
-        } else if (indexPath.row == 3) {
-            sizingView = eventTimeLabel
-        } else if (indexPath.row == 4) {
-            sizingView = eventVenueLabel
-        } else if (indexPath.row == 5) {
-            sizingView = eventDescriptionLabel
-        }
-        if sizingView != nil {
-            let padding: CGFloat = 8.0
-            height = padding + sizingView!.sizeThatFits(CGSize(width: width, height: CGFloat(FLT_MAX))).height
-        }
-        return height
-    }
-
-    // MARK: UITableViewDelegate
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if (indexPath.row == 0) {
-            AppDelegate.sharedInstance().allowLandscape = true
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.parentViewController()!.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
-            })
-        } else if(indexPath.row == 4) {
-            mapTapped(nil)
-        }
-    }
-    
 }

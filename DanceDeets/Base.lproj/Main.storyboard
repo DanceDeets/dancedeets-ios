@@ -610,6 +610,9 @@
                             <outlet property="delegate" destination="zQ5-NL-m8V" id="kzh-Rl-ZXT"/>
                         </connections>
                     </collectionView>
+                    <connections>
+                        <outlet property="bottomToolbarItems" destination="qk8-iZ-08l" id="3Oz-QS-JIg"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OOT-zj-RDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="qk8-iZ-08l">

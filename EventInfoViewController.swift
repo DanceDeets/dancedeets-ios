@@ -16,14 +16,14 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
 
     @IBOutlet var bottomToolbarItems: UIToolbar!
 
-
     // MARK: UICollectionViewDelegate
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let event = events[indexPath.row]
+        print(1)
     }
 
     // MARK: UICollectionViewDataSource
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return events.count
     }
 
@@ -52,7 +52,7 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         super.viewDidLoad()
 
         // Use the toolbars from the toolbar we set up in Interface Builder
- //       self.toolbarItems = bottomToolbarItems.items
+        self.toolbarItems = bottomToolbarItems.items
         navigationController?.toolbar.barTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.8)
 
 
@@ -62,6 +62,7 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         flowLayout.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height)
         flowLayout.minimumLineSpacing = 0.0
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        //automaticallyAdjustsScrollViewInsets = false
     }
 
 
