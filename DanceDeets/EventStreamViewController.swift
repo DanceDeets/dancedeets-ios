@@ -95,17 +95,19 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        checkFaceBookToken()
         if (requiresRefresh) {
             requiresRefresh = false
             fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
         }
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        checkFaceBookToken()
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "settingsSegue" {
             let destination:SettingsViewController? = segue.destinationViewController as? SettingsViewController

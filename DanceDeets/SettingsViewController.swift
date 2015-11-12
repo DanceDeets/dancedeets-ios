@@ -49,12 +49,6 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     // MARK: UITableViewDataSource
