@@ -373,8 +373,8 @@
                         <outlet property="searchTextCancelButton" destination="FAC-4W-puc" id="f41-Mc-f9P"/>
                         <outlet property="settingsButton" destination="985-JS-nOW" id="cRX-zs-TGh"/>
                         <outlet property="textFieldsEqualWidthConstraint" destination="WvE-mq-Mq1" id="aL8-Ah-CzG"/>
-                        <segue destination="2zh-F8-7u4" kind="show" identifier="eventDetailSegue" id="vjg-jf-Ol8"/>
                         <segue destination="Gdp-6o-WzI" kind="show" identifier="settingsSegue" id="jGw-rt-6UH"/>
+                        <segue destination="zQ5-NL-m8V" kind="show" identifier="eventDetailSegue" id="WeX-nq-I8T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5E-47-ysN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -387,10 +387,47 @@
             </objects>
             <point key="canvasLocation" x="136" y="-1990"/>
         </scene>
+        <!--Event Info View Controller-->
+        <scene sceneID="mXk-BB-hTT">
+            <objects>
+                <collectionViewController storyboardIdentifier="eventInfoViewController" id="zQ5-NL-m8V" customClass="EventInfoViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ke3-6g-W72">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9nT-ut-URY">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="eventCollectionViewCell" id="6rD-vv-dd1" customClass="EventDetailCell" customModule="DanceDeets" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <animations/>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="zQ5-NL-m8V" id="m2u-YH-qQ0"/>
+                            <outlet property="delegate" destination="zQ5-NL-m8V" id="kzh-Rl-ZXT"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OOT-zj-RDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="848" y="-2660"/>
+        </scene>
         <!--Event Detail View Controller-->
         <scene sceneID="lcM-bZ-PCu">
             <objects>
-                <tableViewController storyboardIdentifier="eventDetailViewController" id="2zh-F8-7u4" customClass="EventDetailViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="eventDetailViewController" id="2zh-F8-7u4" customClass="EventDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Rdd-yc-mfj">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -68,9 +68,10 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     
     func eventSelected(event: Event, eventImage: UIImage?) {
         // the collection cell of the selected event
-        let destination = storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
-        destination.initialImage = eventImage
-        destination.event = event
+        let destination = storyboard?.instantiateViewControllerWithIdentifier("eventInfoViewController") as! EventInfoViewController
+        if let display = self.eventDisplay {
+            destination.events = display.events
+        }
 
         navigationController?.pushViewController(destination, animated: true)
     }

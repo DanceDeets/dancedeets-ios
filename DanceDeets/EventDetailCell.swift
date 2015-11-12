@@ -1,5 +1,5 @@
 //
-//  EventDetailViewController.swift
+//  EventDetailCell
 //  DanceDeets
 //
 //  Created by David Xiang on 10/28/14.
@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 import MapKit
 
-class EventDetailViewController: UITableViewController, UIGestureRecognizerDelegate {
+class EventDetailCell: UICollectionViewCell, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
     
     let DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING:CGFloat = 15.0
 
@@ -20,7 +20,9 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     var initialImage:UIImage?
     
     var addToCalendar:AddToCalendar?
-    
+
+    var tableView:UITableView?
+
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
@@ -37,16 +39,8 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     @IBOutlet weak var eventCoverImageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewLeftConstraint: NSLayoutConstraint!
 
-    func getTopOffset()->CGFloat{
-        if(navigationController != nil){
-            return navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.size.height
-        }else{
-            return CGFloat.min
-        }
-    }
-
     // MARK: UIViewController
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "fullScreenImageSegue") {
             let destinationController = segue.destinationViewController as! FullScreenImageViewController
             if let image = eventCoverImageView.image {
@@ -56,35 +50,36 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, cellForRowAtIndexPath:indexPath)
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier",
+            forIndexPath: indexPath)
         // We set backgroundColor = clearColor in Interface Builder, but iPads seem to require we set this in code
         cell.backgroundColor = UIColor.clearColor()
         return cell
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //TODO: FIXME
+        return 0
+    }
 
-        CLSLogv("EventDetailViewController.viewDidLoad event id: \(event.id ?? "Unknown")", getVaList([]))
+    func viewDidLoad() {
+
+        CLSLogv("EventDetailCell.viewDidLoad event id: \(event.id ?? "Unknown")", getVaList([]))
         AnalyticsUtil.track("View Event", withEvent: event)
 
-        // Use the toolbars from the toolbar we set up in Interface Builder
-        self.toolbarItems = bottomToolbarItems.items
-        navigationController?.toolbar.barTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.8)
-
         // styling
-        title = event!.title!.uppercaseString
+        parentViewController()!.title = event!.title!.uppercaseString
         let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
-        navigationItem.rightBarButtonItem = shareButton
+        parentViewController()!.navigationItem.rightBarButtonItem = shareButton
         // TODO: what do we want to stick in the upper right?
 
         var titleOptions = [String:AnyObject]()
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
-        navigationController?.navigationBar.titleTextAttributes = titleOptions
+        parentViewController()!.navigationController?.navigationBar.titleTextAttributes = titleOptions
 
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 10
+        tableView!.rowHeight = UITableViewAutomaticDimension
+        tableView!.estimatedRowHeight = 10
 
         // Initialize display objects
 
@@ -117,9 +112,6 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
             eventMapView.setRegion(region, animated:false)
         }
         
-        navigationController?.interactivePopGestureRecognizer!.delegate = self
-        navigationController?.interactivePopGestureRecognizer!.enabled = true
-        
         // set to initial image first, this may be a smaller image if coming from list view
         eventCoverImageView.image = initialImage
         if let url = event.eventImageUrl{
@@ -143,35 +135,20 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
         }
         
         eventCoverImageView.userInteractionEnabled = false
-        
-        self.tableView.backgroundColor = UIColor(white: 0, alpha: 1)
     }
 
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+    func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.setToolbarHidden(false, animated: false)
 
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        self.navigationController?.setToolbarHidden(true, animated: false)
-    }
-    
     // MARK: Buttons
     @IBAction func shareButtonTapped(sender: AnyObject) {
         if (event != nil) {
             AnalyticsUtil.track("Share Event", withEvent: event)
             let activityViewController = UIActivityViewController(activityItems: event!.createSharingItems(), applicationActivities: nil)
             activityViewController.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
-            self.presentViewController(activityViewController, animated: true, completion: nil)
+            self.parentViewController()!.presentViewController(activityViewController, animated: true, completion: nil)
         }
     }
     
@@ -207,12 +184,12 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     }
     
     func eventImageHeight() -> CGFloat{
-        return view.frame.size.width * ASPECT_RATIO
+        return frame.size.width * ASPECT_RATIO
     }
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let width:CGFloat = tableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
-        var height = super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let width:CGFloat = frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
+        var height = UITableViewAutomaticDimension
         var sizingView: UIView?
         if (indexPath.row == 1) {
             sizingView = eventTitleLabel
@@ -233,11 +210,11 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
     }
 
     // MARK: UITableViewDelegate
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.row == 0) {
             AppDelegate.sharedInstance().allowLandscape = true
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
+                self.parentViewController()!.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
             })
         } else if(indexPath.row == 4) {
             mapTapped(nil)
