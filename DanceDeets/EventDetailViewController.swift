@@ -71,6 +71,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
 
         // Use the toolbars from the toolbar we set up in Interface Builder
         self.toolbarItems = bottomToolbarItems.items
+        navigationController?.toolbar.barTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.8)
 
         // styling
         title = event!.title!.uppercaseString
@@ -81,6 +82,9 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
         var titleOptions = [String:AnyObject]()
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
         navigationController?.navigationBar.titleTextAttributes = titleOptions
+
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 10
 
         // Initialize display objects
 
@@ -123,7 +127,7 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
             let imageRequest:NSURLRequest = NSURLRequest(URL: url)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
                 eventCoverImageView.image = image
-            }else{
+            } else {
                 event?.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
                     if(image != nil && error == nil){
                         self.eventCoverImageView.image = image
@@ -208,64 +212,34 @@ class EventDetailViewController: UITableViewController, UIGestureRecognizerDeleg
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let width:CGFloat = tableView.frame.size.width - (2*DETAILS_TABLE_VIEW_CELL_HORIZONTAL_PADDING)
-
-        var height:CGFloat?
-        if (indexPath.row == 0) {
-            // gap, cover image sits here but isn't part of the tableview
-            height = getTopOffset() + eventImageHeight()
-        } else if(indexPath.row == 1) {
-            // title
-            let textHeight = Utilities.heightRequiredForText(eventTitleLabel.text!,
-                lineHeight: FontFactory.eventHeadlineLineHeight(),
-                font: eventTitleLabel.font,
-                width:width)
-            height = textHeight + 25
-        } else if(indexPath.row == 2) {
-            // categories
-            let textHeight = Utilities.heightRequiredForText(eventCategoriesLabel.text!,
-                lineHeight: FontFactory.eventDescriptionLineHeight(),
-                font: eventCategoriesLabel.font!,
-                width:width)
-            height = textHeight
-        } else if(indexPath.row == 3) {
-            // time
-            height = 24
-        } else if(indexPath.row == 4) {
-            // display address
-            var displayAddressHeight:CGFloat = 0.0
-            displayAddressHeight += Utilities.heightRequiredForText(eventVenueLabel.text!,
-                lineHeight: FontFactory.eventVenueLineHeight(),
-                font: eventVenueLabel.font,
-                width: width)
-            height = displayAddressHeight
-        } else if(indexPath.row == 5) {
-            //description
-            let textHeight = Utilities.heightRequiredForText(eventDescriptionLabel.text,
-                lineHeight: FontFactory.eventDescriptionLineHeight(),
-                font: eventDescriptionLabel.font!,
-                width:width)
-            height = textHeight + 30
-        } else if(indexPath.row == 6) {
-            // map
-            height = 300;
-        } else if(indexPath.row == 7) {
-            // CTAs
-            height = 55;
-        } else {
-            height = CGFloat.min
+        var height = super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+        var sizingView: UIView?
+        if (indexPath.row == 1) {
+            sizingView = eventTitleLabel
+        } else if (indexPath.row == 2) {
+            sizingView = eventCategoriesLabel
+        } else if (indexPath.row == 3) {
+            sizingView = eventTimeLabel
+        } else if (indexPath.row == 4) {
+            sizingView = eventVenueLabel
+        } else if (indexPath.row == 5) {
+            sizingView = eventDescriptionLabel
         }
-        // print("Row \(indexPath.row) has height \(height)")
-        return height!
+        if sizingView != nil {
+            let padding: CGFloat = 8.0
+            height = padding + sizingView!.sizeThatFits(CGSize(width: width, height: CGFloat(FLT_MAX))).height
+        }
+        return height
     }
 
     // MARK: UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(indexPath.row == 0){
+        if (indexPath.row == 0) {
             AppDelegate.sharedInstance().allowLandscape = true
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
             })
-        }else if(indexPath.row == 4){
+        } else if(indexPath.row == 4) {
             mapTapped(nil)
         }
     }
