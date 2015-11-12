@@ -86,8 +86,8 @@ class EventDetailCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
         let mapGesture = UITapGestureRecognizer(target: self, action: "mapTapped:")
         eventMapView.addGestureRecognizer(mapGesture)
-        eventVenueLabel.addGestureRecognizer(mapGesture)
-
+        let venueGesture = UITapGestureRecognizer(target: self, action: "mapTapped:")
+        eventVenueLabel.addGestureRecognizer(venueGesture)
         let imageGesture = UITapGestureRecognizer(target: self, action: "imageTapped:")
         eventCoverImageView.addGestureRecognizer(imageGesture)
 
