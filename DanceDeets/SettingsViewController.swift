@@ -131,12 +131,16 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             } else if (indexPath.row == 1) {
                 AnalyticsUtil.track("Add Event")
                 let token = FBSDKAccessToken.currentAccessToken()
-                let stringUrl = "http://www.dancedeets.com/events_add?uid="+token.userID+"&access_token="+token.tokenString;
-                print(stringUrl)
+                let url = NSURLComponents(string: "http://www.dancedeets.com/events_add")!
+                url.queryItems = [
+                    NSURLQueryItem(name: "uid", value: token.userID),
+                    NSURLQueryItem(name: "access_token", value: token.tokenString),
+                ]
+                let realUrl = url.URL!
+                let row = tableView.cellForRowAtIndexPath(indexPath) as? SettingsCell
+
                 let webViewController = WebViewController()
-                webViewController.setStartUrl(stringUrl)
-                // TODO: make a sideways transition?
-                //self.presentViewController(webViewController, animated: true, completion: nil)
+                webViewController.configure(withUrl: realUrl, andTitle: row?.label?.text ?? "")
                 navigationController!.pushViewController(webViewController, animated: true)
             } else if (indexPath.row == 2) {
                 AnalyticsUtil.logout()

@@ -14,8 +14,9 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     var webView: WKWebView!
     var url: NSURL?
 
-    func setStartUrl(startUrl: String) {
-        url = NSURL(string: startUrl)
+    func configure(withUrl startUrl: NSURL, andTitle startTitle: String) {
+        url = startUrl
+        title = startTitle
     }
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -42,7 +43,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         if url != nil {
             // Append &webview=1 to our URLs
-            let modUrl = NSURLComponents(URL: url!, resolvingAgainstBaseURL: false)!
+            let modUrl = NSURLComponents(string: url!.absoluteString)!
             modUrl.queryItems!.append(NSURLQueryItem(name: "webview", value: "1"))
             if let newUrl = modUrl.URL {
                 webView.loadRequest(NSURLRequest(URL: newUrl))
