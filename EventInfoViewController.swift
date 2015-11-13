@@ -13,6 +13,7 @@ import MapKit
 class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDelegate {
 
     var events:[Event]!
+    var startEvent: Event?
 
     @IBOutlet var bottomToolbarItems: UIToolbar!
 
@@ -29,9 +30,13 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
 
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         if let event = currentEventCell()?.event {
-            AnalyticsUtil.track("View Event", withEvent: event)
-            title = event.title!.uppercaseString
+            setCurrentEvent(event)
         }
+    }
+
+    func setCurrentEvent(event: Event) {
+        AnalyticsUtil.track("View Event", withEvent: event)
+        title = event.title!.uppercaseString
     }
 
     func currentEventCell() -> EventDetailCell? {
@@ -81,6 +86,21 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         var titleOptions = [String:AnyObject]()
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
         navigationController?.navigationBar.titleTextAttributes = titleOptions
+    }
+
+    override func viewDidLayoutSubviews() {
+        // If we haven't done the initial scroll, do it once.
+        if let event = startEvent {
+            setCurrentEvent(event)
+            if let index = events.indexOf(event) {
+                let indexPath = NSIndexPath(forItem: index, inSection: 0)
+                collectionView!.layoutIfNeeded()
+                collectionView!.scrollToItemAtIndexPath(indexPath, atScrollPosition:UICollectionViewScrollPosition.CenteredHorizontally, animated:false)
+            } else {
+                CLSLogv("Event \(event.id) not in EventInfoViewController.events", getVaList([]))
+            }
+            startEvent = nil
+        }
     }
 
 
