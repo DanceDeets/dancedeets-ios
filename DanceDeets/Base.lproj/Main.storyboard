@@ -597,6 +597,7 @@
                                     <outlet property="eventTimeLabel" destination="SKS-WK-qB4" id="SAN-dL-tYG"/>
                                     <outlet property="eventTitleLabel" destination="0nM-UR-teI" id="hfO-De-R13"/>
                                     <outlet property="eventVenueLabel" destination="iR9-dF-OU4" id="Hij-VA-och"/>
+                                    <outlet property="scrollView" destination="LTU-Zb-ND8" id="ffm-S9-A4P"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

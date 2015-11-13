@@ -23,6 +23,8 @@ class EventDetailCell: UICollectionViewCell {
 
     var tableView:UITableView?
 
+    @IBOutlet weak var scrollView: UIScrollView!
+
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
@@ -31,9 +33,6 @@ class EventDetailCell: UICollectionViewCell {
     @IBOutlet weak var eventDescriptionLabel: UITextView!
     @IBOutlet weak var eventMapView: MKMapView!
 
-    
-    @IBOutlet var bottomToolbarItems: UIToolbar!
-    
     @IBOutlet weak var eventCoverImageViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewHeightConstraint: NSLayoutConstraint!
@@ -41,6 +40,9 @@ class EventDetailCell: UICollectionViewCell {
 
     func setupEvent(event: Event) {
         self.event = event
+        // Reset scroll position on setup, in case we are recycling a cell
+        scrollView.setContentOffset(CGPoint(x:0, y:0), animated: false)
+
         // Initialize display objects
 
         eventTitleLabel.text = event.title!
