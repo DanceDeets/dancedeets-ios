@@ -23,15 +23,25 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCollectionViewCell", forIndexPath: indexPath) as! EventDetailCell
-        cell.event = events[indexPath.row]
-        cell.viewDidLoad()
+        cell.setupEvent(events[indexPath.row])
         return cell
+    }
+
+    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        if let event = currentEventCell()?.event {
+            AnalyticsUtil.track("View Event", withEvent: event)
+            title = event.title!.uppercaseString
+        }
     }
 
     func currentEventCell() -> EventDetailCell? {
         if let cells = collectionView?.visibleCells() {
-            if let cell = cells[0] as? EventDetailCell {
-                return cell
+            // There may be multiple visibleCells (during scrolls), so we have to ensure we find the visible one
+            for cell in cells {
+                let cellRect = collectionView!.convertRect(cell.frame, toView:collectionView!.superview)
+                if CGRectContainsRect(collectionView!.frame, cellRect) {
+                    return cell as? EventDetailCell
+                }
             }
         }
         return nil
@@ -64,6 +74,13 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         flowLayout.minimumLineSpacing = 0.0
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         //automaticallyAdjustsScrollViewInsets = false
+
+        let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
+        navigationItem.rightBarButtonItem = shareButton
+
+        var titleOptions = [String:AnyObject]()
+        titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
+        navigationController?.navigationBar.titleTextAttributes = titleOptions
     }
 
 
