@@ -141,8 +141,9 @@ class EventDetailCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         }
     }
 
-    @IBAction func imageTapped(sender: AnyObject?) {
+    func imageTapped(sender: AnyObject?) {
         AppDelegate.sharedInstance().allowLandscape = true
+        print(0)
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.parentViewController()!.performSegueWithIdentifier("fullScreenImageSegue", sender: self)
         })

@@ -16,12 +16,6 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
 
     @IBOutlet var bottomToolbarItems: UIToolbar!
 
-    // MARK: UICollectionViewDelegate
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let event = events[indexPath.row]
-        print(1)
-    }
-
     // MARK: UICollectionViewDataSource
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return events.count
@@ -34,17 +28,25 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         return cell
     }
 
+    func currentEventCell() -> EventDetailCell? {
+        if let cells = collectionView?.visibleCells() {
+            if let cell = cells[0] as? EventDetailCell {
+                return cell
+            }
+        }
+        return nil
+    }
+
     // MARK: UIViewController
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "fullScreenImageSegue") {
-
-            let destinationController = segue.destinationViewController as! FullScreenImageViewController
-            /*
-            if let image = eventCoverImageView.image {
-                destinationController.image = image
+        if (segue.identifier == "fullScreenImageSegue") {
+            if let cell = currentEventCell() {
+                let destinationController = segue.destinationViewController as! FullScreenImageViewController
+                if let image = cell.eventCoverImageView.image {
+                    destinationController.image = image
+                }
+                destinationController.event = cell.event
             }
-            destinationController.event = event
-            */
         }
     }
 
@@ -54,7 +56,6 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         // Use the toolbars from the toolbar we set up in Interface Builder
         self.toolbarItems = bottomToolbarItems.items
         navigationController?.toolbar.barTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.8)
-
 
         // collection view
         let flowLayout:UICollectionViewFlowLayout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
@@ -82,4 +83,21 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.setToolbarHidden(true, animated: false)
     }
+
+    @IBAction func facebookTapped(sender: AnyObject) {
+        currentEventCell()?.facebookTapped(sender)
+    }
+    @IBAction func mapTapped(sender: AnyObject) {
+        currentEventCell()?.mapTapped(sender)
+    }
+    @IBAction func calendarTapped(sender: AnyObject) {
+        currentEventCell()?.calendarTapped(sender)
+    }
+    @IBAction func rsvpTapped(sender: AnyObject) {
+        currentEventCell()?.rsvpTapped(sender)
+    }
+    @IBAction func shareButtonTapped(sender: AnyObject) {
+        currentEventCell()?.shareButtonTapped(sender)
+    }
+
 }
