@@ -33,10 +33,7 @@ class EventDetailCell: UICollectionViewCell {
     @IBOutlet weak var eventDescriptionLabel: UITextView!
     @IBOutlet weak var eventMapView: MKMapView!
 
-    @IBOutlet weak var eventCoverImageViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var eventCoverImageViewRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var eventCoverImageViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var eventCoverImageViewLeftConstraint: NSLayoutConstraint!
 
     func setupEvent(event: Event) {
         self.event = event
@@ -81,7 +78,7 @@ class EventDetailCell: UICollectionViewCell {
         
         // set to initial image first, this may be a smaller image if coming from list view
         eventCoverImageView.image = initialImage
-        if let url = event.eventImageUrl{
+        if let url = event.eventImageUrl {
             // hero image for detail view is the big image
             let imageRequest:NSURLRequest = NSURLRequest(URL: url)
             if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
@@ -96,11 +93,13 @@ class EventDetailCell: UICollectionViewCell {
         }
 
         // aspect ratio if available, capped at 1:1 to prevent super tall images
-        if event.eventImageHeight != nil && event.eventImageWidth != nil{
+        if event.eventImageHeight != nil && event.eventImageWidth != nil {
             ASPECT_RATIO = min(1.0, event.eventImageHeight! / event.eventImageWidth!)
         }
-        
-        eventCoverImageView.userInteractionEnabled = false
+        eventCoverImageViewHeightConstraint.constant = frame.size.width * ASPECT_RATIO
+        print(ASPECT_RATIO)
+        print("Height: ", eventCoverImageViewHeightConstraint.constant)
+        layoutIfNeeded()
     }
 
     func preferredStatusBarStyle() -> UIStatusBarStyle {
