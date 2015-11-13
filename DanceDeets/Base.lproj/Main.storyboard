@@ -592,12 +592,14 @@
                                 <connections>
                                     <outlet property="eventCategoriesLabel" destination="DDd-M8-QVB" id="u7b-lN-eZW"/>
                                     <outlet property="eventCoverImageView" destination="aIu-5i-zz6" id="kWL-XD-Stx"/>
+                                    <outlet property="eventCoverImageViewHeightConstraint" destination="hEA-r2-jHg" id="JcW-8V-p1O"/>
                                     <outlet property="eventDescriptionLabel" destination="UQO-pn-Gib" id="B1N-7m-tb3"/>
                                     <outlet property="eventMapView" destination="f6f-Sg-0t5" id="4Mh-hy-Sft"/>
                                     <outlet property="eventTimeLabel" destination="SKS-WK-qB4" id="SAN-dL-tYG"/>
                                     <outlet property="eventTitleLabel" destination="0nM-UR-teI" id="hfO-De-R13"/>
                                     <outlet property="eventVenueLabel" destination="iR9-dF-OU4" id="Hij-VA-och"/>
                                     <outlet property="scrollView" destination="LTU-Zb-ND8" id="ffm-S9-A4P"/>
+                                    <segue destination="NNj-Xd-7Ej" kind="presentation" identifier="fullScreenImageSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="yGL-cj-pC5"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
