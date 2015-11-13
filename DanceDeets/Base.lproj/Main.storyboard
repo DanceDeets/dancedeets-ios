@@ -412,8 +412,8 @@
                                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTU-Zb-ND8">
                                             <rect key="frame" x="0.0" y="0.0" width="601" height="556"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BMm-lK-XN9" customClass="OAStackView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="601" height="43"/>
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BMm-lK-XN9" customClass="OAStackView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="601" height="0.0"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aIu-5i-zz6">
                                                             <rect key="frame" x="0.0" y="0.0" width="601" height="0.0"/>
@@ -429,15 +429,15 @@
                                                                 </mask>
                                                             </variation>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Event Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0nM-UR-teI">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="Event Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0nM-UR-teI">
                                                             <rect key="frame" x="0.0" y="0.0" width="601" height="24.5"/>
                                                             <animations/>
                                                             <fontDescription key="fontDescription" name="Interstate-ExtraLight" family="Interstate-ExtraLight" pointSize="22"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UkX-bk-rrs" userLabel="Categories View">
-                                                            <rect key="frame" x="0.0" y="0.0" width="601" height="0.0"/>
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UkX-bk-rrs" userLabel="Categories View">
+                                                            <rect key="frame" x="0.0" y="0.0" width="601" height="14.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="danceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="37S-By-X1e" userLabel="danceIcon">
                                                                     <rect key="frame" x="12" y="0.0" width="14" height="14"/>
@@ -552,7 +552,6 @@
                                                         <constraint firstItem="UkX-bk-rrs" firstAttribute="leading" secondItem="BMm-lK-XN9" secondAttribute="leading" id="OgW-Gg-Xwl"/>
                                                         <constraint firstItem="2qZ-eX-hRF" firstAttribute="leading" secondItem="BMm-lK-XN9" secondAttribute="leading" id="PLs-c8-HyB"/>
                                                         <constraint firstItem="f6f-Sg-0t5" firstAttribute="leading" secondItem="BMm-lK-XN9" secondAttribute="leading" id="Wrl-Mg-1iJ"/>
-                                                        <constraint firstItem="0nM-UR-teI" firstAttribute="top" secondItem="BMm-lK-XN9" secondAttribute="top" id="Zlf-92-Ynx"/>
                                                         <constraint firstItem="c6i-Di-3Pr" firstAttribute="trailing" secondItem="BMm-lK-XN9" secondAttribute="trailing" id="e66-xt-J6L"/>
                                                         <constraint firstItem="2qZ-eX-hRF" firstAttribute="trailing" secondItem="BMm-lK-XN9" secondAttribute="trailing" id="hFv-8i-6ZH"/>
                                                         <constraint firstItem="c6i-Di-3Pr" firstAttribute="leading" secondItem="BMm-lK-XN9" secondAttribute="leading" id="ndt-bc-Nas"/>
@@ -570,16 +569,9 @@
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="BMm-lK-XN9" secondAttribute="trailing" id="U0M-oN-Lpe"/>
-                                                <constraint firstItem="BMm-lK-XN9" firstAttribute="leading" secondItem="LTU-Zb-ND8" secondAttribute="leading" id="d3H-Kk-BUQ"/>
+                                                <constraint firstAttribute="bottom" secondItem="BMm-lK-XN9" secondAttribute="bottom" id="nD2-zl-rRQ"/>
                                                 <constraint firstItem="BMm-lK-XN9" firstAttribute="top" secondItem="LTU-Zb-ND8" secondAttribute="top" id="xTV-Af-Gqf"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="U0M-oN-Lpe"/>
-                                                    <exclude reference="d3H-Kk-BUQ"/>
-                                                </mask>
-                                            </variation>
                                         </scrollView>
                                     </subviews>
                                     <animations/>
