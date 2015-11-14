@@ -37,8 +37,6 @@ class EventDetailCell: UICollectionViewCell {
 
     func setupEvent(event: Event) {
         self.event = event
-        // Reset scroll position on setup, in case we are recycling a cell
-        scrollView.setContentOffset(CGPoint(x:0, y:0), animated: false)
 
         // Initialize display objects
 

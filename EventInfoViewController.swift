@@ -25,6 +25,14 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCollectionViewCell", forIndexPath: indexPath) as! EventDetailCell
         cell.setupEvent(events[indexPath.row])
+
+        // Ensure the cell contents don't have to underlap the navbar/toolbar
+        let topHeightOffset = navigationController!.navigationBar.frame.size.height + navigationController!.navigationBar.frame.origin.y
+        let bottomHeightOffset = navigationController!.toolbar.frame.size.height
+        cell.scrollView.contentInset = UIEdgeInsetsMake(topHeightOffset, 0.0, bottomHeightOffset, 0.0)
+        cell.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(topHeightOffset, 0.0, bottomHeightOffset, 0.0)
+        cell.scrollView.setContentOffset(CGPoint(x:0, y:-topHeightOffset), animated: false)
+
         return cell
     }
 
@@ -78,7 +86,9 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         flowLayout.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height)
         flowLayout.minimumLineSpacing = 0.0
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        //automaticallyAdjustsScrollViewInsets = false
+        // We don't want this done at the table level, but instead done within each cell,
+        // up above in cellForItemAtIndexPath
+        automaticallyAdjustsScrollViewInsets = false
 
         let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
         navigationItem.rightBarButtonItem = shareButton
