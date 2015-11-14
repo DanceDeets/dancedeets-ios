@@ -43,9 +43,6 @@ class EventDetailCell: UICollectionViewCell {
         eventTitleLabel.text = event.title!
         eventTitleLabel.numberOfLines = 0
         eventTitleLabel.lineBreakMode = .ByWordWrapping
-        eventTitleLabel.frame = CGRectMake(
-            eventTitleLabel.frame.origin.x, eventTitleLabel.frame.origin.y,
-            eventTitleLabel.frame.size.width, 200);
         eventTimeLabel.text = event.displayTime
         eventVenueLabel.text = event.displayAddress
 
