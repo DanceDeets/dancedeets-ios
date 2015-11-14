@@ -58,12 +58,15 @@ public class Venue {
         }
     }
 
-    private func prefixName(postfix: String) -> String {
-        if let realName = name {
-            return "\(realName)\n\(postfix)"
-        } else {
-            return postfix
+    private func prefixName(postfix: String?) -> String {
+        var components:[String] = []
+        if name != nil {
+            components.append(name!)
         }
+        if postfix != nil {
+            components.append(postfix!)
+        }
+        return components.joinWithSeparator("\n")
     }
 
     public func formattedNameAndCity() -> String {
@@ -78,7 +81,10 @@ public class Venue {
     }
 
     public func formattedFull() -> String {
-        let address = ABCreateStringWithAddressDictionary(fullAddressDictionary, true)
+        var address:String? = nil
+        if !fullAddressDictionary.isEmpty {
+            address = ABCreateStringWithAddressDictionary(fullAddressDictionary, true)
+        }
         return prefixName(address)
     }
 }
