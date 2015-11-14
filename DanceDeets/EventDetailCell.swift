@@ -63,14 +63,16 @@ class EventDetailCell: UICollectionViewCell {
 
         // setup map if possible
         if (event.geoloc != nil) {
+            eventMapView.hidden = false
             let annotation:MKPointAnnotation = MKPointAnnotation()
             annotation.coordinate = event.geoloc!.coordinate
             eventMapView.addAnnotation(annotation)
             eventMapView.centerCoordinate = annotation.coordinate
             let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 1000,1000)
             eventMapView.setRegion(region, animated:false)
+        } else {
+            eventMapView.hidden = true
         }
-        
         // set to initial image first, this may be a smaller image if coming from list view
         eventCoverImageView.image = initialImage
         if let url = event.eventImageUrl {
