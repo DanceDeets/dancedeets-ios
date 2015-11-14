@@ -129,19 +129,6 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
 
         // It turns out to be really difficult to scroll the previous Stream VC down to the current VC's event
         // because many of the images are unloaded, and everything operates off estimated row heights.
-        /*
-        // Scroll the previous Stream viewcontroller down to the currently-viewed event. This code "mostly" works.
-        if isBeingDismissed() || isMovingFromParentViewController() {
-            if let event = self.currentEventCell()?.event {
-                if let index = events.indexOf(event) {
-                    if let streamController = parentViewController?.childViewControllers[0] as? EventStreamViewController {
-                        let indexPath = NSIndexPath(forItem: index, inSection: 0)
-                        streamController.eventListTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: false)
-                    }
-                }
-            }
-        }
-        */
     }
 
     @IBAction func facebookTapped(sender: AnyObject) {

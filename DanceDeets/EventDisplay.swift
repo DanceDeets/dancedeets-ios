@@ -30,7 +30,7 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
         tableView.separatorInset = UIEdgeInsetsMake(0, 12, 0, 12)
         tableView.layoutMargins = UIEdgeInsetsZero
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 500
+        tableView.estimatedRowHeight = 300
         tableView.backgroundColor = UIColor.clearColor()
         tableView.contentInset = UIEdgeInsetsMake(heightOffset, 0, 0, 0)
         tableView.delegate = self
