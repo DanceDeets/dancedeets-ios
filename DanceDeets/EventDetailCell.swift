@@ -97,8 +97,6 @@ class EventDetailCell: UICollectionViewCell {
             ASPECT_RATIO = min(1.0, event.eventImageHeight! / event.eventImageWidth!)
         }
         eventCoverImageViewHeightConstraint.constant = frame.size.width * ASPECT_RATIO
-        print(ASPECT_RATIO)
-        print("Height: ", eventCoverImageViewHeightConstraint.constant)
         layoutIfNeeded()
     }
 
