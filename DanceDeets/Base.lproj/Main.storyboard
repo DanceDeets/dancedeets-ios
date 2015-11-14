@@ -424,14 +424,27 @@
                                                                 <constraint firstAttribute="height" constant="290" id="hEA-r2-jHg"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="Event Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0nM-UR-teI">
-                                                            <rect key="frame" x="0.0" y="0.0" width="601" height="24.5"/>
+                                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Egz-1P-DNK" userLabel="Title View">
+                                                            <rect key="frame" x="180" y="-64" width="240" height="128"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" misplaced="YES" text="Event Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0nM-UR-teI">
+                                                                    <rect key="frame" x="-181" y="52.5" width="601" height="24.5"/>
+                                                                    <animations/>
+                                                                    <fontDescription key="fontDescription" name="Interstate-ExtraLight" family="Interstate-ExtraLight" pointSize="22"/>
+                                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
                                                             <animations/>
-                                                            <fontDescription key="fontDescription" name="Interstate-ExtraLight" family="Interstate-ExtraLight" pointSize="22"/>
-                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UkX-bk-rrs" userLabel="Categories View">
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstItem="0nM-UR-teI" firstAttribute="trailing" secondItem="Egz-1P-DNK" secondAttribute="trailing" constant="-5" id="4ra-py-CxU"/>
+                                                                <constraint firstItem="0nM-UR-teI" firstAttribute="leading" secondItem="Egz-1P-DNK" secondAttribute="leading" constant="5" id="Dr6-So-WEi"/>
+                                                                <constraint firstItem="0nM-UR-teI" firstAttribute="top" secondItem="Egz-1P-DNK" secondAttribute="top" id="pWf-6b-Saf"/>
+                                                                <constraint firstItem="0nM-UR-teI" firstAttribute="bottom" secondItem="Egz-1P-DNK" secondAttribute="bottom" id="yT7-rN-gpg"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UkX-bk-rrs" userLabel="Categories View">
                                                             <rect key="frame" x="0.0" y="0.0" width="601" height="14.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="danceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="37S-By-X1e" userLabel="danceIcon">
@@ -442,7 +455,7 @@
                                                                         <constraint firstAttribute="height" constant="14" id="b9G-Lr-LsZ"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDd-M8-QVB" userLabel="Event Categories Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDd-M8-QVB" userLabel="Event Categories Label">
                                                                     <rect key="frame" x="38" y="0.0" width="563" height="14.5"/>
                                                                     <animations/>
                                                                     <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
@@ -453,7 +466,7 @@
                                                             <animations/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <constraints>
-                                                                <constraint firstItem="DDd-M8-QVB" firstAttribute="trailing" secondItem="UkX-bk-rrs" secondAttribute="trailing" id="0No-Mc-pww"/>
+                                                                <constraint firstItem="DDd-M8-QVB" firstAttribute="trailing" secondItem="UkX-bk-rrs" secondAttribute="trailing" constant="-5" id="0No-Mc-pww"/>
                                                                 <constraint firstItem="37S-By-X1e" firstAttribute="top" secondItem="DDd-M8-QVB" secondAttribute="top" id="EJE-YN-1nA"/>
                                                                 <constraint firstItem="DDd-M8-QVB" firstAttribute="top" secondItem="UkX-bk-rrs" secondAttribute="top" id="imk-uS-1y6"/>
                                                                 <constraint firstItem="DDd-M8-QVB" firstAttribute="leading" secondItem="37S-By-X1e" secondAttribute="trailing" constant="12" id="k9J-py-Vph"/>
@@ -461,7 +474,7 @@
                                                                 <constraint firstItem="DDd-M8-QVB" firstAttribute="bottom" secondItem="UkX-bk-rrs" secondAttribute="bottom" id="xNT-pR-6j3"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2qZ-eX-hRF" userLabel="Time View">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2qZ-eX-hRF" userLabel="Time View">
                                                             <rect key="frame" x="0.0" y="0.0" width="601" height="17"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="clockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="VZ7-xH-hJc">
@@ -472,7 +485,7 @@
                                                                         <constraint firstAttribute="height" constant="14" id="ZsY-EU-2nc"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKS-WK-qB4">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKS-WK-qB4">
                                                                     <rect key="frame" x="38" y="0.0" width="563" height="17"/>
                                                                     <animations/>
                                                                     <color key="tintColor" red="0.0" green="0.92549019607843142" blue="0.8901960784313725" alpha="1" colorSpace="calibratedRGB"/>
@@ -485,14 +498,14 @@
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <constraints>
                                                                 <constraint firstItem="SKS-WK-qB4" firstAttribute="leading" secondItem="VZ7-xH-hJc" secondAttribute="trailing" constant="12" id="9k6-Tu-Jhv"/>
-                                                                <constraint firstItem="SKS-WK-qB4" firstAttribute="trailing" secondItem="2qZ-eX-hRF" secondAttribute="trailing" id="A8O-6Q-5E7"/>
+                                                                <constraint firstItem="SKS-WK-qB4" firstAttribute="trailing" secondItem="2qZ-eX-hRF" secondAttribute="trailing" constant="-5" id="A8O-6Q-5E7"/>
                                                                 <constraint firstItem="VZ7-xH-hJc" firstAttribute="leading" secondItem="2qZ-eX-hRF" secondAttribute="leading" constant="12" id="EoB-MZ-fJV"/>
                                                                 <constraint firstItem="SKS-WK-qB4" firstAttribute="top" secondItem="2qZ-eX-hRF" secondAttribute="top" id="kK2-pA-eQS"/>
                                                                 <constraint firstItem="SKS-WK-qB4" firstAttribute="bottom" secondItem="2qZ-eX-hRF" secondAttribute="bottom" id="rAY-g9-aVc"/>
                                                                 <constraint firstItem="VZ7-xH-hJc" firstAttribute="top" secondItem="SKS-WK-qB4" secondAttribute="top" id="uNN-7o-oEW"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c6i-Di-3Pr" userLabel="Venue View">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c6i-Di-3Pr" userLabel="Venue View">
                                                             <rect key="frame" x="0.0" y="0.0" width="601" height="14.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="PEO-0i-6s3">
@@ -503,7 +516,7 @@
                                                                         <constraint firstAttribute="width" constant="12" id="jQ7-Ya-c7Z"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iR9-dF-OU4">
+                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iR9-dF-OU4">
                                                                     <rect key="frame" x="36" y="0.0" width="565" height="14.5"/>
                                                                     <animations/>
                                                                     <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
@@ -516,13 +529,13 @@
                                                             <constraints>
                                                                 <constraint firstItem="PEO-0i-6s3" firstAttribute="leading" secondItem="c6i-Di-3Pr" secondAttribute="leading" constant="12" id="8yC-8E-lBn"/>
                                                                 <constraint firstItem="iR9-dF-OU4" firstAttribute="leading" secondItem="PEO-0i-6s3" secondAttribute="trailing" constant="12" id="SRn-0g-MXd"/>
-                                                                <constraint firstItem="iR9-dF-OU4" firstAttribute="trailing" secondItem="c6i-Di-3Pr" secondAttribute="trailing" id="Ze7-vF-VaU"/>
+                                                                <constraint firstItem="iR9-dF-OU4" firstAttribute="trailing" secondItem="c6i-Di-3Pr" secondAttribute="trailing" constant="-5" id="Ze7-vF-VaU"/>
                                                                 <constraint firstItem="iR9-dF-OU4" firstAttribute="top" secondItem="c6i-Di-3Pr" secondAttribute="top" id="hlU-MF-p6E"/>
                                                                 <constraint firstItem="PEO-0i-6s3" firstAttribute="top" secondItem="iR9-dF-OU4" secondAttribute="top" id="leG-Cd-6JF"/>
                                                                 <constraint firstItem="iR9-dF-OU4" firstAttribute="bottom" secondItem="c6i-Di-3Pr" secondAttribute="bottom" id="vmF-EL-dKl"/>
                                                             </constraints>
                                                         </view>
-                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQO-pn-Gib">
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQO-pn-Gib">
                                                             <rect key="frame" x="0.0" y="0.0" width="601" height="102.5"/>
                                                             <animations/>
                                                             <color key="tintColor" red="0.0" green="0.92549019610000005" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -532,7 +545,7 @@
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                             <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
                                                         </textView>
-                                                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6f-Sg-0t5">
+                                                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6f-Sg-0t5">
                                                             <rect key="frame" x="0.0" y="0.0" width="601" height="300"/>
                                                             <animations/>
                                                             <constraints>
@@ -542,22 +555,6 @@
                                                     </subviews>
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstItem="aIu-5i-zz6" firstAttribute="leading" secondItem="BMm-lK-XN9" secondAttribute="leading" id="1DU-Ae-w1m"/>
-                                                        <constraint firstItem="UQO-pn-Gib" firstAttribute="leading" secondItem="BMm-lK-XN9" secondAttribute="leading" id="5g9-n0-THf"/>
-                                                        <constraint firstItem="aIu-5i-zz6" firstAttribute="trailing" secondItem="BMm-lK-XN9" secondAttribute="trailing" id="DxI-v2-MtF"/>
-                                                        <constraint firstItem="UQO-pn-Gib" firstAttribute="trailing" secondItem="BMm-lK-XN9" secondAttribute="trailing" id="ITC-vv-ad7"/>
-                                                        <constraint firstItem="UkX-bk-rrs" firstAttribute="leading" secondItem="BMm-lK-XN9" secondAttribute="leading" id="OgW-Gg-Xwl"/>
-                                                        <constraint firstItem="2qZ-eX-hRF" firstAttribute="leading" secondItem="BMm-lK-XN9" secondAttribute="leading" id="PLs-c8-HyB"/>
-                                                        <constraint firstItem="f6f-Sg-0t5" firstAttribute="leading" secondItem="BMm-lK-XN9" secondAttribute="leading" id="Wrl-Mg-1iJ"/>
-                                                        <constraint firstItem="c6i-Di-3Pr" firstAttribute="trailing" secondItem="BMm-lK-XN9" secondAttribute="trailing" id="e66-xt-J6L"/>
-                                                        <constraint firstItem="2qZ-eX-hRF" firstAttribute="trailing" secondItem="BMm-lK-XN9" secondAttribute="trailing" id="hFv-8i-6ZH"/>
-                                                        <constraint firstItem="c6i-Di-3Pr" firstAttribute="leading" secondItem="BMm-lK-XN9" secondAttribute="leading" id="ndt-bc-Nas"/>
-                                                        <constraint firstItem="f6f-Sg-0t5" firstAttribute="trailing" secondItem="BMm-lK-XN9" secondAttribute="trailing" id="rWe-Vh-jiA"/>
-                                                        <constraint firstItem="UkX-bk-rrs" firstAttribute="trailing" secondItem="BMm-lK-XN9" secondAttribute="trailing" id="rXh-GY-wsy"/>
-                                                        <constraint firstItem="0nM-UR-teI" firstAttribute="trailing" secondItem="BMm-lK-XN9" secondAttribute="trailing" id="rYJ-Cd-L6K"/>
-                                                        <constraint firstItem="0nM-UR-teI" firstAttribute="leading" secondItem="BMm-lK-XN9" secondAttribute="leading" id="yV1-SU-W2V"/>
-                                                    </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="spacing">
                                                             <real key="value" value="5"/>
