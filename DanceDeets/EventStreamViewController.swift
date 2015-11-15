@@ -244,6 +244,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     }
 
     func backToView() {
-        adBar?.maybeShowInterstitialAd()
+        // Disabled because we decided to focus on event<->event interstitial ads
+        //adBar?.maybeShowInterstitialAd()
     }
 }

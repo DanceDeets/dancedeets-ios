@@ -12,7 +12,8 @@ import GoogleMobileAds
 
 class AdBar : NSObject, GADBannerViewDelegate {
 
-    var controller: EventStreamViewController
+    var controller: UIViewController
+    var eventStreamController: EventStreamViewController?
     var fetchLocation: FetchLocation?
 
     var request: DFPRequest
@@ -23,25 +24,29 @@ class AdBar : NSObject, GADBannerViewDelegate {
     let kInterstitialAdUnitId = "/26589588/mobile-interstitial"
     let kBottomBannerAdUnitId = "/26589588/mobile-bottom-banner"
 
-    init(controller: EventStreamViewController) {
+    init(controller: UIViewController) {
         self.controller = controller
+        self.eventStreamController = controller as? EventStreamViewController
         self.request = DFPRequest()
         self.request.testDevices = [
             kGADSimulatorID,
             "301ebb9f19659a3ebbc88d348b8810b5", // Mike's iPhone
         ]
         self.interstitial = DFPInterstitial(adUnitID: kInterstitialAdUnitId)
+
         super.init()
-        fetchLocation = FetchLocation(completionHandler: locationFoundHandler)
+
+        self.fetchLocation = FetchLocation(completionHandler: locationFoundHandler)
+        setupAccessToken()
     }
 
     func locationFoundHandler(optionalLocation: CLLocation?) {
-        controller.bannerView.adUnitID = kBottomBannerAdUnitId
-        controller.bannerView.rootViewController = controller
-        controller.bannerView.adSize = kGADAdSizeSmartBannerPortrait
+        eventStreamController?.bannerView.adUnitID = kBottomBannerAdUnitId
+        eventStreamController?.bannerView.rootViewController = controller
+        eventStreamController?.bannerView.adSize = kGADAdSizeSmartBannerPortrait
 
+        setLocation = true
         if let location = optionalLocation {
-            setLocation = true
             request.setLocationWithLatitude(
                 CGFloat(location.coordinate.latitude),
                 longitude: CGFloat(location.coordinate.longitude),
@@ -62,20 +67,20 @@ class AdBar : NSObject, GADBannerViewDelegate {
 
     func loadIfTokenComplete() {
         if request.publisherProvidedID != nil && setLocation {
-            controller.bannerView.delegate = self
-            controller.bannerView.loadRequest(request)
+            eventStreamController?.bannerView.delegate = self
+            eventStreamController?.bannerView.loadRequest(request)
             interstitial.loadRequest(request)
         }
     }
 
     func adViewDidReceiveAd(bannerView: GADBannerView!) {
-        controller.bannerViewHeight.constant = 50
+        eventStreamController?.bannerViewHeight.constant = 50
         controller.view.layoutIfNeeded()
     }
 
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
         print("No Ad ", error)
-        controller.bannerViewHeight.constant = 0
+        eventStreamController?.bannerViewHeight.constant = 0
         controller.view.layoutIfNeeded()
     }
 

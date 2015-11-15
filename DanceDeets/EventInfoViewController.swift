@@ -15,6 +15,8 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
     var events:[Event]!
     var startEvent: Event?
 
+    var adBar:AdBar?
+
     @IBOutlet var bottomToolbarItems: UIToolbar!
 
     // MARK: UICollectionViewDataSource
@@ -32,6 +34,8 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         cell.scrollView.contentInset = UIEdgeInsetsMake(topHeightOffset, 0.0, bottomHeightOffset, 0.0)
         cell.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(topHeightOffset, 0.0, bottomHeightOffset, 0.0)
         cell.scrollView.setContentOffset(CGPoint(x:0, y:-topHeightOffset), animated: false)
+
+        adBar?.maybeShowInterstitialAd()
 
         return cell
     }
@@ -97,6 +101,8 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         var titleOptions = [String:AnyObject]()
         titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
         navigationController?.navigationBar.titleTextAttributes = titleOptions
+
+        adBar = AdBar(controller: self)
     }
 
     override func viewDidLayoutSubviews() {
