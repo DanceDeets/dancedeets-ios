@@ -72,9 +72,8 @@ public class Event: NSObject {
                 longitude: self.venue!.latLong!.1
             )
         }
-        let displayAddressComponents:[String?] = [self.venue?.name, self.venue?.street, self.venue?.cityStateZip()]
-        displayAddress = displayAddressComponents.filter({$0 != nil}).map({$0!}).joinWithSeparator("\n")
-        
+        displayAddress = self.venue?.formattedFull() ?? ""
+
         // annotations
         if let annotations = dictionary["annotations"] as? NSDictionary{
             if let danceKeywords = annotations["dance_keywords"] as? [String] {
@@ -218,6 +217,7 @@ public class Event: NSObject {
     
     public class func loadEventsForLocation(location:String, withKeywords keyword:String, completion: (([Event]!, NSError!)->Void)) -> Void
     {
+        CLSLogv("Search Events: \(location): \(keyword ?? "")", getVaList([]))
         AnalyticsUtil.track("Search Events", [
             "Location": location,
             "Keywords": keyword ?? "",

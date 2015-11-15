@@ -22,8 +22,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: Action
     @IBAction func doneButtonTapped(sender: AnyObject) {
-        presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-        })
+        navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: UIViewController    
@@ -35,23 +34,23 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.separatorColor = ColorFactory.tableSeparatorColor()
         tableView.allowsSelectionDuringEditing = true
         tableView.allowsMultipleSelection = false
-        
-        titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.font = FontFactory.navigationTitleFont()
-        
-        doneButton.titleLabel?.textColor = ColorFactory.white50()
-        doneButton.titleLabel?.font = FontFactory.barButtonFont()
+
+        title = NSLocalizedString("SETTINGS", comment: "Page Title")
+
+        var titleOptions = [String:AnyObject]()
+        titleOptions[NSFontAttributeName] = FontFactory.navigationTitleFont()
+        navigationController?.navigationBar.titleTextAttributes = titleOptions
     }
-    
+
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-    
+
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == TOOLS_SECTION) {
@@ -111,8 +110,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.section == TOOLS_SECTION) {
-            if(indexPath.row == 0){
-                if (MFMailComposeViewController.canSendMail()) {
+            if (indexPath.row == 0) {
+                if MFMailComposeViewController.canSendMail() {
                     let composer = MFMailComposeViewController()
                     let recipients:[String] = ["feedback@dancedeets.com"]
                     composer.mailComposeDelegate = self
@@ -123,13 +122,21 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                     let alertView = UIAlertView(title: NSLocalizedString("Cannot send feedback", comment: "Error Title"), message: NSLocalizedString("You cannot send feedback through email, because you have no email accounts set up on this iPhone/iPad.", comment: "Error Description"), delegate: nil, cancelButtonTitle: "OK")
                     alertView.show()
                 }
-            } else if(indexPath.row == 1) {
+            } else if (indexPath.row == 1) {
                 AnalyticsUtil.track("Add Event")
                 let token = FBSDKAccessToken.currentAccessToken()
-                let stringUrl = "http://www.dancedeets.com/events_add?uid="+token.userID+"&access_token="+token.tokenString;
-                print(stringUrl)
-                UIApplication.sharedApplication().openURL(NSURL(string:stringUrl)!);
-            }else if(indexPath.row == 2){
+                let url = NSURLComponents(string: "http://www.dancedeets.com/events_add")!
+                url.queryItems = [
+                    NSURLQueryItem(name: "uid", value: token.userID),
+                    NSURLQueryItem(name: "access_token", value: token.tokenString),
+                ]
+                let realUrl = url.URL!
+                let row = tableView.cellForRowAtIndexPath(indexPath) as? SettingsCell
+
+                let webViewController = WebViewController()
+                webViewController.configure(withUrl: realUrl, andTitle: row?.label?.text ?? "")
+                navigationController!.pushViewController(webViewController, animated: true)
+            } else if (indexPath.row == 2) {
                 AnalyticsUtil.logout()
                 FBSDKAccessToken.setCurrentAccessToken(nil)
                 FBSDKProfile.setCurrentProfile(nil)

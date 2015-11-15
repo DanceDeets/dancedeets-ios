@@ -31,9 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func eventStreamViewController()->EventStreamViewController?
     {
         let rootVC:UINavigationController? =  window?.rootViewController as? UINavigationController
-        if(rootVC?.viewControllers.count > 0){
+        if (rootVC?.viewControllers.count > 0) {
             return rootVC?.viewControllers[0] as? EventStreamViewController
-        }else{
+        } else {
             return nil
         }
     }
@@ -54,6 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics()])
         
         AnalyticsUtil.createInstance()
+
+        window?.tintColor = UIColor.whiteColor()
 
         return true
     }
@@ -84,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
         var returnValue:UIInterfaceOrientationMask = UIInterfaceOrientationMask.Portrait
         if let allowLandscape = allowLandscape {
-            if(allowLandscape){
+            if allowLandscape {
                 returnValue = UIInterfaceOrientationMask.AllButUpsideDown
             }
         }

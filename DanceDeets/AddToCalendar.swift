@@ -62,7 +62,7 @@ public class AddToCalendar: NSObject, UIAlertViewDelegate {
                     } catch {
                         fatalError()
                     }
-                    print(saveError)
+                    CLSNSLogv("AddToCalendar.saveError \(saveError)", getVaList([]))
                 }
             }
         } else if (alertView == permissionAlert) {

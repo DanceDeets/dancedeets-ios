@@ -30,7 +30,7 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
         tableView.separatorInset = UIEdgeInsetsMake(0, 12, 0, 12)
         tableView.layoutMargins = UIEdgeInsetsZero
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 142
+        tableView.estimatedRowHeight = 150
         tableView.backgroundColor = UIColor.clearColor()
         tableView.contentInset = UIEdgeInsetsMake(heightOffset, 0, 0, 0)
         tableView.delegate = self
@@ -69,6 +69,7 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
                     }
                 }
             }
+            // Scroll to top
             tableView.reloadData()
             if (tableView.numberOfSections > 0 && tableView.numberOfRowsInSection(0) > 0) {
                 let indexPath = NSIndexPath(forRow: 0, inSection: 0)

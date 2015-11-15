@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 david.xiang. All rights reserved.
 //
 
-import UIKit
 import CoreLocation
-import MessageUI
-import QuartzCore
 import FBSDKCoreKit
 import GoogleMobileAds
+import UIKit
+import MessageUI
+import QuartzCore
 
 class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate, GADBannerViewDelegate {
     
@@ -68,9 +68,11 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     
     func eventSelected(event: Event, eventImage: UIImage?) {
         // the collection cell of the selected event
-        let destination = storyboard?.instantiateViewControllerWithIdentifier("eventDetailViewController") as! EventDetailViewController
-        destination.initialImage = eventImage
-        destination.event = event
+        let destination = storyboard?.instantiateViewControllerWithIdentifier("eventInfoViewController") as! EventInfoViewController
+        if let display = self.eventDisplay {
+            destination.events = display.events
+            destination.startEvent = event
+        }
 
         navigationController?.pushViewController(destination, animated: true)
     }
@@ -95,17 +97,19 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        checkFaceBookToken()
         if (requiresRefresh) {
             requiresRefresh = false
             fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
         }
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        checkFaceBookToken()
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "settingsSegue" {
             let destination:SettingsViewController? = segue.destinationViewController as? SettingsViewController
@@ -148,6 +152,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
         if let placemark = optionalPlacemark {
+            CLSLogv("EventStreamViewController.addressFoundHandler placemark: \(placemark.description)", getVaList([]))
             let fields = [placemark.locality, placemark.administrativeArea, placemark.country]
             let setFields = fields.filter({ (elem: String?) -> Bool in
                 return elem != nil
@@ -156,12 +161,16 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             })
             let fullText = setFields.joinWithSeparator(", ")
             self.locationSearchField.text = fullText
+            CLSLogv("EventStreamViewController.addressFoundHandler locationSearchField: \(self.locationSearchField.text ?? "Unknown")", getVaList([]))
+            CLSLogv("EventStreamViewController.addressFoundHandler keywordSearchField: \(self.keywordSearchField.text ?? "Unknown")", getVaList([]))
             Event.loadEventsForLocation(self.locationSearchField.text!, withKeywords:self.keywordSearchField.text!, completion:self.setupEventsDisplay)
         } else {
             if let location = NSUserDefaults.standardUserDefaults().stringForKey(USER_SEARCH_LOCATION_KEY) {
+                CLSLogv("addressFoundHandler savedLocation: \(location)", getVaList([]))
                 self.locationSearchField.text = location
                 refreshEvents()
             } else {
+                CLSLogv("addressFoundHandler No Location", getVaList([]))
                 setTitle(NSLocalizedString("RETRY", comment: "Title"), NSLocalizedString("Couldn't detect your location", comment: "GPS Failure"))
                 locationFailureAlert.show()
             }
@@ -233,5 +242,9 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         }
         adBar?.setupAccessToken()
     }
-    
+
+    func backToView() {
+        // Disabled because we decided to focus on event<->event interstitial ads
+        //adBar?.maybeShowInterstitialAd()
+    }
 }
