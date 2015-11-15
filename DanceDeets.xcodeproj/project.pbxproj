@@ -41,11 +41,11 @@
 		1D95547F1BB3C84400241F38 /* FacebookRsvpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D95547E1BB3C84400241F38 /* FacebookRsvpManager.swift */; };
 		1D9554811BB3CA0300241F38 /* AddToCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554801BB3CA0300241F38 /* AddToCalendar.swift */; };
 		1D9554831BB3E0F700241F38 /* AnalyticsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554821BB3E0F700241F38 /* AnalyticsUtil.swift */; };
-		1D9554851BB3EEBA00241F38 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554841BB3EEBA00241F38 /* Venue.swift */; };
+		1D9E3D2F1BF88865001F4D45 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9E3D2E1BF88865001F4D45 /* Venue.swift */; };
+		1D9E3D311BF8886A001F4D45 /* EventInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9E3D301BF8886A001F4D45 /* EventInfoViewController.swift */; };
 		1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA4566A1AD226B900368186 /* UIViewExtensions.swift */; };
 		1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA57ACD1BAE3D4500370519 /* MapManager.swift */; };
 		1DA6E1211BF2956A00518EAF /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA6E1201BF2956A00518EAF /* WebViewController.swift */; };
-		1DA6E1231BF48E2B00518EAF /* EventInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA6E1221BF48E2B00518EAF /* EventInfoViewController.swift */; };
 		1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49EF1A17E4D70002BBDD /* Utilities.swift */; };
 		1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F11A17F0310002BBDD /* Extensions.swift */; };
 		1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */; };
@@ -134,14 +134,14 @@
 		1D95547E1BB3C84400241F38 /* FacebookRsvpManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookRsvpManager.swift; sourceTree = "<group>"; };
 		1D9554801BB3CA0300241F38 /* AddToCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToCalendar.swift; sourceTree = "<group>"; };
 		1D9554821BB3E0F700241F38 /* AnalyticsUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsUtil.swift; sourceTree = "<group>"; };
-		1D9554841BB3EEBA00241F38 /* Venue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Venue.swift; path = ../Venue.swift; sourceTree = "<group>"; };
+		1D9E3D2E1BF88865001F4D45 /* Venue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
+		1D9E3D301BF8886A001F4D45 /* EventInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventInfoViewController.swift; sourceTree = "<group>"; };
 		1DA4566A1AD226B900368186 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		1DA57ACD1BAE3D4500370519 /* MapManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		1DA6E11D1BF275E800518EAF /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "DanceDeets/zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1DA6E11E1BF275E800518EAF /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1DA6E11F1BF275E800518EAF /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		1DA6E1201BF2956A00518EAF /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
-		1DA6E1221BF48E2B00518EAF /* EventInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventInfoViewController.swift; path = ../EventInfoViewController.swift; sourceTree = "<group>"; };
 		1DAB49EF1A17E4D70002BBDD /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		1DAB49F11A17F0310002BBDD /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1DAB49F71A1815DD0002BBDD /* ColorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFactory.swift; sourceTree = "<group>"; };
@@ -332,7 +332,7 @@
 		1D8A063D19CDE5D4004607B6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1D9554841BB3EEBA00241F38 /* Venue.swift */,
+				1D9E3D2E1BF88865001F4D45 /* Venue.swift */,
 				1D8A063F19CDE605004607B6 /* Event.swift */,
 				1D15802A1A05695400658A1D /* EventAdmin.swift */,
 			);
@@ -342,7 +342,7 @@
 		1D8A063E19CDE5D9004607B6 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				1DA6E1221BF48E2B00518EAF /* EventInfoViewController.swift */,
+				1D9E3D301BF8886A001F4D45 /* EventInfoViewController.swift */,
 				1DFB3B4F19FF500E00CF4A72 /* EventDetailCell.swift */,
 				1D08923B1A266D7A00A9EAC4 /* EventStreamViewController.swift */,
 				1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */,
@@ -572,11 +572,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D08923C1A266D7A00A9EAC4 /* EventStreamViewController.swift in Sources */,
+				1D9E3D2F1BF88865001F4D45 /* Venue.swift in Sources */,
 				1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */,
 				1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */,
 				1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */,
 				1D4A22311BB8692400CAD7E3 /* UrlUtil.swift in Sources */,
-				1DA6E1231BF48E2B00518EAF /* EventInfoViewController.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1D20FFC51BC7BC4E00CB21D3 /* AdBar.swift in Sources */,
 				1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */,
@@ -591,9 +591,9 @@
 				1DBA3F691A4BAA7600842486 /* SettingsCell.swift in Sources */,
 				1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */,
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
-				1D9554851BB3EEBA00241F38 /* Venue.swift in Sources */,
 				1DEE8EA31BB78C5B00D1DA15 /* SearchBar.swift in Sources */,
 				1D015B491AD21E0500DBC905 /* EventListItemTableViewCell.swift in Sources */,
+				1D9E3D311BF8886A001F4D45 /* EventInfoViewController.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,
 				1D5888FA1BB75B2900E70626 /* EventDisplay.swift in Sources */,
 				1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */,
