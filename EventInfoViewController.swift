@@ -83,7 +83,8 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         // collection view
         let flowLayout:UICollectionViewFlowLayout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.sectionInset = UIEdgeInsetsZero
-        flowLayout.itemSize = CGSizeMake(view.frame.size.width,view.frame.size.height)
+        // Don't access view.frame directly: http://ashfurrow.com/blog/you-probably-dont-understand-frames-and-bounds/
+        flowLayout.itemSize = CGSizeMake(CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))
         flowLayout.minimumLineSpacing = 0.0
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         // We don't want this done at the table level, but instead done within each cell,
