@@ -28,7 +28,6 @@
 		1D4A22311BB8692400CAD7E3 /* UrlUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A22301BB8692400CAD7E3 /* UrlUtil.swift */; };
 		1D5888FA1BB75B2900E70626 /* EventDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888F91BB75B2900E70626 /* EventDisplay.swift */; };
 		1D5888FD1BB7765C00E70626 /* FetchAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5888FC1BB7765C00E70626 /* FetchAddress.swift */; };
-		1D62C2F31BB525D30023F199 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D62C2F21BB525D30023F199 /* Test.swift */; };
 		1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */; };
 		1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */; };
 		1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */; };
@@ -118,7 +117,6 @@
 		1D4A22301BB8692400CAD7E3 /* UrlUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlUtil.swift; sourceTree = "<group>"; };
 		1D5888F91BB75B2900E70626 /* EventDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDisplay.swift; sourceTree = "<group>"; };
 		1D5888FC1BB7765C00E70626 /* FetchAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAddress.swift; sourceTree = "<group>"; };
-		1D62C2F21BB525D30023F199 /* Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		1D6C3EA41A4A21B80081A43C /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
 		1D8856B719CDE510005FFDB2 /* DanceDeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceDeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856BB19CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -268,7 +266,6 @@
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
-				1D62C2F21BB525D30023F199 /* Test.swift */,
 				1D8856B919CDE510005FFDB2 /* DanceDeets */,
 				1D8856CF19CDE510005FFDB2 /* DanceDeetsTests */,
 				1D8856B819CDE510005FFDB2 /* Products */,
@@ -594,7 +591,6 @@
 				1DBA3F691A4BAA7600842486 /* SettingsCell.swift in Sources */,
 				1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */,
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
-				1D62C2F31BB525D30023F199 /* Test.swift in Sources */,
 				1D9554851BB3EEBA00241F38 /* Venue.swift in Sources */,
 				1DEE8EA31BB78C5B00D1DA15 /* SearchBar.swift in Sources */,
 				1D015B491AD21E0500DBC905 /* EventListItemTableViewCell.swift in Sources */,
