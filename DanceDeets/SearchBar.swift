@@ -252,7 +252,13 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         fetchAddress = nil
         if let placemark = optionalPlacemark {
             CLSNSLogv("addressFoundHandler with Placemark \(placemark): \(placemark.locality), \(placemark.administrativeArea), \(placemark.country)", getVaList([]))
-            let fullText = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
+            let fields = [placemark.locality, placemark.administrativeArea, placemark.country]
+            let setFields = fields.filter({ (elem: String?) -> Bool in
+                return elem != nil
+            }).map({ (elem: String?) -> String in
+                return elem!
+            })
+            let fullText = setFields.joinWithSeparator(", ")
             self.controller.locationSearchField.text = fullText
             textFieldShouldReturn(controller.locationSearchField)
         } else {
