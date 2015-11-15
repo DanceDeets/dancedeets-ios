@@ -9,7 +9,7 @@
 import Foundation
 
 
-class FullScreenImageViewController : UIViewController, UIScrollViewDelegate{
+class FullScreenImageViewController : UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
@@ -25,7 +25,15 @@ class FullScreenImageViewController : UIViewController, UIScrollViewDelegate{
         if event != nil {
             AnalyticsUtil.track("View Flyer", withEvent: event!)
         }
-        
+
+        let heightPadding = max(0, (view.frame.height - image!.size.height)/2)
+        let widthPadding = max(0, (view.frame.width - image!.size.width)/2)
+        scrollView.contentInset = UIEdgeInsets(top: heightPadding, left: widthPadding, bottom: heightPadding, right: widthPadding)
+
+        let scale = min(view.frame.width / imageView.frame.width, view.frame.height / imageView.frame.height)
+        scrollView.minimumZoomScale = scale
+        scrollView.zoomScale = scale
+
         tapGesture = UITapGestureRecognizer(target: self, action: "tapped")
         scrollView.addGestureRecognizer(tapGesture!)
     }
@@ -34,7 +42,7 @@ class FullScreenImageViewController : UIViewController, UIScrollViewDelegate{
         return true
     }
     
-    func tapped(){
+    func tapped() {
         AppDelegate.sharedInstance().allowLandscape = false
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }

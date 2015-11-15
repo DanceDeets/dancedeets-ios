@@ -656,10 +656,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="5" translatesAutoresizingMaskIntoConstraints="NO" id="ooR-1O-HFi">
-                                <rect key="frame" x="20" y="0.0" width="560" height="600"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" minimumZoomScale="0.5" maximumZoomScale="5" translatesAutoresizingMaskIntoConstraints="NO" id="ooR-1O-HFi">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sa8-dO-dn1">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sa8-dO-dn1">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -668,47 +668,21 @@
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="sa8-dO-dn1" secondAttribute="trailing" id="1mO-9l-1rh"/>
+                                    <constraint firstItem="sa8-dO-dn1" firstAttribute="bottom" secondItem="ooR-1O-HFi" secondAttribute="bottom" id="0J4-7o-2ZG"/>
                                     <constraint firstItem="sa8-dO-dn1" firstAttribute="top" secondItem="ooR-1O-HFi" secondAttribute="top" id="1rG-wC-u8V"/>
-                                    <constraint firstItem="sa8-dO-dn1" firstAttribute="leading" secondItem="ooR-1O-HFi" secondAttribute="leading" id="OND-HN-cCE"/>
-                                    <constraint firstAttribute="bottom" secondItem="sa8-dO-dn1" secondAttribute="bottom" id="WwG-cC-SrA"/>
-                                    <constraint firstAttribute="centerX" secondItem="sa8-dO-dn1" secondAttribute="centerX" id="ePh-8X-IrL"/>
-                                    <constraint firstAttribute="bottom" secondItem="sa8-dO-dn1" secondAttribute="bottom" id="nmW-gD-3Tz"/>
-                                    <constraint firstItem="sa8-dO-dn1" firstAttribute="top" secondItem="ooR-1O-HFi" secondAttribute="top" constant="20" id="sf6-ry-sbS"/>
-                                    <constraint firstItem="sa8-dO-dn1" firstAttribute="leading" secondItem="ooR-1O-HFi" secondAttribute="leading" constant="20" id="v69-Qg-Xcp"/>
-                                    <constraint firstAttribute="trailing" secondItem="sa8-dO-dn1" secondAttribute="trailing" constant="-36" id="wES-8v-NIk"/>
-                                    <constraint firstAttribute="centerY" secondItem="sa8-dO-dn1" secondAttribute="centerY" id="wjX-mo-Rbb"/>
+                                    <constraint firstItem="sa8-dO-dn1" firstAttribute="leading" secondItem="ooR-1O-HFi" secondAttribute="leading" id="7Y7-VB-bqH"/>
+                                    <constraint firstItem="sa8-dO-dn1" firstAttribute="trailing" secondItem="ooR-1O-HFi" secondAttribute="trailing" id="Aky-AI-OMA"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="WwG-cC-SrA"/>
-                                        <exclude reference="ePh-8X-IrL"/>
-                                        <exclude reference="sf6-ry-sbS"/>
-                                        <exclude reference="v69-Qg-Xcp"/>
-                                        <exclude reference="wES-8v-NIk"/>
-                                        <exclude reference="wjX-mo-Rbb"/>
-                                    </mask>
-                                </variation>
                             </scrollView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="sa8-dO-dn1" secondAttribute="width" id="0kR-Qv-ey3"/>
-                            <constraint firstItem="ooR-1O-HFi" firstAttribute="bottom" secondItem="Lzw-TI-i0b" secondAttribute="bottomMargin" id="5Qm-kV-TnZ"/>
-                            <constraint firstItem="ooR-1O-HFi" firstAttribute="trailing" secondItem="Lzw-TI-i0b" secondAttribute="trailingMargin" id="BD6-PB-9G3"/>
-                            <constraint firstItem="ooR-1O-HFi" firstAttribute="leading" secondItem="Lzw-TI-i0b" secondAttribute="leadingMargin" id="BED-3G-3LT"/>
-                            <constraint firstItem="ooR-1O-HFi" firstAttribute="top" secondItem="Lzw-TI-i0b" secondAttribute="topMargin" id="KCO-GJ-E0E"/>
-                            <constraint firstAttribute="height" secondItem="sa8-dO-dn1" secondAttribute="height" id="a08-54-ogT"/>
-                            <constraint firstAttribute="width" secondItem="sa8-dO-dn1" secondAttribute="width" id="fa9-c9-oxg"/>
-                            <constraint firstAttribute="height" secondItem="sa8-dO-dn1" secondAttribute="height" id="vGv-Uf-cpB"/>
+                            <constraint firstItem="ooR-1O-HFi" firstAttribute="bottom" secondItem="Lzw-TI-i0b" secondAttribute="bottom" id="5Qm-kV-TnZ"/>
+                            <constraint firstItem="ooR-1O-HFi" firstAttribute="trailing" secondItem="Lzw-TI-i0b" secondAttribute="trailing" id="BD6-PB-9G3"/>
+                            <constraint firstItem="ooR-1O-HFi" firstAttribute="leading" secondItem="Lzw-TI-i0b" secondAttribute="leading" id="BED-3G-3LT"/>
+                            <constraint firstItem="ooR-1O-HFi" firstAttribute="top" secondItem="Lzw-TI-i0b" secondAttribute="top" id="KCO-GJ-E0E"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="0kR-Qv-ey3"/>
-                                <exclude reference="vGv-Uf-cpB"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="sa8-dO-dn1" id="u2x-nZ-eFJ"/>
