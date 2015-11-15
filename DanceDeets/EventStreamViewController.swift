@@ -242,5 +242,8 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         }
         adBar?.setupAccessToken()
     }
-    
+
+    func backToView() {
+        adBar?.maybeShowInterstitialAd()
+    }
 }

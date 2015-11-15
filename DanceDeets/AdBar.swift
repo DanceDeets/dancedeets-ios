@@ -18,19 +18,25 @@ class AdBar : NSObject, GADBannerViewDelegate {
     var request: DFPRequest
     var setLocation: Bool = false
 
+    var interstitial: DFPInterstitial
+
+    let kInterstitialAdUnitId = "/26589588/mobile-interstitial"
+    let kBottomBannerAdUnitId = "/26589588/mobile-bottom-banner"
+
     init(controller: EventStreamViewController) {
         self.controller = controller
         self.request = DFPRequest()
-        request.testDevices = [
+        self.request.testDevices = [
             kGADSimulatorID,
             "301ebb9f19659a3ebbc88d348b8810b5", // Mike's iPhone
         ]
+        self.interstitial = DFPInterstitial(adUnitID: kInterstitialAdUnitId)
         super.init()
         fetchLocation = FetchLocation(completionHandler: locationFoundHandler)
     }
 
     func locationFoundHandler(optionalLocation: CLLocation?) {
-        controller.bannerView.adUnitID = "/26589588/mobile-bottom-banner"
+        controller.bannerView.adUnitID = kBottomBannerAdUnitId
         controller.bannerView.rootViewController = controller
         controller.bannerView.adSize = kGADAdSizeSmartBannerPortrait
 
@@ -58,6 +64,7 @@ class AdBar : NSObject, GADBannerViewDelegate {
         if request.publisherProvidedID != nil && setLocation {
             controller.bannerView.delegate = self
             controller.bannerView.loadRequest(request)
+            interstitial.loadRequest(request)
         }
     }
 
@@ -70,5 +77,11 @@ class AdBar : NSObject, GADBannerViewDelegate {
         print("No Ad ", error)
         controller.bannerViewHeight.constant = 0
         controller.view.layoutIfNeeded()
+    }
+
+    func maybeShowInterstitialAd() {
+        if interstitial.isReady {
+            interstitial.presentFromRootViewController(controller)
+        }
     }
 }
