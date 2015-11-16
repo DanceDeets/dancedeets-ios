@@ -16,8 +16,8 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
     var eventSelectedHandler: EventSelectedHandler
 
     var events:[Event] = []
-    var eventsBySection:NSMutableDictionary = NSMutableDictionary()
-    var sectionNames:NSMutableArray = NSMutableArray()
+    var eventsBySection:[String:[Event]] = [:]
+    var sectionNames:[String] = []
     
     init(tableView: UITableView, heightOffset: CGFloat, andHandler handler: EventSelectedHandler) {
         self.tableView = tableView
@@ -40,8 +40,8 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
     func setup(events: [Event]!, error: NSError!) {
         // reset event models
         self.events = []
-        eventsBySection.removeAllObjects()
-        sectionNames.removeAllObjects()
+        eventsBySection.removeAll()
+        sectionNames.removeAll()
         
         // check response
         if (events != nil && events.count > 0) {
@@ -56,16 +56,14 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
                     dateFormatter.dateFormat = "EEE MMM dd"
                     let sectionName = dateFormatter.stringFromDate(event.startTime!)
                     // each section has an array of events
-                    var eventList:NSMutableArray? = eventsBySection[sectionName] as? NSMutableArray
-                    if (eventList == nil) {
-                        eventList = NSMutableArray()
-                        eventsBySection[sectionName] = eventList
+                    if eventsBySection.indexForKey(sectionName) == nil {
+                        eventsBySection[sectionName] = []
                     }
-                    eventList?.addObject(event)
-                    
+                    eventsBySection[sectionName]!.append(event)
+
                     // keep track of active sections for section headers
-                    if (!sectionNames.containsObject(sectionName)) {
-                        sectionNames.addObject(sectionName)
+                    if sectionNames.indexOf(sectionName) == nil {
+                        sectionNames.append(sectionName)
                     }
                 }
             }
@@ -86,9 +84,9 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionName = sectionNames[section] as! String
-        let events = eventsBySection[sectionName] as! NSArray
-        return events.count
+        let sectionName = sectionNames[section]
+        let events = eventsBySection[sectionName]
+        return events?.count ?? 0
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -105,7 +103,7 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
         headerView.backgroundColor = UIColor.clearColor()
         headerView.addDarkBlurOverlay()
         let headerLabel = UILabel(frame: CGRectZero)
-        let sectionName = sectionNames[section] as! String
+        let sectionName = sectionNames[section]
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(headerLabel)
         headerLabel.constrainLeftToSuperView(13)
@@ -117,9 +115,9 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let sectionName = sectionNames[indexPath.section] as! String
-        let sectionEvents = eventsBySection[sectionName] as! [Event]
-        
+        let sectionName = sectionNames[indexPath.section]
+        let sectionEvents = eventsBySection[sectionName]!
+
         let cell = tableView.dequeueReusableCellWithIdentifier("eventListTableViewCell", forIndexPath: indexPath) as! EventListItemTableViewCell
         let event:Event = sectionEvents[indexPath.row]
         cell.updateForEvent(event)
@@ -146,14 +144,13 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let sectionName = sectionNames[indexPath.section] as? String {
-            if let sectionEvents = eventsBySection[sectionName] as? [Event] {
-                if (sectionEvents.count > indexPath.row) {
-                    let event = sectionEvents[indexPath.row]
-                    let eventCell = tableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
-                    
-                    eventSelectedHandler(event, withImage: eventCell.eventImageView.image)
-                }
+        let sectionName = sectionNames[indexPath.section]
+        if let sectionEvents = eventsBySection[sectionName] {
+            if (sectionEvents.count > indexPath.row) {
+                let event = sectionEvents[indexPath.row]
+                let eventCell = tableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
+                
+                eventSelectedHandler(event, withImage: eventCell.eventImageView.image)
             }
         }
     }
