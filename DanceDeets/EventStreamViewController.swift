@@ -70,11 +70,17 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         // the collection cell of the selected event
         let destination = storyboard?.instantiateViewControllerWithIdentifier("eventInfoViewController") as! EventInfoViewController
         if let display = self.eventDisplay {
-            destination.events = display.events
+            destination.events = display.results?.events
             destination.startEvent = event
         }
 
         navigationController?.pushViewController(destination, animated: true)
+    }
+
+    func oneboxSelected(oneboxLink: OneboxLink) {
+        let webViewController = WebViewController()
+        webViewController.configure(withUrl: NSURL(string: oneboxLink.url!)!, andTitle: oneboxLink.title!)
+        navigationController!.pushViewController(webViewController, animated: true)
     }
 
     // MARK: UIViewController
@@ -83,7 +89,8 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         eventDisplay = EventDisplay(
             tableView: eventListTableView,
             heightOffset: CUSTOM_NAVIGATION_BAR_HEIGHT,
-            andHandler: eventSelected)
+            andEventHandler: eventSelected,
+            andOneboxHandler: oneboxSelected)
         searchBar = SearchBar(controller: self, searchHandler: refreshEvents)
 
         adBar = AdBar(controller: self)
@@ -193,20 +200,20 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         navigationTitle.attributedText = finalTitle
     }
 
-    func setupEventsDisplay(events: [Event]!, error: NSError!) {
+    func setupEventsDisplay(results: SearchResults?, error: NSError?) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             if (error != nil) {
                 let errorAlert = UIAlertView(title: NSLocalizedString("No Connection", comment: "Error Title"), message: NSLocalizedString("There might have been a network problem. Check your connection", comment: "Error Description"), delegate: nil, cancelButtonTitle: "OK")
                 errorAlert.show()
                 self.setTitle("ERROR", "Try again")
-            } else if(events.count == 0) {
+            } else if(results?.events.count == 0) {
                 let noEventAlert = UIAlertView(title: NSLocalizedString("No Results", comment: "Error Title"), message: NSLocalizedString("There doesn't seem to be any events in that area right now. Try expanding your search criteria?", comment: "Error Description"), delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
                 self.setTitle(self.locationSearchField.text!, "No Events")
             } else {
-                self.setTitle(self.locationSearchField.text!, "\(self.keywordSearchField.text!) | \(events.count) Events")
+                self.setTitle(self.locationSearchField.text!, "\(self.keywordSearchField.text!) | \(results!.events.count) Events")
             }
-            self.eventDisplay!.setup(events, error: error)
+            self.eventDisplay!.setup(results, error: error)
         })
     }
 

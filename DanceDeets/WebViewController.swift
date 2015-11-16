@@ -13,6 +13,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
 
     var webView: WKWebView!
     var url: NSURL?
+    var initialLoadUrl: NSURL?
 
     func configure(withUrl startUrl: NSURL, andTitle startTitle: String) {
         url = startUrl
@@ -34,12 +35,16 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         if url != nil {
             // Append &webview=1 to our URLs
             let modUrl = NSURLComponents(string: url!.absoluteString)!
+            if modUrl.queryItems == nil {
+                modUrl.queryItems = []
+            }
             modUrl.queryItems!.append(NSURLQueryItem(name: "webview", value: "1"))
             if let newUrl = modUrl.URL {
+                print(newUrl)
+                initialLoadUrl = newUrl
                 webView.loadRequest(NSURLRequest(URL: newUrl))
             }
         }
-        // TODO: If we want to use http, we probably need to disable app transport security
         // TODO: set up a navigation controller, that lets us go back?
     }
 
@@ -52,7 +57,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         }
 
         if let destUrl = navigationAction.request.URL {
-            if destUrl.host == "www.dancedeets.com" {
+            if destUrl.host == "www.dancedeets.com" || destUrl == initialLoadUrl {
                 decisionHandler(WKNavigationActionPolicy.Allow)
                 return
             }

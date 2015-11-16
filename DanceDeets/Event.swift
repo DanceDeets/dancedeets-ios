@@ -215,21 +215,18 @@ public class Event: NSObject {
         
     }
     
-    public class func loadEventsForLocation(location:String, withKeywords keyword:String, completion: (([Event]!, NSError!)->Void)) -> Void
+    public class func loadEventsForLocation(location:String, withKeywords keyword:String, completion: ((SearchResults?, NSError?)->Void)) -> Void
     {
         CLSLogv("Search Events: \(location): \(keyword ?? "")", getVaList([]))
         AnalyticsUtil.track("Search Events", [
             "Location": location,
             "Keywords": keyword ?? "",
             ])
-        loadEventsFromUrl(ServerInterface.sharedInstance.getEventSearchUrl(location, eventKeyword:keyword), completion:completion)
-    }
-    
-    public class func loadEventsFromUrl(url:NSURL, completion: (([Event]!, NSError!)->Void)) -> Void
-    {
+        let url = ServerInterface.sharedInstance.getEventSearchUrl(location, eventKeyword:keyword)
+
         let task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
             if (error != nil) {
-                completion([], error)
+                completion(nil, error)
             } else {
                 var json:NSDictionary?
                 do {
@@ -237,24 +234,11 @@ public class Event: NSObject {
                 } catch {
                     json = nil
                 }
-                if (json == nil) {
-                    completion([], error)
-                }
-                else {
-                    var eventList:[Event] = []
-                    if (json != nil) {
-                        if let results = json!["results"] as? NSArray {
-                            for item in results{
-                                if let eventDictionary = item as? NSDictionary {
-                                    let newEvent:Event? = Event(dictionary: eventDictionary)
-                                    if newEvent != nil {
-                                        eventList.append(newEvent!)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    completion(eventList, nil)
+                if (json != nil) {
+                    let results = SearchResults(json: json!)
+                    completion(results, nil)
+                } else {
+                    completion(nil, error)
                 }
             }
         })

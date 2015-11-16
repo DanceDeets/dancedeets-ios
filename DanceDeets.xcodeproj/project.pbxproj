@@ -43,6 +43,9 @@
 		1D9554831BB3E0F700241F38 /* AnalyticsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9554821BB3E0F700241F38 /* AnalyticsUtil.swift */; };
 		1D9E3D2F1BF88865001F4D45 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9E3D2E1BF88865001F4D45 /* Venue.swift */; };
 		1D9E3D311BF8886A001F4D45 /* EventInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9E3D301BF8886A001F4D45 /* EventInfoViewController.swift */; };
+		1D9E3D331BFA8A47001F4D45 /* OneboxLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9E3D321BFA8A47001F4D45 /* OneboxLink.swift */; };
+		1D9E3D351BFA8BD7001F4D45 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9E3D341BFA8BD7001F4D45 /* SearchResults.swift */; };
+		1D9E3D371BFA8E9F001F4D45 /* OneboxListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9E3D361BFA8E9F001F4D45 /* OneboxListItemTableViewCell.swift */; };
 		1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA4566A1AD226B900368186 /* UIViewExtensions.swift */; };
 		1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA57ACD1BAE3D4500370519 /* MapManager.swift */; };
 		1DA6E1211BF2956A00518EAF /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA6E1201BF2956A00518EAF /* WebViewController.swift */; };
@@ -136,6 +139,9 @@
 		1D9554821BB3E0F700241F38 /* AnalyticsUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsUtil.swift; sourceTree = "<group>"; };
 		1D9E3D2E1BF88865001F4D45 /* Venue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
 		1D9E3D301BF8886A001F4D45 /* EventInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventInfoViewController.swift; sourceTree = "<group>"; };
+		1D9E3D321BFA8A47001F4D45 /* OneboxLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneboxLink.swift; sourceTree = "<group>"; };
+		1D9E3D341BFA8BD7001F4D45 /* SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
+		1D9E3D361BFA8E9F001F4D45 /* OneboxListItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneboxListItemTableViewCell.swift; sourceTree = "<group>"; };
 		1DA4566A1AD226B900368186 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		1DA57ACD1BAE3D4500370519 /* MapManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		1DA6E11D1BF275E800518EAF /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "DanceDeets/zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -236,6 +242,7 @@
 			children = (
 				1D015B481AD21E0500DBC905 /* EventListItemTableViewCell.swift */,
 				1DBA3F681A4BAA7600842486 /* SettingsCell.swift */,
+				1D9E3D361BFA8E9F001F4D45 /* OneboxListItemTableViewCell.swift */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -335,6 +342,8 @@
 				1D9E3D2E1BF88865001F4D45 /* Venue.swift */,
 				1D8A063F19CDE605004607B6 /* Event.swift */,
 				1D15802A1A05695400658A1D /* EventAdmin.swift */,
+				1D9E3D321BFA8A47001F4D45 /* OneboxLink.swift */,
+				1D9E3D341BFA8BD7001F4D45 /* SearchResults.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -575,8 +584,10 @@
 				1D9E3D2F1BF88865001F4D45 /* Venue.swift in Sources */,
 				1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */,
 				1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */,
+				1D9E3D331BFA8A47001F4D45 /* OneboxLink.swift in Sources */,
 				1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */,
 				1D4A22311BB8692400CAD7E3 /* UrlUtil.swift in Sources */,
+				1D9E3D371BFA8E9F001F4D45 /* OneboxListItemTableViewCell.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1D20FFC51BC7BC4E00CB21D3 /* AdBar.swift in Sources */,
 				1DAB49F01A17E4D70002BBDD /* Utilities.swift in Sources */,
@@ -592,6 +603,7 @@
 				1D6C3EA51A4A21B80081A43C /* FullScreenImageViewController.swift in Sources */,
 				1D15802B1A05695400658A1D /* EventAdmin.swift in Sources */,
 				1DEE8EA31BB78C5B00D1DA15 /* SearchBar.swift in Sources */,
+				1D9E3D351BFA8BD7001F4D45 /* SearchResults.swift in Sources */,
 				1D015B491AD21E0500DBC905 /* EventListItemTableViewCell.swift in Sources */,
 				1D9E3D311BF8886A001F4D45 /* EventInfoViewController.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,

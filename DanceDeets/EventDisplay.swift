@@ -13,15 +13,20 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
     weak var tableView: UITableView!
     
     typealias EventSelectedHandler = (Event, withImage: UIImage?) -> Void
+    typealias OneboxSelectedHandler = (OneboxLink) -> Void
+    var oneboxSelectedHandler: OneboxSelectedHandler
     var eventSelectedHandler: EventSelectedHandler
 
-    var events:[Event] = []
+    var results:SearchResults?
     var eventsBySection:[String:[Event]] = [:]
     var sectionNames:[String] = []
+
+    let oneboxTitle = "Special Links"
     
-    init(tableView: UITableView, heightOffset: CGFloat, andHandler handler: EventSelectedHandler) {
+    init(tableView: UITableView, heightOffset: CGFloat, andEventHandler eventHandler: EventSelectedHandler, andOneboxHandler oneboxHandler: OneboxSelectedHandler) {
         self.tableView = tableView
-        self.eventSelectedHandler = handler
+        self.eventSelectedHandler = eventHandler
+        self.oneboxSelectedHandler = oneboxHandler
 
         super.init()
 
@@ -37,19 +42,23 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
         tableView.dataSource = self
     }
 
-    func setup(events: [Event]!, error: NSError!) {
+    func setup(results: SearchResults?, error: NSError?) {
         // reset event models
-        self.events = []
         eventsBySection.removeAll()
         sectionNames.removeAll()
-        
+
+        // data source for collection view
+        self.results = results
+
+        if results?.oneboxLinks.count > 0 {
+            sectionNames.append(oneboxTitle)
+            eventsBySection[oneboxTitle] = []
+        }
+
         // check response
-        if (events != nil && events.count > 0) {
-            // data source for collection view
-            self.events = events
-            
+        if results?.events.count > 0 {
             // data source for list view -> group events into sections by month (or day?)
-            for event in events {
+            for event in results!.events {
                 if event.startTime != nil {
                     // month from event's start time as a string
                     let dateFormatter = NSDateFormatter()
@@ -85,8 +94,12 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionName = sectionNames[section]
-        let events = eventsBySection[sectionName]
-        return events?.count ?? 0
+        if sectionName == oneboxTitle {
+            return results?.oneboxLinks.count ?? 0
+        } else {
+            let events = eventsBySection[sectionName]
+            return events?.count ?? 0
+        }
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -116,6 +129,12 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let sectionName = sectionNames[indexPath.section]
+        if sectionName == oneboxTitle {
+            let cell = tableView.dequeueReusableCellWithIdentifier("oneboxListTableViewCell", forIndexPath: indexPath) as! OneboxListItemTableViewCell
+            cell.updateForOneboxLink(results!.oneboxLinks[indexPath.row])
+            return cell
+        }
+
         let sectionEvents = eventsBySection[sectionName]!
 
         let cell = tableView.dequeueReusableCellWithIdentifier("eventListTableViewCell", forIndexPath: indexPath) as! EventListItemTableViewCell
@@ -145,12 +164,17 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sectionName = sectionNames[indexPath.section]
-        if let sectionEvents = eventsBySection[sectionName] {
-            if (sectionEvents.count > indexPath.row) {
-                let event = sectionEvents[indexPath.row]
-                let eventCell = tableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
-                
-                eventSelectedHandler(event, withImage: eventCell.eventImageView.image)
+        if sectionName == oneboxTitle {
+            let oneboxLink = results?.oneboxLinks[indexPath.row]
+            oneboxSelectedHandler(oneboxLink!)
+        } else {
+            if let sectionEvents = eventsBySection[sectionName] {
+                if (sectionEvents.count > indexPath.row) {
+                    let event = sectionEvents[indexPath.row]
+                    let eventCell = tableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
+                    
+                    eventSelectedHandler(event, withImage: eventCell.eventImageView.image)
+                }
             }
         }
     }
