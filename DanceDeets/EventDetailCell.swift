@@ -51,7 +51,7 @@ class EventDetailCell: UICollectionViewCell {
         // TODO: why is setLineHeight and textContainerInset both required to make this fit correctly?
         attributedDescription.setLineHeight(18)
         attributedDescription.setFont(eventDescriptionLabel.font!)
-        attributedDescription.setColor(eventDescriptionLabel.textColor!)
+        attributedDescription.setColor(UIColor.whiteColor())
         eventDescriptionLabel.attributedText = attributedDescription
 
         let mapGesture = UITapGestureRecognizer(target: self, action: "mapTapped:")
