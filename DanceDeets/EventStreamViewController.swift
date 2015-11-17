@@ -78,6 +78,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     }
 
     func oneboxSelected(oneboxLink: OneboxLink) {
+        AnalyticsUtil.track("Onebox", ["URL": oneboxLink.url!])
         let webViewController = WebViewController()
         webViewController.configure(withUrl: NSURL(string: oneboxLink.url!)!, andTitle: oneboxLink.title!)
         navigationController!.pushViewController(webViewController, animated: true)
