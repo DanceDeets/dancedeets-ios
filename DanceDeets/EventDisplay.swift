@@ -165,8 +165,9 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sectionName = sectionNames[indexPath.section]
         if sectionName == oneboxTitle {
-            let oneboxLink = results?.oneboxLinks[indexPath.row]
-            oneboxSelectedHandler(oneboxLink!)
+            if let oneboxLink = results?.oneboxLinks[indexPath.row] {
+                oneboxSelectedHandler(oneboxLink)
+            }
         } else {
             if let sectionEvents = eventsBySection[sectionName] {
                 if (sectionEvents.count > indexPath.row) {
