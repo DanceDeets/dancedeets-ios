@@ -57,7 +57,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
 
         var geocodeString:String = ""
         if let placemark = optionalPlacemark {
-            CLSLogv("ServerInterface.addressFound: placemark: \(placemark.description)", getVaList([]))
+            CLSLogv("%@", getVaList(["ServerInterface.addressFound: placemark: \(placemark.description)"]))
             // set up a display address
             if let lines = placemark.addressDictionary?["FormattedAddressLines"] as? [String] {
                 for line in lines {
@@ -91,7 +91,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
             
             // post it up
             let task = NSURLSession.sharedSession().dataTaskWithRequest(urlRequest, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-                CLSNSLogv("Posted up token with error: \(error)", getVaList([]))
+                CLSNSLogv("%@", getVaList(["Posted up token with error: \(error)"]))
             })
             task.resume()
         }

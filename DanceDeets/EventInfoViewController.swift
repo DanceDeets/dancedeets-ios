@@ -114,7 +114,7 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
                 collectionView!.layoutIfNeeded()
                 collectionView!.scrollToItemAtIndexPath(indexPath, atScrollPosition:UICollectionViewScrollPosition.CenteredHorizontally, animated:false)
             } else {
-                CLSLogv("Event \(event.id) not in EventInfoViewController.events", getVaList([]))
+                CLSLogv("%@", getVaList(["Event \(event.id) not in EventInfoViewController.events"]))
             }
             startEvent = nil
         }

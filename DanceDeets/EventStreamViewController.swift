@@ -160,7 +160,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
         if let placemark = optionalPlacemark {
-            CLSLogv("EventStreamViewController.addressFoundHandler placemark: \(placemark.description)", getVaList([]))
+            CLSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler placemark: \(placemark.description)"]))
             let fields = [placemark.locality, placemark.administrativeArea, placemark.country]
             let setFields = fields.filter({ (elem: String?) -> Bool in
                 return elem != nil
@@ -169,16 +169,16 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             })
             let fullText = setFields.joinWithSeparator(", ")
             self.locationSearchField.text = fullText
-            CLSLogv("EventStreamViewController.addressFoundHandler locationSearchField: \(self.locationSearchField.text ?? "Unknown")", getVaList([]))
-            CLSLogv("EventStreamViewController.addressFoundHandler keywordSearchField: \(self.keywordSearchField.text ?? "Unknown")", getVaList([]))
+            CLSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler locationSearchField: \(self.locationSearchField.text ?? "Unknown")"]))
+            CLSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler keywordSearchField: \(self.keywordSearchField.text ?? "Unknown")"]))
             Event.loadEventsForLocation(self.locationSearchField.text!, withKeywords:self.keywordSearchField.text!, completion:self.setupEventsDisplay)
         } else {
             if let location = NSUserDefaults.standardUserDefaults().stringForKey(USER_SEARCH_LOCATION_KEY) {
-                CLSLogv("addressFoundHandler savedLocation: \(location)", getVaList([]))
+                CLSLogv("%@", getVaList(["addressFoundHandler savedLocation: \(location)"]))
                 self.locationSearchField.text = location
                 refreshEvents()
             } else {
-                CLSLogv("addressFoundHandler No Location", getVaList([]))
+                CLSLogv("%@", getVaList(["addressFoundHandler No Location"]))
                 setTitle(NSLocalizedString("RETRY", comment: "Title"), NSLocalizedString("Couldn't detect your location", comment: "GPS Failure"))
                 locationFailureAlert.show()
             }

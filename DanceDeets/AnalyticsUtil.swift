@@ -32,7 +32,7 @@ public class AnalyticsUtil {
 
     private class func userInfoComplete(connection: FBSDKGraphRequestConnection!, user: AnyObject!, error: NSError!) {
         if (error != nil) {
-            CLSNSLogv("Error fetching \(connection.description), received \(error.description)", getVaList([]))
+            CLSNSLogv("%@", getVaList(["Error fetching \(connection?.description), received \(error.description)"]))
         } else {
             // Not MixPanel analytics, but Crashlytics "analytics" of a sort.
             Crashlytics.sharedInstance().setUserEmail(user["email"] as? String)

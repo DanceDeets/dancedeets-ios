@@ -251,7 +251,7 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
         fetchAddress = nil
         if let placemark = optionalPlacemark {
-            CLSNSLogv("addressFoundHandler with Placemark \(placemark): \(placemark.locality), \(placemark.administrativeArea), \(placemark.country)", getVaList([]))
+            CLSNSLogv("%@", getVaList(["addressFoundHandler with Placemark \(placemark): \(placemark.locality), \(placemark.administrativeArea), \(placemark.country)"]))
             let fields = [placemark.locality, placemark.administrativeArea, placemark.country]
             let setFields = fields.filter({ (elem: String?) -> Bool in
                 return elem != nil
