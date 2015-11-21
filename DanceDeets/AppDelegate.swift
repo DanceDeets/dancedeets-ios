@@ -40,6 +40,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        // Only do the badging on debug builds, as this API will get you rejected from the App Store apps.
+        #if DEBUG
+            // TODO: someday move this to the main app flow with proper priming before asking
+            let settings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+            UIApplication.sharedApplication().performSelector("setApplicationBadgeString:", withObject:"β");
+        #endif
+
+
         FBSDKLoginButton.self
         FBSDKProfilePictureView.self
         DFPRequest.sdkVersion()
