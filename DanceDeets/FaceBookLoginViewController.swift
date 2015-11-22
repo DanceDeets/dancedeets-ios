@@ -61,7 +61,7 @@ class FaceBookLoginViewController: UIViewController, FBSDKLoginButtonDelegate, U
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)
     {
-        if (result.token != nil) {
+        if (error == nil && result.token != nil) {
             AnalyticsUtil.track("Login - Completed")
             presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
             // update token on back
