@@ -117,14 +117,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                     composer.mailComposeDelegate = self
                     composer.setSubject("DanceDeets Feedback")
                     composer.setToRecipients(recipients)
-                    //composer.delegate = self // UNDO color changes
-                    let handler = {() -> Void in
-                        let app = UIApplication.sharedApplication().delegate as! AppDelegate
-                        let window = UIApplication.sharedApplication().keyWindow
-                        window?.tintColor = app.originalTintColor
-                        composer.navigationBar.tintColor = app.originalTintColor
-                    }
-                    presentViewController(composer, animated: true, completion: handler)
+                    presentViewController(composer, animated: true, completion: nil)
                 } else {
                     let alertView = UIAlertView(title: NSLocalizedString("Cannot send feedback", comment: "Error Title"), message: NSLocalizedString("You cannot send feedback through email, because you have no email accounts set up on this iPhone/iPad.", comment: "Error Description"), delegate: nil, cancelButtonTitle: "OK")
                     alertView.show()

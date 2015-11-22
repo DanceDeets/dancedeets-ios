@@ -155,6 +155,11 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         setTitle("", "")
         navigationItem.title = ""
 
+        // So we show a white chevron back button when we navigate to other views.
+        // Do not attempt to set the window.tintColor globally,
+        // as it messes with the tint of the UIActivityViewController and MFMailComposeViewController.
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+
         searchTextCancelButton.alpha = 0
     }
 

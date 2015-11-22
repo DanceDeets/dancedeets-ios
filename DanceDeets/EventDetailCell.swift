@@ -25,6 +25,10 @@ class EventDetailCell: UICollectionViewCell {
 
     @IBOutlet weak var scrollView: UIScrollView!
 
+    @IBOutlet weak var danceIconView: UIImageView!
+    @IBOutlet weak var clockIconView: UIImageView!
+    @IBOutlet weak var pinIconView: UIImageView!
+
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
@@ -147,5 +151,16 @@ class EventDetailCell: UICollectionViewCell {
         let rsvp = FacebookRsvpManager.RSVP.Attending
         AnalyticsUtil.track("RSVP", withEvent: event, ["RSVP Value": rsvp.rawValue])
         FacebookRsvpManager.rsvpFacebook( event, withRsvp: rsvp)
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        // No idea why these are necessary, since they are set in the NIB
+        danceIconView.tintColor = UIColor.whiteColor()
+        // No idea why we have to set this color directly, instead of copying another color
+        // Seems there's some of magic going on with tintColor in multiple ways
+        clockIconView.tintColor = UIColor(red: 0, green: 236, blue: 227, alpha: 1.0)
+        pinIconView.tintColor = UIColor.whiteColor()
     }
 }

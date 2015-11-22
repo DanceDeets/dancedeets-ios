@@ -22,7 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let urlCacheMemoryCapacityMB = 48
     let urlCacheDiskCapacityMB = 128
     var allowLandscape:Bool?
-    var originalTintColor: UIColor?
 
     class func sharedInstance() -> AppDelegate
     {
@@ -64,9 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics()])
         
         AnalyticsUtil.createInstance()
-
-        originalTintColor = window?.tintColor
-        window?.tintColor = UIColor.whiteColor()
 
         return true
     }

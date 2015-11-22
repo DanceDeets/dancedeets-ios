@@ -120,7 +120,6 @@
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="danceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="KFG-w4-rc3" userLabel="dance Icon">
                                                             <rect key="frame" x="30" y="57" width="14" height="14"/>
                                                             <animations/>
-                                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="14" id="Onn-SD-EJL"/>
                                                                 <constraint firstAttribute="height" constant="14" id="bY5-jk-ccR"/>
@@ -129,7 +128,6 @@
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="fsk-AB-l6j" userLabel="clock Icon">
                                                             <rect key="frame" x="30" y="80" width="14" height="14"/>
                                                             <animations/>
-                                                            <color key="tintColor" red="0.0" green="0.92549019610000005" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="14" id="Sjq-KV-idX"/>
                                                                 <constraint firstAttribute="height" constant="14" id="tP3-Ye-xUo"/>
@@ -138,7 +136,6 @@
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cba-0q-1a5" userLabel="pin Icon">
                                                             <rect key="frame" x="31" y="106" width="12" height="12"/>
                                                             <animations/>
-                                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="12" id="0oT-uN-6S3"/>
                                                                 <constraint firstAttribute="width" constant="12" id="SI9-eA-kEc"/>
@@ -612,6 +609,8 @@
                                     <constraint firstItem="LTU-Zb-ND8" firstAttribute="bottom" secondItem="6rD-vv-dd1" secondAttribute="bottom" id="uzY-a7-j3h"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="clockIconView" destination="VZ7-xH-hJc" id="b3v-TM-So5"/>
+                                    <outlet property="danceIconView" destination="37S-By-X1e" id="qHn-vm-nTB"/>
                                     <outlet property="eventCategoriesLabel" destination="DDd-M8-QVB" id="u7b-lN-eZW"/>
                                     <outlet property="eventCoverImageView" destination="aIu-5i-zz6" id="kWL-XD-Stx"/>
                                     <outlet property="eventCoverImageViewHeightConstraint" destination="hEA-r2-jHg" id="JcW-8V-p1O"/>
@@ -620,6 +619,7 @@
                                     <outlet property="eventTimeLabel" destination="SKS-WK-qB4" id="SAN-dL-tYG"/>
                                     <outlet property="eventTitleLabel" destination="0nM-UR-teI" id="hfO-De-R13"/>
                                     <outlet property="eventVenueLabel" destination="iR9-dF-OU4" id="Hij-VA-och"/>
+                                    <outlet property="pinIconView" destination="PEO-0i-6s3" id="6fW-Ku-ouM"/>
                                     <outlet property="scrollView" destination="LTU-Zb-ND8" id="ffm-S9-A4P"/>
                                     <segue destination="NNj-Xd-7Ej" kind="presentation" identifier="fullScreenImageSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="yGL-cj-pC5"/>
                                 </connections>
@@ -641,30 +641,35 @@
                     <animations/>
                     <items>
                         <barButtonItem image="facebookIcon" id="u2o-xn-fa9" userLabel="Facebook">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="facebookTapped:" destination="zQ5-NL-m8V" id="tet-DT-t5c"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="i8Y-2E-sSF"/>
                         <barButtonItem image="bottomPinIcon" id="bjL-dO-BmW" userLabel="Map">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="mapTapped:" destination="zQ5-NL-m8V" id="Adk-g8-jCZ"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="GBk-EJ-D8k"/>
                         <barButtonItem image="calendarIcon" id="Igb-O3-G6E" userLabel="Add to Calendar">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="calendarTapped:" destination="zQ5-NL-m8V" id="ptf-1I-F8y"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="nyI-l9-xuf"/>
                         <barButtonItem title="RSVP" id="Mbf-UG-DzL">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="rsvpTapped:" destination="zQ5-NL-m8V" id="xn3-uK-yLc"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="PmU-8x-x8C"/>
                         <barButtonItem systemItem="action" id="7Hz-PN-8lB">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="shareButtonTapped:" destination="zQ5-NL-m8V" id="BQH-ef-vBR"/>
                             </connections>
