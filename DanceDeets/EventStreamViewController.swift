@@ -25,7 +25,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         message: NSLocalizedString("Couldn't detect your location", comment: "GPS Failure"),
         delegate: nil,
         cancelButtonTitle: "OK")
-    var requiresRefresh = true
     var blurOverlay:UIView!
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
@@ -96,6 +95,8 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
         adBar = AdBar(controller: self)
 
+        fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
+
         view.layoutIfNeeded()
         
         loadViewController()
@@ -106,10 +107,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         super.viewWillAppear(animated)
         
         checkFaceBookToken()
-        if (requiresRefresh) {
-            requiresRefresh = false
-            fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
-        }
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
@@ -224,6 +221,11 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     }
 
     func refreshEvents(location: String, withKeywords keywords: String) {
+        if location == "" && keywords == "" {
+            fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
+            return
+        }
+
         // If we do a search, store the location, in case we can't access GPS next time, we'll have a good cached value
         NSUserDefaults.standardUserDefaults().setObject(location, forKey: USER_SEARCH_LOCATION_KEY)
         NSUserDefaults.standardUserDefaults().synchronize()
