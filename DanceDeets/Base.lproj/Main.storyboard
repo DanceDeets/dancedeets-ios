@@ -562,6 +562,23 @@
                                                                 <constraint firstItem="iR9-dF-OU4" firstAttribute="bottom" secondItem="c6i-Di-3Pr" secondAttribute="bottom" id="vmF-EL-dKl"/>
                                                             </constraints>
                                                         </view>
+                                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zxw-S5-gcq" userLabel="Share View">
+                                                            <rect key="frame" x="180" y="-64" width="240" height="128"/>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvq-P3-Ie1" customClass="EventShareButton" customModule="DanceDeets" customModuleProvider="target">
+                                                                    <rect key="frame" x="97" y="49" width="46" height="30"/>
+                                                                    <animations/>
+                                                                    <state key="normal" title="Button"/>
+                                                                </button>
+                                                            </subviews>
+                                                            <animations/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstItem="nvq-P3-Ie1" firstAttribute="leading" secondItem="zxw-S5-gcq" secondAttribute="leading" id="C5G-5u-NC3"/>
+                                                                <constraint firstItem="nvq-P3-Ie1" firstAttribute="top" secondItem="zxw-S5-gcq" secondAttribute="top" id="eEs-ff-Gnh"/>
+                                                                <constraint firstAttribute="bottom" secondItem="nvq-P3-Ie1" secondAttribute="bottom" id="shy-8G-38o"/>
+                                                            </constraints>
+                                                        </view>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQO-pn-Gib">
                                                             <rect key="frame" x="0.0" y="0.0" width="601" height="102.5"/>
                                                             <animations/>
@@ -616,6 +633,7 @@
                                     <outlet property="eventCoverImageViewHeightConstraint" destination="hEA-r2-jHg" id="JcW-8V-p1O"/>
                                     <outlet property="eventDescriptionLabel" destination="UQO-pn-Gib" id="B1N-7m-tb3"/>
                                     <outlet property="eventMapView" destination="f6f-Sg-0t5" id="4Mh-hy-Sft"/>
+                                    <outlet property="eventShareButton" destination="nvq-P3-Ie1" id="W9S-gZ-JhD"/>
                                     <outlet property="eventTimeLabel" destination="SKS-WK-qB4" id="SAN-dL-tYG"/>
                                     <outlet property="eventTitleLabel" destination="0nM-UR-teI" id="hfO-De-R13"/>
                                     <outlet property="eventVenueLabel" destination="iR9-dF-OU4" id="Hij-VA-och"/>

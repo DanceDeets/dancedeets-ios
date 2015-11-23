@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 david.xiang. All rights reserved.
 //
 
+import FBSDKShareKit
 import UIKit
 import QuartzCore
 import MapKit
@@ -23,6 +24,8 @@ class EventDetailCell: UICollectionViewCell {
 
     var tableView:UITableView?
 
+    var linkContent:FBSDKShareLinkContent!
+
     @IBOutlet weak var scrollView: UIScrollView!
 
     @IBOutlet weak var danceIconView: UIImageView!
@@ -36,6 +39,8 @@ class EventDetailCell: UICollectionViewCell {
     @IBOutlet weak var eventCategoriesLabel: UILabel!
     @IBOutlet weak var eventDescriptionLabel: UITextView!
     @IBOutlet weak var eventMapView: MKMapView!
+
+    @IBOutlet weak var eventShareButton: EventShareButton!
 
     @IBOutlet weak var eventCoverImageViewHeightConstraint: NSLayoutConstraint!
 
@@ -77,12 +82,20 @@ class EventDetailCell: UICollectionViewCell {
         } else {
             eventMapView.hidden = true
         }
+
+        linkContent = FBSDKShareLinkContent()
+        linkContent.contentURL = event.danceDeetsUrl
+        linkContent.imageURL = NSURL(string: "http://www.dancedeets.com/events/image_proxy/" + event.id!)
+        linkContent.contentTitle = event.title
+        linkContent.contentDescription = event.description
+        eventShareButton.shareContent = linkContent
+
         // set to initial image first, this may be a smaller image if coming from list view
         eventCoverImageView.image = initialImage
         if let url = event.eventImageUrl {
             // hero image for detail view is the big image
             let imageRequest:NSURLRequest = NSURLRequest(URL: url)
-            if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest){
+            if let image = ImageCache.sharedInstance.cachedImageForRequest(imageRequest) {
                 eventCoverImageView.image = image
             } else {
                 event.downloadCoverImage({ (image:UIImage!, error:NSError!) -> Void in
