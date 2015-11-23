@@ -28,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>22</string>
+	<string>23</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -49,6 +49,7 @@
 	<string>DanceDeets</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>fbapi20150629</string>
 		<string>fb</string>
 		<string>comgooglemaps</string>
 		<string>fbapi</string>
