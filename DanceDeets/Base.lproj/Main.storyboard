@@ -574,7 +574,7 @@
                                                             <animations/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <constraints>
-                                                                <constraint firstItem="nvq-P3-Ie1" firstAttribute="leading" secondItem="zxw-S5-gcq" secondAttribute="leading" id="C5G-5u-NC3"/>
+                                                                <constraint firstItem="nvq-P3-Ie1" firstAttribute="leading" secondItem="zxw-S5-gcq" secondAttribute="leading" constant="12" id="C5G-5u-NC3"/>
                                                                 <constraint firstItem="nvq-P3-Ie1" firstAttribute="top" secondItem="zxw-S5-gcq" secondAttribute="top" id="eEs-ff-Gnh"/>
                                                                 <constraint firstAttribute="bottom" secondItem="nvq-P3-Ie1" secondAttribute="bottom" id="shy-8G-38o"/>
                                                             </constraints>
