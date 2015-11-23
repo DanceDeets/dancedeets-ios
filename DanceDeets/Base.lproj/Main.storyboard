@@ -13,9 +13,9 @@
         </mutableArray>
         <mutableArray key="Interstate-ExtraLight.ttf">
             <string>Interstate-ExtraLight</string>
-            <string>Interstate-ExtraLight</string>
         </mutableArray>
         <mutableArray key="Interstate-Light.ttf">
+            <string>Interstate-Light</string>
             <string>Interstate-Light</string>
             <string>Interstate-Light</string>
             <string>Interstate-Light</string>
@@ -79,7 +79,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Link Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v9K-A7-sI8" userLabel="Onebox Link View">
                                                             <rect key="frame" x="8" y="8" width="584" height="13.5"/>
                                                             <animations/>
-                                                            <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
+                                                            <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="18"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -113,7 +113,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5R9-2K-AhZ" userLabel="Event Title View">
                                                             <rect key="frame" x="12" y="27" width="576" height="20"/>
                                                             <animations/>
-                                                            <fontDescription key="fontDescription" name="Interstate-ExtraLight" family="Interstate-ExtraLight" pointSize="18"/>
+                                                            <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="18"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>

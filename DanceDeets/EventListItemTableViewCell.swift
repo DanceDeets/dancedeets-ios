@@ -25,7 +25,7 @@ class EventListItemTableViewCell: UITableViewCell {
     func updateForEvent(event: Event) {
         currentEvent = event
         eventCategoriesLabel.text = "(" + event.categories.joinWithSeparator(", ") + ")"
-        eventTitleLabel.text = event.title
+        eventTitleLabel.attributedText = Utilities.underlinedString(event.title!)
         eventTimeLabel.text = event.displayTime
         if let venueDisplay = event.venue?.formattedNameAndCity() {
             if (event.attendingCount != nil) {

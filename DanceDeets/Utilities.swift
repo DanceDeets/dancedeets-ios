@@ -17,4 +17,10 @@ class Utilities {
         return dateFormatter
     }
 
+    class func underlinedString(text: String) -> NSAttributedString {
+        let underlineProps = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
+        let attributedText = NSAttributedString(string: text, attributes: underlineProps)
+        return attributedText
+    }
+
 }
