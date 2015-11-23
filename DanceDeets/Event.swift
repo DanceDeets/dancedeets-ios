@@ -40,8 +40,8 @@ public class Event: NSObject {
         shortDescription = dictionary["description"] as? String
         
         if id != nil && (id!).characters.count > 0 {
-            facebookUrl = NSURL(string: "http://www.facebook.com/"+id!)
-            danceDeetsUrl = NSURL(string: "http://www.dancedeets.com/events/"+id!)
+            facebookUrl = NSURL(string: "http://www.facebook.com/\(id!)/")
+            danceDeetsUrl = NSURL(string: "http://www.dancedeets.com/events/\(id!)/")
         }
         
         if let rsvp = dictionary["rsvp"] as? NSDictionary{
