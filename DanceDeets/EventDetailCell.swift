@@ -88,6 +88,7 @@ class EventDetailCell: UICollectionViewCell {
         linkContent.imageURL = NSURL(string: "http://www.dancedeets.com/events/image_proxy/" + event.id!)
         linkContent.contentTitle = event.title
         linkContent.contentDescription = event.description
+        linkContent.placeID = event.venue?.id
         eventShareButton.shareContent = linkContent
 
         // set to initial image first, this may be a smaller image if coming from list view
