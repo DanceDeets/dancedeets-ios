@@ -13,6 +13,6 @@ class OneboxListItemTableViewCell: UITableViewCell {
     @IBOutlet weak var linkTitleView: UILabel!
 
     func updateForOneboxLink(oneboxLink: OneboxLink) {
-        linkTitleView.attributedText = Utilities.underlinedString(oneboxLink.title!)
+        linkTitleView.text = oneboxLink.title!
     }
 }

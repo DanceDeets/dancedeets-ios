@@ -16,11 +16,4 @@ class Utilities {
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         return dateFormatter
     }
-
-    class func underlinedString(text: String) -> NSAttributedString {
-        let underlineProps = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
-        let attributedText = NSAttributedString(string: text, attributes: underlineProps)
-        return attributedText
-    }
-
 }

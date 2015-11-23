@@ -25,7 +25,7 @@ class EventListItemTableViewCell: UITableViewCell {
     func updateForEvent(event: Event) {
         currentEvent = event
         eventCategoriesLabel.text = "(" + event.categories.joinWithSeparator(", ") + ")"
-        eventTitleLabel.attributedText = Utilities.underlinedString(event.title!)
+        eventTitleLabel.text = event.title!
         eventTimeLabel.text = event.displayTime
         if let venueDisplay = event.venue?.formattedNameAndCity() {
             if (event.attendingCount != nil) {
@@ -58,7 +58,7 @@ class EventListItemTableViewCell: UITableViewCell {
         danceIconImageView.tintColor = UIColor.whiteColor()
         // No idea why we have to set this color directly, instead of copying another color
         // Seems there's some of magic going on with tintColor in multiple ways
-        clockIconImageView.tintColor = UIColor(red: 0, green: 236, blue: 227, alpha: 1.0)
+        clockIconImageView.tintColor = UIColor(red: 192.0/255, green: 1.0, blue: 192.0/255, alpha: 1.0)
         pinIconImageView.tintColor = UIColor.whiteColor()
     }
 }
