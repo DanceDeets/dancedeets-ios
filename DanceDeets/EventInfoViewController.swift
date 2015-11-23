@@ -34,10 +34,13 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         cell.scrollView.contentInset = UIEdgeInsetsMake(topHeightOffset, 0.0, bottomHeightOffset, 0.0)
         cell.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(topHeightOffset, 0.0, bottomHeightOffset, 0.0)
         cell.scrollView.setContentOffset(CGPoint(x:0, y:-topHeightOffset), animated: false)
-
-        adBar?.maybeShowInterstitialAd()
-
         return cell
+    }
+
+    override func collectionView(collectionView: UICollectionView,
+        didEndDisplayingCell cell: UICollectionViewCell,
+        forItemAtIndexPath indexPath: NSIndexPath) {
+            adBar?.maybeShowInterstitialAd()
     }
 
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
