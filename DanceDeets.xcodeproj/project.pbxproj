@@ -461,6 +461,9 @@
 							com.apple.Maps.iOS = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					1D8856CB19CDE510005FFDB2 = {
