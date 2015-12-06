@@ -29,7 +29,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     var searchResultsTableViewBottomConstraint:NSLayoutConstraint?
     var titleTapGestureRecognizer:UITapGestureRecognizer?
     var fetchAddress:FetchAddress?
-    var fetchLocation:FetchLocation?
 
     var eventDisplay:EventDisplay?
     var searchBar:SearchBar?
