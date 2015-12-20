@@ -208,8 +208,12 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
                 let errorAlert = UIAlertView(title: NSLocalizedString("No Connection", comment: "Error Title"), message: NSLocalizedString("There might have been a network problem. Check your connection", comment: "Error Description"), delegate: nil, cancelButtonTitle: "OK")
                 errorAlert.show()
                 self.setTitle("ERROR", "Try again")
-            } else if(results?.events.count == 0) {
-                let noEventAlert = UIAlertView(title: NSLocalizedString("No Results", comment: "Error Title"), message: NSLocalizedString("There doesn't seem to be any events in that area right now. Try expanding your search criteria?", comment: "Error Description"), delegate: nil, cancelButtonTitle: "OK")
+            } else if results == nil {
+                let noEventAlert = UIAlertView(title: NSLocalizedString("Error Finding Events", comment: "Error Title"), message: NSLocalizedString("There was an error getting events. Please try again later...", comment: "Error Description"), delegate: nil, cancelButtonTitle: "OK")
+                noEventAlert.show()
+                self.setTitle(self.locationSearchField.text!, "No Events")
+            } else if results?.events.count == 0 {
+                let noEventAlert = UIAlertView(title: NSLocalizedString("No Events", comment: "Error Title"), message: NSLocalizedString("There doesn't seem to be any events in that area right now. Try expanding your search criteria?", comment: "Error Description"), delegate: nil, cancelButtonTitle: "OK")
                 noEventAlert.show()
                 self.setTitle(self.locationSearchField.text!, "No Events")
             } else {
@@ -250,6 +254,13 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             });
         } else {
             AnalyticsUtil.login()
+
+            #if DEBUG
+            //TODO: this only happens on the second time, after we've already logged in
+            //TODO: clean this up, do it as part of a proper device flow (after user logs in, not before!)
+            UIApplication.sharedApplication().registerForRemoteNotifications()
+            #endif
+
             FBSDKAccessToken.refreshCurrentAccessToken({ (connect:FBSDKGraphRequestConnection!, obj: AnyObject!, error: NSError!) -> Void in
                 ServerInterface.sharedInstance.updateFacebookToken()
             })
