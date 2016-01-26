@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 import GoogleMobileAds
 
-class AdBar : NSObject, GADBannerViewDelegate {
+class AdBar : NSObject, GADBannerViewDelegate, GADInterstitialDelegate {
 
     var controller: UIViewController
     var eventStreamController: EventStreamViewController?
@@ -18,6 +18,7 @@ class AdBar : NSObject, GADBannerViewDelegate {
 
     var request: DFPRequest
     var setLocation: Bool = false
+    var sentLoadRequest: Bool = false
 
     var interstitial: DFPInterstitial
 
@@ -30,7 +31,7 @@ class AdBar : NSObject, GADBannerViewDelegate {
         self.request = DFPRequest()
         self.request.testDevices = [
             kGADSimulatorID,
-            "301ebb9f19659a3ebbc88d348b8810b5", // Mike's iPhone
+            //"e9ffefcf1aead21f5845ca5752a8511f", // Mike's iPhone
         ]
         self.interstitial = DFPInterstitial(adUnitID: kInterstitialAdUnitId)
 
@@ -66,22 +67,34 @@ class AdBar : NSObject, GADBannerViewDelegate {
     }
 
     func loadIfTokenComplete() {
-        if request.publisherProvidedID != nil && setLocation {
+        if request.publisherProvidedID != nil && setLocation && !sentLoadRequest {
+            sentLoadRequest = true
             eventStreamController?.bannerView.delegate = self
             eventStreamController?.bannerView.loadRequest(request)
             interstitial.loadRequest(request)
+            interstitial.delegate = self
+            print("load interstitial: \(interstitial)")
         }
     }
 
     func adViewDidReceiveAd(bannerView: GADBannerView!) {
+        print("Found Banner Ad ", bannerView)
         eventStreamController?.bannerViewHeight.constant = 50
         controller.view.layoutIfNeeded()
     }
 
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
-        print("No Ad ", error)
+        print("No Banner Ad for ", bannerView, ": ", error)
         eventStreamController?.bannerViewHeight.constant = 0
         controller.view.layoutIfNeeded()
+    }
+
+    func interstitialDidReceiveAd(ad: GADInterstitial!) {
+        print("Found Interstitial Ad ", ad)
+    }
+
+    func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
+        print("No Interstitial Ad for ", ad, ": ", error)
     }
 
     func maybeShowInterstitialAd() {
