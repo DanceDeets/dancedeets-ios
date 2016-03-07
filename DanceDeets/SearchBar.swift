@@ -19,7 +19,6 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     var autosuggestedLocations:[String] = []
     var autosuggestedKeywords:[String] = [
         "All Events",
-        "Bboy",
         "Breaking",
         "Hip-Hop",
         "House",
