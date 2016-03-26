@@ -57,7 +57,6 @@
 		1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB901C719E0999E0018B434 /* FontFactory.swift */; };
 		1DBA3F691A4BAA7600842486 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBA3F681A4BAA7600842486 /* SettingsCell.swift */; };
 		1DC07C2F1BC903E5004AB48C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07C2D1BC903E5004AB48C /* Localizable.strings */; };
-		1DCBE24E1BE08B3C007A62B2 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCBE24D1BE08B3C007A62B2 /* GoogleMobileAds.framework */; };
 		1DD6A9931C0327D900F63D35 /* EventShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6A9921C0327D900F63D35 /* EventShareButton.swift */; };
 		1DEE8EA31BB78C5B00D1DA15 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */; };
 		1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */; };
@@ -159,7 +158,6 @@
 		1DC07C2E1BC903E5004AB48C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = DanceDeets/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1DC07C301BC903EF004AB48C /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "DanceDeets/en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1DC07C311BC903F7004AB48C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = DanceDeets/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1DCBE24D1BE08B3C007A62B2 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		1DD6A9921C0327D900F63D35 /* EventShareButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventShareButton.swift; sourceTree = "<group>"; };
 		1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -186,7 +184,6 @@
 				1D12DE901B0A1C0A00BEE249 /* Crashlytics.framework in Frameworks */,
 				1D1131181B458503001CBEDE /* FBSDKMessengerShareKit.framework in Frameworks */,
 				1D95547A1BB3C7A800241F38 /* Fabric.framework in Frameworks */,
-				1DCBE24E1BE08B3C007A62B2 /* GoogleMobileAds.framework in Frameworks */,
 				9DD9DCD5AB61CA917BF518E9 /* Pods_DanceDeets.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,7 +391,6 @@
 		90EA1D330F2FCC1A877FE1CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1DCBE24D1BE08B3C007A62B2 /* GoogleMobileAds.framework */,
 				72F5ED4DA61BC9F2C1804D7F /* Pods_DanceDeets.framework */,
 			);
 			name = Frameworks;

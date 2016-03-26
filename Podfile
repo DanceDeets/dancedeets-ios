@@ -6,6 +6,7 @@ use_frameworks!
 target 'DanceDeets' do
   pod 'Mixpanel'
   pod "OAStackView"
+  pod 'Google-Mobile-Ads-SDK', '~> 7.0'
 end
 
 target 'DanceDeetsTests' do
