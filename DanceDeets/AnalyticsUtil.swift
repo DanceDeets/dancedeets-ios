@@ -25,6 +25,7 @@ public class AnalyticsUtil {
 
     public class func login() {
         if FBSDKAccessToken.currentAccessToken() != nil {
+            Mixpanel.sharedInstance().identify(FBSDKAccessToken.currentAccessToken().userID)
             let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id,name,first_name,last_name,gender,locale,timezone,email,link"])
             request.startWithCompletionHandler(userInfoComplete)
         }
@@ -45,7 +46,6 @@ public class AnalyticsUtil {
                 ]))
 
             // Our normal MixPanel analytics setup
-            Mixpanel.sharedInstance().identify(user["id"] as! String)
 
             if let val = user["first_name"] as? String {
                 Mixpanel.sharedInstance().people.set("$first_name", to: val)
