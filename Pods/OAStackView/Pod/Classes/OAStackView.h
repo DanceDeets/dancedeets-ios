@@ -82,9 +82,15 @@ typedef NS_ENUM(NSInteger, OAStackViewAlignment) {
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
+
+// Define the `OAStackViewDisableForwardToUIStackViewSentinel` to disable the automatic forwarding to OAStackView on iOS 7+.
+// Copy below line into your AppDelegate.m:
+// @interface OAStackViewDisableForwardToUIStackViewSentinel : NSObject @end
+// @implementation OAStackViewDisableForwardToUIStackViewSentinel @end
+
 @interface OAStackView : UIView
 
-@property(nonatomic,readonly,copy) NSArray *arrangedSubviews;
+@property(nonatomic,readonly,copy) NSArray<__kindof UIView *> *arrangedSubviews;
 
 //Default is Vertical
 @property(nonatomic) UILayoutConstraintAxis axis;
@@ -105,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, getter=isLayoutMarginsRelativeArrangement) BOOL layoutMarginsRelativeArrangement;
 
-- (instancetype)initWithArrangedSubviews:(NSArray*)views NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithArrangedSubviews:(NSArray<__kindof UIView *> *)views NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
 
 - (void)addArrangedSubview:(UIView *)view;

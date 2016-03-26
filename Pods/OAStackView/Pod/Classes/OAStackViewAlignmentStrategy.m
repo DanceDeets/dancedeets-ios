@@ -68,7 +68,8 @@
 - (instancetype)initWithWithStackView:(OAStackView *)stackView {
   self = [super init];
   if (self) {
-    _stackView = stackView;;
+    _stackView = stackView;
+    _constraints = [NSMutableArray array];
   }
   return self;
 }
@@ -98,25 +99,21 @@
 }
 
 - (void)addConstraintsOnOtherAxis:(UIView*)view {
-  id arr = [self constraintsalignViewOnOtherAxis:view];
+  NSArray *arr = [self constraintsalignViewOnOtherAxis:view];
   [self.constraints addObjectsFromArray:arr];
   
   if (arr) { [self.stackView addConstraints:arr]; }
 }
 
 - (void)alignView:(UIView*)view withPreviousView:(UIView*)previousView {
-  id arr = [self constraintsAlignView:view afterPreviousView:previousView];
+  NSArray *arr = [self constraintsAlignView:view afterPreviousView:previousView];
   [self.constraints addObjectsFromArray:arr];
   
   if (arr) { [self.stackView addConstraints:arr]; }
 }
 
-- (NSMutableArray *)constraints {
-  if (!_constraints) {
-    _constraints = [@[] mutableCopy];
-  }
-  
-  return _constraints;
+- (NSArray *)addedConstraints {
+  return [self.constraints copy];
 }
 
 - (void)removeAddedConstraints {
@@ -143,6 +140,32 @@
 
 - (NSString *)lastMarginRelation {
     return @"==";
+}
+
+- (void)alignFirstView:(UIView*)view {
+  if(!view) { return; }
+  NSArray *arr = [self firstViewConstraints:view withParentView:self.stackView];
+  if(!arr) { return; }
+  
+  [self.constraints addObjectsFromArray:arr];
+  [self.stackView addConstraints:arr];
+}
+
+- (void)alignLastView:(UIView*)view {
+  if(!view) { return; }
+  NSArray *arr = [self lastViewConstraints:view withParentView:self.stackView];
+  if(!arr) { return; }
+  
+  [self.constraints addObjectsFromArray:arr];
+  [self.stackView addConstraints:arr];
+}
+
+- (NSArray*)firstViewConstraints:(UIView*)view withParentView:(UIView*)parentView {
+  return nil;
+}
+
+- (NSArray*)lastViewConstraints:(UIView*)view withParentView:(UIView*)parentView {
+  return nil;
 }
 
 @end
@@ -180,7 +203,7 @@
 }
 
 - (NSArray*)constraintsalignViewOnOtherAxis:(UIView*)view {
-    NSArray *constraints = [super constraintsalignViewOnOtherAxis:view];
+    NSArray<__kindof NSLayoutConstraint *> *constraints = [super constraintsalignViewOnOtherAxis:view];
     CGFloat centerAdjustment = ([self firstMargin] - [self lastMargin]) / 2;
     return [constraints arrayByAddingObject:[NSLayoutConstraint constraintWithItem:view
                                                                          attribute:[self centerAttribute]
