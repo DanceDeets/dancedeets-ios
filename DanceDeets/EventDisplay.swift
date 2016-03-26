@@ -138,6 +138,9 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
         let sectionEvents = eventsBySection[sectionName]!
 
         let cell = tableView.dequeueReusableCellWithIdentifier("eventListTableViewCell", forIndexPath: indexPath) as! EventListItemTableViewCell
+        if cell.currentEvent?.downloadTask != nil {
+            cell.currentEvent?.downloadTask?.cancel()
+        }
         let event:Event = sectionEvents[indexPath.row]
         cell.updateForEvent(event)
         

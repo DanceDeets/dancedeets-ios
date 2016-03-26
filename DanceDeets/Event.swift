@@ -31,7 +31,8 @@ public class Event: NSObject {
     var admins:[EventAdmin] = []
     var attendingCount:Int?
     var categories:[String] = []
-    
+    var downloadTask:NSURLSessionDownloadTask?
+
     init(dictionary:NSDictionary){
         super.init()
         
@@ -189,8 +190,7 @@ public class Event: NSObject {
     func downloadImage(url:NSURL, completion:((UIImage!,NSError!)->Void))
     {
         let imageRequest:NSURLRequest = NSURLRequest(URL: url)
-        let downloadTask:NSURLSessionDownloadTask =
-        NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
+        downloadTask = NSURLSession.sharedSession().downloadTaskWithRequest(imageRequest,
             completionHandler: { (location:NSURL?, resp:NSURLResponse?, error:NSError?) -> Void in
                 if (error == nil) {
                     let data:NSData? = NSData(contentsOfURL: location!)
@@ -211,7 +211,7 @@ public class Event: NSObject {
                     })
                 }
         })
-        downloadTask.resume()
+        downloadTask!.resume()
         
     }
     
