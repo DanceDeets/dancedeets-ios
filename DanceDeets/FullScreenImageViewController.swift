@@ -44,7 +44,7 @@ class FullScreenImageViewController : UIViewController, UIScrollViewDelegate {
         // or things don't work properly.
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
 
-        tapGesture = UITapGestureRecognizer(target: self, action: "tapped")
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(FullScreenImageViewController.tapped))
         scrollView.addGestureRecognizer(tapGesture!)
     }
 

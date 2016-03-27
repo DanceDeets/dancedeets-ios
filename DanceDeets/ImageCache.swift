@@ -21,7 +21,7 @@ class ImageCache: NSCache {
             Static.instance = ImageCache()
             NSNotificationCenter.defaultCenter().addObserver(
                 Static.instance!,
-                selector: "memoryWarningReceived",
+                selector: #selector(ImageCache.memoryWarningReceived),
                 name: UIApplicationDidReceiveMemoryWarningNotification,
                 object: nil)
         })

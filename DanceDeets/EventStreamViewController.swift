@@ -139,7 +139,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     func loadViewController() {
         // tapping on the title does a refresh
-        titleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "refreshButtonTapped:")
+        titleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EventStreamViewController.refreshButtonTapped(_:)))
         titleTapGestureRecognizer?.delegate = self
         navigationTitle.userInteractionEnabled = true
         navigationTitle.addGestureRecognizer(titleTapGestureRecognizer!)

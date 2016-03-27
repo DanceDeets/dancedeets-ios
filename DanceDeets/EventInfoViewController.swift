@@ -98,7 +98,7 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         // up above in cellForItemAtIndexPath
         automaticallyAdjustsScrollViewInsets = false
 
-        let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "shareButtonTapped:")
+        let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: #selector(EventInfoViewController.shareButtonTapped(_:)))
         shareButton.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = shareButton
 

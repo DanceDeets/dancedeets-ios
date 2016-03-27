@@ -63,11 +63,11 @@ class EventDetailCell: UICollectionViewCell {
         attributedDescription.setColor(UIColor.whiteColor())
         eventDescriptionLabel.attributedText = attributedDescription
 
-        let mapGesture = UITapGestureRecognizer(target: self, action: "mapTapped:")
+        let mapGesture = UITapGestureRecognizer(target: self, action: #selector(EventDetailCell.mapTapped(_:)))
         eventMapView.addGestureRecognizer(mapGesture)
-        let venueGesture = UITapGestureRecognizer(target: self, action: "mapTapped:")
+        let venueGesture = UITapGestureRecognizer(target: self, action: #selector(EventDetailCell.mapTapped(_:)))
         eventVenueLabel.addGestureRecognizer(venueGesture)
-        let imageGesture = UITapGestureRecognizer(target: self, action: "imageTapped:")
+        let imageGesture = UITapGestureRecognizer(target: self, action: #selector(EventDetailCell.imageTapped(_:)))
         eventCoverImageView.addGestureRecognizer(imageGesture)
 
         // setup map if possible

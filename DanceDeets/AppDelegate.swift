@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // TODO: someday move this to the main app flow with proper priming before asking
             let settings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-            UIApplication.sharedApplication().performSelector("setApplicationBadgeString:", withObject:"β");
+            UIApplication.sharedApplication().performSelector(Selector("setApplicationBadgeString:"), withObject:"β");
         #endif
 
 

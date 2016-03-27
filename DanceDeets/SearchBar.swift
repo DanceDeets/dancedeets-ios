@@ -52,8 +52,8 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
         controller.autosuggestTable.tintColor = ColorFactory.white50()
 
         controller.searchTextCancelButton.alpha = 0
-        controller.searchTextCancelButton.addTarget(self, action: "endEditing", forControlEvents: .TouchUpInside)
-        controller.locationSearchField.addTarget(self, action: "locationFieldUpdated", forControlEvents: UIControlEvents.EditingChanged)
+        controller.searchTextCancelButton.addTarget(self, action: #selector(SearchBar.endEditing), forControlEvents: .TouchUpInside)
+        controller.locationSearchField.addTarget(self, action: #selector(SearchBar.locationFieldUpdated), forControlEvents: UIControlEvents.EditingChanged)
 
         // search text field styling
         configureField(controller.locationSearchField, defaultText: NSLocalizedString("Location", comment: "Text Field"), iconName: "pinIcon")
@@ -267,8 +267,8 @@ class SearchBar : NSObject, UITextFieldDelegate, UITableViewDelegate, UITableVie
     }
 
     func registerForKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWasShown:", name:UIKeyboardWillShowNotification, object:nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillBeHidden:", name:UIKeyboardWillHideNotification, object:nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(SearchBar.keyboardWasShown(_:)), name:UIKeyboardWillShowNotification, object:nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(SearchBar.keyboardWillBeHidden(_:)), name:UIKeyboardWillHideNotification, object:nil)
     }
 
     // Called when the UIKeyboardDidShowNotification is sent.
