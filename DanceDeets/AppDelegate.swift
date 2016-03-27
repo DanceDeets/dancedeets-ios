@@ -6,36 +6,27 @@
 //  Copyright (c) 2014 david.xiang. All rights reserved.
 //
 
-import UIKit
-import Fabric
 import Crashlytics
+import Fabric
 import FBSDKCoreKit
 import FBSDKLoginKit
-import Mixpanel
 import GoogleMobileAds
+import Mixpanel
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var fbGraphUserObjectId:String?
+    var fbGraphUserObjectId: String?
     let urlCacheMemoryCapacityMB = 48
     let urlCacheDiskCapacityMB = 128
-    var allowLandscape:Bool?
+    var allowLandscape: Bool?
+    var deviceToken: NSData?
 
     class func sharedInstance() -> AppDelegate
     {
         return UIApplication.sharedApplication().delegate as! AppDelegate
-    }
-    
-    func eventStreamViewController()->EventStreamViewController?
-    {
-        let rootVC:UINavigationController? =  window?.rootViewController as? UINavigationController
-        if (rootVC?.viewControllers.count > 0) {
-            return rootVC?.viewControllers[0] as? EventStreamViewController
-        } else {
-            return nil
-        }
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -66,12 +57,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
-    
+
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        Mixpanel.sharedInstance().people.addPushDeviceToken(deviceToken)
+    }
+
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("Error", error)
+    }
+
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
     {
+        if let targetUrl = AppStartup.getTargetUrl(url) {
+            print(targetUrl)
+            if let eventId = AppStartup.getEventIdFromUrl(targetUrl) {
+                AppStartup.loadEventData(eventId)
+            }
+        }
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
-    
+
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        print("Notification received:", userInfo)
+    }
+
     func applicationWillResignActive(application: UIApplication) {
       
     }

@@ -58,6 +58,7 @@
 		1DBA3F691A4BAA7600842486 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBA3F681A4BAA7600842486 /* SettingsCell.swift */; };
 		1DC07C2F1BC903E5004AB48C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07C2D1BC903E5004AB48C /* Localizable.strings */; };
 		1DD6A9931C0327D900F63D35 /* EventShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6A9921C0327D900F63D35 /* EventShareButton.swift */; };
+		1DDEE4EC1CA7D6310082B876 /* AppStartup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE4EB1CA7D6310082B876 /* AppStartup.swift */; };
 		1DEE8EA31BB78C5B00D1DA15 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */; };
 		1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */; };
 		1DFB3B5019FF500E00CF4A72 /* EventDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4F19FF500E00CF4A72 /* EventDetailCell.swift */; };
@@ -159,6 +160,7 @@
 		1DC07C301BC903EF004AB48C /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "DanceDeets/en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1DC07C311BC903F7004AB48C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = DanceDeets/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1DD6A9921C0327D900F63D35 /* EventShareButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventShareButton.swift; sourceTree = "<group>"; };
+		1DDEE4EB1CA7D6310082B876 /* AppStartup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStartup.swift; sourceTree = "<group>"; };
 		1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1DFB3B4F19FF500E00CF4A72 /* EventDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailCell.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				1DD6A9921C0327D900F63D35 /* EventShareButton.swift */,
 				1D11311A1B4587A7001CBEDE /* Interface */,
 				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
+				1DDEE4EB1CA7D6310082B876 /* AppStartup.swift */,
 				1D95547B1BB3C7E500241F38 /* EventManager */,
 				1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */,
 				1D5888FB1BB7669C00E70626 /* ListView Components */,
@@ -609,6 +612,7 @@
 				1D015B491AD21E0500DBC905 /* EventListItemTableViewCell.swift in Sources */,
 				1D9E3D311BF8886A001F4D45 /* EventInfoViewController.swift in Sources */,
 				1DB901C819E0999E0018B434 /* FontFactory.swift in Sources */,
+				1DDEE4EC1CA7D6310082B876 /* AppStartup.swift in Sources */,
 				1D5888FA1BB75B2900E70626 /* EventDisplay.swift in Sources */,
 				1DAB49F21A17F0310002BBDD /* Extensions.swift in Sources */,
 				1DD6A9931C0327D900F63D35 /* EventShareButton.swift in Sources */,
