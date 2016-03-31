@@ -15,6 +15,11 @@
 		1D0892471A267EE700A9EAC4 /* UniversLTStd-UltraCn.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1D0892461A267EE700A9EAC4 /* UniversLTStd-UltraCn.otf */; };
 		1D0892491A278DCB00A9EAC4 /* GooglePlaceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0892481A278DCB00A9EAC4 /* GooglePlaceAPI.swift */; };
 		1D08924B1A279DFF00A9EAC4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08924A1A279DFF00A9EAC4 /* SettingsViewController.swift */; };
+		1D0AEAE31CAD27B100F51D87 /* Ubuntu 700.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D0AEAE21CAD279100F51D87 /* Ubuntu 700.ttf */; };
+		1D0AEAE51CAD2A1000F51D87 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D0AEAE41CAD2A1000F51D87 /* Images.xcassets */; };
+		1D0AEAE71CAD48C100F51D87 /* Ubuntu 500.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D0AEAE61CAD48B800F51D87 /* Ubuntu 500.ttf */; };
+		1D0AEAE91CAD4B7B00F51D87 /* Ubuntu 300.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D0AEAE81CAD4B7000F51D87 /* Ubuntu 300.ttf */; };
+		1D0AEAEB1CAD623A00F51D87 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0AEAEA1CAD623A00F51D87 /* SplashViewController.swift */; };
 		1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */; };
 		1D1131111B458398001CBEDE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1131101B458398001CBEDE /* MapKit.framework */; };
 		1D1131161B458503001CBEDE /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1131121B458503001CBEDE /* FBSDKCoreKit.framework */; };
@@ -32,7 +37,6 @@
 		1D8856BD19CDE510005FFDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */; };
 		1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */; };
 		1D8856C219CDE510005FFDB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C019CDE510005FFDB2 /* Main.storyboard */; };
-		1D8856C419CDE510005FFDB2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C319CDE510005FFDB2 /* Images.xcassets */; };
 		1D8856C719CDE510005FFDB2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */; };
 		1D8856D319CDE511005FFDB2 /* DanceDeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8856D219CDE511005FFDB2 /* DanceDeetsTests.swift */; };
 		1D89F6A81A0EAB8D00D3E4BE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D89F6A71A0EAB8D00D3E4BE /* ImageCache.swift */; };
@@ -59,6 +63,8 @@
 		1DC07C2F1BC903E5004AB48C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07C2D1BC903E5004AB48C /* Localizable.strings */; };
 		1DD6A9931C0327D900F63D35 /* EventShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6A9921C0327D900F63D35 /* EventShareButton.swift */; };
 		1DDEE4EC1CA7D6310082B876 /* AppStartup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE4EB1CA7D6310082B876 /* AppStartup.swift */; };
+		1DDEE4F41CAA6BC20082B876 /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE4F31CAA6BC20082B876 /* TutorialPageViewController.swift */; };
+		1DDEE4F61CAA7AE20082B876 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE4F51CAA7AE10082B876 /* TutorialViewController.swift */; };
 		1DEE8EA31BB78C5B00D1DA15 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */; };
 		1DFB3B4D19FC39AE00CF4A72 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */; };
 		1DFB3B5019FF500E00CF4A72 /* EventDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB3B4F19FF500E00CF4A72 /* EventDetailCell.swift */; };
@@ -101,6 +107,11 @@
 		1D0892461A267EE700A9EAC4 /* UniversLTStd-UltraCn.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UniversLTStd-UltraCn.otf"; sourceTree = "<group>"; };
 		1D0892481A278DCB00A9EAC4 /* GooglePlaceAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlaceAPI.swift; sourceTree = "<group>"; };
 		1D08924A1A279DFF00A9EAC4 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		1D0AEAE21CAD279100F51D87 /* Ubuntu 700.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu 700.ttf"; sourceTree = "<group>"; };
+		1D0AEAE41CAD2A1000F51D87 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1D0AEAE61CAD48B800F51D87 /* Ubuntu 500.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu 500.ttf"; sourceTree = "<group>"; };
+		1D0AEAE81CAD4B7000F51D87 /* Ubuntu 300.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu 300.ttf"; sourceTree = "<group>"; };
+		1D0AEAEA1CAD623A00F51D87 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1D1131101B458398001CBEDE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1D1131121B458503001CBEDE /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -127,7 +138,6 @@
 		1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D8856BE19CDE510005FFDB2 /* FaceBookLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceBookLoginViewController.swift; sourceTree = "<group>"; };
 		1D8856C119CDE510005FFDB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1D8856C319CDE510005FFDB2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D8856C619CDE510005FFDB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1D8856CC19CDE510005FFDB2 /* DanceDeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DanceDeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8856D119CDE510005FFDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -161,6 +171,8 @@
 		1DC07C311BC903F7004AB48C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = DanceDeets/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1DD6A9921C0327D900F63D35 /* EventShareButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventShareButton.swift; sourceTree = "<group>"; };
 		1DDEE4EB1CA7D6310082B876 /* AppStartup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStartup.swift; sourceTree = "<group>"; };
+		1DDEE4F31CAA6BC20082B876 /* TutorialPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
+		1DDEE4F51CAA7AE10082B876 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		1DEE8EA21BB78C5B00D1DA15 /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		1DFB3B4C19FC39AE00CF4A72 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1DFB3B4F19FF500E00CF4A72 /* EventDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailCell.swift; sourceTree = "<group>"; };
@@ -215,6 +227,9 @@
 				1DC07C2D1BC903E5004AB48C /* Localizable.strings */,
 				1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */,
 				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
+				1D0AEAEA1CAD623A00F51D87 /* SplashViewController.swift */,
+				1DDEE4F51CAA7AE10082B876 /* TutorialViewController.swift */,
+				1DDEE4F31CAA6BC20082B876 /* TutorialPageViewController.swift */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -251,6 +266,9 @@
 		1D43347219D7551D001A5381 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				1D0AEAE81CAD4B7000F51D87 /* Ubuntu 300.ttf */,
+				1D0AEAE61CAD48B800F51D87 /* Ubuntu 500.ttf */,
+				1D0AEAE21CAD279100F51D87 /* Ubuntu 700.ttf */,
 				1D0892461A267EE700A9EAC4 /* UniversLTStd-UltraCn.otf */,
 				1D0892401A267EBF00A9EAC4 /* Interstate-Light.ttf */,
 				1D0892411A267EBF00A9EAC4 /* Interstate-ExtraLight.ttf */,
@@ -314,7 +332,7 @@
 		1D8856BA19CDE510005FFDB2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1D8856C319CDE510005FFDB2 /* Images.xcassets */,
+				1D0AEAE41CAD2A1000F51D87 /* Images.xcassets */,
 				1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */,
 				1D43347219D7551D001A5381 /* Fonts */,
 				1D8856BB19CDE510005FFDB2 /* Info.plist */,
@@ -499,6 +517,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D0AEAE91CAD4B7B00F51D87 /* Ubuntu 300.ttf in Resources */,
+				1D0AEAE71CAD48C100F51D87 /* Ubuntu 500.ttf in Resources */,
+				1D0AEAE51CAD2A1000F51D87 /* Images.xcassets in Resources */,
+				1D0AEAE31CAD27B100F51D87 /* Ubuntu 700.ttf in Resources */,
 				1D0892451A267EBF00A9EAC4 /* Interstate-BoldCondensed.ttf in Resources */,
 				1D0892441A267EBF00A9EAC4 /* Interstate-ExtraLight.ttf in Resources */,
 				1D0892471A267EE700A9EAC4 /* UniversLTStd-UltraCn.otf in Resources */,
@@ -506,7 +528,6 @@
 				1D8856C719CDE510005FFDB2 /* LaunchScreen.xib in Resources */,
 				1DC07C2F1BC903E5004AB48C /* Localizable.strings in Resources */,
 				1D0892431A267EBF00A9EAC4 /* Interstate-Light.ttf in Resources */,
-				1D8856C419CDE510005FFDB2 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,13 +606,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DDEE4F41CAA6BC20082B876 /* TutorialPageViewController.swift in Sources */,
 				1D08923C1A266D7A00A9EAC4 /* EventStreamViewController.swift in Sources */,
 				1D9E3D2F1BF88865001F4D45 /* Venue.swift in Sources */,
 				1DA4566B1AD226B900368186 /* UIViewExtensions.swift in Sources */,
 				1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */,
 				1D9E3D331BFA8A47001F4D45 /* OneboxLink.swift in Sources */,
+				1D0AEAEB1CAD623A00F51D87 /* SplashViewController.swift in Sources */,
 				1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */,
 				1D4A22311BB8692400CAD7E3 /* UrlUtil.swift in Sources */,
+				1DDEE4F61CAA7AE20082B876 /* TutorialViewController.swift in Sources */,
 				1D9E3D371BFA8E9F001F4D45 /* OneboxListItemTableViewCell.swift in Sources */,
 				1D8856BF19CDE510005FFDB2 /* FaceBookLoginViewController.swift in Sources */,
 				1D20FFC51BC7BC4E00CB21D3 /* AdBar.swift in Sources */,

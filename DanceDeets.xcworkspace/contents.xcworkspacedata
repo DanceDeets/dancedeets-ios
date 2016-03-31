@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:DanceDeets/SplashViewController.swift">
+   </FileRef>
+   <FileRef
       location = "group:DanceDeets.xcodeproj">
    </FileRef>
    <FileRef
