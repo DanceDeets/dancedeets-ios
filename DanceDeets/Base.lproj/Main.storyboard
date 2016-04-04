@@ -27,8 +27,14 @@
         </mutableArray>
         <mutableArray key="Ubuntu 300.ttf">
             <string>Ubuntu-Light</string>
+            <string>Ubuntu-Light</string>
+            <string>Ubuntu-Light</string>
+            <string>Ubuntu-Light</string>
+            <string>Ubuntu-Light</string>
         </mutableArray>
         <mutableArray key="Ubuntu 500.ttf">
+            <string>Ubuntu-Medium</string>
+            <string>Ubuntu-Medium</string>
             <string>Ubuntu-Medium</string>
         </mutableArray>
         <mutableArray key="Ubuntu 700.ttf">
@@ -1049,7 +1055,7 @@ AND JOIN OUR 80,000+ EVENTS.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gD5-W6-326">
-                                <rect key="frame" x="190" y="495" width="220" height="33"/>
+                                <rect key="frame" x="190" y="515" width="220" height="33"/>
                                 <color key="backgroundColor" red="0.30980392159999998" green="0.31372549020000001" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="18"/>
                                 <state key="normal" title="  LOGIN WITH FACEBOOK  ">
@@ -1057,11 +1063,14 @@ AND JOIN OUR 80,000+ EVENTS.</string>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIM-7g-jxl">
-                                <rect key="frame" x="20" y="541" width="560" height="33"/>
+                                <rect key="frame" x="20" y="560" width="560" height="33"/>
                                 <fontDescription key="fontDescription" name="Ubuntu-Light" family="Ubuntu" pointSize="18"/>
                                 <state key="normal" title="DON'T WANT TO LOGIN?">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="qbL-AC-HFO" kind="presentation" modalTransitionStyle="flipHorizontal" id="htZ-Jz-mZO"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1073,7 +1082,7 @@ AND JOIN OUR 80,000+ EVENTS.</string>
                             <constraint firstItem="YiY-8v-LvM" firstAttribute="bottom" secondItem="ags-Pj-gyx" secondAttribute="bottomMargin" id="MoV-tU-n87"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kIM-7g-jxl" secondAttribute="trailing" id="QCz-d1-Pfe"/>
                             <constraint firstItem="ehy-oh-J28" firstAttribute="top" secondItem="ags-Pj-gyx" secondAttribute="centerY" multiplier="0.4" id="TGk-YM-yHg"/>
-                            <constraint firstItem="gD5-W6-326" firstAttribute="top" secondItem="ags-Pj-gyx" secondAttribute="centerY" multiplier="1.65" id="aZG-SE-S4o"/>
+                            <constraint firstItem="gD5-W6-326" firstAttribute="top" secondItem="ags-Pj-gyx" secondAttribute="centerY" multiplier="1.65" constant="20" id="aZG-SE-S4o"/>
                             <constraint firstItem="kIM-7g-jxl" firstAttribute="leading" secondItem="ags-Pj-gyx" secondAttribute="leadingMargin" id="bcU-gG-Mwu"/>
                             <constraint firstAttribute="leadingMargin" secondItem="z4j-dD-ADx" secondAttribute="leading" id="dVq-DI-ezc"/>
                             <constraint firstItem="gD5-W6-326" firstAttribute="centerX" secondItem="ags-Pj-gyx" secondAttribute="centerX" id="dyv-V0-PXv"/>
@@ -1082,14 +1091,164 @@ AND JOIN OUR 80,000+ EVENTS.</string>
                             <constraint firstAttribute="trailingMargin" secondItem="z4j-dD-ADx" secondAttribute="trailing" id="icz-qo-JrE"/>
                             <constraint firstItem="UtK-PW-RGr" firstAttribute="centerX" secondItem="ags-Pj-gyx" secondAttribute="centerX" id="lSK-Yx-xxp"/>
                             <constraint firstItem="UtK-PW-RGr" firstAttribute="bottom" secondItem="ags-Pj-gyx" secondAttribute="bottomMargin" constant="37" id="lT0-MR-prR"/>
-                            <constraint firstItem="kIM-7g-jxl" firstAttribute="top" secondItem="ags-Pj-gyx" secondAttribute="centerY" multiplier="1.8" constant="1" id="uUc-cc-Kn5"/>
+                            <constraint firstItem="kIM-7g-jxl" firstAttribute="top" secondItem="ags-Pj-gyx" secondAttribute="centerY" multiplier="1.8" constant="20" id="uUc-cc-Kn5"/>
                         </constraints>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="fbLoginButton" destination="gD5-W6-326" id="pgs-zV-cta"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7z5-NL-w9I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1270" y="-3726"/>
+        </scene>
+        <!--No Login 1-->
+        <scene sceneID="Ov0-s1-FOy">
+            <objects>
+                <viewController storyboardIdentifier="Failed Login" title="No Login 1" id="qbL-AC-HFO" customClass="TutorialViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ui4-ci-2OS"/>
+                        <viewControllerLayoutGuide type="bottom" id="SIp-hG-rMh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="82l-fZ-LNL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Onboard 4" translatesAutoresizingMaskIntoConstraints="NO" id="8zU-MF-FuU">
+                                <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="18" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bog-6J-aSN">
+                                <rect key="frame" x="169" y="30" width="262" height="286"/>
+                                <mutableString key="text">DANCEDEETS NEEDS YOU!
+
+Almost all our dance events are
+discovered through dancers who log in.
+
+When dancers login with Facebook,
+we can discover and share their events
+with the rest of the dance scene,
+helping bring people closer together.
+
+But without logged-in dancers,
+we’d have nothing to share,
+and dance promotion would be harder.
+
+So you can help DanceDeets,
+and help the dance culture,
+by logging in below.</mutableString>
+                                <fontDescription key="fontDescription" name="Ubuntu-Light" family="Ubuntu" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6I6-bM-AEx">
+                                <rect key="frame" x="200" y="528" width="199" height="33"/>
+                                <fontDescription key="fontDescription" name="Ubuntu-Light" family="Ubuntu" pointSize="18"/>
+                                <state key="normal" title="DON'T WANT TO LOGIN?">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="QhJ-8Q-gCD" kind="presentation" modalTransitionStyle="crossDissolve" id="dgO-87-7AR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYf-F4-ebi">
+                                <rect key="frame" x="190" y="482" width="220" height="33"/>
+                                <color key="backgroundColor" red="0.30980392159999998" green="0.31372549020000001" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="18"/>
+                                <state key="normal" title="  LOGIN WITH FACEBOOK  ">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8zU-MF-FuU" firstAttribute="top" secondItem="82l-fZ-LNL" secondAttribute="topMargin" id="1EZ-ER-AkW"/>
+                            <constraint firstItem="8zU-MF-FuU" firstAttribute="centerX" secondItem="82l-fZ-LNL" secondAttribute="centerX" id="3rl-aC-9nG"/>
+                            <constraint firstItem="hYf-F4-ebi" firstAttribute="top" secondItem="82l-fZ-LNL" secondAttribute="centerY" multiplier="1.65" constant="-13" id="89X-86-5YC"/>
+                            <constraint firstItem="6I6-bM-AEx" firstAttribute="centerX" secondItem="82l-fZ-LNL" secondAttribute="centerX" id="BXr-Mk-GYb"/>
+                            <constraint firstItem="6I6-bM-AEx" firstAttribute="top" secondItem="82l-fZ-LNL" secondAttribute="centerY" multiplier="1.8" constant="-12" id="Bw1-hr-89H"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="8zU-MF-FuU" secondAttribute="bottom" id="Exj-94-PQk"/>
+                            <constraint firstItem="Bog-6J-aSN" firstAttribute="top" secondItem="Ui4-ci-2OS" secondAttribute="bottom" constant="10" id="Il5-Tv-qdY"/>
+                            <constraint firstItem="Bog-6J-aSN" firstAttribute="centerX" secondItem="82l-fZ-LNL" secondAttribute="centerX" id="T42-r2-uO5"/>
+                            <constraint firstItem="hYf-F4-ebi" firstAttribute="centerX" secondItem="82l-fZ-LNL" secondAttribute="centerX" id="c63-Lx-DwR"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="fbLoginButton" destination="hYf-F4-ebi" id="IsV-33-Mi9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iL1-lc-fPq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1992" y="-3498"/>
+        </scene>
+        <!--No Login 2-->
+        <scene sceneID="X28-Kw-vJG">
+            <objects>
+                <viewController title="No Login 2" id="QhJ-8Q-gCD" customClass="TutorialViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Gib-A8-DoF"/>
+                        <viewControllerLayoutGuide type="bottom" id="wYK-s2-93f"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lPj-TY-JS5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Onboard 4" translatesAutoresizingMaskIntoConstraints="NO" id="Oce-Cl-jfd">
+                                <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyE-Yd-bEW">
+                                <rect key="frame" x="159" y="30" width="281" height="168.5"/>
+                                <string key="text">Sorry to hear you don’t want to login!
+
+You’re always welcome to use our website
+anytime, without any logins:
+http://www.dancedeets.com
+
+But unfortunately, we require that 
+you log in to use the mobile app.
+
+Hope you’ll forgive us!</string>
+                                <fontDescription key="fontDescription" name="Ubuntu-Light" family="Ubuntu" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AJg-3b-voh">
+                                <rect key="frame" x="232" y="527" width="135" height="33"/>
+                                <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="18"/>
+                                <state key="normal" title="GO TO WEBSITE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8FI-hX-fEE">
+                                <rect key="frame" x="194.5" y="482" width="211" height="33"/>
+                                <fontDescription key="fontDescription" name="Ubuntu-Light" family="Ubuntu" pointSize="18"/>
+                                <state key="normal" title="  LOGIN WITH FACEBOOK  ">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Oce-Cl-jfd" firstAttribute="bottom" secondItem="lPj-TY-JS5" secondAttribute="bottom" id="Cn1-l1-hse"/>
+                            <constraint firstItem="AJg-3b-voh" firstAttribute="top" secondItem="lPj-TY-JS5" secondAttribute="centerY" multiplier="1.8" constant="-13" id="Guf-MG-LFH"/>
+                            <constraint firstItem="8FI-hX-fEE" firstAttribute="top" secondItem="lPj-TY-JS5" secondAttribute="centerY" multiplier="1.65" constant="-13" id="OUW-fS-6Rv"/>
+                            <constraint firstItem="IyE-Yd-bEW" firstAttribute="centerX" secondItem="lPj-TY-JS5" secondAttribute="centerX" id="RU6-Jg-o4m"/>
+                            <constraint firstItem="IyE-Yd-bEW" firstAttribute="top" secondItem="Gib-A8-DoF" secondAttribute="bottom" constant="10" id="U6d-Ca-CkQ"/>
+                            <constraint firstItem="8FI-hX-fEE" firstAttribute="centerX" secondItem="lPj-TY-JS5" secondAttribute="centerX" id="X1Z-fk-GOf"/>
+                            <constraint firstItem="Oce-Cl-jfd" firstAttribute="top" secondItem="lPj-TY-JS5" secondAttribute="top" id="i5X-GZ-eWe"/>
+                            <constraint firstItem="AJg-3b-voh" firstAttribute="centerX" secondItem="lPj-TY-JS5" secondAttribute="centerX" id="oXb-kc-lPk"/>
+                            <constraint firstItem="Oce-Cl-jfd" firstAttribute="centerX" secondItem="lPj-TY-JS5" secondAttribute="centerX" id="tEm-Ng-Juu"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="fbLoginButton" destination="8FI-hX-fEE" id="y0f-PU-udc"/>
+                        <outlet property="websiteButton" destination="AJg-3b-voh" id="l7O-ni-5TX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y5D-eX-HQ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2656" y="-3479"/>
         </scene>
         <!--Tutorial 0-->
         <scene sceneID="Crt-ag-fKu">
@@ -1160,6 +1319,7 @@ AND JOIN OUR 80,000+ EVENTS.</string>
         <image name="Onboard 2" width="768" height="1024"/>
         <image name="Onboard 3" width="768" height="1024"/>
         <image name="Onboard 3 Text" width="768" height="1024"/>
+        <image name="Onboard 4" width="768" height="1024"/>
         <image name="addIcon" width="15" height="15"/>
         <image name="bottomPinIcon" width="32" height="32"/>
         <image name="calendarIcon" width="32" height="32"/>

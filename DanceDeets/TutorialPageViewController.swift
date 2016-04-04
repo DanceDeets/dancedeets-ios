@@ -10,7 +10,7 @@ import Foundation
 
 class TutorialPageViewController : UIPageViewController {
     private(set) lazy var orderedViewControllers: [UIViewController] = {
-        return [self.newColoredViewController(0),
+        return [//self.newColoredViewController(0),
                 self.newColoredViewController(1),
                 self.newColoredViewController(2),
                 self.newColoredViewController(3)
