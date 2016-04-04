@@ -916,10 +916,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Onboard 1" translatesAutoresizingMaskIntoConstraints="NO" id="eco-Uj-Qh3">
-                                <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
+                                <rect key="frame" x="-84" y="0.0" width="768" height="637"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Onboard 1 Text" translatesAutoresizingMaskIntoConstraints="NO" id="pbb-X3-AgW">
-                                <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
+                                <rect key="frame" x="-84" y="0.0" width="768" height="637"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAKE A TRIP:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oLj-op-uBw">
                                 <rect key="frame" x="20" y="60" width="560" height="27"/>
@@ -943,11 +943,11 @@ HIT UP DANCE EVENTS.</string>
                             <constraint firstItem="ESR-5k-ZJh" firstAttribute="top" secondItem="23K-w7-kfd" secondAttribute="centerY" multiplier="0.4" id="AHv-SU-5C3"/>
                             <constraint firstItem="eco-Uj-Qh3" firstAttribute="top" secondItem="23K-w7-kfd" secondAttribute="topMargin" id="Dja-A5-x8I"/>
                             <constraint firstItem="ESR-5k-ZJh" firstAttribute="leading" secondItem="23K-w7-kfd" secondAttribute="leadingMargin" id="Fqe-SM-kWh"/>
-                            <constraint firstItem="eco-Uj-Qh3" firstAttribute="bottom" secondItem="23K-w7-kfd" secondAttribute="bottomMargin" id="RM5-46-pfJ"/>
+                            <constraint firstItem="eco-Uj-Qh3" firstAttribute="bottom" secondItem="23K-w7-kfd" secondAttribute="bottomMargin" constant="37" id="RM5-46-pfJ"/>
                             <constraint firstItem="oLj-op-uBw" firstAttribute="leading" secondItem="23K-w7-kfd" secondAttribute="leadingMargin" id="bMe-io-hKc"/>
                             <constraint firstItem="oLj-op-uBw" firstAttribute="top" secondItem="23K-w7-kfd" secondAttribute="centerY" multiplier="0.2" id="fdU-mv-avO"/>
                             <constraint firstItem="pbb-X3-AgW" firstAttribute="top" secondItem="23K-w7-kfd" secondAttribute="topMargin" id="kF4-Mj-vSE"/>
-                            <constraint firstItem="pbb-X3-AgW" firstAttribute="bottom" secondItem="23K-w7-kfd" secondAttribute="bottomMargin" id="mCV-LF-Vfd"/>
+                            <constraint firstItem="pbb-X3-AgW" firstAttribute="bottom" secondItem="23K-w7-kfd" secondAttribute="bottomMargin" constant="37" id="mCV-LF-Vfd"/>
                             <constraint firstItem="eco-Uj-Qh3" firstAttribute="centerX" secondItem="23K-w7-kfd" secondAttribute="centerX" id="n92-If-TMr"/>
                             <constraint firstItem="pbb-X3-AgW" firstAttribute="centerX" secondItem="23K-w7-kfd" secondAttribute="centerX" id="ve3-ag-lr0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oLj-op-uBw" secondAttribute="trailing" id="wPB-bA-TL9"/>
@@ -973,7 +973,7 @@ HIT UP DANCE EVENTS.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Onboard 2" translatesAutoresizingMaskIntoConstraints="NO" id="Yz2-FO-sj8">
-                                <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
+                                <rect key="frame" x="-84" y="0.0" width="768" height="637"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LEARN TO DANCE:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N4J-Kp-S73">
                                 <rect key="frame" x="20" y="60" width="560" height="27"/>
@@ -1000,7 +1000,7 @@ HIT THE CLUBS.</string>
                             <constraint firstAttribute="trailingMargin" secondItem="KAu-IQ-wsX" secondAttribute="trailing" id="Hbv-zL-RFb"/>
                             <constraint firstItem="N4J-Kp-S73" firstAttribute="leading" secondItem="hnF-We-WRo" secondAttribute="leadingMargin" id="Nxh-xj-QKn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="N4J-Kp-S73" secondAttribute="trailing" id="d0b-wF-yND"/>
-                            <constraint firstItem="Yz2-FO-sj8" firstAttribute="bottom" secondItem="hnF-We-WRo" secondAttribute="bottomMargin" id="lf3-tJ-Xg8"/>
+                            <constraint firstItem="Yz2-FO-sj8" firstAttribute="bottom" secondItem="hnF-We-WRo" secondAttribute="bottomMargin" constant="37" id="lf3-tJ-Xg8"/>
                             <constraint firstItem="Yz2-FO-sj8" firstAttribute="centerX" secondItem="hnF-We-WRo" secondAttribute="centerX" id="mLS-sB-2uv"/>
                             <constraint firstItem="KAu-IQ-wsX" firstAttribute="top" secondItem="hnF-We-WRo" secondAttribute="centerY" multiplier="0.4" id="nnB-TI-kWn"/>
                             <constraint firstItem="Yz2-FO-sj8" firstAttribute="top" secondItem="hnF-We-WRo" secondAttribute="topMargin" id="s2D-H2-8WX"/>
@@ -1025,7 +1025,7 @@ HIT THE CLUBS.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Onboard 3" translatesAutoresizingMaskIntoConstraints="NO" id="UtK-PW-RGr">
-                                <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
+                                <rect key="frame" x="-84" y="0.0" width="768" height="637"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Onboard 3 Text" translatesAutoresizingMaskIntoConstraints="NO" id="YiY-8v-LvM">
                                 <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
@@ -1081,7 +1081,7 @@ AND JOIN OUR 80,000+ EVENTS.</string>
                             <constraint firstAttribute="trailingMargin" secondItem="ehy-oh-J28" secondAttribute="trailing" id="fFG-kC-gGr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="z4j-dD-ADx" secondAttribute="trailing" id="icz-qo-JrE"/>
                             <constraint firstItem="UtK-PW-RGr" firstAttribute="centerX" secondItem="ags-Pj-gyx" secondAttribute="centerX" id="lSK-Yx-xxp"/>
-                            <constraint firstItem="UtK-PW-RGr" firstAttribute="bottom" secondItem="ags-Pj-gyx" secondAttribute="bottomMargin" id="lT0-MR-prR"/>
+                            <constraint firstItem="UtK-PW-RGr" firstAttribute="bottom" secondItem="ags-Pj-gyx" secondAttribute="bottomMargin" constant="37" id="lT0-MR-prR"/>
                             <constraint firstItem="kIM-7g-jxl" firstAttribute="top" secondItem="ags-Pj-gyx" secondAttribute="centerY" multiplier="1.8" constant="1" id="uUc-cc-Kn5"/>
                         </constraints>
                     </view>
@@ -1104,10 +1104,10 @@ AND JOIN OUR 80,000+ EVENTS.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Mii-J3-C7o">
-                                <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
+                                <rect key="frame" x="-84" y="0.0" width="768" height="637"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenText" translatesAutoresizingMaskIntoConstraints="NO" id="iFZ-D2-hCk">
-                                <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
+                                <rect key="frame" x="-84" y="0.0" width="768" height="637"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1115,12 +1115,12 @@ AND JOIN OUR 80,000+ EVENTS.</string>
                             <accessibilityTraits key="traits" button="YES"/>
                         </accessibility>
                         <constraints>
-                            <constraint firstItem="Mii-J3-C7o" firstAttribute="bottom" secondItem="IhN-7x-uyl" secondAttribute="bottom" id="J3P-sI-XrG"/>
+                            <constraint firstItem="Mii-J3-C7o" firstAttribute="bottom" secondItem="IhN-7x-uyl" secondAttribute="bottom" constant="37" id="J3P-sI-XrG"/>
                             <constraint firstItem="Mii-J3-C7o" firstAttribute="top" secondItem="IhN-7x-uyl" secondAttribute="top" id="OEi-co-kmK"/>
                             <constraint firstItem="Mii-J3-C7o" firstAttribute="centerX" secondItem="IhN-7x-uyl" secondAttribute="centerX" id="S3t-gM-2j2"/>
                             <constraint firstItem="iFZ-D2-hCk" firstAttribute="top" secondItem="IhN-7x-uyl" secondAttribute="topMargin" id="tUL-Cr-knQ"/>
                             <constraint firstItem="iFZ-D2-hCk" firstAttribute="centerX" secondItem="IhN-7x-uyl" secondAttribute="centerX" id="uT6-7g-1xf"/>
-                            <constraint firstItem="iFZ-D2-hCk" firstAttribute="bottom" secondItem="IhN-7x-uyl" secondAttribute="bottom" id="zSi-Oy-Aeq"/>
+                            <constraint firstItem="iFZ-D2-hCk" firstAttribute="bottom" secondItem="IhN-7x-uyl" secondAttribute="bottom" constant="37" id="zSi-Oy-Aeq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TIG-13-daa"/>
