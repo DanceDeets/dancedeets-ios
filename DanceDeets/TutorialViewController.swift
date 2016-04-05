@@ -26,13 +26,27 @@ class TutorialViewController : UIViewController {
         return ["public_profile", "email", "user_friends", "user_events"]
     }
 
+    func loginResult(result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void {
+        if error != nil {
+            AnalyticsUtil.track("Login - Error Code", ["Code": String(error.code)])
+        }
+        if (error == nil && result.token != nil) {
+            AnalyticsUtil.track("Login - Completed")
+            performSegueWithIdentifier("postLogin", sender: self)
+
+            //presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            // update token on back
+            // AnalyticsUtil.login() ??
+            ServerInterface.sharedInstance.updateFacebookToken()
+        } else {
+            AnalyticsUtil.track("Login - Not Logged In")
+        }
+    }
+
     func loginButtonClicked() {
         AnalyticsUtil.track("Login - FBLogin Button Pressed")
         let login = FBSDKLoginManager()
-        login.logInWithReadPermissions(getDefaultFacebookPermissions(), fromViewController:self, handler: {  (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
-            print("Logged in??")
-            ServerInterface.sharedInstance.updateFacebookToken()
-        });
+        login.logInWithReadPermissions(getDefaultFacebookPermissions(), fromViewController:self, handler: self.loginResult);
     }
 
     func websiteButtonClicked() {

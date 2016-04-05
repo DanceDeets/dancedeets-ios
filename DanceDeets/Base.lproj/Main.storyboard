@@ -907,7 +907,7 @@
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aYa-IG-tAm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="752" y="-2943"/>
+            <point key="canvasLocation" x="192" y="-2943"/>
         </scene>
         <!--Tutorial 1-->
         <scene sceneID="tc5-BE-U8O">
@@ -1097,6 +1097,7 @@ AND JOIN OUR 80,000+ EVENTS.</string>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="fbLoginButton" destination="gD5-W6-326" id="pgs-zV-cta"/>
+                        <segue destination="EoL-DY-p6g" kind="presentation" identifier="postLogin" modalTransitionStyle="flipHorizontal" id="bMO-Am-sdz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7z5-NL-w9I" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1176,6 +1177,7 @@ by logging in below.</mutableString>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="fbLoginButton" destination="hYf-F4-ebi" id="IsV-33-Mi9"/>
+                        <segue destination="EoL-DY-p6g" kind="presentation" identifier="postLogin" modalTransitionStyle="flipHorizontal" id="a4Y-v4-dbk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iL1-lc-fPq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1244,6 +1246,7 @@ Hope you’ll forgive us!</string>
                     <connections>
                         <outlet property="fbLoginButton" destination="8FI-hX-fEE" id="y0f-PU-udc"/>
                         <outlet property="websiteButton" destination="AJg-3b-voh" id="l7O-ni-5TX"/>
+                        <segue destination="EoL-DY-p6g" kind="presentation" modalTransitionStyle="flipHorizontal" id="yxP-wi-kvz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y5D-eX-HQ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1332,4 +1335,7 @@ Hope you’ll forgive us!</string>
         <image name="settingsIcon" width="39" height="39"/>
         <image name="streamBackground" width="375" height="667"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="bMO-Am-sdz"/>
+    </inferredMetricsTieBreakers>
 </document>
