@@ -78,8 +78,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if(indexPath.section == TOOLS_SECTION){
-            if(indexPath.row == 0){
+        if (indexPath.section == TOOLS_SECTION) {
+            if (indexPath.row == 0) {
                 let cell = tableView.dequeueReusableCellWithIdentifier("sendFeedbackCell", forIndexPath: indexPath)
                 return cell
             } else if(indexPath.row == 1) {
@@ -89,8 +89,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath)
                 return cell
             }
-            
-        }else{
+        } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath)
             return cell
         }
@@ -140,7 +139,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 AnalyticsUtil.logout()
                 FBSDKAccessToken.setCurrentAccessToken(nil)
                 FBSDKProfile.setCurrentProfile(nil)
-                navigationController?.popViewControllerAnimated(true)
+                performSegueWithIdentifier("postLogout", sender: self)
             }
         }
     }

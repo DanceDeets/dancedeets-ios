@@ -396,13 +396,8 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5E-47-ysN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="FyZ-Au-Bku">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
             </objects>
-            <point key="canvasLocation" x="136" y="-1990"/>
+            <point key="canvasLocation" x="32" y="-2066"/>
         </scene>
         <!--Event Info View Controller-->
         <scene sceneID="mXk-BB-hTT">
@@ -831,73 +826,13 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="nbK-7C-w60" id="3FK-rS-uLL"/>
+                        <segue destination="f6x-l0-xXv" kind="unwind" identifier="postLogout" unwindAction="unwindToTutorial:" id="2eq-cK-9NO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PZ6-Yr-WYy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="f6x-l0-xXv" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="136" y="-1220"/>
-        </scene>
-        <!--Face Book Login View Controller-->
-        <scene sceneID="w5m-Gb-xdx">
-            <objects>
-                <viewController storyboardIdentifier="faceBookLoginViewController" id="wgh-qC-ZRz" customClass="FaceBookLoginViewController" customModule="DanceDeets" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="4yA-So-u3K"/>
-                        <viewControllerLayoutGuide type="bottom" id="ftz-mG-Cbs"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="KvK-Th-Fj8">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LandingPage" translatesAutoresizingMaskIntoConstraints="NO" id="D9O-AY-JoL">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Disclaimer" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9EQ-vO-XNU">
-                                <rect key="frame" x="160" y="470" width="280" height="40"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="8s5-OX-z3O"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                            </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="se0-3f-EIf" customClass="FBSDKLoginButton">
-                                <rect key="frame" x="160" y="400" width="280" height="60"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="8zD-x1-Kyp"/>
-                                    <constraint firstAttribute="width" constant="280" id="c2V-Gx-aBw"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="D9O-AY-JoL" secondAttribute="bottom" id="BlD-vT-ysg"/>
-                            <constraint firstItem="9EQ-vO-XNU" firstAttribute="width" secondItem="se0-3f-EIf" secondAttribute="width" id="KvL-Tw-Krh"/>
-                            <constraint firstItem="9EQ-vO-XNU" firstAttribute="top" secondItem="se0-3f-EIf" secondAttribute="bottom" constant="10" id="OL9-42-6fO"/>
-                            <constraint firstItem="D9O-AY-JoL" firstAttribute="leading" secondItem="KvK-Th-Fj8" secondAttribute="leading" id="cbZ-OW-1XZ"/>
-                            <constraint firstItem="9EQ-vO-XNU" firstAttribute="centerX" secondItem="se0-3f-EIf" secondAttribute="centerX" id="eGP-sM-Yc4"/>
-                            <constraint firstItem="D9O-AY-JoL" firstAttribute="top" secondItem="KvK-Th-Fj8" secondAttribute="topMargin" id="j8Z-bx-IU4"/>
-                            <constraint firstAttribute="centerX" secondItem="se0-3f-EIf" secondAttribute="centerX" id="re2-WZ-pTy"/>
-                            <constraint firstItem="D9O-AY-JoL" firstAttribute="bottom" secondItem="KvK-Th-Fj8" secondAttribute="bottomMargin" id="sZS-X2-qlp"/>
-                            <constraint firstAttribute="trailing" secondItem="D9O-AY-JoL" secondAttribute="trailing" id="z0W-n9-c4C"/>
-                            <constraint firstItem="ftz-mG-Cbs" firstAttribute="top" secondItem="se0-3f-EIf" secondAttribute="bottom" constant="140" id="zcc-jM-MUS"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="BlD-vT-ysg"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <connections>
-                        <outlet property="disclaimerTextView" destination="9EQ-vO-XNU" id="DPC-pY-lAJ"/>
-                        <outlet property="fbLoginView" destination="se0-3f-EIf" id="59Y-v6-kyZ"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Bmy-Dl-kqu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-736" y="-1195"/>
         </scene>
         <!--Tutorial Page View Controller-->
         <scene sceneID="taM-yk-Tsd">
@@ -907,7 +842,7 @@
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aYa-IG-tAm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="192" y="-2943"/>
+            <point key="canvasLocation" x="-1522" y="-3711"/>
         </scene>
         <!--Tutorial 1-->
         <scene sceneID="tc5-BE-U8O">
@@ -1107,7 +1042,7 @@ AND JOIN OUR 80,000+ EVENTS.</string>
         <!--No Login 1-->
         <scene sceneID="Ov0-s1-FOy">
             <objects>
-                <viewController storyboardIdentifier="Failed Login" title="No Login 1" id="qbL-AC-HFO" customClass="TutorialViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="No Login" title="No Login 1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qbL-AC-HFO" customClass="TutorialViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ui4-ci-2OS"/>
                         <viewControllerLayoutGuide type="bottom" id="SIp-hG-rMh"/>
@@ -1187,7 +1122,7 @@ by logging in below.</mutableString>
         <!--No Login 2-->
         <scene sceneID="X28-Kw-vJG">
             <objects>
-                <viewController title="No Login 2" id="QhJ-8Q-gCD" customClass="TutorialViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="No Login 2" title="No Login 2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QhJ-8Q-gCD" customClass="TutorialViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Gib-A8-DoF"/>
                         <viewControllerLayoutGuide type="bottom" id="wYK-s2-93f"/>
@@ -1199,22 +1134,6 @@ by logging in below.</mutableString>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Onboard 4" translatesAutoresizingMaskIntoConstraints="NO" id="Oce-Cl-jfd">
                                 <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyE-Yd-bEW">
-                                <rect key="frame" x="159" y="30" width="281" height="168.5"/>
-                                <string key="text">Sorry to hear you don’t want to login!
-
-You’re always welcome to use our website
-anytime, without any logins:
-http://www.dancedeets.com
-
-But unfortunately, we require that 
-you log in to use the mobile app.
-
-Hope you’ll forgive us!</string>
-                                <fontDescription key="fontDescription" name="Ubuntu-Light" family="Ubuntu" pointSize="15"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AJg-3b-voh">
                                 <rect key="frame" x="232" y="527" width="135" height="33"/>
                                 <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="18"/>
@@ -1223,25 +1142,52 @@ Hope you’ll forgive us!</string>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8FI-hX-fEE">
-                                <rect key="frame" x="194.5" y="482" width="211" height="33"/>
+                                <rect key="frame" x="194" y="482" width="211" height="33"/>
                                 <fontDescription key="fontDescription" name="Ubuntu-Light" family="Ubuntu" pointSize="18"/>
                                 <state key="normal" title="  LOGIN WITH FACEBOOK  ">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jV1-Kn-oyi">
+                                <rect key="frame" x="170.5" y="30" width="259" height="188.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" link="YES"/>
+                                </accessibility>
+                                <string key="text">Sorry to hear you don’t want to login!
+
+You can always use our website,
+without any login requirements:
+http://www.dancedeets.com/
+
+But unfortunately, we require that 
+you log in to use the mobile app.
+
+Hope you’ll forgive us!</string>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Ubuntu-Light" family="Ubuntu" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Oce-Cl-jfd" firstAttribute="bottom" secondItem="lPj-TY-JS5" secondAttribute="bottom" id="Cn1-l1-hse"/>
+                            <constraint firstItem="jV1-Kn-oyi" firstAttribute="top" secondItem="Gib-A8-DoF" secondAttribute="bottom" constant="10" id="GeG-1D-q84"/>
                             <constraint firstItem="AJg-3b-voh" firstAttribute="top" secondItem="lPj-TY-JS5" secondAttribute="centerY" multiplier="1.8" constant="-13" id="Guf-MG-LFH"/>
+                            <constraint firstItem="jV1-Kn-oyi" firstAttribute="width" secondItem="Oce-Cl-jfd" secondAttribute="width" id="JKp-Rh-7fM"/>
                             <constraint firstItem="8FI-hX-fEE" firstAttribute="top" secondItem="lPj-TY-JS5" secondAttribute="centerY" multiplier="1.65" constant="-13" id="OUW-fS-6Rv"/>
-                            <constraint firstItem="IyE-Yd-bEW" firstAttribute="centerX" secondItem="lPj-TY-JS5" secondAttribute="centerX" id="RU6-Jg-o4m"/>
-                            <constraint firstItem="IyE-Yd-bEW" firstAttribute="top" secondItem="Gib-A8-DoF" secondAttribute="bottom" constant="10" id="U6d-Ca-CkQ"/>
                             <constraint firstItem="8FI-hX-fEE" firstAttribute="centerX" secondItem="lPj-TY-JS5" secondAttribute="centerX" id="X1Z-fk-GOf"/>
                             <constraint firstItem="Oce-Cl-jfd" firstAttribute="top" secondItem="lPj-TY-JS5" secondAttribute="top" id="i5X-GZ-eWe"/>
                             <constraint firstItem="AJg-3b-voh" firstAttribute="centerX" secondItem="lPj-TY-JS5" secondAttribute="centerX" id="oXb-kc-lPk"/>
                             <constraint firstItem="Oce-Cl-jfd" firstAttribute="centerX" secondItem="lPj-TY-JS5" secondAttribute="centerX" id="tEm-Ng-Juu"/>
+                            <constraint firstItem="jV1-Kn-oyi" firstAttribute="centerX" secondItem="lPj-TY-JS5" secondAttribute="centerX" id="uBj-Bm-C52"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="JKp-Rh-7fM"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="fbLoginButton" destination="8FI-hX-fEE" id="y0f-PU-udc"/>
@@ -1304,17 +1250,15 @@ Hope you’ll forgive us!</string>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="wgh-qC-ZRz" kind="presentation" identifier="presentFacebookLogin" id="CAZ-Zs-tc1"/>
                         <segue destination="SHz-D2-3VC" kind="relationship" relationship="rootViewController" id="8Jx-mX-ePC"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dea-gI-tMM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-780" y="-2053"/>
+            <point key="canvasLocation" x="-2442" y="-3541"/>
         </scene>
     </scenes>
     <resources>
-        <image name="LandingPage" width="375" height="667"/>
         <image name="LaunchScreen" width="768" height="1024"/>
         <image name="LaunchScreenText" width="768" height="1024"/>
         <image name="Onboard 1" width="768" height="1024"/>
@@ -1336,6 +1280,6 @@ Hope you’ll forgive us!</string>
         <image name="streamBackground" width="375" height="667"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bMO-Am-sdz"/>
+        <segue reference="yxP-wi-kvz"/>
     </inferredMetricsTieBreakers>
 </document>

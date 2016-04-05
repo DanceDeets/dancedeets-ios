@@ -18,6 +18,11 @@ class TutorialViewController : UIViewController {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 
+        AnalyticsUtil.track("Login - Not Logged In")
+        if let id = restorationIdentifier {
+            AnalyticsUtil.track("Tutorial - " + id)
+        }
+
         fbLoginButton?.addTarget(self, action: #selector(loginButtonClicked), forControlEvents: .TouchUpInside)
         websiteButton?.addTarget(self, action: #selector(websiteButtonClicked), forControlEvents: .TouchUpInside)
     }
@@ -33,13 +38,8 @@ class TutorialViewController : UIViewController {
         if (error == nil && result.token != nil) {
             AnalyticsUtil.track("Login - Completed")
             performSegueWithIdentifier("postLogin", sender: self)
-
-            //presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-            // update token on back
-            // AnalyticsUtil.login() ??
+            AnalyticsUtil.login()
             ServerInterface.sharedInstance.updateFacebookToken()
-        } else {
-            AnalyticsUtil.track("Login - Not Logged In")
         }
     }
 
