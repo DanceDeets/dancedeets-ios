@@ -3,7 +3,7 @@
 //  DanceDeets
 //
 //  Created by LambertMike on 2016/04/06.
-//  Copyright © 2016年 david.xiang. All rights reserved.
+//  Copyright © 2016年 DanceDeets. All rights reserved.
 //
 
 import Foundation
@@ -14,12 +14,15 @@ class LoadingViewController : UIViewController {
 
 
     @IBAction func unwindToTop(segue: UIStoryboardSegue) {
-        print("HEEEEEEEEEEY")
     }
 
     override func viewDidLoad() {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
+    }
+
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -39,7 +42,7 @@ class LoadingViewController : UIViewController {
         CLSNSLogv("observeTokenChange, token is %@", getVaList([token != nil ? token : "nil"]))
         // No token, send them to the tutorial
         if token == nil {
-            showTutorial();
+            waitForClickToShowTutorial();
         } else {
             let now = NSDate()
             let age = now.timeIntervalSinceDate(token.refreshDate)
@@ -99,6 +102,13 @@ class LoadingViewController : UIViewController {
         login.logInWithReadPermissions(["public_profile", "email", "user_friends", "user_events"], fromViewController:self, handler: self.onLoginFinished);
     }
 
+    func waitForClickToShowTutorial() {
+        CLSNSLogv("%@", getVaList(["waitForClickToShowTutorial"]))
+
+        let tapGesture = UITapGestureRecognizer(target:self, action:#selector(showTutorial))
+        tapGesture.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(tapGesture)
+    }
     func showTutorial() {
         CLSNSLogv("%@", getVaList(["showTutorial"]))
         performSegueWithIdentifier("showTutorial", sender: self)
