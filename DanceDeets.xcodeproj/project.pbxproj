@@ -225,12 +225,9 @@
 			isa = PBXGroup;
 			children = (
 				1DC07C2D1BC903E5004AB48C /* Localizable.strings */,
+				1D0AEAE41CAD2A1000F51D87 /* Images.xcassets */,
 				1D8856C519CDE510005FFDB2 /* LaunchScreen.xib */,
 				1D8856C019CDE510005FFDB2 /* Main.storyboard */,
-				1D0AEAEA1CAD623A00F51D87 /* SplashViewController.swift */,
-				1DDEE4F51CAA7AE10082B876 /* TutorialViewController.swift */,
-				1DDEE4F31CAA6BC20082B876 /* TutorialPageViewController.swift */,
-				1D608B3C1CB4F1FA00A7E401 /* LoadingViewController.swift */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -257,6 +254,7 @@
 		1D19871D1A2A950A004156B2 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				1DD6A9921C0327D900F63D35 /* EventShareButton.swift */,
 				1D015B481AD21E0500DBC905 /* EventListItemTableViewCell.swift */,
 				1DBA3F681A4BAA7600842486 /* SettingsCell.swift */,
 				1D9E3D361BFA8E9F001F4D45 /* OneboxListItemTableViewCell.swift */,
@@ -290,6 +288,17 @@
 			name = "ListView Components";
 			sourceTree = "<group>";
 		};
+		1D608B3E1CB546ED00A7E401 /* Startup Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1D0AEAEA1CAD623A00F51D87 /* SplashViewController.swift */,
+				1DDEE4F51CAA7AE10082B876 /* TutorialViewController.swift */,
+				1DDEE4F31CAA6BC20082B876 /* TutorialPageViewController.swift */,
+				1D608B3C1CB4F1FA00A7E401 /* LoadingViewController.swift */,
+			);
+			name = "Startup Controllers";
+			sourceTree = "<group>";
+		};
 		1D8856AE19CDE510005FFDB2 = {
 			isa = PBXGroup;
 			children = (
@@ -313,13 +322,13 @@
 		1D8856B919CDE510005FFDB2 /* DanceDeets */ = {
 			isa = PBXGroup;
 			children = (
-				1DD6A9921C0327D900F63D35 /* EventShareButton.swift */,
 				1D11311A1B4587A7001CBEDE /* Interface */,
-				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
 				1DDEE4EB1CA7D6310082B876 /* AppStartup.swift */,
 				1D95547B1BB3C7E500241F38 /* EventManager */,
 				1DAE2C1E1A3D063300F03AD1 /* ServerInterface.swift */,
+				1D8856BC19CDE510005FFDB2 /* AppDelegate.swift */,
 				1D5888FB1BB7669C00E70626 /* ListView Components */,
+				1D608B3E1CB546ED00A7E401 /* Startup Controllers */,
 				1D8A063E19CDE5D9004607B6 /* View Controllers */,
 				1DB901C619E099810018B434 /* Extensions and Utilities */,
 				1D19871D1A2A950A004156B2 /* Custom Views */,
@@ -333,7 +342,6 @@
 		1D8856BA19CDE510005FFDB2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1D0AEAE41CAD2A1000F51D87 /* Images.xcassets */,
 				1D43346619D736EF001A5381 /* DanceDeets-Bridging-Header.h */,
 				1D43347219D7551D001A5381 /* Fonts */,
 				1D8856BB19CDE510005FFDB2 /* Info.plist */,
