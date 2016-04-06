@@ -38,14 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplication.sharedApplication().performSelector(Selector("setApplicationBadgeString:"), withObject:"β");
         #endif
 
+        CLSNSLogv("Google Mobile Ads SDK version: %@", getVaList([DFPRequest.sdkVersion()]))
 
-        FBSDKLoginButton.self
-        FBSDKProfilePictureView.self
-        DFPRequest.sdkVersion()
-
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         FBSDKProfile.enableUpdatesOnAccessTokenChange(true)
-        
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+
         // ios url cache defaults to 512KB/10MB. The cover photos can get pretty big so up the defaults
         let sharedURLCache = NSURLCache(memoryCapacity: urlCacheMemoryCapacityMB*1024*1024,
             diskCapacity: urlCacheDiskCapacityMB*1024*1024, diskPath: nil)
@@ -74,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 AppStartup.loadEventData(eventId)
             }
         }
+        FBSDKProfile.enableUpdatesOnAccessTokenChange(true)
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 

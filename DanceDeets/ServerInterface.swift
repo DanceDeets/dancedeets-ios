@@ -57,7 +57,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
 
         var geocodeString:String = ""
         if let placemark = optionalPlacemark {
-            CLSLogv("%@", getVaList(["ServerInterface.addressFound: placemark: \(placemark.description)"]))
+            CLSNSLogv("%@", getVaList(["ServerInterface.addressFound: placemark: \(placemark.description)"]))
             // set up a display address
             if let lines = placemark.addressDictionary?["FormattedAddressLines"] as? [String] {
                 for line in lines {
@@ -68,7 +68,6 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         }
 
         // construct payload
-        FBSDKAccessToken.currentAccessToken()
         if let tokenData = FBSDKAccessToken.currentAccessToken() {
             let expiration = tokenData.expirationDate
             let accessToken = tokenData.tokenString

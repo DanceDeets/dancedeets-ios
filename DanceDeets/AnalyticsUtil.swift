@@ -39,7 +39,7 @@ public class AnalyticsUtil {
             Crashlytics.sharedInstance().setUserEmail(user["email"] as? String)
             Crashlytics.sharedInstance().setUserIdentifier(user["id"] as? String)
             Crashlytics.sharedInstance().setUserName(user["name"] as? String)
-            CLSLogv("User Info %@: %@: %@", getVaList([
+            CLSNSLogv("User Info %@: %@: %@", getVaList([
                 user["id"] as? String ?? "Unknown ID",
                 user["name"] as? String ?? "Unknown Name",
                 user["email"] as? String ?? "Unknown Email",

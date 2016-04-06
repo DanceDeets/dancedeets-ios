@@ -217,7 +217,7 @@ public class Event: NSObject {
     
     public class func loadEventsForLocation(location:String, withKeywords keyword:String, completion: ((SearchResults?, NSError?)->Void)) -> Void
     {
-        CLSLogv("%@", getVaList(["Search Events: \(location): \(keyword ?? "")"]))
+        CLSNSLogv("%@", getVaList(["Search Events: \(location): \(keyword ?? "")"]))
         AnalyticsUtil.track("Search Events", [
             "Location": location,
             "Keywords": keyword ?? "",

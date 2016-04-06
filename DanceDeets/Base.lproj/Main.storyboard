@@ -53,7 +53,7 @@
         <!--Event List View-->
         <scene sceneID="8H4-gb-7Ka">
             <objects>
-                <viewController id="EoL-DY-p6g" userLabel="Event List View" customClass="EventStreamViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EventListView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="EoL-DY-p6g" userLabel="Event List View" customClass="EventStreamViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hh4-6X-ZNH"/>
                         <viewControllerLayoutGuide type="bottom" id="aJB-fk-8dV"/>
@@ -826,7 +826,7 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="nbK-7C-w60" id="3FK-rS-uLL"/>
-                        <segue destination="f6x-l0-xXv" kind="unwind" identifier="postLogout" unwindAction="unwindToTutorial:" id="2eq-cK-9NO"/>
+                        <segue destination="f6x-l0-xXv" kind="unwind" identifier="postLogout" unwindAction="unwindToTop:" id="2eq-cK-9NO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PZ6-Yr-WYy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -842,7 +842,7 @@
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aYa-IG-tAm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1522" y="-3711"/>
+            <point key="canvasLocation" x="-832" y="-3759"/>
         </scene>
         <!--Tutorial 1-->
         <scene sceneID="tc5-BE-U8O">
@@ -1084,7 +1084,7 @@ by logging in below.</mutableString>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="QhJ-8Q-gCD" kind="presentation" modalTransitionStyle="crossDissolve" id="dgO-87-7AR"/>
+                                    <segue destination="QhJ-8Q-gCD" kind="presentation" identifier="noLogin2" modalTransitionStyle="crossDissolve" id="dgO-87-7AR"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYf-F4-ebi">
@@ -1199,10 +1199,10 @@ Hope you’ll forgive us!</string>
             </objects>
             <point key="canvasLocation" x="2656" y="-3479"/>
         </scene>
-        <!--Tutorial 0-->
+        <!--Splash Screen-->
         <scene sceneID="Crt-ag-fKu">
             <objects>
-                <viewController storyboardIdentifier="Tutorial0ViewController" title="Splash Screen" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="75S-6B-mVR" userLabel="Tutorial 0" customClass="TutorialViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Splash Screen" extendedLayoutIncludesOpaqueBars="YES" id="75S-6B-mVR" customClass="LoadingViewController" customModule="DanceDeets" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0jQ-sR-zqv"/>
                         <viewControllerLayoutGuide type="bottom" id="psT-4R-uO7"/>
@@ -1212,10 +1212,10 @@ Hope you’ll forgive us!</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Mii-J3-C7o">
-                                <rect key="frame" x="-84" y="0.0" width="768" height="637"/>
+                                <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenText" translatesAutoresizingMaskIntoConstraints="NO" id="iFZ-D2-hCk">
-                                <rect key="frame" x="-84" y="0.0" width="768" height="637"/>
+                                <rect key="frame" x="-84" y="0.0" width="768" height="600"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1223,21 +1223,25 @@ Hope you’ll forgive us!</string>
                             <accessibilityTraits key="traits" button="YES"/>
                         </accessibility>
                         <constraints>
-                            <constraint firstItem="Mii-J3-C7o" firstAttribute="bottom" secondItem="IhN-7x-uyl" secondAttribute="bottom" constant="37" id="J3P-sI-XrG"/>
+                            <constraint firstItem="Mii-J3-C7o" firstAttribute="bottom" secondItem="IhN-7x-uyl" secondAttribute="bottom" id="J3P-sI-XrG"/>
                             <constraint firstItem="Mii-J3-C7o" firstAttribute="top" secondItem="IhN-7x-uyl" secondAttribute="top" id="OEi-co-kmK"/>
                             <constraint firstItem="Mii-J3-C7o" firstAttribute="centerX" secondItem="IhN-7x-uyl" secondAttribute="centerX" id="S3t-gM-2j2"/>
                             <constraint firstItem="iFZ-D2-hCk" firstAttribute="top" secondItem="IhN-7x-uyl" secondAttribute="topMargin" id="tUL-Cr-knQ"/>
                             <constraint firstItem="iFZ-D2-hCk" firstAttribute="centerX" secondItem="IhN-7x-uyl" secondAttribute="centerX" id="uT6-7g-1xf"/>
-                            <constraint firstItem="iFZ-D2-hCk" firstAttribute="bottom" secondItem="IhN-7x-uyl" secondAttribute="bottom" constant="37" id="zSi-Oy-Aeq"/>
+                            <constraint firstItem="iFZ-D2-hCk" firstAttribute="bottom" secondItem="IhN-7x-uyl" secondAttribute="bottom" id="zSi-Oy-Aeq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TIG-13-daa"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <segue destination="SHz-D2-3VC" kind="presentation" identifier="showTutorial" modalTransitionStyle="crossDissolve" id="Wlv-Fj-D2B"/>
+                        <segue destination="EoL-DY-p6g" kind="presentation" identifier="showList" modalTransitionStyle="flipHorizontal" id="iUI-CA-CxW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lzH-Ou-h4u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-788" y="-3745"/>
+            <point key="canvasLocation" x="-1663" y="-3521"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IhU-fo-6TN">
@@ -1250,7 +1254,7 @@ Hope you’ll forgive us!</string>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="SHz-D2-3VC" kind="relationship" relationship="rootViewController" id="8Jx-mX-ePC"/>
+                        <segue destination="75S-6B-mVR" kind="relationship" relationship="rootViewController" id="Kq5-JU-Ai8"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dea-gI-tMM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1280,6 +1284,6 @@ Hope you’ll forgive us!</string>
         <image name="streamBackground" width="375" height="667"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="yxP-wi-kvz"/>
+        <segue reference="iUI-CA-CxW"/>
     </inferredMetricsTieBreakers>
 </document>

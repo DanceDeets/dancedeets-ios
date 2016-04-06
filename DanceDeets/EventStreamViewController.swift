@@ -105,7 +105,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        checkFaceBookToken()
+        adBar?.setupAccessToken()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
@@ -161,7 +161,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
 
     func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
         if let placemark = optionalPlacemark {
-            CLSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler placemark: \(placemark.description)"]))
+            CLSNSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler placemark: \(placemark.description)"]))
             let fields = [placemark.locality, placemark.administrativeArea, placemark.country]
             let setFields = fields.filter({ (elem: String?) -> Bool in
                 return elem != nil
@@ -170,16 +170,16 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             })
             let fullText = setFields.joinWithSeparator(", ")
             self.locationSearchField.text = fullText
-            CLSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler locationSearchField: \(self.locationSearchField.text ?? "Unknown")"]))
-            CLSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler keywordSearchField: \(self.keywordSearchField.text ?? "Unknown")"]))
+            CLSNSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler locationSearchField: \(self.locationSearchField.text ?? "Unknown")"]))
+            CLSNSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler keywordSearchField: \(self.keywordSearchField.text ?? "Unknown")"]))
             Event.loadEventsForLocation(self.locationSearchField.text!, withKeywords:self.keywordSearchField.text!, completion:self.setupEventsDisplay)
         } else {
             if let location = NSUserDefaults.standardUserDefaults().stringForKey(USER_SEARCH_LOCATION_KEY) {
-                CLSLogv("%@", getVaList(["addressFoundHandler savedLocation: \(location)"]))
+                CLSNSLogv("%@", getVaList(["addressFoundHandler savedLocation: \(location)"]))
                 self.locationSearchField.text = location
                 refreshEvents()
             } else {
-                CLSLogv("%@", getVaList(["addressFoundHandler No Location"]))
+                CLSNSLogv("%@", getVaList(["addressFoundHandler No Location"]))
                 setTitle(NSLocalizedString("RETRY", comment: "Title"), NSLocalizedString("Couldn't detect your location", comment: "GPS Failure"))
                 locationFailureAlert.show()
             }
@@ -241,33 +241,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         refreshEvents(locationSearchField.text!, withKeywords: keywordSearchField.text!)
     }
     
-    func checkFaceBookToken() {
-        let token = FBSDKAccessToken.currentAccessToken()
-        if (token == nil) {
-            self.navigationController?.performSegueWithIdentifier("presentFacebookLogin", sender: self)
-        } else if (!token.hasGranted("user_events")) {
-            // This user_events check is because for awhile we allowed iOS access without requesting this permission,
-            // and now we wish these users to re-authorize with the additional permissions, even if they have a token.
-            let login = FBSDKLoginManager()
-            login.logInWithReadPermissions(["user_events"], fromViewController:self, handler: {  (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
-                ServerInterface.sharedInstance.updateFacebookToken()
-            });
-        } else {
-            AnalyticsUtil.login()
-
-            #if DEBUG
-            //TODO: this only happens on the second time, after we've already logged in
-            //TODO: clean this up, do it as part of a proper device flow (after user logs in, not before!)
-            UIApplication.sharedApplication().registerForRemoteNotifications()
-            #endif
-
-            FBSDKAccessToken.refreshCurrentAccessToken({ (connect:FBSDKGraphRequestConnection!, obj: AnyObject!, error: NSError!) -> Void in
-                ServerInterface.sharedInstance.updateFacebookToken()
-            })
-        }
-        adBar?.setupAccessToken()
-    }
-
     func backToView() {
         // Disabled because we decided to focus on event<->event interstitial ads
         //adBar?.maybeShowInterstitialAd()

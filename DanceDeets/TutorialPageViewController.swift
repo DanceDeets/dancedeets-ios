@@ -17,15 +17,6 @@ class TutorialPageViewController : UIPageViewController {
         ]
     }()
 
-    @IBAction func unwindToTutorial(segue: UIStoryboardSegue) {
-        if let firstViewController = orderedViewControllers.first {
-            setViewControllers([firstViewController],
-                               direction: .Forward,
-                               animated: true,
-                               completion: nil)
-        }
-    }
-
     private func newColoredViewController(index: Int) -> UIViewController {
         return UIStoryboard(name: "Main", bundle: nil) .
             instantiateViewControllerWithIdentifier("Tutorial\(index)ViewController")

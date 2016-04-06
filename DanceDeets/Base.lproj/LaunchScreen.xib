@@ -20,23 +20,15 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="6Hu-PU-18g" secondAttribute="trailing" id="1dw-Dl-RSH"/>
                 <constraint firstItem="6Hu-PU-18g" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2I4-b2-kvV"/>
                 <constraint firstItem="Opw-od-VUY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="STw-pu-Wpg"/>
                 <constraint firstAttribute="bottom" secondItem="6Hu-PU-18g" secondAttribute="bottom" id="TUG-w7-cHl"/>
                 <constraint firstAttribute="bottom" secondItem="Opw-od-VUY" secondAttribute="bottom" id="eZ7-Md-OBu"/>
-                <constraint firstItem="6Hu-PU-18g" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fcI-7p-aIa"/>
                 <constraint firstItem="Opw-od-VUY" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="uRC-Cb-cmt"/>
                 <constraint firstItem="6Hu-PU-18g" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="wFK-7g-a2z"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="1dw-Dl-RSH"/>
-                    <exclude reference="fcI-7p-aIa"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="548" y="557"/>
         </view>
     </objects>
