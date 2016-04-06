@@ -3,16 +3,14 @@ PODS:
   - Mixpanel (2.9.4):
     - Mixpanel/Mixpanel (= 2.9.4)
   - Mixpanel/Mixpanel (2.9.4)
-  - OAStackView (1.0.1)
 
 DEPENDENCIES:
   - Google-Mobile-Ads-SDK (~> 7.0)
   - Mixpanel
-  - OAStackView
 
 SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: d290e523a6e2f223256abcbf8e0c778b55b1f04e
   Mixpanel: 80d2ca9bb38ae91c1044d738e80fe448377ac89f
-  OAStackView: 95e7cb79cbea25c2342f496a44bdbe8bd4c8d510
 
 COCOAPODS: 0.39.0
+

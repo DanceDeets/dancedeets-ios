@@ -47,7 +47,7 @@ class LoadingViewController : UIViewController {
             let now = NSDate()
             let age = now.timeIntervalSinceDate(token.refreshDate)
             CLSNSLogv("Refresh Date: %@, Now Date: %@, Date Diff in Seconds: %f", getVaList([token.refreshDate, now, age]))
-            if (age > 60 * 60) {
+            if (age < 60 * 60) {
                 // Recent token, let's just send them on their way now
                 showList()
             } else if (!token.hasGranted("user_events")) {
@@ -109,6 +109,7 @@ class LoadingViewController : UIViewController {
         tapGesture.numberOfTapsRequired = 1
         self.view.addGestureRecognizer(tapGesture)
     }
+
     func showTutorial() {
         CLSNSLogv("%@", getVaList(["showTutorial"]))
         performSegueWithIdentifier("showTutorial", sender: self)

@@ -2,7 +2,7 @@ FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Google-Mobile-Ads-SDK/Google
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Google-Mobile-Ads-SDK"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/Mixpanel.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/OAStackView.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Google-Mobile-Ads-SDK"
-OTHER_LDFLAGS = $(inherited) -ObjC -framework "AVFoundation" -framework "AudioToolbox" -framework "CoreGraphics" -framework "CoreMedia" -framework "CoreTelephony" -framework "EventKit" -framework "EventKitUI" -framework "GoogleMobileAds" -framework "MediaPlayer" -framework "MessageUI" -framework "Mixpanel" -framework "OAStackView" -framework "StoreKit" -framework "SystemConfiguration" -weak_framework "AdSupport"
+OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/Mixpanel.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Google-Mobile-Ads-SDK"
+OTHER_LDFLAGS = $(inherited) -ObjC -framework "AVFoundation" -framework "AudioToolbox" -framework "CoreGraphics" -framework "CoreMedia" -framework "CoreTelephony" -framework "EventKit" -framework "EventKitUI" -framework "GoogleMobileAds" -framework "MediaPlayer" -framework "MessageUI" -framework "Mixpanel" -framework "StoreKit" -framework "SystemConfiguration" -weak_framework "AdSupport"
 PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods-DanceDeets
 PODS_ROOT = ${SRCROOT}/Pods

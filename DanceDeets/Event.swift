@@ -30,8 +30,11 @@ public class Event: NSObject {
     var geoloc:CLLocation?
     var admins:[EventAdmin] = []
     var attendingCount:Int?
+    var maybeCount:Int?
     var categories:[String] = []
     var downloadTask:NSURLSessionDownloadTask?
+    var sourceName:String?
+    var sourceUrl:String?
 
     init(dictionary:NSDictionary){
         super.init()
@@ -45,14 +48,17 @@ public class Event: NSObject {
             danceDeetsUrl = NSURL(string: "http://www.dancedeets.com/events/\(id!)/")
         }
         
-        if let rsvp = dictionary["rsvp"] as? NSDictionary{
+        if let rsvp = dictionary["rsvp"] as? NSDictionary {
             if let attending = rsvp["attending_count"] as? Int{
                 self.attendingCount = attending
+            }
+            if let maybe = rsvp["maybe_count"] as? Int{
+                self.maybeCount = maybe
             }
         }
         
         // admins
-        if let admins = dictionary["admins"] as? NSArray{
+        if let admins = dictionary["admins"] as? NSArray {
             for admin in admins{
                 if let _ = admin as? NSDictionary{
                     let name:String? = admin["name"] as? String
@@ -64,7 +70,13 @@ public class Event: NSObject {
                 }
             }
         }
-        
+
+        // source
+        if let source = dictionary["source"] as? NSDictionary {
+            self.sourceName = source["name"] as? String
+            self.sourceUrl = source["url"] as? String
+        }
+
         // venue
         self.venue = Venue(dictionary["venue"] as! NSDictionary)
         if self.venue?.latLong != nil {

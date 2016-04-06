@@ -19,7 +19,6 @@
 		1D0AEAE51CAD2A1000F51D87 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D0AEAE41CAD2A1000F51D87 /* Images.xcassets */; };
 		1D0AEAE71CAD48C100F51D87 /* Ubuntu 500.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D0AEAE61CAD48B800F51D87 /* Ubuntu 500.ttf */; };
 		1D0AEAE91CAD4B7B00F51D87 /* Ubuntu 300.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D0AEAE81CAD4B7000F51D87 /* Ubuntu 300.ttf */; };
-		1D0AEAEB1CAD623A00F51D87 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0AEAEA1CAD623A00F51D87 /* SplashViewController.swift */; };
 		1D0D92A119D3DE28003E7C14 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */; };
 		1D1131111B458398001CBEDE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1131101B458398001CBEDE /* MapKit.framework */; };
 		1D1131161B458503001CBEDE /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1131121B458503001CBEDE /* FBSDKCoreKit.framework */; };
@@ -111,7 +110,6 @@
 		1D0AEAE41CAD2A1000F51D87 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D0AEAE61CAD48B800F51D87 /* Ubuntu 500.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu 500.ttf"; sourceTree = "<group>"; };
 		1D0AEAE81CAD4B7000F51D87 /* Ubuntu 300.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu 300.ttf"; sourceTree = "<group>"; };
-		1D0AEAEA1CAD623A00F51D87 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		1D0D92A019D3DE28003E7C14 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1D1131101B458398001CBEDE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1D1131121B458503001CBEDE /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -291,7 +289,6 @@
 		1D608B3E1CB546ED00A7E401 /* Startup Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				1D0AEAEA1CAD623A00F51D87 /* SplashViewController.swift */,
 				1DDEE4F51CAA7AE10082B876 /* TutorialViewController.swift */,
 				1DDEE4F31CAA6BC20082B876 /* TutorialPageViewController.swift */,
 				1D608B3C1CB4F1FA00A7E401 /* LoadingViewController.swift */,
@@ -621,7 +618,6 @@
 				1DAB49F81A1815DD0002BBDD /* ColorFactory.swift in Sources */,
 				1D608B3D1CB4F1FA00A7E401 /* LoadingViewController.swift in Sources */,
 				1D9E3D331BFA8A47001F4D45 /* OneboxLink.swift in Sources */,
-				1D0AEAEB1CAD623A00F51D87 /* SplashViewController.swift in Sources */,
 				1DA57ACE1BAE3D4500370519 /* MapManager.swift in Sources */,
 				1D4A22311BB8692400CAD7E3 /* UrlUtil.swift in Sources */,
 				1DDEE4F61CAA7AE20082B876 /* TutorialViewController.swift in Sources */,

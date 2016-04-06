@@ -105,13 +105,16 @@ class EventDetailCell: UICollectionViewCell {
                     }
                 })
             }
+
+            // aspect ratio if available, capped at 1:1 to prevent super tall images
+            if event.eventImageHeight != nil && event.eventImageWidth != nil {
+                ASPECT_RATIO = min(1.0, event.eventImageHeight! / event.eventImageWidth!)
+            }
+            eventCoverImageViewHeightConstraint.constant = frame.size.width * ASPECT_RATIO
+        } else {
+            eventCoverImageViewHeightConstraint.constant = 0
         }
 
-        // aspect ratio if available, capped at 1:1 to prevent super tall images
-        if event.eventImageHeight != nil && event.eventImageWidth != nil {
-            ASPECT_RATIO = min(1.0, event.eventImageHeight! / event.eventImageWidth!)
-        }
-        eventCoverImageViewHeightConstraint.constant = frame.size.width * ASPECT_RATIO
         layoutIfNeeded()
     }
 

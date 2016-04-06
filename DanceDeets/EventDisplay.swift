@@ -176,7 +176,6 @@ class EventDisplay: NSObject, UITableViewDataSource, UITableViewDelegate {
                 if (sectionEvents.count > indexPath.row) {
                     let event = sectionEvents[indexPath.row]
                     let eventCell = tableView.cellForRowAtIndexPath(indexPath) as! EventListItemTableViewCell
-                    
                     eventSelectedHandler(event, withImage: eventCell.eventImageView.image)
                 }
             }
