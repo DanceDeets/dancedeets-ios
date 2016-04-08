@@ -1340,7 +1340,7 @@ Hope you’ll forgive us!</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AhJ-it-Dkf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-928" y="-2113"/>
+            <point key="canvasLocation" x="-996" y="-2017"/>
         </scene>
     </scenes>
     <resources>
@@ -1366,6 +1366,6 @@ Hope you’ll forgive us!</string>
         <image name="streamBackground" width="375" height="667"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uAh-ZA-xSQ"/>
+        <segue reference="3d7-YI-caM"/>
     </inferredMetricsTieBreakers>
 </document>
