@@ -478,7 +478,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eor-dJ-OUi" userLabel="Icon Views">
-                                                    <rect key="frame" x="8" y="324.5" width="585" height="77.5"/>
+                                                    <rect key="frame" x="8" y="324" width="585" height="77.5"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UkX-bk-rrs" userLabel="Categories View">
                                                             <rect key="frame" x="0.0" y="0.0" width="585" height="14.5"/>
@@ -567,14 +567,14 @@
                                                             <rect key="frame" x="0.0" y="63" width="585" height="14.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="PEO-0i-6s3">
-                                                                    <rect key="frame" x="12" y="0.0" width="12" height="12"/>
+                                                                    <rect key="frame" x="12" y="0.0" width="14" height="14"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="12" id="hTu-im-QI3"/>
-                                                                        <constraint firstAttribute="width" constant="12" id="jQ7-Ya-c7Z"/>
+                                                                        <constraint firstAttribute="height" constant="14" id="hTu-im-QI3"/>
+                                                                        <constraint firstAttribute="width" constant="14" id="jQ7-Ya-c7Z"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iR9-dF-OU4">
-                                                                    <rect key="frame" x="36" y="0.0" width="544" height="14.5"/>
+                                                                    <rect key="frame" x="38" y="0.0" width="542" height="14.5"/>
                                                                     <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
