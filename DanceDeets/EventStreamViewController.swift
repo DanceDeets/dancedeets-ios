@@ -72,8 +72,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             destination.startEvent = event
         }
 
-        print("DD", destination)
-        print("EE", navigationController)
         navigationController?.pushViewController(destination, animated: true)
     }
 

@@ -30,6 +30,7 @@ class EventDetailCell: UICollectionViewCell {
 
     @IBOutlet weak var danceIconView: UIImageView!
     @IBOutlet weak var clockIconView: UIImageView!
+    @IBOutlet weak var rsvpIconView: UIImageView!
     @IBOutlet weak var pinIconView: UIImageView!
 
     @IBOutlet weak var eventCoverImageView: UIImageView!
@@ -180,6 +181,7 @@ class EventDetailCell: UICollectionViewCell {
         // No idea why we have to set this color directly, instead of copying another color
         // Seems there's some of magic going on with tintColor in multiple ways
         clockIconView.tintColor = UIColor(red: 192.0/255, green: 1.0, blue: 192.0/255, alpha: 1.0)
+        rsvpIconView.tintColor = UIColor.whiteColor()
         pinIconView.tintColor = UIColor.whiteColor()
     }
 }

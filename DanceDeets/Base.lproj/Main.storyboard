@@ -25,6 +25,7 @@
             <string>Interstate-Light</string>
             <string>Interstate-Light</string>
             <string>Interstate-Light</string>
+            <string>Interstate-Light</string>
         </mutableArray>
         <mutableArray key="Ubuntu 300.ttf">
             <string>Ubuntu-Light</string>
@@ -122,49 +123,62 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Ru-Ei-3pI">
-                                                            <rect key="frame" x="12" y="15" width="568" height="7"/>
+                                                            <rect key="frame" x="12" y="15" width="568" height="0.0"/>
                                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5R9-2K-AhZ" userLabel="Event Title View">
-                                                            <rect key="frame" x="12" y="27" width="576" height="20"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5R9-2K-AhZ" userLabel="Event Title View">
+                                                            <rect key="frame" x="12" y="20" width="576" height="4.5"/>
                                                             <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="18"/>
                                                             <color key="textColor" red="0.4392156862745098" green="0.75294117647058822" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="danceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="KFG-w4-rc3" userLabel="dance Icon">
-                                                            <rect key="frame" x="30" y="57" width="14" height="14"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="danceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="KFG-w4-rc3" userLabel="dance Icon">
+                                                            <rect key="frame" x="30" y="34.5" width="14" height="14"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="14" id="Onn-SD-EJL"/>
                                                                 <constraint firstAttribute="height" constant="14" id="bY5-jk-ccR"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="fsk-AB-l6j" userLabel="clock Icon">
-                                                            <rect key="frame" x="30" y="80" width="14" height="14"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="clockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="fsk-AB-l6j" userLabel="clock Icon">
+                                                            <rect key="frame" x="30" y="57.5" width="14" height="14"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="14" id="Sjq-KV-idX"/>
                                                                 <constraint firstAttribute="height" constant="14" id="tP3-Ye-xUo"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cba-0q-1a5" userLabel="pin Icon">
-                                                            <rect key="frame" x="31" y="106" width="12" height="12"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="rsvpIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cba-0q-1a5" userLabel="rsvp Icon">
+                                                            <rect key="frame" x="31" y="83.5" width="12" height="12"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="12" id="0oT-uN-6S3"/>
                                                                 <constraint firstAttribute="width" constant="12" id="SI9-eA-kEc"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Categories)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31y-Oc-dOn" userLabel="Categories Label">
-                                                            <rect key="frame" x="54" y="57" width="534" height="14.5"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="3Jy-x6-htO" userLabel="venue Icon">
+                                                            <rect key="frame" x="31" y="105" width="12" height="12"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="12" id="JYv-cd-1Er"/>
+                                                                <constraint firstAttribute="width" constant="12" id="QPq-zY-9At"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="(Categories)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31y-Oc-dOn" userLabel="Categories Label">
+                                                            <rect key="frame" x="54" y="34.5" width="534" height="14.5"/>
                                                             <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date | Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kzc-j3-51H" userLabel="Time Label">
-                                                            <rect key="frame" x="54" y="79" width="534" height="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Date | Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kzc-j3-51H" userLabel="Time Label">
+                                                            <rect key="frame" x="54" y="56.5" width="534" height="17"/>
                                                             <fontDescription key="fontDescription" name="Interstate-BoldCondensed" family="Interstate-BoldCondensed" pointSize="15"/>
                                                             <color key="textColor" red="0.75294117647058822" green="1" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venue Location" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qyj-U8-4EI" userLabel="Venue Label">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="RSVP" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qyj-U8-4EI" userLabel="RSVP Label">
+                                                            <rect key="frame" x="54" y="81.5" width="534" height="14.5"/>
+                                                            <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
+                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Venue Location" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXl-0G-oRt" userLabel="Venue Label">
                                                             <rect key="frame" x="54" y="104" width="534" height="14.5"/>
                                                             <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -175,26 +189,37 @@
                                                     <constraints>
                                                         <constraint firstItem="Qyj-U8-4EI" firstAttribute="leading" secondItem="31y-Oc-dOn" secondAttribute="leading" id="0dv-uI-ixj"/>
                                                         <constraint firstItem="Kzc-j3-51H" firstAttribute="leading" secondItem="31y-Oc-dOn" secondAttribute="leading" id="2RU-9l-CiQ"/>
-                                                        <constraint firstAttribute="bottomMargin" secondItem="Qyj-U8-4EI" secondAttribute="bottom" constant="15" id="5DJ-iD-jqE"/>
                                                         <constraint firstItem="31y-Oc-dOn" firstAttribute="top" secondItem="5R9-2K-AhZ" secondAttribute="bottom" constant="10" id="6ds-1I-hyc"/>
                                                         <constraint firstItem="Kzc-j3-51H" firstAttribute="trailing" secondItem="5R9-2K-AhZ" secondAttribute="trailing" id="77i-47-MOz"/>
                                                         <constraint firstItem="KFG-w4-rc3" firstAttribute="trailing" secondItem="31y-Oc-dOn" secondAttribute="leading" constant="-10" id="7aW-Vu-QAx"/>
                                                         <constraint firstItem="5R9-2K-AhZ" firstAttribute="top" secondItem="3Ru-Ei-3pI" secondAttribute="bottom" constant="5" id="9aw-j5-hXV"/>
                                                         <constraint firstItem="Kzc-j3-51H" firstAttribute="bottom" secondItem="Qyj-U8-4EI" secondAttribute="top" constant="-8" id="A7d-5R-wfZ"/>
                                                         <constraint firstItem="31y-Oc-dOn" firstAttribute="centerY" secondItem="KFG-w4-rc3" secondAttribute="centerY" id="IKY-eF-aBs"/>
+                                                        <constraint firstItem="3Jy-x6-htO" firstAttribute="centerX" secondItem="KFG-w4-rc3" secondAttribute="centerX" id="Ilq-Ld-3fY"/>
+                                                        <constraint firstItem="3Jy-x6-htO" firstAttribute="centerY" secondItem="dXl-0G-oRt" secondAttribute="centerY" id="OZl-JY-pQo"/>
                                                         <constraint firstItem="3Ru-Ei-3pI" firstAttribute="top" secondItem="rrA-Jj-kmz" secondAttribute="top" constant="15" id="PAC-rf-PoB"/>
                                                         <constraint firstItem="fsk-AB-l6j" firstAttribute="centerX" secondItem="KFG-w4-rc3" secondAttribute="centerX" id="QQ8-jT-4w1"/>
+                                                        <constraint firstItem="Cba-0q-1a5" firstAttribute="centerY" secondItem="Qyj-U8-4EI" secondAttribute="centerY" id="TOy-84-2Nz"/>
+                                                        <constraint firstItem="Qyj-U8-4EI" firstAttribute="bottom" secondItem="dXl-0G-oRt" secondAttribute="top" constant="-8" id="TQu-PZ-jcK"/>
                                                         <constraint firstItem="5R9-2K-AhZ" firstAttribute="leading" secondItem="3Ru-Ei-3pI" secondAttribute="leading" id="UBQ-dn-VGN"/>
                                                         <constraint firstItem="Kzc-j3-51H" firstAttribute="centerY" secondItem="fsk-AB-l6j" secondAttribute="centerY" id="VKq-Rb-gQj"/>
-                                                        <constraint firstItem="Qyj-U8-4EI" firstAttribute="top" secondItem="Cba-0q-1a5" secondAttribute="top" constant="-2" id="aVY-0t-Sca"/>
+                                                        <constraint firstItem="dXl-0G-oRt" firstAttribute="trailing" secondItem="5R9-2K-AhZ" secondAttribute="trailing" id="Vmz-PY-qNv"/>
+                                                        <constraint firstItem="dXl-0G-oRt" firstAttribute="leading" secondItem="31y-Oc-dOn" secondAttribute="leading" id="WwO-On-vze"/>
                                                         <constraint firstItem="Cba-0q-1a5" firstAttribute="centerX" secondItem="KFG-w4-rc3" secondAttribute="centerX" id="e5A-yK-ueT"/>
                                                         <constraint firstItem="3Ru-Ei-3pI" firstAttribute="leading" secondItem="rrA-Jj-kmz" secondAttribute="leading" constant="12" id="fBe-0L-vNB"/>
                                                         <constraint firstAttribute="trailing" secondItem="5R9-2K-AhZ" secondAttribute="trailing" constant="12" id="gPB-UY-2bK"/>
                                                         <constraint firstItem="Qyj-U8-4EI" firstAttribute="trailing" secondItem="5R9-2K-AhZ" secondAttribute="trailing" id="hvV-3H-FUw"/>
                                                         <constraint firstItem="Kzc-j3-51H" firstAttribute="top" secondItem="31y-Oc-dOn" secondAttribute="bottom" constant="7.5" id="lbK-Ji-U12"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="3Ru-Ei-3pI" secondAttribute="trailing" constant="12" id="qxV-fH-H0U"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="dXl-0G-oRt" secondAttribute="bottom" constant="15" id="vPQ-7P-vzB"/>
+                                                        <constraint firstItem="dXl-0G-oRt" firstAttribute="top" secondItem="3Jy-x6-htO" secondAttribute="top" constant="-2" id="xu3-u0-dp8"/>
                                                         <constraint firstItem="31y-Oc-dOn" firstAttribute="trailing" secondItem="5R9-2K-AhZ" secondAttribute="trailing" id="yXV-HV-ly1"/>
                                                     </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="OZl-JY-pQo"/>
+                                                        </mask>
+                                                    </variation>
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -205,10 +230,12 @@
                                                     <outlet property="danceIconImageView" destination="KFG-w4-rc3" id="InY-Xe-8Xa"/>
                                                     <outlet property="eventCategoriesLabel" destination="31y-Oc-dOn" id="Hv6-94-IRw"/>
                                                     <outlet property="eventImageView" destination="3Ru-Ei-3pI" id="OoP-mz-q7f"/>
+                                                    <outlet property="eventRsvpLabel" destination="Qyj-U8-4EI" id="pKO-mC-rPR"/>
                                                     <outlet property="eventTimeLabel" destination="Kzc-j3-51H" id="0J0-zF-ED9"/>
                                                     <outlet property="eventTitleLabel" destination="5R9-2K-AhZ" id="JBc-ve-sWr"/>
-                                                    <outlet property="eventVenueLabel" destination="Qyj-U8-4EI" id="LZy-WA-Ala"/>
-                                                    <outlet property="pinIconImageView" destination="Cba-0q-1a5" id="0jo-IF-di7"/>
+                                                    <outlet property="eventVenueLabel" destination="dXl-0G-oRt" id="UxP-E8-1ls"/>
+                                                    <outlet property="rsvpIconImageView" destination="Cba-0q-1a5" id="Kai-cj-avs"/>
+                                                    <outlet property="venueIconImageView" destination="3Jy-x6-htO" id="M0W-qy-qJ4"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -511,7 +538,7 @@
                                                         <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gX2-42-rrO" userLabel="RSVP View">
                                                             <rect key="frame" x="0.0" y="41" width="585" height="17"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="XDg-Io-ZdM" userLabel="rsvpIcon">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rsvpIcon" translatesAutoresizingMaskIntoConstraints="NO" id="XDg-Io-ZdM" userLabel="rsvpIcon">
                                                                     <rect key="frame" x="12" y="0.0" width="14" height="14"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="14" id="TTf-zp-Jrf"/>
@@ -658,6 +685,7 @@
                                     <outlet property="eventTitleLabel" destination="0nM-UR-teI" id="hfO-De-R13"/>
                                     <outlet property="eventVenueLabel" destination="iR9-dF-OU4" id="Hij-VA-och"/>
                                     <outlet property="pinIconView" destination="PEO-0i-6s3" id="6fW-Ku-ouM"/>
+                                    <outlet property="rsvpIconView" destination="XDg-Io-ZdM" id="Kjy-9M-JOt"/>
                                     <outlet property="scrollView" destination="LTU-Zb-ND8" id="ffm-S9-A4P"/>
                                     <segue destination="NNj-Xd-7Ej" kind="presentation" identifier="fullScreenImageSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="yGL-cj-pC5"/>
                                 </connections>
@@ -1333,6 +1361,7 @@ Hope you’ll forgive us!</string>
         <image name="feedbackIcon" width="16" height="16"/>
         <image name="logoutIcon" width="16" height="16"/>
         <image name="pinIcon" width="12" height="12"/>
+        <image name="rsvpIcon" width="18" height="18"/>
         <image name="settingsIcon" width="39" height="39"/>
         <image name="streamBackground" width="375" height="667"/>
     </resources>

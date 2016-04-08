@@ -167,7 +167,11 @@ public class Event: NSObject {
     }
 
     public func rsvpSummary() -> String {
-        return String.localizedStringWithFormat(NSLocalizedString("%1$d going, %2$d interested", comment: "Event Listing"), self.attendingCount!, self.maybeCount!)
+        if self.attendingCount != nil {
+            return String.localizedStringWithFormat(NSLocalizedString("%1$d going, %2$d interested", comment: "Event Listing"), self.attendingCount!, self.maybeCount!)
+        } else {
+            return NSLocalizedString("Unknown Attendance", comment: "Unknown RSVP")
+        }
     }
 
     // Create sharing items for the activity sheet

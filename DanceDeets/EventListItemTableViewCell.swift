@@ -11,14 +11,17 @@ import UIKit
 class EventListItemTableViewCell: UITableViewCell {
     
     let SEPARATOR_HORIZONTAL_INSETS:CGFloat = 12.0
+    @IBOutlet var currentEvent:Event?
+
     @IBOutlet var eventImageView:UIImageView!
     @IBOutlet var eventTitleLabel:UILabel!
-    @IBOutlet var currentEvent:Event?
     @IBOutlet var danceIconImageView:UIImageView!
     @IBOutlet var clockIconImageView:UIImageView!
-    @IBOutlet var pinIconImageView:UIImageView!
+    @IBOutlet var rsvpIconImageView:UIImageView!
+    @IBOutlet var venueIconImageView:UIImageView!
     @IBOutlet var eventCategoriesLabel:UILabel!
     @IBOutlet var eventTimeLabel:UILabel!
+    @IBOutlet var eventRsvpLabel:UILabel!
     @IBOutlet var eventVenueLabel:UILabel!
 
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
@@ -28,12 +31,9 @@ class EventListItemTableViewCell: UITableViewCell {
         eventTitleLabel.text = event.title!
         eventTimeLabel.text = event.displayTime
         if let venueDisplay = event.venue?.formattedNameAndCity() {
-            if (event.attendingCount != nil) {
-                eventVenueLabel.text = venueDisplay + "\n" + event.rsvpSummary()
-            } else {
-                eventVenueLabel.text = venueDisplay
-            }
+            eventVenueLabel.text = venueDisplay
         }
+        eventRsvpLabel.text = event.rsvpSummary()
         if imageHeightConstraint == nil {
             imageHeightConstraint = NSLayoutConstraint(item: eventImageView!, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 0)
             imageHeightConstraint.priority = 999
@@ -59,6 +59,7 @@ class EventListItemTableViewCell: UITableViewCell {
         // No idea why we have to set this color directly, instead of copying another color
         // Seems there's some of magic going on with tintColor in multiple ways
         clockIconImageView.tintColor = UIColor(red: 192.0/255, green: 1.0, blue: 192.0/255, alpha: 1.0)
-        pinIconImageView.tintColor = UIColor.whiteColor()
+        rsvpIconImageView.tintColor = UIColor.whiteColor()
+        venueIconImageView.tintColor = UIColor.whiteColor()
     }
 }
