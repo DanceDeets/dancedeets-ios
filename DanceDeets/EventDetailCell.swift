@@ -35,6 +35,7 @@ class EventDetailCell: UICollectionViewCell {
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
+    @IBOutlet weak var eventRsvpLabel: UILabel!
     @IBOutlet weak var eventVenueLabel: UILabel!
     @IBOutlet weak var eventCategoriesLabel: UILabel!
     @IBOutlet weak var eventDescriptionLabel: UITextView!
@@ -53,6 +54,7 @@ class EventDetailCell: UICollectionViewCell {
         eventTitleLabel.numberOfLines = 0
         eventTitleLabel.lineBreakMode = .ByWordWrapping
         eventTimeLabel.text = event.displayTime
+        eventRsvpLabel.text = event.rsvpSummary()
         eventVenueLabel.text = event.displayAddress
 
         eventCategoriesLabel.text = "("+event.categories.joinWithSeparator(", ")+")"

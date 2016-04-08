@@ -29,7 +29,7 @@ class EventListItemTableViewCell: UITableViewCell {
         eventTimeLabel.text = event.displayTime
         if let venueDisplay = event.venue?.formattedNameAndCity() {
             if (event.attendingCount != nil) {
-                eventVenueLabel.text = venueDisplay + "\n" + String.localizedStringWithFormat(NSLocalizedString("%d attending", comment: "Event Listing"), event.attendingCount!)
+                eventVenueLabel.text = venueDisplay + "\n" + event.rsvpSummary()
             } else {
                 eventVenueLabel.text = venueDisplay
             }

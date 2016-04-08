@@ -24,6 +24,7 @@
             <string>Interstate-Light</string>
             <string>Interstate-Light</string>
             <string>Interstate-Light</string>
+            <string>Interstate-Light</string>
         </mutableArray>
         <mutableArray key="Ubuntu 300.ttf">
             <string>Ubuntu-Light</string>
@@ -432,10 +433,10 @@
                                                     </constraints>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Egz-1P-DNK" userLabel="Title View">
-                                                    <rect key="frame" x="8" y="295" width="585" height="26"/>
+                                                    <rect key="frame" x="8" y="295" width="585" height="24.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Event Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0nM-UR-teI">
-                                                            <rect key="frame" x="5" y="0.0" width="575" height="26"/>
+                                                            <rect key="frame" x="5" y="0.0" width="575" height="24.5"/>
                                                             <fontDescription key="fontDescription" name="Interstate-ExtraLight" family="Interstate-ExtraLight" pointSize="22"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -449,11 +450,11 @@
                                                         <constraint firstItem="0nM-UR-teI" firstAttribute="bottom" secondItem="Egz-1P-DNK" secondAttribute="bottom" id="yT7-rN-gpg"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eor-dJ-OUi" userLabel="Icon Views">
-                                                    <rect key="frame" x="8" y="326" width="585" height="58"/>
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eor-dJ-OUi" userLabel="Icon Views">
+                                                    <rect key="frame" x="8" y="324.5" width="585" height="77.5"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UkX-bk-rrs" userLabel="Categories View">
-                                                            <rect key="frame" x="0.0" y="0.0" width="585" height="15.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="585" height="14.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="danceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="37S-By-X1e" userLabel="danceIcon">
                                                                     <rect key="frame" x="12" y="0.0" width="14" height="14"/>
@@ -463,7 +464,7 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDd-M8-QVB" userLabel="Event Categories Label">
-                                                                    <rect key="frame" x="38" y="0.0" width="542" height="15.5"/>
+                                                                    <rect key="frame" x="38" y="0.0" width="542" height="14.5"/>
                                                                     <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -480,7 +481,7 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2qZ-eX-hRF" userLabel="Time View">
-                                                            <rect key="frame" x="0.0" y="20" width="585" height="17"/>
+                                                            <rect key="frame" x="0.0" y="19" width="585" height="17"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="VZ7-xH-hJc">
                                                                     <rect key="frame" x="12" y="0.0" width="14" height="14"/>
@@ -507,8 +508,36 @@
                                                                 <constraint firstItem="VZ7-xH-hJc" firstAttribute="top" secondItem="SKS-WK-qB4" secondAttribute="top" id="uNN-7o-oEW"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c6i-Di-3Pr" userLabel="Venue View">
-                                                            <rect key="frame" x="0.0" y="42" width="585" height="15.5"/>
+                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gX2-42-rrO" userLabel="RSVP View">
+                                                            <rect key="frame" x="0.0" y="41" width="585" height="17"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="XDg-Io-ZdM" userLabel="rsvpIcon">
+                                                                    <rect key="frame" x="12" y="0.0" width="14" height="14"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="14" id="TTf-zp-Jrf"/>
+                                                                        <constraint firstAttribute="height" constant="14" id="sa3-vh-5OJ"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No Attending" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xc-uz-scz" userLabel="Attending">
+                                                                    <rect key="frame" x="38" y="0.0" width="542" height="17"/>
+                                                                    <color key="tintColor" red="0.0" green="0.92549019610000005" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstItem="0xc-uz-scz" firstAttribute="leading" secondItem="XDg-Io-ZdM" secondAttribute="trailing" constant="12" id="CxW-LI-x7q"/>
+                                                                <constraint firstItem="XDg-Io-ZdM" firstAttribute="leading" secondItem="gX2-42-rrO" secondAttribute="leading" constant="12" id="DhQ-JU-2rE"/>
+                                                                <constraint firstItem="0xc-uz-scz" firstAttribute="bottom" secondItem="gX2-42-rrO" secondAttribute="bottom" id="JwW-yd-mAP"/>
+                                                                <constraint firstItem="0xc-uz-scz" firstAttribute="top" secondItem="gX2-42-rrO" secondAttribute="top" id="VxT-gE-gRo"/>
+                                                                <constraint firstItem="XDg-Io-ZdM" firstAttribute="top" secondItem="0xc-uz-scz" secondAttribute="top" id="eF1-5v-u8b"/>
+                                                                <constraint firstItem="0xc-uz-scz" firstAttribute="trailing" secondItem="gX2-42-rrO" secondAttribute="trailing" constant="-5" id="qcn-Gy-GpQ"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c6i-Di-3Pr" userLabel="Venue View">
+                                                            <rect key="frame" x="0.0" y="63" width="585" height="14.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="PEO-0i-6s3">
                                                                     <rect key="frame" x="12" y="0.0" width="12" height="12"/>
@@ -518,7 +547,7 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venue" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iR9-dF-OU4">
-                                                                    <rect key="frame" x="36" y="0.0" width="544" height="15.5"/>
+                                                                    <rect key="frame" x="36" y="0.0" width="544" height="14.5"/>
                                                                     <fontDescription key="fontDescription" name="Interstate-Light" family="Interstate-Light" pointSize="13"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -540,17 +569,20 @@
                                                         <constraint firstItem="UkX-bk-rrs" firstAttribute="leading" secondItem="eor-dJ-OUi" secondAttribute="leading" id="1DV-ZS-opp"/>
                                                         <constraint firstItem="UkX-bk-rrs" firstAttribute="top" secondItem="eor-dJ-OUi" secondAttribute="top" id="2RQ-V6-V1A"/>
                                                         <constraint firstAttribute="bottom" secondItem="c6i-Di-3Pr" secondAttribute="bottom" id="37W-KG-kFT"/>
+                                                        <constraint firstItem="c6i-Di-3Pr" firstAttribute="top" secondItem="gX2-42-rrO" secondAttribute="bottom" constant="5" id="5Sz-zF-V9e"/>
                                                         <constraint firstItem="c6i-Di-3Pr" firstAttribute="leading" secondItem="eor-dJ-OUi" secondAttribute="leading" id="6NG-UB-m1e"/>
+                                                        <constraint firstItem="gX2-42-rrO" firstAttribute="leading" secondItem="eor-dJ-OUi" secondAttribute="leading" id="8jh-ha-mu6"/>
                                                         <constraint firstAttribute="trailing" secondItem="c6i-Di-3Pr" secondAttribute="trailing" id="Ggq-dq-qva"/>
                                                         <constraint firstAttribute="trailing" secondItem="UkX-bk-rrs" secondAttribute="trailing" id="Hea-Vu-yc3"/>
                                                         <constraint firstAttribute="trailing" secondItem="2qZ-eX-hRF" secondAttribute="trailing" id="PBH-UI-MY5"/>
+                                                        <constraint firstItem="gX2-42-rrO" firstAttribute="top" secondItem="2qZ-eX-hRF" secondAttribute="bottom" constant="5" id="ZAk-bp-fix"/>
                                                         <constraint firstItem="2qZ-eX-hRF" firstAttribute="top" secondItem="UkX-bk-rrs" secondAttribute="bottom" constant="5" id="g9k-i7-boE"/>
                                                         <constraint firstItem="2qZ-eX-hRF" firstAttribute="leading" secondItem="eor-dJ-OUi" secondAttribute="leading" id="gXr-qQ-nNH"/>
-                                                        <constraint firstItem="c6i-Di-3Pr" firstAttribute="top" secondItem="2qZ-eX-hRF" secondAttribute="bottom" constant="5" id="gj8-lV-X3S"/>
+                                                        <constraint firstAttribute="trailing" secondItem="gX2-42-rrO" secondAttribute="trailing" id="nbQ-x3-EIt"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxw-S5-gcq" userLabel="Share View">
-                                                    <rect key="frame" x="8" y="389" width="585" height="30"/>
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zxw-S5-gcq" userLabel="Share View">
+                                                    <rect key="frame" x="8" y="407" width="585" height="30"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvq-P3-Ie1" customClass="EventShareButton" customModule="DanceDeets" customModuleProvider="target">
                                                             <rect key="frame" x="12" y="0.0" width="46" height="30"/>
@@ -564,8 +596,8 @@
                                                         <constraint firstAttribute="bottom" secondItem="nvq-P3-Ie1" secondAttribute="bottom" id="shy-8G-38o"/>
                                                     </constraints>
                                                 </view>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQO-pn-Gib">
-                                                    <rect key="frame" x="8" y="424" width="585" height="109.5"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQO-pn-Gib">
+                                                    <rect key="frame" x="8" y="442" width="585" height="102.5"/>
                                                     <color key="tintColor" red="0.0" green="0.92549019610000005" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. http://www.google.com</string>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -574,7 +606,7 @@
                                                     <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
                                                 </textView>
                                                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6f-Sg-0t5">
-                                                    <rect key="frame" x="8" y="538" width="0.0" height="300"/>
+                                                    <rect key="frame" x="0.0" y="549.5" width="601" height="300"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="300" id="LJu-5e-uxA"/>
                                                     </constraints>
@@ -620,6 +652,7 @@
                                     <outlet property="eventCoverImageViewHeightConstraint" destination="hEA-r2-jHg" id="JcW-8V-p1O"/>
                                     <outlet property="eventDescriptionLabel" destination="UQO-pn-Gib" id="B1N-7m-tb3"/>
                                     <outlet property="eventMapView" destination="f6f-Sg-0t5" id="4Mh-hy-Sft"/>
+                                    <outlet property="eventRsvpLabel" destination="0xc-uz-scz" id="K5V-Nh-7Ys"/>
                                     <outlet property="eventShareButton" destination="nvq-P3-Ie1" id="W9S-gZ-JhD"/>
                                     <outlet property="eventTimeLabel" destination="SKS-WK-qB4" id="SAN-dL-tYG"/>
                                     <outlet property="eventTitleLabel" destination="0nM-UR-teI" id="hfO-De-R13"/>
@@ -750,7 +783,7 @@
                                         <rect key="frame" x="0.0" y="49.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uZ0-ij-Qq7" id="B6i-KW-smG">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoutIcon" translatesAutoresizingMaskIntoConstraints="NO" id="e0c-Tg-emu">
@@ -780,7 +813,7 @@
                                         <rect key="frame" x="0.0" y="93.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mr2-mN-zvR" id="vO5-dj-yCl">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="feedbackIcon" translatesAutoresizingMaskIntoConstraints="NO" id="RYr-XX-9A2">
@@ -809,7 +842,7 @@
                                         <rect key="frame" x="0.0" y="137.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7uF-BY-dmn" id="PyL-bB-bLC">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addIcon" translatesAutoresizingMaskIntoConstraints="NO" id="dqa-sr-eAh" userLabel="Add Event Icon">
@@ -1079,7 +1112,7 @@ AND JOIN OUR 80,000+ EVENTS.</string>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="18" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bog-6J-aSN">
                                 <rect key="frame" x="169" y="30" width="262" height="286"/>
-                                <mutableString key="text">DANCEDEETS NEEDS YOU!
+                                <string key="text">DANCEDEETS NEEDS YOU!
 
 Almost all our dance events are
 discovered through dancers who log in.
@@ -1095,7 +1128,7 @@ and dance promotion would be harder.
 
 So you can help DanceDeets,
 and help the dance culture,
-by logging in below.</mutableString>
+by logging in below.</string>
                                 <fontDescription key="fontDescription" name="Ubuntu-Light" family="Ubuntu" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>

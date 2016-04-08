@@ -165,7 +165,11 @@ public class Event: NSObject {
         }
         displayTime = dateDisplayString
     }
-    
+
+    public func rsvpSummary() -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("%1$d going, %2$d interested", comment: "Event Listing"), self.attendingCount!, self.maybeCount!)
+    }
+
     // Create sharing items for the activity sheet
     public func createSharingItems()->[AnyObject] {
         var sharingItems:[AnyObject] = []
