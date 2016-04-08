@@ -17,7 +17,8 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
 
     var adBar:AdBar?
 
-    @IBOutlet var bottomToolbarItems: UIToolbar!
+    @IBOutlet var bottomFbEventToolbarItems: UIToolbar!
+    @IBOutlet var bottomWebEventToolbarItems: UIToolbar!
 
     // MARK: UICollectionViewDataSource
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -52,6 +53,11 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
     func setCurrentEvent(event: Event) {
         AnalyticsUtil.track("View Event", withEvent: event)
         title = event.title!.uppercaseString
+        if event.isFbEvent() {
+            self.toolbarItems = bottomFbEventToolbarItems.items
+        } else {
+            self.toolbarItems = bottomWebEventToolbarItems.items
+        }
     }
 
     func currentEventCell() -> EventDetailCell? {
@@ -84,7 +90,6 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         super.viewDidLoad()
 
         // Use the toolbars from the toolbar we set up in Interface Builder
-        self.toolbarItems = bottomToolbarItems.items
         navigationController?.toolbar.barTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.8)
 
         // collection view
@@ -149,8 +154,8 @@ class EventInfoViewController: UICollectionViewController, UIGestureRecognizerDe
         }
     }
 
-    @IBAction func facebookTapped(sender: AnyObject) {
-        currentEventCell()?.facebookTapped(sender)
+    @IBAction func sourceTapped(sender: AnyObject) {
+        currentEventCell()?.sourceTapped(sender)
     }
     @IBAction func mapTapped(sender: AnyObject) {
         currentEventCell()?.mapTapped(sender)

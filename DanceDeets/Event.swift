@@ -166,6 +166,10 @@ public class Event: NSObject {
         displayTime = dateDisplayString
     }
 
+    public func isFbEvent() -> Bool {
+        return self.sourceName == "Facebook"
+    }
+
     public func rsvpSummary() -> String {
         if self.attendingCount != nil {
             return String.localizedStringWithFormat(NSLocalizedString("%1$d going, %2$d interested", comment: "Event Listing"), self.attendingCount!, self.maybeCount!)

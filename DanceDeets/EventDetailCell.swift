@@ -28,6 +28,7 @@ class EventDetailCell: UICollectionViewCell {
 
     @IBOutlet weak var scrollView: UIScrollView!
 
+    @IBOutlet weak var sourceIconView: UIImageView!
     @IBOutlet weak var danceIconView: UIImageView!
     @IBOutlet weak var clockIconView: UIImageView!
     @IBOutlet weak var rsvpIconView: UIImageView!
@@ -35,10 +36,11 @@ class EventDetailCell: UICollectionViewCell {
 
     @IBOutlet weak var eventCoverImageView: UIImageView!
     @IBOutlet weak var eventTitleLabel: UILabel!
+    @IBOutlet weak var eventSourceLabel: UILabel!
+    @IBOutlet weak var eventCategoriesLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
     @IBOutlet weak var eventRsvpLabel: UILabel!
     @IBOutlet weak var eventVenueLabel: UILabel!
-    @IBOutlet weak var eventCategoriesLabel: UILabel!
     @IBOutlet weak var eventDescriptionLabel: UITextView!
     @IBOutlet weak var eventMapView: MKMapView!
 
@@ -54,6 +56,7 @@ class EventDetailCell: UICollectionViewCell {
         eventTitleLabel.text = event.title!
         eventTitleLabel.numberOfLines = 0
         eventTitleLabel.lineBreakMode = .ByWordWrapping
+        eventSourceLabel.text = String.localizedStringWithFormat(NSLocalizedString("Source: %@", comment: "Link to event source"), event.sourceName!)
         eventTimeLabel.text = event.displayTime
         eventRsvpLabel.text = event.rsvpSummary()
         eventVenueLabel.text = event.displayAddress
@@ -66,6 +69,8 @@ class EventDetailCell: UICollectionViewCell {
         attributedDescription.setColor(UIColor.whiteColor())
         eventDescriptionLabel.attributedText = attributedDescription
 
+        let sourceGesture = UITapGestureRecognizer(target: self, action: #selector(EventDetailCell.sourceTapped(_:)))
+        eventSourceLabel.addGestureRecognizer(sourceGesture)
         let mapGesture = UITapGestureRecognizer(target: self, action: #selector(EventDetailCell.mapTapped(_:)))
         eventMapView.addGestureRecognizer(mapGesture)
         let venueGesture = UITapGestureRecognizer(target: self, action: #selector(EventDetailCell.mapTapped(_:)))
@@ -147,17 +152,29 @@ class EventDetailCell: UICollectionViewCell {
         MapManager.showOnMap(event!)
     }
     
-    func facebookTapped(sender: AnyObject) {
-        if (event != nil) {
-            AnalyticsUtil.track("Open in Facebook", withEvent: event)
-            let urlString:String?
+    func getEventUrl() -> NSURL? {
+        var urlString = event.sourceUrl
+        if event.isFbEvent() {
             if UIApplication.sharedApplication().canOpenURL(NSURL(string: "fb://")!) {
-                urlString = String(format: "fb://profile/%@", event.id!);
-            } else {
-                urlString = String(format: "https://www.facebook.com/events/%@", event.id!);
+                urlString = String(format: "fb://profile/%@", event.id!)
             }
-            let url = NSURL(string: urlString!)
-            UIApplication.sharedApplication().openURL(url!)
+        }
+        if let url = urlString {
+            return NSURL(string: url)!
+        } else {
+            CLSNSLogv("Error getting URL for event: %@", getVaList([event.id!]))
+            return nil
+        }
+    }
+
+    func sourceTapped(sender: AnyObject) {
+        if (event != nil) {
+            AnalyticsUtil.track("Open Source", withEvent: event)
+            if let url = getEventUrl() {
+                UIApplication.sharedApplication().openURL(url)
+            } else {
+                CLSNSLogv("%@", getVaList(["No source URL, not opening event source."]))
+            }
         }
     }
     
@@ -177,11 +194,12 @@ class EventDetailCell: UICollectionViewCell {
         super.awakeFromNib()
 
         // No idea why these are necessary, since they are set in the NIB
+        sourceIconView.tintColor = UIColor.whiteColor()
         danceIconView.tintColor = UIColor.whiteColor()
+        rsvpIconView.tintColor = UIColor.whiteColor()
+        pinIconView.tintColor = UIColor.whiteColor()
         // No idea why we have to set this color directly, instead of copying another color
         // Seems there's some of magic going on with tintColor in multiple ways
         clockIconView.tintColor = UIColor(red: 192.0/255, green: 1.0, blue: 192.0/255, alpha: 1.0)
-        rsvpIconView.tintColor = UIColor.whiteColor()
-        pinIconView.tintColor = UIColor.whiteColor()
     }
 }
