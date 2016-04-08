@@ -484,7 +484,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HsF-vF-np0" userLabel="Source View">
                                                             <rect key="frame" x="0.0" y="0.0" width="585" height="14.5"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="danceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="PEe-57-sPI" userLabel="sourceIcon">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="browserIcon" translatesAutoresizingMaskIntoConstraints="NO" id="PEe-57-sPI" userLabel="sourceIcon">
                                                                     <rect key="frame" x="12" y="0.0" width="14" height="14"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="14" id="9Sj-uf-vXL"/>
@@ -779,7 +779,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <items>
-                        <barButtonItem image="facebookIcon" id="ttU-2h-wm4" userLabel="Facebook">
+                        <barButtonItem title="Item" image="browserIcon" id="ttU-2h-wm4" userLabel="Web">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="sourceTapped:" destination="zQ5-NL-m8V" id="qv7-9w-kZj"/>
@@ -1421,6 +1421,7 @@ Hope you’ll forgive us!</string>
         <image name="Onboard 4" width="768" height="1024"/>
         <image name="addIcon" width="15" height="15"/>
         <image name="bottomPinIcon" width="32" height="32"/>
+        <image name="browserIcon" width="512" height="512"/>
         <image name="calendarIcon" width="32" height="32"/>
         <image name="clockIcon" width="14" height="14"/>
         <image name="danceIcon" width="65" height="65"/>

@@ -56,6 +56,11 @@ class EventDetailCell: UICollectionViewCell {
         eventTitleLabel.text = event.title!
         eventTitleLabel.numberOfLines = 0
         eventTitleLabel.lineBreakMode = .ByWordWrapping
+        if event.isFbEvent() {
+            sourceIconView.image = UIImage(named: "facebookIcon")
+        } else {
+            sourceIconView.image = UIImage(named: "browserIcon")
+        }
         eventSourceLabel.text = String.localizedStringWithFormat(NSLocalizedString("Source: %@", comment: "Link to event source"), event.sourceName!)
         eventTimeLabel.text = event.displayTime
         eventRsvpLabel.text = event.rsvpSummary()
