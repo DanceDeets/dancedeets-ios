@@ -160,6 +160,11 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     }
 
     func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
+        if self.locationSearchField.text != "" {
+            CLSNSLogv("%@", getVaList(["Not resetting already-set location field, so ignoring GPS lookup results."]))
+            return
+        }
+
         if let placemark = optionalPlacemark {
             CLSNSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler placemark: \(placemark.description)"]))
             let fields = [placemark.locality, placemark.administrativeArea, placemark.country]
@@ -172,7 +177,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
             self.locationSearchField.text = fullText
             CLSNSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler locationSearchField: \(self.locationSearchField.text ?? "Unknown")"]))
             CLSNSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler keywordSearchField: \(self.keywordSearchField.text ?? "Unknown")"]))
-            Event.loadEventsForLocation(self.locationSearchField.text!, withKeywords:self.keywordSearchField.text!, completion:self.setupEventsDisplay)
+            ServerInterface.searchEvents(self.locationSearchField.text!, withKeywords:self.keywordSearchField.text!, completion:self.setupEventsDisplay)
         } else {
             if let location = NSUserDefaults.standardUserDefaults().stringForKey(USER_SEARCH_LOCATION_KEY) {
                 CLSNSLogv("%@", getVaList(["addressFoundHandler savedLocation: \(location)"]))
@@ -234,7 +239,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         NSUserDefaults.standardUserDefaults().synchronize()
 
         self.setTitle(location, NSLocalizedString("Loading...", comment: "Progress Title"))
-        Event.loadEventsForLocation(location, withKeywords:keywords, completion: setupEventsDisplay)
+        ServerInterface.searchEvents(location, withKeywords:keywords, completion: setupEventsDisplay)
     }
 
     func refreshEvents() {

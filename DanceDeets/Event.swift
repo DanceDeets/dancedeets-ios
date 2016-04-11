@@ -238,37 +238,4 @@ public class Event: NSObject {
         downloadTask!.resume()
         
     }
-    
-    public class func loadEventsForLocation(location:String, withKeywords keyword:String, completion: ((SearchResults?, NSError?)->Void)) -> Void
-    {
-        CLSNSLogv("%@", getVaList(["Search Events: \(location): \(keyword ?? "")"]))
-        AnalyticsUtil.track("Search Events", [
-            "Location": location,
-            "Keywords": keyword ?? "",
-            ])
-        let url = ServerInterface.sharedInstance.getEventSearchUrl(location, eventKeyword:keyword)
-
-        let task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-            if (error != nil) {
-                completion(nil, error)
-            } else {
-                var json:NSDictionary?
-                do {
-                    json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
-                } catch {
-                    json = nil
-                }
-                if (json != nil) {
-                    let results = SearchResults(json: json!)
-                    completion(results, nil)
-                } else {
-                    completion(nil, error)
-                }
-            }
-        })
-        task.resume()
-    }
-    
-    
-    
 }

@@ -36,24 +36,58 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         return Static.instance!
     }
 
-    func getAuthUrl() -> NSURL {
-        return ServerInterface.getApiUrl("auth")
-    }
-    
-    func getEventSearchUrl(city:String, eventKeyword:String) -> NSURL{
+    // MARK: Search
+    class func getEventSearchUrl(city:String, eventKeyword:String) -> NSURL{
         let args = [
             "location": city,
             "keywords": eventKeyword,
             "time_period": "UPCOMING",
-        ]
+            ]
         return ServerInterface.getApiUrl("search", withArgs: args)
     }
-    
-    func updateFacebookToken() {
-        fetchAddress = FetchAddress(completionHandler: addressFoundHandler)
+
+
+    public class func searchEvents(location:String, withKeywords keyword:String, completion: ((SearchResults?, NSError?) -> Void)) -> Void
+    {
+        CLSNSLogv("%@", getVaList(["Search Events: \(location): \(keyword ?? "")"]))
+        AnalyticsUtil.track("Search Events", [
+            "Location": location,
+            "Keywords": keyword ?? "",
+            ])
+        let url = getEventSearchUrl(location, eventKeyword:keyword)
+
+        let task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+            if (error != nil) {
+                completion(nil, error)
+            } else {
+                var json:NSDictionary?
+                do {
+                    json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                } catch {
+                    json = nil
+                }
+                if (json != nil) {
+                    let results = SearchResults(json: json!)
+                    completion(results, nil)
+                } else {
+                    completion(nil, error)
+                }
+            }
+        })
+        task.resume()
     }
     
-    func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
+
+    // MARK: Auth/User Creation
+    class func getAuthUrl() -> NSURL {
+        return ServerInterface.getApiUrl("auth")
+    }
+
+    func updateFacebookToken() {
+        fetchAddress = FetchAddress(completionHandler: ServerInterface.addressFoundHandler)
+    }
+    
+    class func addressFoundHandler(optionalPlacemark: CLPlacemark?) {
 
         var geocodeString:String = ""
         if let placemark = optionalPlacemark {
