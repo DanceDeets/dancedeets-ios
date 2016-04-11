@@ -16,13 +16,11 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-    var fbGraphUserObjectId: String?
     let urlCacheMemoryCapacityMB = 48
     let urlCacheDiskCapacityMB = 128
     var allowLandscape: Bool?
-    var deviceToken: NSData?
+    var openingEventId: String?
 
     class func sharedInstance() -> AppDelegate
     {
@@ -65,11 +63,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
     {
+        // AppLinks coming from Facebook
         if let targetUrl = AppStartup.getTargetUrl(url) {
-            print(targetUrl)
             if let eventId = AppStartup.getEventIdFromUrl(targetUrl) {
-                AppStartup.loadEventData(eventId)
+                openingEventId = eventId
             }
+        // dancedeets://events/events/859964690791522/, for easier testing
+        } else if url.path != nil && url.path!.containsString("/events/") {
+            if let eventId = AppStartup.getEventIdFromUrl(url) {
+                openingEventId = eventId
+            }
+        }
+        if openingEventId != nil {
+            CLSNSLogv("%@", getVaList(["Opened with URL \(url), loading event id \(openingEventId)"]))
+            window!.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
         }
         FBSDKProfile.enableUpdatesOnAccessTokenChange(true)
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)

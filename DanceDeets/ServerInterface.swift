@@ -13,7 +13,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
 
     var fetchAddress:FetchAddress?
 
-    // MARK: Static URL Construction Methods
+    // MARK: Common Code
     static let baseUrl:String = "http://www.dancedeets.com/api/v1.1/"
 
     class func getApiUrl(path: String, withArgs args: [String: String]=[:]) -> NSURL {
@@ -23,7 +23,6 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         return UrlUtil.getUrl(baseUrl + path, withArgs: fullArgs)
     }
 
-    // MARK: Shared Instance Setup
     public class var sharedInstance : ServerInterface{
         struct Static {
             static var onceToken : dispatch_once_t = 0
@@ -36,27 +35,8 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         return Static.instance!
     }
 
-    // MARK: Search
-    class func getEventSearchUrl(city:String, eventKeyword:String) -> NSURL{
-        let args = [
-            "location": city,
-            "keywords": eventKeyword,
-            "time_period": "UPCOMING",
-            ]
-        return ServerInterface.getApiUrl("search", withArgs: args)
-    }
-
-
-    public class func searchEvents(location:String, withKeywords keyword:String, completion: ((SearchResults?, NSError?) -> Void)) -> Void
-    {
-        CLSNSLogv("%@", getVaList(["Search Events: \(location): \(keyword ?? "")"]))
-        AnalyticsUtil.track("Search Events", [
-            "Location": location,
-            "Keywords": keyword ?? "",
-            ])
-        let url = getEventSearchUrl(location, eventKeyword:keyword)
-
-        let task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+    class func executeJsonRequest(url: NSURL, completion: (NSDictionary?, NSError?) -> Void) {
+        let task:NSURLSessionTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if (error != nil) {
                 completion(nil, error)
             } else {
@@ -67,8 +47,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
                     json = nil
                 }
                 if (json != nil) {
-                    let results = SearchResults(json: json!)
-                    completion(results, nil)
+                    completion(json, nil)
                 } else {
                     completion(nil, error)
                 }
@@ -76,7 +55,53 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
         })
         task.resume()
     }
-    
+
+    // MARK: Search
+    class func getEventSearchUrl(city:String, eventKeyword:String) -> NSURL{
+        let args = [
+            "location": city,
+            "keywords": eventKeyword,
+            "time_period": "UPCOMING",
+            ]
+        return ServerInterface.getApiUrl("search", withArgs: args)
+    }
+
+    public class func searchEvents(location:String, withKeywords keyword:String, completion: ((SearchResults?, NSError?) -> Void)) -> Void
+    {
+        CLSNSLogv("%@", getVaList(["Search Events: \(location): \(keyword ?? "")"]))
+        AnalyticsUtil.track("Search Events", [
+            "Location": location,
+            "Keywords": keyword ?? "",
+            ])
+        let url = getEventSearchUrl(location, eventKeyword:keyword)
+
+        executeJsonRequest(url, completion: {(json: NSDictionary?, error: NSError?) -> Void in
+            if let realJson = json {
+                completion(SearchResults(json: realJson), error)
+            } else {
+                completion(nil, error)
+            }
+        })
+    }
+
+    // MARK: Event Lookup
+    class func getEventUrl(eventId: String) -> NSURL{
+        return ServerInterface.getApiUrl("events/\(eventId)")
+    }
+
+    public class func getEvent(eventId:String, completion: ((Event?, NSError?) -> Void)) -> Void
+    {
+        CLSNSLogv("%@", getVaList(["Lookup Event: \(eventId)"]))
+        let url = getEventUrl(eventId)
+
+        executeJsonRequest(url, completion: {(json: NSDictionary?, error: NSError?) -> Void in
+            if let realJson = json {
+                completion(Event(dictionary: realJson), error)
+            } else {
+                completion(nil, error)
+            }
+        })
+    }
 
     // MARK: Auth/User Creation
     class func getAuthUrl() -> NSURL {
@@ -91,7 +116,7 @@ public class ServerInterface : NSObject, CLLocationManagerDelegate {
 
         var geocodeString:String = ""
         if let placemark = optionalPlacemark {
-            CLSNSLogv("%@", getVaList(["ServerInterface.addressFound: placemark: \(placemark.description)"]))
+            CLSNSLogv("%@", getVaList(["ServerInterface.addressFound: placemark"]))
             // set up a display address
             if let lines = placemark.addressDictionary?["FormattedAddressLines"] as? [String] {
                 for line in lines {

@@ -12,13 +12,12 @@ class LoadingViewController : UIViewController {
 
     var refreshLoops: Int = 0
 
+    var openingEventId: String?
+    var openingEvent: Event?
+    var loggedIn: Bool = false
 
+    // MARK: The usual
     @IBAction func unwindToTop(segue: UIStoryboardSegue) {
-    }
-
-    override func viewDidLoad() {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
     }
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -27,14 +26,67 @@ class LoadingViewController : UIViewController {
 
     override func viewDidAppear(animated: Bool) {
         CLSNSLogv("%@", getVaList(["viewDidAppear"]))
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoadingViewController.observeTokenChange), name: FBSDKAccessTokenDidChangeNotification, object: nil)
-        observeTokenChange()
+
+        if let eventId = AppDelegate.sharedInstance().openingEventId {
+            openingEventId = eventId
+            ServerInterface.getEvent(eventId, completion: loadedEventData)
+        } else {
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoadingViewController.observeTokenChange), name: FBSDKAccessTokenDidChangeNotification, object: nil)
+            observeTokenChange()
+        }
+    }
+
+    func loadedEventData(event: Event?, error: NSError?) {
+        if event != nil {
+            openingEvent = event
+            maybeShowEvent()
+        }
+    }
+
+    func maybeShowEvent() {
+        CLSNSLogv("%@", getVaList(["maybeShowEvent"]))
+        if let event = openingEvent where loggedIn {
+            CLSNSLogv("%@", getVaList(["logged in, showing event \(event.id)"]))
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            let navVC = sb.instantiateViewControllerWithIdentifier("mainNavVC")
+            let eventListVC = sb.instantiateViewControllerWithIdentifier("EventListView")
+            let eventInfoVC = sb.instantiateViewControllerWithIdentifier("eventInfoViewController")
+            if let vc = eventInfoVC as? EventInfoViewController {
+                vc.events = [event]
+                vc.startEvent = event
+            }
+            if let nc = navVC as? UINavigationController {
+                nc.pushViewController(eventInfoVC, animated: true)
+                let stackCount = nc.viewControllers.count
+                let addIndex = stackCount - 1
+                nc.viewControllers.insert(eventListVC, atIndex: addIndex)
+            }
+            presentViewController(navVC, animated: false, completion: nil)
+        }
+    }
+
+
+    func showReal() {
+        loggedIn = true
+        if openingEventId != nil {
+            maybeShowEvent()
+        } else {
+            showList()
+        }
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let vc = segue.destinationViewController as? EventInfoViewController {
+            if let event = openingEvent {
+            }
+        }
     }
 
     override func viewWillDisappear(animated: Bool) {
         CLSNSLogv("%@", getVaList(["viewWillDisappear"]))
         NSNotificationCenter.defaultCenter().removeObserver(self, name: FBSDKAccessTokenDidChangeNotification, object: nil)
     }
+
 
     func observeTokenChange() {
         let token = FBSDKAccessToken.currentAccessToken()
@@ -49,7 +101,7 @@ class LoadingViewController : UIViewController {
             CLSNSLogv("Refresh Date: %@, Now Date: %@, Date Diff in Seconds: %f", getVaList([token.refreshDate, now, age]))
             if (age < 60 * 60) {
                 // Recent token, let's just send them on their way now
-                showList()
+                showReal()
             } else if (!token.hasGranted("user_events")) {
                 // TODO: If the user cancels-out, this can create problems when we come back through this same code path
                 // It results in the following error when we call this twice:
@@ -62,7 +114,7 @@ class LoadingViewController : UIViewController {
                     // Let's just go here regardless, so we avoid an infinite loop of refreshing
                     // Not sure if this happens in real life, but don't want to risk it
                     CLSNSLogv("%@", getVaList(["Found a refresh loop, shouldn't happen! Sending to the ListView..."]))
-                    showList()
+                    showReal()
                 } else {
                     // Otherwise attempt to refresh the token, and act based on that
                     FBSDKAccessToken.refreshCurrentAccessToken(onRefreshTokenResult)

@@ -33,6 +33,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     var eventDisplay:EventDisplay?
     var searchBar:SearchBar?
     var adBar:AdBar?
+    var selectedEvent:Event?
 
     // MARK: Outlets
     @IBOutlet weak var eventListTableView: UITableView!
@@ -66,14 +67,32 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
     
     func eventSelected(event: Event, eventImage: UIImage?) {
         // the collection cell of the selected event
-        let destination = storyboard?.instantiateViewControllerWithIdentifier("eventInfoViewController") as! EventInfoViewController
-        if let display = self.eventDisplay {
-            destination.events = display.results?.events
-            destination.startEvent = event
-        }
 
-        navigationController?.pushViewController(destination, animated: true)
+        selectedEvent = event
+        performSegueWithIdentifier("eventDetailSegue", sender: self)
     }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let vc = segue.destinationViewController as? SettingsViewController {
+            // take snap shot of our current view, add a blur, this is the background effect for the settings
+            let snapShot:UIView = view.snapshotViewAfterScreenUpdates(false)
+            let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
+            snapShot.addSubview(overlayView)
+            overlayView.constrainToSuperViewEdges()
+            vc.view.insertSubview(snapShot, atIndex: 0)
+            snapShot.constrainToSuperViewEdges()
+            vc.backgroundBlurView = snapShot
+        } else if let vc = segue.destinationViewController as? EventInfoViewController {
+            if let event = selectedEvent {
+                if let results = self.eventDisplay?.results {
+                    vc.events = results.events
+                    vc.startEvent = event
+                }
+            }
+        }
+    }
+
+
 
     func oneboxSelected(oneboxLink: OneboxLink) {
         AnalyticsUtil.track("Onebox", ["URL": oneboxLink.url!])
@@ -114,21 +133,6 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "settingsSegue" {
-            let destination:SettingsViewController? = segue.destinationViewController as? SettingsViewController
-            
-            // take snap shot of our current view, add a blur, this is the background effect for the settings
-            let snapShot:UIView = view.snapshotViewAfterScreenUpdates(false)
-            let overlayView = UIVisualEffectView(effect: UIBlurEffect(style:UIBlurEffectStyle.Dark)) as UIVisualEffectView
-            snapShot.addSubview(overlayView)
-            overlayView.constrainToSuperViewEdges()
-            destination?.view.insertSubview(snapShot, atIndex: 0)
-            snapShot.constrainToSuperViewEdges()
-            destination?.backgroundBlurView = snapShot
-        }
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -166,7 +170,7 @@ class EventStreamViewController: UIViewController, UIGestureRecognizerDelegate, 
         }
 
         if let placemark = optionalPlacemark {
-            CLSNSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler placemark: \(placemark.description)"]))
+            CLSNSLogv("%@", getVaList(["EventStreamViewController.addressFoundHandler placemark"]))
             let fields = [placemark.locality, placemark.administrativeArea, placemark.country]
             let setFields = fields.filter({ (elem: String?) -> Bool in
                 return elem != nil
